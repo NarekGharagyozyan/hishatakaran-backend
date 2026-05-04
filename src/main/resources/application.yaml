@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: backend
+  datasource:
+    url: jdbc:postgresql://localhost:3307/hishatakaran
+    username: hishatakaranlogin
+    password: hishatakaranpassword
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: NEVER
+
+server:
+  port: 8888

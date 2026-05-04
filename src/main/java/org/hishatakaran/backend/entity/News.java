@@ -1,0 +1,51 @@
+package org.hishatakaran.backend.entity;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+import org.hishatakaran.backend.model.Status;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Entity
+@Table(name = "news")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class News {
+
+    @Id
+    @GeneratedValue
+    private UUID id;
+
+    private String title;
+
+    @Column(columnDefinition = "TEXT")
+    private String text;
+
+    @ElementCollection
+    @CollectionTable(name = "news_pictures", joinColumns = @JoinColumn(name = "news_id"))
+    @Column(name = "picture_url")
+    private List<String> pictures = new ArrayList<>();
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Status status;
+}
