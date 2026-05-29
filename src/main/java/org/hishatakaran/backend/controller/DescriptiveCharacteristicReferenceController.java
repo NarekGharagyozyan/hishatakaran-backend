@@ -1,8 +1,9 @@
 package org.hishatakaran.backend.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.hishatakaran.backend.entity.DescriptiveCharacteristicReference;
+import org.hishatakaran.backend.mapper.DescriptiveCharacteristicMapper;
 import org.hishatakaran.backend.model.Color;
+import org.hishatakaran.backend.model.DescriptiveCharacteristicResponseDto;
 import org.hishatakaran.backend.repository.DescriptiveCharacteristicReferenceRepository;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,22 +18,33 @@ public class DescriptiveCharacteristicReferenceController {
     private final DescriptiveCharacteristicReferenceRepository descriptiveRepository;
 
     @GetMapping
-    public List<DescriptiveCharacteristicReference> getAll() {
-        return descriptiveRepository.findAll();
+    public List<DescriptiveCharacteristicResponseDto> getAll() {
+        return descriptiveRepository.findAll()
+            .stream()
+            .map(DescriptiveCharacteristicMapper::toDto)
+            .toList();
     }
 
     @GetMapping("/{id}")
-    public DescriptiveCharacteristicReference getById(@PathVariable UUID id) {
-        return descriptiveRepository.findById(id).orElseThrow();
+    public DescriptiveCharacteristicResponseDto getById(@PathVariable UUID id) {
+        return DescriptiveCharacteristicMapper.toDto(
+            descriptiveRepository.findById(id).orElseThrow()
+        );
     }
 
     @GetMapping("/monument/{monumentId}")
-    public List<DescriptiveCharacteristicReference> getByMonument(@PathVariable UUID monumentId) {
-        return descriptiveRepository.findByMonumentId(monumentId);
+    public List<DescriptiveCharacteristicResponseDto> getByMonument(@PathVariable UUID monumentId) {
+        return descriptiveRepository.findByMonumentId(monumentId)
+            .stream()
+            .map(DescriptiveCharacteristicMapper::toDto)
+            .toList();
     }
 
     @GetMapping("/color/{color}")
-    public List<DescriptiveCharacteristicReference> getByColor(@PathVariable Color color) {
-        return descriptiveRepository.findByColor(color);
+    public List<DescriptiveCharacteristicResponseDto> getByColor(@PathVariable Color color) {
+        return descriptiveRepository.findByColor(color)
+            .stream()
+            .map(DescriptiveCharacteristicMapper::toDto)
+            .toList();
     }
 }

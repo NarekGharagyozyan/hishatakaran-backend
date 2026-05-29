@@ -1,7 +1,8 @@
 package org.hishatakaran.backend.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.hishatakaran.backend.entity.Library;
+import org.hishatakaran.backend.mapper.LibraryMapper;
+import org.hishatakaran.backend.model.LibraryResponseDto;
 import org.hishatakaran.backend.repository.LibraryRepository;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,12 +17,17 @@ public class LibraryController {
     private final LibraryRepository libraryRepository;
 
     @GetMapping
-    public List<Library> getAll() {
-        return libraryRepository.findAll();
+    public List<LibraryResponseDto> getAll() {
+        return libraryRepository.findAll()
+            .stream()
+            .map(LibraryMapper::toDto)
+            .toList();
     }
 
     @GetMapping("/{id}")
-    public Library getById(@PathVariable UUID id) {
-        return libraryRepository.findById(id).orElseThrow();
+    public LibraryResponseDto getById(@PathVariable UUID id) {
+        return LibraryMapper.toDto(
+            libraryRepository.findById(id).orElseThrow()
+        );
     }
 }

@@ -2,7 +2,7 @@ spring:
   application:
     name: backend
   datasource:
-    url: jdbc:postgresql://localhost:3307/hishatakaran
+    url: jdbc:mysql://localhost:3307/hishatakaran
     username: hishatakaranlogin
     password: hishatakaranpassword
   jpa:
@@ -13,6 +13,10 @@ spring:
   sql:
     init:
       mode: NEVER
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
 
 server:
   port: 8888

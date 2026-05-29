@@ -3,62 +3,69 @@ package org.hishatakaran.backend.mapper;
 import java.util.stream.Collectors;
 
 import org.hishatakaran.backend.entity.Monument;
-import org.hishatakaran.backend.model.MonumentDto;
+import org.hishatakaran.backend.model.MonumentResponseDto;
 
 public class MonumentMapper {
 
-    public static MonumentDto toDto(Monument m) {
+    public static MonumentResponseDto toDto(Monument m) {
         if (m == null) return null;
 
-        MonumentDto dto = new MonumentDto();
+        MonumentResponseDto.MonumentResponseDtoBuilder monumentDtoBuilder = MonumentResponseDto.builder();
 
-        dto.id = m.getId();
-        dto.name = m.getName();
-        dto.status = m.getStatus().name();
-        dto.monumentType = m.getMonumentType().name();
+        monumentDtoBuilder.id(m.getId());
+        monumentDtoBuilder.name(m.getName());
+        monumentDtoBuilder.status(m.getStatus().name());
+        monumentDtoBuilder.monumentType(m.getMonumentType().name());
 
         if (m.getRegion() != null) {
-            dto.regionId = m.getRegion().getId();
-            dto.regionName = m.getRegion().getName();
+            monumentDtoBuilder.region(RegionMapper.toDto(m.getRegion()));
         }
 
         if (m.getSettlement() != null) {
-            dto.settlementId = m.getSettlement().getId();
+            monumentDtoBuilder.settlement(SettlementMapper.toDto(m.getSettlement()));
         }
 
-        dto.specialName = m.getSpecialName();
-        dto.anotherNames = m.getAnotherNames();
+        monumentDtoBuilder.specialName(m.getSpecialName());
+        monumentDtoBuilder.anotherNames(m.getAnotherNames());
 
-        dto.history = m.getHistory();
-        dto.originalAffiliation = m.getOriginalAffiliation();
-        dto.storageUnitName = m.getStorageUnitName();
-        dto.condition = m.getCondition();
+        monumentDtoBuilder.history(m.getHistory());
+        monumentDtoBuilder.originalAffiliation(m.getOriginalAffiliation());
+        monumentDtoBuilder.storageUnitName(m.getStorageUnitName());
+        monumentDtoBuilder.condition(m.getCondition());
 
-        dto.pictures = m.getPictures();
+        monumentDtoBuilder.pictures(m.getPictures());
 
-        dto.createdAt = m.getCreatedAt();
-        dto.updatedAt = m.getUpdatedAt();
+        monumentDtoBuilder.createdAt(m.getCreatedAt());
+        monumentDtoBuilder.updatedAt(m.getUpdatedAt());
 
-        dto.bibliography = m.getBibliography()
+        monumentDtoBuilder.bibliography(
+            m.getBibliography()
                 .stream()
                 .map(BibliographyMapper::toDto)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList())
+        );
 
-        dto.topographics = m.getTopographics()
+        monumentDtoBuilder.topographics(
+            m.getTopographics()
                 .stream()
                 .map(TopographicMapper::toDto)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList())
+        );
 
-        dto.historicalReferences = m.getHistoricalReferences()
+        monumentDtoBuilder.historicalReferences(
+            m.getHistoricalReferences()
                 .stream()
                 .map(HistoricalReferenceMapper::toDto)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList())
+        );
 
-        dto.descriptiveCharacteristics = m.getDescriptiveCharacteristics()
+        monumentDtoBuilder.descriptiveCharacteristics(
+            m.getDescriptiveCharacteristics()
                 .stream()
                 .map(DescriptiveCharacteristicMapper::toDto)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList())
+        );
 
-        return dto;
+        return monumentDtoBuilder.build();
     }
 }

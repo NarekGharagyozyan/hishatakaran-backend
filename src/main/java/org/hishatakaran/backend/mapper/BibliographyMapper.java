@@ -1,17 +1,15 @@
 package org.hishatakaran.backend.mapper;
 
 import org.hishatakaran.backend.entity.Bibliography;
-import org.hishatakaran.backend.model.BibliographyDto;
+import org.hishatakaran.backend.model.BibliographyResponseDto;
 
 public class BibliographyMapper {
 
-    public static BibliographyDto toDto(Bibliography b) {
-        if (b == null) return null;
-
-        BibliographyDto dto = new BibliographyDto();
-        dto.id = b.getId();
-        dto.urls = b.getUrls();
-
-        return dto;
+    public static BibliographyResponseDto toDto(Bibliography bibliography) {
+        return new BibliographyResponseDto(
+            bibliography.getId(),
+            bibliography.getUrls()
+        );
     }
+
 }

@@ -1,7 +1,9 @@
 package org.hishatakaran.backend.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.hishatakaran.backend.entity.Bibliography;
+
+import org.hishatakaran.backend.mapper.BibliographyMapper;
+import org.hishatakaran.backend.model.BibliographyResponseDto;
 import org.hishatakaran.backend.repository.BibliographyRepository;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,17 +18,25 @@ public class BibliographyController {
     private final BibliographyRepository bibliographyRepository;
 
     @GetMapping
-    public List<Bibliography> getAll() {
-        return bibliographyRepository.findAll();
+    public List<BibliographyResponseDto> getAll() {
+        return bibliographyRepository.findAll()
+            .stream()
+            .map(BibliographyMapper::toDto)
+            .toList();
     }
 
     @GetMapping("/{id}")
-    public Bibliography getById(@PathVariable UUID id) {
-        return bibliographyRepository.findById(id).orElseThrow();
+    public BibliographyResponseDto getById(@PathVariable UUID id) {
+        return BibliographyMapper.toDto(
+            bibliographyRepository.findById(id).orElseThrow()
+        );
     }
 
     @GetMapping("/monument/{monumentId}")
-    public List<Bibliography> getByMonument(@PathVariable UUID monumentId) {
-        return bibliographyRepository.findByMonumentId(monumentId);
+    public List<BibliographyResponseDto> getByMonument(@PathVariable UUID monumentId) {
+        return bibliographyRepository.findByMonumentId(monumentId)
+            .stream()
+            .map(BibliographyMapper::toDto)
+            .toList();
     }
 }

@@ -1,7 +1,8 @@
 package org.hishatakaran.backend.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.hishatakaran.backend.entity.Region;
+import org.hishatakaran.backend.mapper.RegionMapper;
+import org.hishatakaran.backend.model.RegionResponseDto;
 import org.hishatakaran.backend.repository.RegionRepository;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,12 +16,17 @@ public class RegionController {
     private final RegionRepository regionRepository;
 
     @GetMapping
-    public List<Region> getAll() {
-        return regionRepository.findAll();
+    public List<RegionResponseDto> getAll() {
+        return regionRepository.findAll()
+            .stream()
+            .map(RegionMapper::toDto)
+            .toList();
     }
 
     @GetMapping("/{id}")
-    public Region getById(@PathVariable Integer id) {
-        return regionRepository.findById(id).orElseThrow();
+    public RegionResponseDto getById(@PathVariable Integer id) {
+        return RegionMapper.toDto(
+            regionRepository.findById(id).orElseThrow()
+        );
     }
 }

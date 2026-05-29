@@ -1,18 +1,21 @@
 package org.hishatakaran.backend.mapper;
 
 import org.hishatakaran.backend.entity.Topographic;
-import org.hishatakaran.backend.model.TopographicDto;
+import org.hishatakaran.backend.model.TopographicResponseDto;
 
 public class TopographicMapper {
 
-    public static TopographicDto toDto(Topographic t) {
-        if (t == null) return null;
+    public static TopographicResponseDto toDto(Topographic topographic) {
 
-        TopographicDto dto = new TopographicDto();
-        dto.id = t.getId();
-        dto.address = t.getAddress();
-        dto.topography = t.getTopography();
-
-        return dto;
+        return new TopographicResponseDto(
+            topographic.getId(),
+            topographic.getRegionHistory(),
+            topographic.getAddress(),
+            topographic.getTopography(),
+            topographic.getDistanceFromResidence(),
+            topographic.getAltitude(),
+            topographic.getHydrography(),
+            topographic.getDescription()
+        );
     }
 }

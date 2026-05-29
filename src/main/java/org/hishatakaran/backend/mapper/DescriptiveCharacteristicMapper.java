@@ -1,19 +1,19 @@
 package org.hishatakaran.backend.mapper;
 
 import org.hishatakaran.backend.entity.DescriptiveCharacteristicReference;
-import org.hishatakaran.backend.model.DescriptiveCharacteristicDto;
+import org.hishatakaran.backend.model.DescriptiveCharacteristicResponseDto;
 
 public class DescriptiveCharacteristicMapper {
 
-    public static DescriptiveCharacteristicDto toDto(DescriptiveCharacteristicReference d) {
-        if (d == null) return null;
-
-        DescriptiveCharacteristicDto dto = new DescriptiveCharacteristicDto();
-        dto.id = d.getId();
-        dto.type = d.getType();
-        dto.color = d.getColor().name();
-        dto.buildingMaterial = d.getTheBuildingMaterial();
-
-        return dto;
+    public static DescriptiveCharacteristicResponseDto toDto(DescriptiveCharacteristicReference descriptive) {
+        return new DescriptiveCharacteristicResponseDto(
+            descriptive.getId(),
+            descriptive.getType(),
+            descriptive.getColor().name(),
+            descriptive.getTheBuildingMaterial(),
+            descriptive.getImplementationTechnique(),
+            descriptive.getStateOfMonument().getName(),
+            descriptive.getValuation()
+        );
     }
 }
