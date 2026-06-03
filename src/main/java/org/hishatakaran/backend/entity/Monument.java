@@ -8,7 +8,6 @@ import java.util.UUID;
 import org.hishatakaran.backend.model.MonumentType;
 import org.hishatakaran.backend.model.Status;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.CollectionTable;

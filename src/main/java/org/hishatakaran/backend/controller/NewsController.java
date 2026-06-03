@@ -1,54 +1,37 @@
 package org.hishatakaran.backend.controller;
 
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+import java.util.UUID;
 
-import org.hishatakaran.backend.entity.News;
 import org.hishatakaran.backend.mapper.NewsMapper;
 import org.hishatakaran.backend.model.NewsRequestDto;
 import org.hishatakaran.backend.model.NewsResponseDto;
 import org.hishatakaran.backend.model.Status;
 import org.hishatakaran.backend.repository.NewsRepository;
-import org.hishatakaran.backend.service.FileStorageService;
+import org.hishatakaran.backend.service.NewsService;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/news")
 @RequiredArgsConstructor
 public class NewsController {
 
+    private final NewsService newsService;
     private final NewsRepository newsRepository;
-    private final FileStorageService fileStorageService;
 
     @PostMapping(
         consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
     public NewsResponseDto postNews(@ModelAttribute NewsRequestDto newsDto) {
-
-        List<String> imagePaths = new ArrayList<>();
-
-        if (newsDto.getPictures() != null) {
-
-            imagePaths = newsDto.getPictures()
-                .stream()
-                .map(fileStorageService::saveNewsImage)
-                .toList();
-        }
-
-        News news = new News();
-
-        news.setTitle(newsDto.getTitle());
-        news.setText(newsDto.getText());
-        news.setPictures(imagePaths);
-        news.setStatus(Status.DRAFT);
-
-        newsRepository.save(news);
-
-        return NewsMapper.toDto(news);
+        return newsService.postNews(newsDto);
     }
 
     @GetMapping

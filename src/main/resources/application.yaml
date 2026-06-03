@@ -1,6 +1,9 @@
 spring:
   application:
     name: backend
+  jackson:
+    serialization:
+      indent_output: true
   datasource:
     url: jdbc:mysql://localhost:3307/hishatakaran
     username: hishatakaranlogin

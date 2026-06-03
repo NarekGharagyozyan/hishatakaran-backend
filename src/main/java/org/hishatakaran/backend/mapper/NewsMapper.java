@@ -9,8 +9,12 @@ public class NewsMapper {
 
     return new NewsResponseDto(
         news.getId(),
-        news.getTitle(),
-        news.getText(),
+        news.getTitleArmenian(),
+        news.getTitleEnglish(),
+        news.getTitleFrench(),
+        news.getTextArmenian(),
+        news.getTextEnglish(),
+        news.getTextFrench(),
         news.getPictures(),
         news.getStatus().name()
     );

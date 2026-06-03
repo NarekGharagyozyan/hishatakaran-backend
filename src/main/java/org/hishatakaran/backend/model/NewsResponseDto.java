@@ -13,8 +13,12 @@ import lombok.Setter;
 public class NewsResponseDto {
 
     private final UUID id;
-    private final String title;
-    private final String text;
+    private final String titleArmenian;
+    private final String titleEnglish;
+    private final String titleFrench;
+    private final String textArmenian;
+    private final String textEnglish;
+    private final String textFrench;
     private final List<String> pictures;
     private final String status;
 }

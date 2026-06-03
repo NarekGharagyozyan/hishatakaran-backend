@@ -6,8 +6,6 @@ import java.util.UUID;
 
 import org.hishatakaran.backend.model.Status;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
@@ -35,10 +33,20 @@ public class News {
     @GeneratedValue
     private UUID id;
 
-    private String title;
+    private String titleArmenian;
+
+    private String titleEnglish;
+
+    private String titleFrench;
 
     @Column(columnDefinition = "TEXT")
-    private String text;
+    private String textArmenian;
+
+    @Column(columnDefinition = "TEXT")
+    private String textEnglish;
+
+    @Column(columnDefinition = "TEXT")
+    private String textFrench;
 
     @ElementCollection
     @CollectionTable(name = "news_pictures", joinColumns = @JoinColumn(name = "news_id"))
