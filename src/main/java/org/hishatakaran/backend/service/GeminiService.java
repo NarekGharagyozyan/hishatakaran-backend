@@ -1,9 +1,9 @@
 package org.hishatakaran.backend.service;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
+
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.google.genai.Client;
@@ -11,11 +11,21 @@ import com.google.genai.types.Content;
 import com.google.genai.types.GenerateContentResponse;
 import com.google.genai.types.Part;
 
+import jakarta.annotation.PostConstruct;
+
 @Service
 public class GeminiService {
 
-  private static String API_KEY = "AIzaSyAvXsUCT3iP7qecRpKblarfhuqyn51azVk";
-  static Client client = Client.builder().apiKey(API_KEY).build();
+  @Value("${gemini.api.key}")
+  private String apiKey;
+  private Client client;
+
+  @PostConstruct
+  public void init() {
+    this.client = new Client.Builder()
+        .apiKey(apiKey)
+        .build();
+  }
 
   public String askGemini(String titleArmenian, String textArmenian)
   {
