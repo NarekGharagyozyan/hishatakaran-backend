@@ -1,6 +1,7 @@
 package org.hishatakaran.backend.model;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,13 +35,13 @@ public class MonumentResponseDto {
 
     private final List<String> pictures;
 
-    private final LocalDateTime createdAt;
-    private final LocalDateTime updatedAt;
+    private final ZonedDateTime createdAt;
+    private final ZonedDateTime updatedAt;
 
     private final List<BibliographyResponseDto> bibliography;
     private final List<TopographicResponseDto> topographics;
     private final List<HistoricalReferenceResponseDto> historicalReferences;
     private final List<DescriptiveCharacteristicResponseDto> descriptiveCharacteristics;
 
-
+    private final boolean showInMainPage;
 }

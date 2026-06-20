@@ -9,13 +9,13 @@ public class TopographicMapper {
 
         return new TopographicResponseDto(
             topographic.getId(),
-            topographic.getRegionHistory(),
-            topographic.getAddress(),
-            topographic.getTopography(),
-            topographic.getDistanceFromResidence(),
+            topographic.getProvinceArmenian(),
+            topographic.getAddressArmenian(),
+            topographic.getTopographyArmenian(),
+            topographic.getDistanceFromResidenceArmenian(),
             topographic.getAltitude(),
-            topographic.getHydrography(),
-            topographic.getDescription()
+            topographic.getHydrographyArmenian(),
+            topographic.getDescriptionArmenian()
         );
     }
 }

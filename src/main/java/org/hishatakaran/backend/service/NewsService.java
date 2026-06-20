@@ -1,6 +1,5 @@
 package org.hishatakaran.backend.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hishatakaran.backend.entity.News;
@@ -29,7 +28,7 @@ public class NewsService {
   private final ObjectMapper objectMapper;
 
   public NewsResponseDto postNews(@ModelAttribute NewsRequestDto newsDto) {
-    String result = geminiService.askGemini(newsDto.getTitle(), newsDto.getText());
+    String result = geminiService.requestGeminiForNews(newsDto.getTitle(), newsDto.getText());
     NewsAiResponseDto newsAiResponseDto = null;
     try {
       var cleanJson = extractJson(result);

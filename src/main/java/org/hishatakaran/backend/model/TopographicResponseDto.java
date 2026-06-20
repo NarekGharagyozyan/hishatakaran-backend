@@ -12,7 +12,7 @@ import lombok.Setter;
 public class TopographicResponseDto {
 
     private final UUID id;
-    private final String regionHistory;
+    private final String province;
     private final String address;
     private final String topography;
     private final String distanceFromResidence;

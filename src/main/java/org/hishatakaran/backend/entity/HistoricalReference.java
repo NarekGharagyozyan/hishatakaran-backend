@@ -32,14 +32,64 @@ public class HistoricalReference {
     @JoinColumn(name = "monument", nullable = false)
     private Monument monument;
 
-    private String culturalAffiliation;
-    private String century;
+    private String culturalAffiliationArmenian;
+    private String culturalAffiliationEnglish;
+    private String culturalAffiliationFrench;
+    private String centuryArmenian;
+    private String centuryEnglish;
+    private String centuryFrench;
 
     @Column(columnDefinition = "TEXT")
-    private String justificationOfTheNumberingBasedOnLithography;
+    private String justificationOfTheNumberingBasedOnLithographyArmenian;
+    @Column(columnDefinition = "TEXT")
+    private String justificationOfTheNumberingBasedOnLithographyEnglish;
+    @Column(columnDefinition = "TEXT")
+    private String justificationOfTheNumberingBasedOnLithographyFrench;
 
     @Column(columnDefinition = "TEXT")
-    private String chronologicalTableOfTheStud;
+    private String chronologicalTableOfTheStudArmenian;
+    @Column(columnDefinition = "TEXT")
+    private String chronologicalTableOfTheStudEnglish;
+    @Column(columnDefinition = "TEXT")
+    private String chronologicalTableOfTheStudFrench;
 
-    private String author;
+    private String authorArmenian;
+    private String authorEnglish;
+    private String authorFrench;
+
+    public HistoricalReference(
+        Monument monument,
+        String culturalAffiliationArmenian,
+        String culturalAffiliationEnglish,
+        String culturalAffiliationFrench,
+        String centuryArmenian,
+        String centuryEnglish,
+        String centuryFrench,
+        String justificationOfTheNumberingBasedOnLithographyArmenian,
+        String justificationOfTheNumberingBasedOnLithographyEnglish,
+        String justificationOfTheNumberingBasedOnLithographyFrench,
+        String chronologicalTableOfTheStudArmenian,
+        String chronologicalTableOfTheStudEnglish,
+        String chronologicalTableOfTheStudFrench,
+        String authorArmenian,
+        String authorEnglish,
+        String authorFrench)
+    {
+        this.monument = monument;
+        this.culturalAffiliationArmenian = culturalAffiliationArmenian;
+        this.culturalAffiliationEnglish = culturalAffiliationEnglish;
+        this.culturalAffiliationFrench = culturalAffiliationFrench;
+        this.centuryArmenian = centuryArmenian;
+        this.centuryEnglish = centuryEnglish;
+        this.centuryFrench = centuryFrench;
+        this.justificationOfTheNumberingBasedOnLithographyArmenian = justificationOfTheNumberingBasedOnLithographyArmenian;
+        this.justificationOfTheNumberingBasedOnLithographyEnglish = justificationOfTheNumberingBasedOnLithographyEnglish;
+        this.justificationOfTheNumberingBasedOnLithographyFrench = justificationOfTheNumberingBasedOnLithographyFrench;
+        this.chronologicalTableOfTheStudArmenian = chronologicalTableOfTheStudArmenian;
+        this.chronologicalTableOfTheStudEnglish = chronologicalTableOfTheStudEnglish;
+        this.chronologicalTableOfTheStudFrench = chronologicalTableOfTheStudFrench;
+        this.authorArmenian = authorArmenian;
+        this.authorEnglish = authorEnglish;
+        this.authorFrench = authorFrench;
+    }
 }

@@ -31,18 +31,81 @@ public class Topographic {
     @JoinColumn(name = "monument", nullable = false)
     private Monument monument;
 
-    private String regionHistory;
-    private String address;
+    private String provinceArmenian;
+    private String provinceEnglish;
+    private String provinceFrench;
+
+    private String addressArmenian;
+    private String addressEnglish;
+    private String addressFrench;
 
     @Column(columnDefinition = "TEXT")
-    private String topography;
+    private String topographyArmenian;
+    @Column(columnDefinition = "TEXT")
+    private String topographyEnglish;
+    @Column(columnDefinition = "TEXT")
+    private String topographyFrench;
 
-    private String distanceFromResidence;
+    private String distanceFromResidenceArmenian;
+    private String distanceFromResidenceEnglish;
+    private String distanceFromResidenceFrench;
     private Integer altitude;
 
     @Column(columnDefinition = "TEXT")
-    private String hydrography;
+    private String hydrographyArmenian;
+    @Column(columnDefinition = "TEXT")
+    private String hydrographyEnglish;
+    @Column(columnDefinition = "TEXT")
+    private String hydrographyFrench;
 
     @Column(columnDefinition = "TEXT")
-    private String description;
+    private String descriptionArmenian;
+    @Column(columnDefinition = "TEXT")
+    private String descriptionEnglish;
+    @Column(columnDefinition = "TEXT")
+    private String descriptionFrench;
+
+    public Topographic(
+        Monument monument,
+        String provinceArmenian,
+        String provinceEnglish,
+        String provinceFrench,
+        String addressArmenian,
+        String addressEnglish,
+        String addressFrench,
+        String topographyArmenian,
+        String topographyEnglish,
+        String topographyFrench,
+        String distanceFromResidenceArmenian,
+        String distanceFromResidenceEnglish,
+        String distanceFromResidenceFrench,
+        Integer altitude,
+        String hydrographyArmenian,
+        String hydrographyEnglish,
+        String hydrographyFrench,
+        String descriptionArmenian,
+        String descriptionEnglish,
+        String descriptionFrench)
+    {
+        this.monument = monument;
+        this.provinceArmenian = provinceArmenian;
+        this.provinceEnglish = provinceEnglish;
+        this.provinceFrench = provinceFrench;
+        this.addressArmenian = addressArmenian;
+        this.addressEnglish = addressEnglish;
+        this.addressFrench = addressFrench;
+        this.topographyArmenian = topographyArmenian;
+        this.topographyEnglish = topographyEnglish;
+        this.topographyFrench = topographyFrench;
+        this.distanceFromResidenceArmenian = distanceFromResidenceArmenian;
+        this.distanceFromResidenceEnglish = distanceFromResidenceEnglish;
+        this.distanceFromResidenceFrench = distanceFromResidenceFrench;
+        this.altitude = altitude;
+        this.hydrographyArmenian = hydrographyArmenian;
+        this.hydrographyEnglish = hydrographyEnglish;
+        this.hydrographyFrench = hydrographyFrench;
+        this.descriptionArmenian = descriptionArmenian;
+        this.descriptionEnglish = descriptionEnglish;
+        this.descriptionFrench = descriptionFrench;
+    }
 }

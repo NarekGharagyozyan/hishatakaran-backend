@@ -34,7 +34,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Monument {
+public class Monument extends BaseEntity{
 
     @Id
     @GeneratedValue
@@ -44,8 +44,9 @@ public class Monument {
     @Column(nullable = false)
     private Status status;
 
-    @Column(nullable = false)
-    private String name;
+    private String nameArmenian;
+    private String nameEnglish;
+    private String nameFrench;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "region", nullable = false)
@@ -55,33 +56,57 @@ public class Monument {
     @JoinColumn(name = "settlement", nullable = false)
     private Settlement settlement;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "monument_type", nullable = false)
-    private MonumentType monumentType;
+    private String monumentType;
 
-    private String specialName;
+    private String specialNameArmenian;
+    private String specialNameEnglish;
+    private String specialNameFrench;
 
     @ElementCollection
-    @CollectionTable(name = "monument_another_names", joinColumns = @JoinColumn(name = "monument_id"))
-    @Column(name = "another_name")
-    private List<String> anotherNames = new ArrayList<>();
+    @CollectionTable(name = "monument_another_names_armenian", joinColumns = @JoinColumn(name = "monument_id"))
+    @Column(name = "another_names_armenian")
+    private List<String> anotherNamesArmenian = new ArrayList<>();
+
+    @ElementCollection
+    @CollectionTable(name = "monument_another_names_english", joinColumns = @JoinColumn(name = "monument_id"))
+    @Column(name = "another_names_english")
+    private List<String> anotherNamesEnglish = new ArrayList<>();
+
+    @ElementCollection
+    @CollectionTable(name = "monument_another_names_french", joinColumns = @JoinColumn(name = "monument_id"))
+    @Column(name = "another_names_french")
+    private List<String> anotherNamesFrench = new ArrayList<>();
 
     @Column(columnDefinition = "TEXT")
-    private String history;
+    private String historyArmenian;
 
-    private String originalAffiliation;
-    private String storageUnitName;
+    @Column(columnDefinition = "TEXT")
+    private String historyEnglish;
 
-    @Column(name = "monument_condition")
-    private String condition;
+    @Column(columnDefinition = "TEXT")
+    private String historyFrench;
+
+    private String originalAffiliationArmenian;
+    private String originalAffiliationEnglish;
+    private String originalAffiliationFrench;
+
+    private String storageUnitNameArmenian;
+    private String storageUnitNameEnglish;
+    private String storageUnitNameFrench;
+
+    @Column(name = "monument_condition_armenian")
+    private String conditionArmenian;
+
+    @Column(name = "monument_condition_english")
+    private String conditionEnglish;
+
+    @Column(name = "monument_condition_french")
+    private String conditionFrench;
 
     @ElementCollection
     @CollectionTable(name = "monument_pictures", joinColumns = @JoinColumn(name = "monument_id"))
     @Column(name = "picture_url")
     private List<String> pictures = new ArrayList<>();
-
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "monument", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Bibliography> bibliography = new ArrayList<>();
@@ -94,4 +119,72 @@ public class Monument {
 
     @OneToMany(mappedBy = "monument", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DescriptiveCharacteristicReference> descriptiveCharacteristics = new ArrayList<>();
+
+    private String signature;
+
+    public Monument(
+        Status status,
+        String nameArmenian,
+        String nameEnglish,
+        String nameFrench,
+        Region region,
+        Settlement settlement,
+        String monumentType,
+        String specialNameArmenian,
+        String specialNameEnglish,
+        String specialNameFrench,
+        List<String> anotherNamesArmenian,
+        List<String> anotherNamesEnglish,
+        List<String> anotherNamesFrench,
+        String historyArmenian,
+        String historyEnglish,
+        String historyFrench,
+        String originalAffiliationArmenian,
+        String originalAffiliationEnglish,
+        String originalAffiliationFrench,
+        String storageUnitNameArmenian,
+        String storageUnitNameEnglish,
+        String storageUnitNameFrench,
+        String conditionArmenian,
+        String conditionEnglish,
+        String conditionFrench,
+        List<String> pictures,
+        List<Bibliography> bibliography,
+        List<Topographic> topographics,
+        List<HistoricalReference> historicalReferences,
+        List<DescriptiveCharacteristicReference> descriptiveCharacteristics,
+        String signature)
+    {
+        this.status = status;
+        this.nameArmenian = nameArmenian;
+        this.nameEnglish = nameEnglish;
+        this.nameFrench = nameFrench;
+        this.region = region;
+        this.settlement = settlement;
+        this.monumentType = monumentType;
+        this.specialNameArmenian = specialNameArmenian;
+        this.specialNameEnglish = specialNameEnglish;
+        this.specialNameFrench = specialNameFrench;
+        this.anotherNamesArmenian = anotherNamesArmenian;
+        this.anotherNamesEnglish = anotherNamesEnglish;
+        this.anotherNamesFrench = anotherNamesFrench;
+        this.historyArmenian = historyArmenian;
+        this.historyEnglish = historyEnglish;
+        this.historyFrench = historyFrench;
+        this.originalAffiliationArmenian = originalAffiliationArmenian;
+        this.originalAffiliationEnglish = originalAffiliationEnglish;
+        this.originalAffiliationFrench = originalAffiliationFrench;
+        this.storageUnitNameArmenian = storageUnitNameArmenian;
+        this.storageUnitNameEnglish = storageUnitNameEnglish;
+        this.storageUnitNameFrench = storageUnitNameFrench;
+        this.conditionArmenian = conditionArmenian;
+        this.conditionEnglish = conditionEnglish;
+        this.conditionFrench = conditionFrench;
+        this.pictures = pictures;
+        this.bibliography = bibliography;
+        this.topographics = topographics;
+        this.historicalReferences = historicalReferences;
+        this.descriptiveCharacteristics = descriptiveCharacteristics;
+        this.signature = signature;
+    }
 }

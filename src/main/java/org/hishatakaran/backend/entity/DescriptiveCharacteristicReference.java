@@ -2,12 +2,8 @@ package org.hishatakaran.backend.entity;
 
 import java.util.UUID;
 
-import org.hishatakaran.backend.model.Color;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -35,20 +31,74 @@ public class DescriptiveCharacteristicReference {
     @JoinColumn(name = "monument", nullable = false)
     private Monument monument;
 
-    private String theBuildingMaterial;
-    private String type;
+    private String theBuildingMaterialArmenian;
+    private String theBuildingMaterialEnglish;
+    private String theBuildingMaterialFrench;
+    private String typeArmenian;
+    private String typeEnglish;
+    private String typeFrench;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Color color;
-
-    @Column(columnDefinition = "TEXT")
-    private String implementationTechnique;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "stateOfMonument", nullable = false)
-    private StateOfMonument stateOfMonument;
+    private String colorArmenian;
+    private String colorEnglish;
+    private String colorFrench;
 
     @Column(columnDefinition = "TEXT")
-    private String valuation;
+    private String implementationTechniqueArmenian;
+    @Column(columnDefinition = "TEXT")
+    private String implementationTechniqueEnglish;
+    @Column(columnDefinition = "TEXT")
+    private String implementationTechniqueFrench;
+
+    private String stateOfMonumentArmenian;
+    private String stateOfMonumentEnglish;
+    private String stateOfMonumentFrench;
+
+    @Column(columnDefinition = "TEXT")
+    private String valuationArmenian;
+    @Column(columnDefinition = "TEXT")
+    private String valuationEnglish;
+    @Column(columnDefinition = "TEXT")
+    private String valuationFrench;
+
+    public DescriptiveCharacteristicReference(
+        Monument monument,
+        String theBuildingMaterialArmenian,
+        String theBuildingMaterialEnglish,
+        String theBuildingMaterialFrench,
+        String typeArmenian,
+        String typeEnglish,
+        String typeFrench,
+        String colorArmenian,
+        String colorEnglish,
+        String colorFrench,
+        String implementationTechniqueArmenian,
+        String implementationTechniqueEnglish,
+        String implementationTechniqueFrench,
+        String stateOfMonumentArmenian,
+        String stateOfMonumentEnglish,
+        String stateOfMonumentFrench,
+        String valuationArmenian,
+        String valuationEnglish,
+        String valuationFrench)
+    {
+        this.monument = monument;
+        this.theBuildingMaterialArmenian = theBuildingMaterialArmenian;
+        this.theBuildingMaterialEnglish = theBuildingMaterialEnglish;
+        this.theBuildingMaterialFrench = theBuildingMaterialFrench;
+        this.typeArmenian = typeArmenian;
+        this.typeEnglish = typeEnglish;
+        this.typeFrench = typeFrench;
+        this.colorArmenian = colorArmenian;
+        this.colorEnglish = colorEnglish;
+        this.colorFrench = colorFrench;
+        this.implementationTechniqueArmenian = implementationTechniqueArmenian;
+        this.implementationTechniqueEnglish = implementationTechniqueEnglish;
+        this.implementationTechniqueFrench = implementationTechniqueFrench;
+        this.stateOfMonumentArmenian = stateOfMonumentArmenian;
+        this.stateOfMonumentEnglish = stateOfMonumentEnglish;
+        this.stateOfMonumentFrench = stateOfMonumentFrench;
+        this.valuationArmenian = valuationArmenian;
+        this.valuationEnglish = valuationEnglish;
+        this.valuationFrench = valuationFrench;
+    }
 }

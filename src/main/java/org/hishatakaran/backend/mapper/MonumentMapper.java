@@ -13,9 +13,9 @@ public class MonumentMapper {
         MonumentResponseDto.MonumentResponseDtoBuilder monumentDtoBuilder = MonumentResponseDto.builder();
 
         monumentDtoBuilder.id(m.getId());
-        monumentDtoBuilder.name(m.getName());
+        monumentDtoBuilder.name(m.getNameArmenian());
         monumentDtoBuilder.status(m.getStatus().name());
-        monumentDtoBuilder.monumentType(m.getMonumentType().name());
+        monumentDtoBuilder.monumentType(m.getMonumentType());
 
         if (m.getRegion() != null) {
             monumentDtoBuilder.region(RegionMapper.toDto(m.getRegion()));
@@ -25,13 +25,13 @@ public class MonumentMapper {
             monumentDtoBuilder.settlement(SettlementMapper.toDto(m.getSettlement()));
         }
 
-        monumentDtoBuilder.specialName(m.getSpecialName());
-        monumentDtoBuilder.anotherNames(m.getAnotherNames());
+        monumentDtoBuilder.specialName(m.getSpecialNameArmenian());
+        monumentDtoBuilder.anotherNames(m.getAnotherNamesArmenian());
 
-        monumentDtoBuilder.history(m.getHistory());
-        monumentDtoBuilder.originalAffiliation(m.getOriginalAffiliation());
-        monumentDtoBuilder.storageUnitName(m.getStorageUnitName());
-        monumentDtoBuilder.condition(m.getCondition());
+        monumentDtoBuilder.history(m.getHistoryArmenian());
+        monumentDtoBuilder.originalAffiliation(m.getOriginalAffiliationArmenian());
+        monumentDtoBuilder.storageUnitName(m.getStorageUnitNameArmenian());
+        monumentDtoBuilder.condition(m.getConditionArmenian());
 
         monumentDtoBuilder.pictures(m.getPictures());
 

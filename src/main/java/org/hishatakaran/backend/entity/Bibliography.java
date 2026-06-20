@@ -39,4 +39,9 @@ public class Bibliography {
     @CollectionTable(name = "bibliography_urls", joinColumns = @JoinColumn(name = "bibliography_id"))
     @Column(name = "url")
     private List<String> urls = new ArrayList<>();
+
+    public Bibliography(Monument monument, List<String> urls) {
+        this.monument = monument;
+        this.urls = urls;
+    }
 }

@@ -8,12 +8,12 @@ public class DescriptiveCharacteristicMapper {
     public static DescriptiveCharacteristicResponseDto toDto(DescriptiveCharacteristicReference descriptive) {
         return new DescriptiveCharacteristicResponseDto(
             descriptive.getId(),
-            descriptive.getType(),
-            descriptive.getColor().name(),
-            descriptive.getTheBuildingMaterial(),
-            descriptive.getImplementationTechnique(),
-            descriptive.getStateOfMonument().getName(),
-            descriptive.getValuation()
+            descriptive.getTypeArmenian(),
+            descriptive.getColorArmenian(),
+            descriptive.getTheBuildingMaterialArmenian(),
+            descriptive.getImplementationTechniqueArmenian(),
+            descriptive.getStateOfMonumentArmenian(),
+            descriptive.getValuationArmenian()
         );
     }
 }

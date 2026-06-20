@@ -9,11 +9,11 @@ public class HistoricalReferenceMapper {
 
         return new HistoricalReferenceResponseDto(
             historicalReference.getId(),
-            historicalReference.getCulturalAffiliation(),
-            historicalReference.getCentury(),
-            historicalReference.getJustificationOfTheNumberingBasedOnLithography(),
-            historicalReference.getChronologicalTableOfTheStud(),
-            historicalReference.getAuthor()
+            historicalReference.getCulturalAffiliationArmenian(),
+            historicalReference.getCenturyArmenian(),
+            historicalReference.getJustificationOfTheNumberingBasedOnLithographyArmenian(),
+            historicalReference.getChronologicalTableOfTheStudArmenian(),
+            historicalReference.getAuthorArmenian()
         );
     }
 }
