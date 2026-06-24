@@ -10,12 +10,24 @@ public class TopographicMapper {
         return new TopographicResponseDto(
             topographic.getId(),
             topographic.getProvinceArmenian(),
+            topographic.getProvinceEnglish(),
+            topographic.getProvinceFrench(),
             topographic.getAddressArmenian(),
+            topographic.getAddressEnglish(),
+            topographic.getAddressFrench(),
             topographic.getTopographyArmenian(),
+            topographic.getTopographyEnglish(),
+            topographic.getTopographyFrench(),
             topographic.getDistanceFromResidenceArmenian(),
+            topographic.getDistanceFromResidenceEnglish(),
+            topographic.getDistanceFromResidenceFrench(),
             topographic.getAltitude(),
             topographic.getHydrographyArmenian(),
-            topographic.getDescriptionArmenian()
+            topographic.getHydrographyEnglish(),
+            topographic.getHydrographyFrench(),
+            topographic.getDescriptionArmenian(),
+            topographic.getDescriptionEnglish(),
+            topographic.getDescriptionFrench()
         );
     }
 }

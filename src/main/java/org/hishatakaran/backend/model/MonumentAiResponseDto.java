@@ -25,6 +25,10 @@ public class MonumentAiResponseDto {
   private List<String> anotherNamesEnglish;
   private List<String> anotherNamesFrench;
 
+  private String monumentTypeArmenian;
+  private String monumentTypeEnglish;
+  private String monumentTypeFrench;
+
   private String provinceArmenian;
   private String provinceEnglish;
   private String provinceFrench;
@@ -40,10 +44,6 @@ public class MonumentAiResponseDto {
   private String conditionArmenian;
   private String conditionEnglish;
   private String conditionFrench;
-
-  private String regionArmenian;
-  private String regionEnglish;
-  private String regionFrench;
 
   private String addressArmenian;
   private String addressEnglish;

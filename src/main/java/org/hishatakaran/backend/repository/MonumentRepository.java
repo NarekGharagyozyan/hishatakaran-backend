@@ -16,6 +16,6 @@ public interface MonumentRepository extends JpaRepository<Monument, UUID>, JpaSp
 
     List<Monument> findBySettlementId(Integer settlementId);
 
-    List<Monument> findByMonumentType(MonumentType monumentType);
+    List<Monument> findByMonumentTypeArmenianOrMonumentTypeEnglishOrMonumentTypeEnglish(MonumentType monumentTypeArmenian, MonumentType monumentTypeEnglish, MonumentType monumentTypeFrench);
 
 }

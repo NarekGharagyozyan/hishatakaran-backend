@@ -27,7 +27,11 @@ public class Region {
     private Integer id;
 
     @Column(nullable = false)
-    private String name;
+    private String nameArmenian;
+    @Column(nullable = false)
+    private String nameEnglish;
+    @Column(nullable = false)
+    private String nameFrench;
 
     @OneToMany(mappedBy = "region")
     @JsonManagedReference

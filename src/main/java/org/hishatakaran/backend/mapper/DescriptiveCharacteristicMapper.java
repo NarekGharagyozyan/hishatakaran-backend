@@ -9,11 +9,23 @@ public class DescriptiveCharacteristicMapper {
         return new DescriptiveCharacteristicResponseDto(
             descriptive.getId(),
             descriptive.getTypeArmenian(),
+            descriptive.getTypeEnglish(),
+            descriptive.getTypeFrench(),
             descriptive.getColorArmenian(),
+            descriptive.getColorEnglish(),
+            descriptive.getColorFrench(),
             descriptive.getTheBuildingMaterialArmenian(),
+            descriptive.getTheBuildingMaterialEnglish(),
+            descriptive.getTheBuildingMaterialFrench(),
             descriptive.getImplementationTechniqueArmenian(),
+            descriptive.getImplementationTechniqueEnglish(),
+            descriptive.getImplementationTechniqueFrench(),
             descriptive.getStateOfMonumentArmenian(),
-            descriptive.getValuationArmenian()
+            descriptive.getStateOfMonumentEnglish(),
+            descriptive.getStateOfMonumentFrench(),
+            descriptive.getValuationArmenian(),
+            descriptive.getValuationEnglish(),
+            descriptive.getValuationFrench()
         );
     }
 }

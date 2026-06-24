@@ -10,10 +10,20 @@ public class HistoricalReferenceMapper {
         return new HistoricalReferenceResponseDto(
             historicalReference.getId(),
             historicalReference.getCulturalAffiliationArmenian(),
+            historicalReference.getCulturalAffiliationEnglish(),
+            historicalReference.getCulturalAffiliationFrench(),
             historicalReference.getCenturyArmenian(),
+            historicalReference.getCenturyEnglish(),
+            historicalReference.getCenturyFrench(),
             historicalReference.getJustificationOfTheNumberingBasedOnLithographyArmenian(),
+            historicalReference.getJustificationOfTheNumberingBasedOnLithographyEnglish(),
+            historicalReference.getJustificationOfTheNumberingBasedOnLithographyFrench(),
             historicalReference.getChronologicalTableOfTheStudArmenian(),
-            historicalReference.getAuthorArmenian()
+            historicalReference.getChronologicalTableOfTheStudEnglish(),
+            historicalReference.getChronologicalTableOfTheStudFrench(),
+            historicalReference.getAuthorArmenian(),
+            historicalReference.getAuthorEnglish(),
+            historicalReference.getAuthorFrench()
         );
     }
 }

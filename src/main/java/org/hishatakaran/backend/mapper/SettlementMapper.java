@@ -10,11 +10,9 @@ public class SettlementMapper {
 
     return new SettlementResponseDto(
         settlement.getId(),
-        settlement.getName(),
-        settlement.getMonuments()
-            .stream()
-            .map(Monument::getId)
-            .toList()
+        settlement.getNameArmenian(),
+        settlement.getNameEnglish(),
+        settlement.getNameFrench()
     );
   }
 }

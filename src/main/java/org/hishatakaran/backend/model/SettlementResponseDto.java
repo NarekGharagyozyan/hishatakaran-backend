@@ -13,6 +13,7 @@ import lombok.Setter;
 public class SettlementResponseDto {
 
     private final Integer id;
-    private final String name;
-    private final List<UUID> monumentIds;
+    private final String nameArmenian;
+    private final String nameEnglish;
+    private final String nameFrench;
 }

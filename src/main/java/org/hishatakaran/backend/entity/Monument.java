@@ -56,7 +56,9 @@ public class Monument extends BaseEntity{
     @JoinColumn(name = "settlement", nullable = false)
     private Settlement settlement;
 
-    private String monumentType;
+    private String monumentTypeArmenian;
+    private String monumentTypeEnglish;
+    private String monumentTypeFrench;
 
     private String specialNameArmenian;
     private String specialNameEnglish;
@@ -129,7 +131,9 @@ public class Monument extends BaseEntity{
         String nameFrench,
         Region region,
         Settlement settlement,
-        String monumentType,
+        String monumentTypeArmenian,
+        String monumentTypeEnglish,
+        String monumentTypeFrench,
         String specialNameArmenian,
         String specialNameEnglish,
         String specialNameFrench,
@@ -161,7 +165,9 @@ public class Monument extends BaseEntity{
         this.nameFrench = nameFrench;
         this.region = region;
         this.settlement = settlement;
-        this.monumentType = monumentType;
+        this.monumentTypeArmenian = monumentTypeArmenian;
+        this.monumentTypeEnglish = monumentTypeEnglish;
+        this.monumentTypeFrench = monumentTypeFrench;
         this.specialNameArmenian = specialNameArmenian;
         this.specialNameEnglish = specialNameEnglish;
         this.specialNameFrench = specialNameFrench;

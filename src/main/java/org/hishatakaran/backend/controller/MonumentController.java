@@ -93,7 +93,7 @@ public class MonumentController {
 
     @GetMapping("/type/{type}")
     public List<MonumentResponseDto> getByType(@PathVariable MonumentType type) {
-        return monumentRepository.findByMonumentType(type)
+        return monumentRepository.findByMonumentTypeArmenianOrMonumentTypeEnglishOrMonumentTypeEnglish(type, type, type)
             .stream()
             .map(MonumentMapper::toDto)
             .toList();

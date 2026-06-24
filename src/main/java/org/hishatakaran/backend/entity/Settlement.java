@@ -30,7 +30,11 @@ public class Settlement {
     private Integer id;
 
     @Column(nullable = false)
-    private String name;
+    private String nameArmenian;
+    @Column(nullable = false)
+    private String nameEnglish;
+    @Column(nullable = false)
+    private String nameFrench;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "region", nullable = false)

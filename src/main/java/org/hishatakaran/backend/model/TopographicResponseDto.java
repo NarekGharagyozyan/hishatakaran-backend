@@ -12,11 +12,23 @@ import lombok.Setter;
 public class TopographicResponseDto {
 
     private final UUID id;
-    private final String province;
-    private final String address;
-    private final String topography;
-    private final String distanceFromResidence;
+    private final String provinceArmenian;
+    private final String provinceEnglish;
+    private final String provinceFrench;
+    private final String addressArmenian;
+    private final String addressEnglish;
+    private final String addressFrench;
+    private final String topographyArmenian;
+    private final String topographyEnglish;
+    private final String topographyFrench;
+    private final String distanceFromResidenceArmenian;
+    private final String distanceFromResidenceEnglish;
+    private final String distanceFromResidenceFrench;
     private final Integer altitude;
-    private final String hydrography;
-    private final String description;
+    private final String hydrographyArmenian;
+    private final String hydrographyEnglish;
+    private final String hydrographyFrench;
+    private final String descriptionArmenian;
+    private final String descriptionEnglish;
+    private final String descriptionFrench;
 }

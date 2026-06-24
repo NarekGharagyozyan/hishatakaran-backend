@@ -12,10 +12,22 @@ import lombok.Setter;
 public class DescriptiveCharacteristicResponseDto {
 
     private final UUID id;
-    private final String type;
-    private final String color;
-    private final String buildingMaterial;
-    private final String implementationTechnique;
-    private final String stateOfMonument;
-    private final String valuation;
+    private final String typeArmenian;
+    private final String typeEnglish;
+    private final String typeFrench;
+    private final String colorArmenian;
+    private final String colorEnglish;
+    private final String colorFrench;
+    private final String buildingMaterialArmenian;
+    private final String buildingMaterialEnglish;
+    private final String buildingMaterialFrench;
+    private final String implementationTechniqueArmenian;
+    private final String implementationTechniqueEnglish;
+    private final String implementationTechniqueFrench;
+    private final String stateOfMonumentArmenian;
+    private final String stateOfMonumentEnglish;
+    private final String stateOfMonumentFrench;
+    private final String valuationArmenian;
+    private final String valuationEnglish;
+    private final String valuationFrench;
 }
