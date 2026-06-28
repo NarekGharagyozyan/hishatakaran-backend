@@ -30,10 +30,10 @@ public class MonumentRequestDto {
 
   private List<String> pictures;
 
-  private List<String> bibliography;
-  private List<TopographicRequestDto> topographics;
-  private List<HistoricalReferenceRequestDto> historicalReferences;
-  private List<DescriptiveCharacteristicReferenceRequestDto> descriptiveCharacteristics;
+  private List<BibliographyRequestDto> bibliography;
+  private TopographicRequestDto topographics;
+  private HistoricalReferenceRequestDto historicalReferences;
+  private DescriptiveCharacteristicReferenceRequestDto descriptiveCharacteristics;
 
   private Boolean showInMainPage;
   private String signature;

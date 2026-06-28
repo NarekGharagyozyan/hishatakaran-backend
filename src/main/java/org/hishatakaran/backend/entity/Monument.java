@@ -1,11 +1,9 @@
 package org.hishatakaran.backend.entity;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import org.hishatakaran.backend.model.MonumentType;
 import org.hishatakaran.backend.model.Status;
 
 
@@ -18,10 +16,12 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -37,8 +37,8 @@ import lombok.Setter;
 public class Monument extends BaseEntity{
 
     @Id
-    @GeneratedValue
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -110,18 +110,17 @@ public class Monument extends BaseEntity{
     @Column(name = "picture_url")
     private List<String> pictures = new ArrayList<>();
 
-    @ElementCollection
-    @CollectionTable(name = "monument_bibliography", joinColumns = @JoinColumn(name = "monument_id"))
-    private List<String> bibliography;
-
     @OneToMany(mappedBy = "monument", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Topographic> topographics = new ArrayList<>();
+    private List<Bibliography> bibliography;
 
-    @OneToMany(mappedBy = "monument", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<HistoricalReference> historicalReferences = new ArrayList<>();
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    private Topographic topographics;
 
-    @OneToMany(mappedBy = "monument", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<DescriptiveCharacteristicReference> descriptiveCharacteristics = new ArrayList<>();
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    private HistoricalReference historicalReferences;
+
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    private DescriptiveCharacteristicReference descriptiveCharacteristics;
 
     private String signature;
 
@@ -154,10 +153,10 @@ public class Monument extends BaseEntity{
         String conditionEnglish,
         String conditionFrench,
         List<String> pictures,
-        List<String> bibliography,
-        List<Topographic> topographics,
-        List<HistoricalReference> historicalReferences,
-        List<DescriptiveCharacteristicReference> descriptiveCharacteristics,
+        List<Bibliography> bibliography,
+        Topographic topographics,
+        HistoricalReference historicalReferences,
+        DescriptiveCharacteristicReference descriptiveCharacteristics,
         String signature)
     {
         this.status = status;
@@ -193,5 +192,45 @@ public class Monument extends BaseEntity{
         this.historicalReferences = historicalReferences;
         this.descriptiveCharacteristics = descriptiveCharacteristics;
         this.signature = signature;
+    }
+
+    @Override
+    public String toString() {
+        return "Monument{" +
+            "id=" + id +
+            ", status=" + status +
+            ", nameArmenian='" + nameArmenian + '\'' +
+            ", nameEnglish='" + nameEnglish + '\'' +
+            ", nameFrench='" + nameFrench + '\'' +
+            ", region=" + region +
+            ", settlement=" + settlement +
+            ", monumentTypeArmenian='" + monumentTypeArmenian + '\'' +
+            ", monumentTypeEnglish='" + monumentTypeEnglish + '\'' +
+            ", monumentTypeFrench='" + monumentTypeFrench + '\'' +
+            ", specialNameArmenian='" + specialNameArmenian + '\'' +
+            ", specialNameEnglish='" + specialNameEnglish + '\'' +
+            ", specialNameFrench='" + specialNameFrench + '\'' +
+            ", anotherNamesArmenian=" + anotherNamesArmenian +
+            ", anotherNamesEnglish=" + anotherNamesEnglish +
+            ", anotherNamesFrench=" + anotherNamesFrench +
+            ", historyArmenian='" + historyArmenian + '\'' +
+            ", historyEnglish='" + historyEnglish + '\'' +
+            ", historyFrench='" + historyFrench + '\'' +
+            ", originalAffiliationArmenian='" + originalAffiliationArmenian + '\'' +
+            ", originalAffiliationEnglish='" + originalAffiliationEnglish + '\'' +
+            ", originalAffiliationFrench='" + originalAffiliationFrench + '\'' +
+            ", storageUnitNameArmenian='" + storageUnitNameArmenian + '\'' +
+            ", storageUnitNameEnglish='" + storageUnitNameEnglish + '\'' +
+            ", storageUnitNameFrench='" + storageUnitNameFrench + '\'' +
+            ", conditionArmenian='" + conditionArmenian + '\'' +
+            ", conditionEnglish='" + conditionEnglish + '\'' +
+            ", conditionFrench='" + conditionFrench + '\'' +
+            ", pictures=" + pictures +
+            ", bibliography=" + bibliography +
+            ", topographics=" + topographics +
+            ", historicalReferences=" + historicalReferences +
+            ", descriptiveCharacteristics=" + descriptiveCharacteristics +
+            ", signature='" + signature + '\'' +
+            '}';
     }
 }

@@ -12,6 +12,7 @@ import lombok.Setter;
 @RequiredArgsConstructor
 public class BibliographyResponseDto {
 
-    private final UUID id;
-    private final List<String> urls;
+    private final Long id;
+    private final String title;
+    private final String url;
 }

@@ -12,7 +12,7 @@ import lombok.Setter;
 @RequiredArgsConstructor
 public class SettlementResponseDto {
 
-    private final Integer id;
+    private final Long id;
     private final String nameArmenian;
     private final String nameEnglish;
     private final String nameFrench;

@@ -11,7 +11,7 @@ import lombok.Setter;
 @RequiredArgsConstructor
 public class DescriptiveCharacteristicResponseDto {
 
-    private final UUID id;
+    private final Long id;
     private final String typeArmenian;
     private final String typeEnglish;
     private final String typeFrench;

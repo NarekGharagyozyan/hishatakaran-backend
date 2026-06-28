@@ -26,6 +26,7 @@ public class GeminiService {
 
   @Value("${gemini.api.key}")
   private String apiKey;
+
   private Client client;
 
   @PostConstruct
@@ -264,11 +265,11 @@ NOW EXTRACT DATA FROM THIS HTML:
     return response.text();
   }
 
-  @Retryable(
-      retryFor = { Exception.class },
-      maxAttempts = 4,
-      backoff = @Backoff(delay = 10000, multiplier = 2.0)
-  )
+//  @Retryable(
+//      retryFor = { Exception.class },
+//      maxAttempts = 4,
+//      backoff = @Backoff(delay = 10000, multiplier = 2.0)
+//  )
   public String requestGeminiForMonuments(MonumentRequestDto monumentRequestDto) {
 
     System.out.println("method requestGeminiForMonuments called");

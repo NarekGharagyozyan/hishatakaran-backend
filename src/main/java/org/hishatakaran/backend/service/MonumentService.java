@@ -86,94 +86,92 @@ public class MonumentService {
                 monumentAiResponseDto.getConditionFrench(),
                 monumentRequestDto.getPictures(),
                 new ArrayList<>(),
-                new ArrayList<>(),
-                new ArrayList<>(),
-                new ArrayList<>(),
+                null,
+                null,
+                null,
                 monumentRequestDto.getSignature()
             );
-            monument.setBibliography(monumentRequestDto.getBibliography());
+            monument.setBibliography(
+                monumentRequestDto.getBibliography()
+                    .stream()
+                    .map(bibliographyRequestDto -> new Bibliography(
+                        monument,
+                        bibliographyRequestDto.getTitle(),
+                        bibliographyRequestDto.getUrl())
+                    )
+                    .toList()
+            );
 
-            MonumentAiResponseDto finalMonumentAiResponseDto = monumentAiResponseDto;
-            List<Topographic> topographics = monumentRequestDto.getTopographics()
-                .stream()
-                .map(topographicRequestDto -> new Topographic(
-                    monument,
-                    finalMonumentAiResponseDto.getProvinceArmenian(),
-                    finalMonumentAiResponseDto.getProvinceEnglish(),
-                    finalMonumentAiResponseDto.getProvinceFrench(),
-                    finalMonumentAiResponseDto.getAddressArmenian(),
-                    finalMonumentAiResponseDto.getAddressEnglish(),
-                    finalMonumentAiResponseDto.getAddressFrench(),
-                    finalMonumentAiResponseDto.getTopographyArmenian(),
-                    finalMonumentAiResponseDto.getTopographyEnglish(),
-                    finalMonumentAiResponseDto.getTopographyFrench(),
-                    finalMonumentAiResponseDto.getDistanceFromResidenceArmenian(),
-                    finalMonumentAiResponseDto.getDistanceFromResidenceEnglish(),
-                    finalMonumentAiResponseDto.getDistanceFromResidenceFrench(),
-                    topographicRequestDto.getLatitude(),
-                    topographicRequestDto.getLongitude(),
-                    topographicRequestDto.getAltitude(),
-                    finalMonumentAiResponseDto.getHydrographyArmenian(),
-                    finalMonumentAiResponseDto.getHydrographyEnglish(),
-                    finalMonumentAiResponseDto.getHydrographyFrench(),
-                    finalMonumentAiResponseDto.getDescriptionArmenian(),
-                    finalMonumentAiResponseDto.getDescriptionEnglish(),
-                    finalMonumentAiResponseDto.getDescriptionFrench()
-                ))
-                .toList();
-            monument.setTopographics(topographics);
+            Topographic topographic = new Topographic(
+                monument,
+                monumentAiResponseDto.getProvinceArmenian(),
+                monumentAiResponseDto.getProvinceEnglish(),
+                monumentAiResponseDto.getProvinceFrench(),
+                monumentAiResponseDto.getAddressArmenian(),
+                monumentAiResponseDto.getAddressEnglish(),
+                monumentAiResponseDto.getAddressFrench(),
+                monumentAiResponseDto.getTopographyArmenian(),
+                monumentAiResponseDto.getTopographyEnglish(),
+                monumentAiResponseDto.getTopographyFrench(),
+                monumentAiResponseDto.getDistanceFromResidenceArmenian(),
+                monumentAiResponseDto.getDistanceFromResidenceEnglish(),
+                monumentAiResponseDto.getDistanceFromResidenceFrench(),
+                monumentRequestDto.getTopographics().getLatitude(),
+                monumentRequestDto.getTopographics().getLongitude(),
+                monumentRequestDto.getTopographics().getAltitude(),
+                monumentAiResponseDto.getHydrographyArmenian(),
+                monumentAiResponseDto.getHydrographyEnglish(),
+                monumentAiResponseDto.getHydrographyFrench(),
+                monumentAiResponseDto.getDescriptionArmenian(),
+                monumentAiResponseDto.getDescriptionEnglish(),
+                monumentAiResponseDto.getDescriptionFrench()
+            );
+            monument.setTopographics(topographic);
 
-            MonumentAiResponseDto finalMonumentAiResponseDto1 = monumentAiResponseDto;
-            List<HistoricalReference> historicalReferences = monumentRequestDto.getHistoricalReferences()
-                .stream()
-                .map(historicalReferenceRequestDto -> new HistoricalReference(
-                    monument,
-                    finalMonumentAiResponseDto1.getCulturalAffiliationArmenian(),
-                    finalMonumentAiResponseDto1.getOriginalAffiliationEnglish(),
-                    finalMonumentAiResponseDto1.getOriginalAffiliationFrench(),
-                    finalMonumentAiResponseDto1.getCenturyArmenian(),
-                    finalMonumentAiResponseDto.getCenturyEnglish(),
-                    finalMonumentAiResponseDto.getCenturyFrench(),
-                    finalMonumentAiResponseDto1.getJustificationOfTheNumberingBasedOnLithographyArmenian(),
-                    finalMonumentAiResponseDto1.getJustificationOfTheNumberingBasedOnLithographyEnglish(),
-                    finalMonumentAiResponseDto1.getJustificationOfTheNumberingBasedOnLithographyFrench(),
-                    finalMonumentAiResponseDto1.getChronologicalTableOfTheStudArmenian(),
-                    finalMonumentAiResponseDto1.getChronologicalTableOfTheStudEnglish(),
-                    finalMonumentAiResponseDto1.getChronologicalTableOfTheStudFrench(),
-                    finalMonumentAiResponseDto.getAuthorArmenian(),
-                    finalMonumentAiResponseDto.getAuthorEnglish(),
-                    finalMonumentAiResponseDto.getAuthorFrench()
-                ))
-                .toList();
-            monument.setHistoricalReferences(historicalReferences);
+            HistoricalReference historicalReference = new HistoricalReference(
+                monument,
+                monumentAiResponseDto.getCulturalAffiliationArmenian(),
+                monumentAiResponseDto.getOriginalAffiliationEnglish(),
+                monumentAiResponseDto.getOriginalAffiliationFrench(),
+                monumentAiResponseDto.getCenturyArmenian(),
+                monumentAiResponseDto.getCenturyEnglish(),
+                monumentAiResponseDto.getCenturyFrench(),
+                monumentAiResponseDto.getJustificationOfTheNumberingBasedOnLithographyArmenian(),
+                monumentAiResponseDto.getJustificationOfTheNumberingBasedOnLithographyEnglish(),
+                monumentAiResponseDto.getJustificationOfTheNumberingBasedOnLithographyFrench(),
+                monumentAiResponseDto.getChronologicalTableOfTheStudArmenian(),
+                monumentAiResponseDto.getChronologicalTableOfTheStudEnglish(),
+                monumentAiResponseDto.getChronologicalTableOfTheStudFrench(),
+                monumentAiResponseDto.getAuthorArmenian(),
+                monumentAiResponseDto.getAuthorEnglish(),
+                monumentAiResponseDto.getAuthorFrench()
+            );
+            monument.setHistoricalReferences(historicalReference);
 
-            MonumentAiResponseDto finalMonumentAiResponseDto2 = monumentAiResponseDto;
-            List<DescriptiveCharacteristicReference> descriptiveCharacteristicReferences = monumentRequestDto.getDescriptiveCharacteristics()
-                .stream()
-                .map(descriptiveCharacteristicReferenceRequestDto -> new DescriptiveCharacteristicReference(
-                    monument,
-                    finalMonumentAiResponseDto2.getTheBuildingMaterialArmenian(),
-                    finalMonumentAiResponseDto2.getTheBuildingMaterialEnglish(),
-                    finalMonumentAiResponseDto2.getTheBuildingMaterialFrench(),
-                    finalMonumentAiResponseDto2.getTypeArmenian(),
-                    finalMonumentAiResponseDto2.getTypeEnglish(),
-                    finalMonumentAiResponseDto2.getTypeFrench(),
-                    finalMonumentAiResponseDto2.getColorArmenian(),
-                    finalMonumentAiResponseDto2.getColorEnglish(),
-                    finalMonumentAiResponseDto2.getColorFrench(),
-                    finalMonumentAiResponseDto2.getImplementationTechniqueArmenian(),
-                    finalMonumentAiResponseDto2.getImplementationTechniqueEnglish(),
-                    finalMonumentAiResponseDto2.getImplementationTechniqueFrench(),
-                    finalMonumentAiResponseDto2.getStateOfMonumentArmenian(),
-                    finalMonumentAiResponseDto2.getStateOfMonumentEnglish(),
-                    finalMonumentAiResponseDto2.getStateOfMonumentFrench(),
-                    finalMonumentAiResponseDto2.getValuationArmenian(),
-                    finalMonumentAiResponseDto2.getValuationEnglish(),
-                    finalMonumentAiResponseDto2.getValuationFrench()
-                ))
-                .toList();
-            monument.setDescriptiveCharacteristics(descriptiveCharacteristicReferences);
+            DescriptiveCharacteristicReference descriptiveCharacteristicReference = new DescriptiveCharacteristicReference(
+                monument,
+                monumentAiResponseDto.getTheBuildingMaterialArmenian(),
+                monumentAiResponseDto.getTheBuildingMaterialEnglish(),
+                monumentAiResponseDto.getTheBuildingMaterialFrench(),
+                monumentAiResponseDto.getTypeArmenian(),
+                monumentAiResponseDto.getTypeEnglish(),
+                monumentAiResponseDto.getTypeFrench(),
+                monumentAiResponseDto.getColorArmenian(),
+                monumentAiResponseDto.getColorEnglish(),
+                monumentAiResponseDto.getColorFrench(),
+                monumentAiResponseDto.getImplementationTechniqueArmenian(),
+                monumentAiResponseDto.getImplementationTechniqueEnglish(),
+                monumentAiResponseDto.getImplementationTechniqueFrench(),
+                monumentAiResponseDto.getStateOfMonumentArmenian(),
+                monumentAiResponseDto.getStateOfMonumentEnglish(),
+                monumentAiResponseDto.getStateOfMonumentFrench(),
+                monumentAiResponseDto.getValuationArmenian(),
+                monumentAiResponseDto.getValuationEnglish(),
+                monumentAiResponseDto.getValuationFrench()
+            );
+            monument.setDescriptiveCharacteristics(descriptiveCharacteristicReference);
             Monument savedMonument = monumentRepository.save(monument);
+            System.out.println("saved monument:  === " + savedMonument);
             return MonumentMapper.toDto(savedMonument);
         } else {
           throw new RuntimeException("MonumentAiResponseDto is null");

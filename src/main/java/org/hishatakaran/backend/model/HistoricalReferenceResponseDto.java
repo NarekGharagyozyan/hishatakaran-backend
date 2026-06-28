@@ -11,7 +11,7 @@ import lombok.Setter;
 @RequiredArgsConstructor
 public class HistoricalReferenceResponseDto {
 
-    private final UUID id;
+    private final Long id;
     private final String culturalAffiliationArmenian;
     private final String culturalAffiliationEnglish;
     private final String culturalAffiliationFrench;

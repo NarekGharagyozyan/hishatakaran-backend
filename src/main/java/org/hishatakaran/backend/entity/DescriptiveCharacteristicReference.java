@@ -6,6 +6,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -24,8 +25,8 @@ import lombok.Setter;
 public class DescriptiveCharacteristicReference {
 
     @Id
-    @GeneratedValue
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "monument", nullable = false)
@@ -100,5 +101,31 @@ public class DescriptiveCharacteristicReference {
         this.valuationArmenian = valuationArmenian;
         this.valuationEnglish = valuationEnglish;
         this.valuationFrench = valuationFrench;
+    }
+
+    @Override
+    public String toString() {
+        return "DescriptiveCharacteristicReference{" +
+            "id=" + id +
+            ", monument=" + monument +
+            ", theBuildingMaterialArmenian='" + theBuildingMaterialArmenian + '\'' +
+            ", theBuildingMaterialEnglish='" + theBuildingMaterialEnglish + '\'' +
+            ", theBuildingMaterialFrench='" + theBuildingMaterialFrench + '\'' +
+            ", typeArmenian='" + typeArmenian + '\'' +
+            ", typeEnglish='" + typeEnglish + '\'' +
+            ", typeFrench='" + typeFrench + '\'' +
+            ", colorArmenian='" + colorArmenian + '\'' +
+            ", colorEnglish='" + colorEnglish + '\'' +
+            ", colorFrench='" + colorFrench + '\'' +
+            ", implementationTechniqueArmenian='" + implementationTechniqueArmenian + '\'' +
+            ", implementationTechniqueEnglish='" + implementationTechniqueEnglish + '\'' +
+            ", implementationTechniqueFrench='" + implementationTechniqueFrench + '\'' +
+            ", stateOfMonumentArmenian='" + stateOfMonumentArmenian + '\'' +
+            ", stateOfMonumentEnglish='" + stateOfMonumentEnglish + '\'' +
+            ", stateOfMonumentFrench='" + stateOfMonumentFrench + '\'' +
+            ", valuationArmenian='" + valuationArmenian + '\'' +
+            ", valuationEnglish='" + valuationEnglish + '\'' +
+            ", valuationFrench='" + valuationFrench + '\'' +
+            '}';
     }
 }

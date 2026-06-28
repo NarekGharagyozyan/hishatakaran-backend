@@ -12,7 +12,7 @@ import lombok.Setter;
 @RequiredArgsConstructor
 public class NewsResponseDto {
 
-    private final UUID id;
+    private final Long id;
     private final String titleArmenian;
     private final String titleEnglish;
     private final String titleFrench;

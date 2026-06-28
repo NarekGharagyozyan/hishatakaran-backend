@@ -11,7 +11,7 @@ import lombok.Setter;
 @RequiredArgsConstructor
 public class TopographicResponseDto {
 
-    private final UUID id;
+    private final Long id;
     private final String provinceArmenian;
     private final String provinceEnglish;
     private final String provinceFrench;

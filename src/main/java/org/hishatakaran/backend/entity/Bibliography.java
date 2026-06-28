@@ -1,15 +1,11 @@
 package org.hishatakaran.backend.entity;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
-import jakarta.persistence.CollectionTable;
-import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -28,19 +24,29 @@ import lombok.Setter;
 public class Bibliography {
 
     @Id
-    @GeneratedValue
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "monument", nullable = false)
     private Monument monument;
 
-    @ElementCollection
-    @CollectionTable(name = "bibliography_urls", joinColumns = @JoinColumn(name = "bibliography_id"))
-    @Column(name = "url")
-    private List<String> urls = new ArrayList<>();
+    private String title;
+    private String url;
 
-    public Bibliography(Monument monument, List<String> urls) {
+    public Bibliography(Monument monument, String title, String url) {
         this.monument = monument;
-        this.urls = urls;
+        this.title = title;
+        this.url = url;
+    }
+
+    @Override
+    public String toString() {
+        return "Bibliography{" +
+            "id=" + id +
+            ", monument=" + monument +
+            ", title='" + title + '\'' +
+            ", url='" + url + '\'' +
+            '}';
     }
 }

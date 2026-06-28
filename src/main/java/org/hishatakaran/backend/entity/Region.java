@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -24,7 +26,8 @@ import lombok.Setter;
 public class Region {
 
     @Id
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(nullable = false)
     private String nameArmenian;
@@ -39,4 +42,15 @@ public class Region {
 
     @OneToMany(mappedBy = "region")
     private List<Monument> monuments = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "Region{" +
+            "id=" + id +
+            ", nameArmenian='" + nameArmenian + '\'' +
+            ", nameEnglish='" + nameEnglish + '\'' +
+            ", nameFrench='" + nameFrench + '\'' +
+            ", monuments=" + monuments +
+            '}';
+    }
 }

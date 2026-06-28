@@ -3,6 +3,7 @@ package org.hishatakaran.backend.mapper;
 import java.util.stream.Collectors;
 
 import org.hishatakaran.backend.entity.Monument;
+import org.hishatakaran.backend.model.BibliographyResponseDto;
 import org.hishatakaran.backend.model.MonumentResponseDto;
 import org.hishatakaran.backend.model.RegionResponseDto;
 import org.hishatakaran.backend.model.SettlementResponseDto;
@@ -56,28 +57,18 @@ public class MonumentMapper {
         monumentDtoBuilder.createdAt(m.getCreatedAt());
         monumentDtoBuilder.updatedAt(m.getUpdatedAt());
 
-        monumentDtoBuilder.bibliography(m.getBibliography());
-
-        monumentDtoBuilder.topographics(
-            m.getTopographics()
+        monumentDtoBuilder.bibliography(
+            m.getBibliography()
                 .stream()
-                .map(TopographicMapper::toDto)
-                .collect(Collectors.toList())
+                .map(bibliography -> new BibliographyResponseDto(bibliography.getId(), bibliography.getTitle(),
+                    bibliography.getUrl()))
+                .toList()
         );
 
-        monumentDtoBuilder.historicalReferences(
-            m.getHistoricalReferences()
-                .stream()
-                .map(HistoricalReferenceMapper::toDto)
-                .collect(Collectors.toList())
-        );
+        monumentDtoBuilder.topographics(TopographicMapper.toDto(m.getTopographics()));
+        monumentDtoBuilder.historicalReferences(HistoricalReferenceMapper.toDto(m.getHistoricalReferences()));
+        monumentDtoBuilder.descriptiveCharacteristics(DescriptiveCharacteristicMapper.toDto(m.getDescriptiveCharacteristics()));
 
-        monumentDtoBuilder.descriptiveCharacteristics(
-            m.getDescriptiveCharacteristics()
-                .stream()
-                .map(DescriptiveCharacteristicMapper::toDto)
-                .collect(Collectors.toList())
-        );
 
         return monumentDtoBuilder.build();
     }

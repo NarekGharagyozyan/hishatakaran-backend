@@ -16,7 +16,7 @@ import lombok.Setter;
 @Builder
 public class MonumentResponseDto {
 
-    private final UUID id;
+    private final Long id;
     private final String nameArmenian;
     private final String nameEnglish;
     private final String nameFrench;
@@ -53,10 +53,10 @@ public class MonumentResponseDto {
     private final ZonedDateTime createdAt;
     private final ZonedDateTime updatedAt;
 
-    private final List<String> bibliography;
-    private final List<TopographicResponseDto> topographics;
-    private final List<HistoricalReferenceResponseDto> historicalReferences;
-    private final List<DescriptiveCharacteristicResponseDto> descriptiveCharacteristics;
+    private final List<BibliographyResponseDto> bibliography;
+    private final TopographicResponseDto topographics;
+    private final HistoricalReferenceResponseDto historicalReferences;
+    private final DescriptiveCharacteristicResponseDto descriptiveCharacteristics;
 
     private final boolean showInMainPage;
 }

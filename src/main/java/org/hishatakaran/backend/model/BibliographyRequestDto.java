@@ -10,5 +10,6 @@ import lombok.Setter;
 @Setter
 @Getter
 public class BibliographyRequestDto {
-  private final List<String> urls;
+  private final String title;
+  private final String url;
 }

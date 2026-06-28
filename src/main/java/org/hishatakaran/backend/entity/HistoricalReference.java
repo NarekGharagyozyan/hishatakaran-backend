@@ -7,6 +7,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -25,8 +26,8 @@ import lombok.Setter;
 public class HistoricalReference {
 
     @Id
-    @GeneratedValue
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "monument", nullable = false)
@@ -91,5 +92,28 @@ public class HistoricalReference {
         this.authorArmenian = authorArmenian;
         this.authorEnglish = authorEnglish;
         this.authorFrench = authorFrench;
+    }
+
+    @Override
+    public String toString() {
+        return "HistoricalReference{" +
+            "id=" + id +
+            ", monument=" + monument +
+            ", culturalAffiliationArmenian='" + culturalAffiliationArmenian + '\'' +
+            ", culturalAffiliationEnglish='" + culturalAffiliationEnglish + '\'' +
+            ", culturalAffiliationFrench='" + culturalAffiliationFrench + '\'' +
+            ", centuryArmenian='" + centuryArmenian + '\'' +
+            ", centuryEnglish='" + centuryEnglish + '\'' +
+            ", centuryFrench='" + centuryFrench + '\'' +
+            ", justificationOfTheNumberingBasedOnLithographyArmenian='" + justificationOfTheNumberingBasedOnLithographyArmenian + '\'' +
+            ", justificationOfTheNumberingBasedOnLithographyEnglish='" + justificationOfTheNumberingBasedOnLithographyEnglish + '\'' +
+            ", justificationOfTheNumberingBasedOnLithographyFrench='" + justificationOfTheNumberingBasedOnLithographyFrench + '\'' +
+            ", chronologicalTableOfTheStudArmenian='" + chronologicalTableOfTheStudArmenian + '\'' +
+            ", chronologicalTableOfTheStudEnglish='" + chronologicalTableOfTheStudEnglish + '\'' +
+            ", chronologicalTableOfTheStudFrench='" + chronologicalTableOfTheStudFrench + '\'' +
+            ", authorArmenian='" + authorArmenian + '\'' +
+            ", authorEnglish='" + authorEnglish + '\'' +
+            ", authorFrench='" + authorFrench + '\'' +
+            '}';
     }
 }
