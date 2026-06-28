@@ -21,6 +21,8 @@ public class TopographicMapper {
             topographic.getDistanceFromResidenceArmenian(),
             topographic.getDistanceFromResidenceEnglish(),
             topographic.getDistanceFromResidenceFrench(),
+            topographic.getLatitude(),
+            topographic.getLongitude(),
             topographic.getAltitude(),
             topographic.getHydrographyArmenian(),
             topographic.getHydrographyEnglish(),

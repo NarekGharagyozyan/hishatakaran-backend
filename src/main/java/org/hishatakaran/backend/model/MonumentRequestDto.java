@@ -2,38 +2,41 @@ package org.hishatakaran.backend.model;
 
 import java.util.List;
 
-import org.springframework.web.multipart.MultipartFile;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class MonumentRequestDto {
 
-  private final String name;
-  private final Integer regionId;
-  private final Integer settlementId;
-  private final String monumentType;
-  private final String specialName;
-  private final List<String> anotherNames;
-  private final String history;
+  private String name;
+  private Integer regionId;
+  private Integer settlementId;
+  private String monumentType;
+  private String specialName;
+  private List<String> anotherNames;
+  private String history;
 
-  private final String originalAffiliation;
-  private final String storageUnitName;
-  private final String condition;
+  private String originalAffiliation;
+  private String storageUnitName;
+  private String condition;
 
-  private final List<MultipartFile> pictures;
+  private List<String> pictures;
 
-  private final List<BibliographyRequestDto> bibliography;
-  private final List<TopographicRequestDto> topographics;
-  private final List<HistoricalReferenceRequestDto> historicalReferences;
-  private final List<DescriptiveCharacteristicReferenceRequestDto> descriptiveCharacteristics;
+  private List<String> bibliography;
+  private List<TopographicRequestDto> topographics;
+  private List<HistoricalReferenceRequestDto> historicalReferences;
+  private List<DescriptiveCharacteristicReferenceRequestDto> descriptiveCharacteristics;
 
-  private final Boolean showInMainPage;
-  private final String signature;
+  private Boolean showInMainPage;
+  private String signature;
 
   @Override
   public String toString() {

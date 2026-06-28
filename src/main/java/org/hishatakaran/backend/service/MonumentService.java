@@ -84,18 +84,14 @@ public class MonumentService {
                 monumentAiResponseDto.getConditionArmenian(),
                 monumentAiResponseDto.getConditionEnglish(),
                 monumentAiResponseDto.getConditionFrench(),
-                generateImagePaths(monumentRequestDto.getPictures()),
+                monumentRequestDto.getPictures(),
                 new ArrayList<>(),
                 new ArrayList<>(),
                 new ArrayList<>(),
                 new ArrayList<>(),
                 monumentRequestDto.getSignature()
             );
-            List<Bibliography> bibliographies = monumentRequestDto.getBibliography()
-                .stream()
-                .map(dto -> new Bibliography(monument, dto.getUrls()))
-                .toList();
-            monument.setBibliography(bibliographies);
+            monument.setBibliography(monumentRequestDto.getBibliography());
 
             MonumentAiResponseDto finalMonumentAiResponseDto = monumentAiResponseDto;
             List<Topographic> topographics = monumentRequestDto.getTopographics()
@@ -114,6 +110,8 @@ public class MonumentService {
                     finalMonumentAiResponseDto.getDistanceFromResidenceArmenian(),
                     finalMonumentAiResponseDto.getDistanceFromResidenceEnglish(),
                     finalMonumentAiResponseDto.getDistanceFromResidenceFrench(),
+                    topographicRequestDto.getLatitude(),
+                    topographicRequestDto.getLongitude(),
                     topographicRequestDto.getAltitude(),
                     finalMonumentAiResponseDto.getHydrographyArmenian(),
                     finalMonumentAiResponseDto.getHydrographyEnglish(),
@@ -175,8 +173,8 @@ public class MonumentService {
                 ))
                 .toList();
             monument.setDescriptiveCharacteristics(descriptiveCharacteristicReferences);
-            monumentRepository.save(monument);
-            return MonumentMapper.toDto(monument);
+            Monument savedMonument = monumentRepository.save(monument);
+            return MonumentMapper.toDto(savedMonument);
         } else {
           throw new RuntimeException("MonumentAiResponseDto is null");
         }
@@ -236,10 +234,10 @@ public class MonumentService {
                 .toList();
     }
 
-    List<String> generateImagePaths(List<MultipartFile> files) {
+    public List<String> generateImagePaths(List<MultipartFile> files) {
         if (files != null) {
             return files.stream()
-                .map(fileStorageService::saveNewsImage)
+                .map(file -> fileStorageService.saveImage(file, "monuments"))
                 .toList();
         }
         return null;

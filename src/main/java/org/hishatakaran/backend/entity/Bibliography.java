@@ -32,7 +32,6 @@ public class Bibliography {
     private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "monument", nullable = false)
     private Monument monument;
 
     @ElementCollection

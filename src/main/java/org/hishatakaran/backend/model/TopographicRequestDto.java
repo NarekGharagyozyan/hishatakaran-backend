@@ -13,6 +13,8 @@ public class TopographicRequestDto {
   private String address;
   private String topography;
   private String distanceFromResidence;
+  private String latitude;
+  private String longitude;
   private Integer altitude;
   private String hydrography;
   private String description;

@@ -24,6 +24,8 @@ public class TopographicResponseDto {
     private final String distanceFromResidenceArmenian;
     private final String distanceFromResidenceEnglish;
     private final String distanceFromResidenceFrench;
+    private final String latitude;
+    private final String longitude;
     private final Integer altitude;
     private final String hydrographyArmenian;
     private final String hydrographyEnglish;

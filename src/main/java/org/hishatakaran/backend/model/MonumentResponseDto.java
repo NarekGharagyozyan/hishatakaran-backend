@@ -53,7 +53,7 @@ public class MonumentResponseDto {
     private final ZonedDateTime createdAt;
     private final ZonedDateTime updatedAt;
 
-    private final List<BibliographyResponseDto> bibliography;
+    private final List<String> bibliography;
     private final List<TopographicResponseDto> topographics;
     private final List<HistoricalReferenceResponseDto> historicalReferences;
     private final List<DescriptiveCharacteristicResponseDto> descriptiveCharacteristics;

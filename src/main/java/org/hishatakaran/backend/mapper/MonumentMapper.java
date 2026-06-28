@@ -56,12 +56,7 @@ public class MonumentMapper {
         monumentDtoBuilder.createdAt(m.getCreatedAt());
         monumentDtoBuilder.updatedAt(m.getUpdatedAt());
 
-        monumentDtoBuilder.bibliography(
-            m.getBibliography()
-                .stream()
-                .map(BibliographyMapper::toDto)
-                .collect(Collectors.toList())
-        );
+        monumentDtoBuilder.bibliography(m.getBibliography());
 
         monumentDtoBuilder.topographics(
             m.getTopographics()

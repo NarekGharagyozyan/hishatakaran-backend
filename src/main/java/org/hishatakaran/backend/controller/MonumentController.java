@@ -1,6 +1,8 @@
 package org.hishatakaran.backend.controller;
 
 import lombok.RequiredArgsConstructor;
+
+import org.hishatakaran.backend.Scraper;
 import org.hishatakaran.backend.mapper.MonumentMapper;
 import org.hishatakaran.backend.model.MonumentFilterRequest;
 import org.hishatakaran.backend.model.MonumentRequestDto;
@@ -14,6 +16,7 @@ import org.hishatakaran.backend.service.MonumentService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.awt.print.Pageable;
 import java.util.List;
@@ -28,8 +31,17 @@ public class MonumentController {
     private final MonumentService monumentService;
 
     @PostMapping
-    public MonumentResponseDto postNews(@RequestBody MonumentRequestDto monumentRequestDto) {
+    public MonumentResponseDto postMonument(
+        @RequestBody MonumentRequestDto monumentRequestDto
+    ) {
         return monumentService.postMonument(monumentRequestDto);
+    }
+
+    @PostMapping("/uploadImages")
+    public List<String> uploadImages(
+        @RequestPart(value = "pictures") List<MultipartFile> pictures
+    ) {
+        return monumentService.generateImagePaths(pictures);
     }
 
     /*@GetMapping

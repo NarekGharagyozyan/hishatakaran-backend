@@ -60,7 +60,7 @@ public class NewsService {
   List<String> generateImagePaths(List<MultipartFile> files) {
     if (files != null) {
       return files.stream()
-          .map(fileStorageService::saveNewsImage)
+          .map(file -> fileStorageService.saveImage(file, "news"))
           .toList();
     }
     return null;

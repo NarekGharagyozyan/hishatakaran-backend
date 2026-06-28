@@ -15,7 +15,7 @@ public class FileStorageService {
 
     private final Path rootLocation = Paths.get("images");
 
-    public String saveNewsImage(MultipartFile file) {
+    public String saveImage(MultipartFile file, String folder) {
 
         String extension = getExtension(
                 Objects.requireNonNull(file.getOriginalFilename())
@@ -26,7 +26,7 @@ public class FileStorageService {
 
         Path target =
                 rootLocation
-                        .resolve("news")
+                        .resolve(folder)
                         .resolve(fileName);
 
         try {
@@ -35,7 +35,7 @@ public class FileStorageService {
 
             file.transferTo(target);
 
-            return "/images/news/" + fileName;
+            return "/images/" + folder + "/" + fileName;
 
         } catch (IOException e) {
             throw new RuntimeException(e);

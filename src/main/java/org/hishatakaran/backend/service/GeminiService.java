@@ -72,6 +72,201 @@ public class GeminiService {
   @Retryable(
       retryFor = { Exception.class },
       maxAttempts = 4,
+      backoff = @Backoff(delay = 100000, multiplier = 2.0)
+  )
+  public String requestGeminiFromHtml(String html) {
+
+    System.out.println("method requestGeminiFromHtml called");
+
+    Map<String, Schema> allProperties = new HashMap<>();
+
+    allProperties.put("name", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("regionId", Schema.builder().type(Type.Known.NUMBER).build());
+    allProperties.put("settlementId", Schema.builder().type(Type.Known.NUMBER).build());
+
+    allProperties.put("monumentType", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("specialName", Schema.builder().type(Type.Known.STRING).build());
+
+    allProperties.put("anotherNames", Schema.builder()
+        .type(Type.Known.ARRAY)
+        .items(Schema.builder().type(Type.Known.STRING).build())
+        .build());
+
+    allProperties.put("history", Schema.builder().type(Type.Known.STRING).build());
+
+    allProperties.put("originalAffiliation", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("storageUnitName", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("condition", Schema.builder().type(Type.Known.STRING).build());
+
+    allProperties.put("bibliography", Schema.builder()
+        .type(Type.Known.ARRAY)
+        .items(Schema.builder()
+            .type(Type.Known.OBJECT)
+            .properties(Map.of(
+                "urls", Schema.builder()
+                    .type(Type.Known.ARRAY)
+                    .items(Schema.builder().type(Type.Known.STRING).build())
+                    .build()
+            ))
+            .build())
+        .build());
+
+    allProperties.put("topographics", Schema.builder()
+        .type(Type.Known.ARRAY)
+        .items(Schema.builder()
+            .type(Type.Known.OBJECT)
+            .properties(Map.of(
+                "region", Schema.builder().type(Type.Known.STRING).build(),
+                "address", Schema.builder().type(Type.Known.STRING).build(),
+                "topography", Schema.builder().type(Type.Known.STRING).build(),
+                "distanceFromResidence", Schema.builder().type(Type.Known.STRING).build(),
+                "altitude", Schema.builder().type(Type.Known.NUMBER).build(),
+                "hydrography", Schema.builder().type(Type.Known.STRING).build(),
+                "description", Schema.builder().type(Type.Known.STRING).build()
+            ))
+            .build())
+        .build());
+
+    allProperties.put("historicalReferences", Schema.builder()
+        .type(Type.Known.ARRAY)
+        .items(Schema.builder()
+            .type(Type.Known.OBJECT)
+            .properties(Map.of(
+                "culturalAffiliation", Schema.builder().type(Type.Known.STRING).build(),
+                "century", Schema.builder().type(Type.Known.STRING).build(),
+                "justificationOfTheNumberingBasedOnLithography", Schema.builder().type(Type.Known.STRING).build(),
+                "chronologicalTableOfTheStud", Schema.builder().type(Type.Known.STRING).build(),
+                "author", Schema.builder().type(Type.Known.STRING).build()
+            ))
+            .build())
+        .build());
+
+    allProperties.put("descriptiveCharacteristics", Schema.builder()
+        .type(Type.Known.ARRAY)
+        .items(Schema.builder()
+            .type(Type.Known.OBJECT)
+            .properties(Map.of(
+                "theBuildingMaterial", Schema.builder().type(Type.Known.STRING).build(),
+                "type", Schema.builder().type(Type.Known.STRING).build(),
+                "color", Schema.builder().type(Type.Known.STRING).build(),
+                "implementationTechnique", Schema.builder().type(Type.Known.STRING).build(),
+                "stateOfMonument", Schema.builder().type(Type.Known.STRING).build(),
+                "valuation", Schema.builder().type(Type.Known.STRING).build()
+            ))
+            .build())
+        .build());
+
+    allProperties.put("showInMainPage", Schema.builder().type(Type.Known.BOOLEAN).build());
+
+    // 2. schema object
+    Schema schema = Schema.builder()
+        .type(Type.Known.OBJECT)
+        .properties(allProperties)
+        .build();
+
+    GenerateContentConfig config = GenerateContentConfig.builder()
+        .responseMimeType("application/json")
+        .responseSchema(schema)
+        .build();
+
+    // 3. PROMPT (самое важное)
+    String prompt = """
+You are an expert archaeological data extraction system.
+
+Your task:
+Extract structured data from HTML of a historical monument page and return ONLY valid JSON.
+
+CRITICAL RULES:
+1. Return ONLY JSON (no text, no explanation)
+2. Do NOT hallucinate missing data → use null
+3. Keep Armenian names in Armenian
+4. Normalize long text into clean single strings
+5. Extract only what exists in HTML
+6. Ignore navigation, footer, menu, ads
+
+OUTPUT FORMAT MUST MATCH THIS STRUCTURE EXACTLY:
+
+{
+  "name": "Գառնիի հնագույն տաճար",
+  "regionId": 1,
+  "settlementId": 101,
+  "monumentType": "Տաճար",
+  "specialName": "Արևի տաճար",
+  "anotherNames": [
+    "Գառնիի տաճար",
+    "Հեթանոսական տաճար"
+  ],
+  "history": "Հուշարձանը կառուցվել է մ.թ. առաջին դարում և հանդիսանում է հայկական հնագույն ճարտարապետության կարևոր նմուշ։",
+
+  "originalAffiliation": "Հայկական հեթանոսական մշակույթ",
+  "storageUnitName": "Պատմամշակութային արգելոց-թանգարան",
+  "condition": "Լավ",
+
+  "bibliography": [
+    {
+      "urls": [
+        "հայկական պատմության ուսումնասիրություն",
+        "հնագիտական հետազոտությունների ժողովածու"
+      ]
+    }
+  ],
+
+  "topographics": [
+    {
+      "region": "Կոտայքի մարզ",
+      "address": "Գառնի համայնք",
+      "topography": "Բարձրադիր սարահարթ",
+      "distanceFromResidence": "Բնակավայրից մոտ մեկ կիլոմետր",
+      "altitude": 1400,
+      "hydrography": "Մոտակայքում հոսում է Ազատ գետը",
+      "description": "Գտնվում է ժայռոտ բարձրության վրա"
+    }
+  ],
+
+  "historicalReferences": [
+    {
+      "culturalAffiliation": "Հայկական հեթանոսական մշակույթ",
+      "century": "Առաջին դար",
+      "justificationOfTheNumberingBasedOnLithography": "...",
+      "chronologicalTableOfTheStud": "...",
+      "author": "..."
+    }
+  ],
+
+  "descriptiveCharacteristics": [
+    {
+      "theBuildingMaterial": "Բազալտ",
+      "type": "Կրոնական կառույց",
+      "color": "Մոխրագույն",
+      "implementationTechnique": "Քարակերտ շինարարություն",
+      "stateOfMonument": "Վերականգնված",
+      "valuation": "Բարձր պատմամշակութային արժեք"
+    }
+  ],
+  "showInMainPage": false
+}
+
+NOW EXTRACT DATA FROM THIS HTML:
+
+""" + html;
+
+    Content content = Content.builder()
+        .parts(List.of(Part.builder().text(prompt).build()))
+        .build();
+
+    GenerateContentResponse response = client.models.generateContent(
+        "gemini-2.5-flash",
+        content,
+        config
+    );
+
+    System.out.println(response.text());
+    return response.text();
+  }
+
+  @Retryable(
+      retryFor = { Exception.class },
+      maxAttempts = 4,
       backoff = @Backoff(delay = 10000, multiplier = 2.0)
   )
   public String requestGeminiForMonuments(MonumentRequestDto monumentRequestDto) {

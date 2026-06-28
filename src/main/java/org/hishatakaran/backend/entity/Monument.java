@@ -110,8 +110,9 @@ public class Monument extends BaseEntity{
     @Column(name = "picture_url")
     private List<String> pictures = new ArrayList<>();
 
-    @OneToMany(mappedBy = "monument", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Bibliography> bibliography = new ArrayList<>();
+    @ElementCollection
+    @CollectionTable(name = "monument_bibliography", joinColumns = @JoinColumn(name = "monument_id"))
+    private List<String> bibliography;
 
     @OneToMany(mappedBy = "monument", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Topographic> topographics = new ArrayList<>();
@@ -153,7 +154,7 @@ public class Monument extends BaseEntity{
         String conditionEnglish,
         String conditionFrench,
         List<String> pictures,
-        List<Bibliography> bibliography,
+        List<String> bibliography,
         List<Topographic> topographics,
         List<HistoricalReference> historicalReferences,
         List<DescriptiveCharacteristicReference> descriptiveCharacteristics,

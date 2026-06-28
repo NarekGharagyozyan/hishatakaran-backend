@@ -49,6 +49,8 @@ public class Topographic {
     private String distanceFromResidenceArmenian;
     private String distanceFromResidenceEnglish;
     private String distanceFromResidenceFrench;
+    private String longitude;
+    private String latitude;
     private Integer altitude;
 
     @Column(columnDefinition = "TEXT")
@@ -79,6 +81,8 @@ public class Topographic {
         String distanceFromResidenceArmenian,
         String distanceFromResidenceEnglish,
         String distanceFromResidenceFrench,
+        String latitude,
+        String longitude,
         Integer altitude,
         String hydrographyArmenian,
         String hydrographyEnglish,
@@ -100,6 +104,8 @@ public class Topographic {
         this.distanceFromResidenceArmenian = distanceFromResidenceArmenian;
         this.distanceFromResidenceEnglish = distanceFromResidenceEnglish;
         this.distanceFromResidenceFrench = distanceFromResidenceFrench;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.altitude = altitude;
         this.hydrographyArmenian = hydrographyArmenian;
         this.hydrographyEnglish = hydrographyEnglish;
