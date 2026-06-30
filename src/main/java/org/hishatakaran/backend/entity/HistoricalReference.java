@@ -1,8 +1,5 @@
 package org.hishatakaran.backend.entity;
 
-import java.util.UUID;
-
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -33,65 +30,65 @@ public class HistoricalReference {
     @JoinColumn(name = "monument", nullable = false)
     private Monument monument;
 
-    private String culturalAffiliationArmenian;
-    private String culturalAffiliationEnglish;
-    private String culturalAffiliationFrench;
-    private String centuryArmenian;
-    private String centuryEnglish;
-    private String centuryFrench;
+    private String culturalAffiliationHy;
+    private String culturalAffiliationEn;
+    private String culturalAffiliationFr;
+    private String centuryHy;
+    private String centuryEn;
+    private String centuryFr;
 
     @Column(columnDefinition = "TEXT")
-    private String justificationOfTheNumberingBasedOnLithographyArmenian;
+    private String justificationOfTheNumberingBasedOnLithographyHy;
     @Column(columnDefinition = "TEXT")
-    private String justificationOfTheNumberingBasedOnLithographyEnglish;
+    private String justificationOfTheNumberingBasedOnLithographyEn;
     @Column(columnDefinition = "TEXT")
-    private String justificationOfTheNumberingBasedOnLithographyFrench;
+    private String justificationOfTheNumberingBasedOnLithographyFr;
 
     @Column(columnDefinition = "TEXT")
-    private String chronologicalTableOfTheStudArmenian;
+    private String chronologicalTableOfTheStudHy;
     @Column(columnDefinition = "TEXT")
-    private String chronologicalTableOfTheStudEnglish;
+    private String chronologicalTableOfTheStudEn;
     @Column(columnDefinition = "TEXT")
-    private String chronologicalTableOfTheStudFrench;
+    private String chronologicalTableOfTheStudFr;
 
-    private String authorArmenian;
-    private String authorEnglish;
-    private String authorFrench;
+    private String authorHy;
+    private String authorEn;
+    private String authorFr;
 
     public HistoricalReference(
         Monument monument,
-        String culturalAffiliationArmenian,
-        String culturalAffiliationEnglish,
-        String culturalAffiliationFrench,
-        String centuryArmenian,
-        String centuryEnglish,
-        String centuryFrench,
-        String justificationOfTheNumberingBasedOnLithographyArmenian,
-        String justificationOfTheNumberingBasedOnLithographyEnglish,
-        String justificationOfTheNumberingBasedOnLithographyFrench,
-        String chronologicalTableOfTheStudArmenian,
-        String chronologicalTableOfTheStudEnglish,
-        String chronologicalTableOfTheStudFrench,
-        String authorArmenian,
-        String authorEnglish,
-        String authorFrench)
+        String culturalAffiliationHy,
+        String culturalAffiliationEn,
+        String culturalAffiliationFr,
+        String centuryHy,
+        String centuryEn,
+        String centuryFr,
+        String justificationOfTheNumberingBasedOnLithographyHy,
+        String justificationOfTheNumberingBasedOnLithographyEn,
+        String justificationOfTheNumberingBasedOnLithographyFr,
+        String chronologicalTableOfTheStudHy,
+        String chronologicalTableOfTheStudEn,
+        String chronologicalTableOfTheStudFr,
+        String authorHy,
+        String authorEn,
+        String authorFr)
     {
         this.monument = monument;
-        this.culturalAffiliationArmenian = culturalAffiliationArmenian;
-        this.culturalAffiliationEnglish = culturalAffiliationEnglish;
-        this.culturalAffiliationFrench = culturalAffiliationFrench;
-        this.centuryArmenian = centuryArmenian;
-        this.centuryEnglish = centuryEnglish;
-        this.centuryFrench = centuryFrench;
-        this.justificationOfTheNumberingBasedOnLithographyArmenian = justificationOfTheNumberingBasedOnLithographyArmenian;
-        this.justificationOfTheNumberingBasedOnLithographyEnglish = justificationOfTheNumberingBasedOnLithographyEnglish;
-        this.justificationOfTheNumberingBasedOnLithographyFrench = justificationOfTheNumberingBasedOnLithographyFrench;
-        this.chronologicalTableOfTheStudArmenian = chronologicalTableOfTheStudArmenian;
-        this.chronologicalTableOfTheStudEnglish = chronologicalTableOfTheStudEnglish;
-        this.chronologicalTableOfTheStudFrench = chronologicalTableOfTheStudFrench;
-        this.authorArmenian = authorArmenian;
-        this.authorEnglish = authorEnglish;
-        this.authorFrench = authorFrench;
+        this.culturalAffiliationHy = culturalAffiliationHy;
+        this.culturalAffiliationEn = culturalAffiliationEn;
+        this.culturalAffiliationFr = culturalAffiliationFr;
+        this.centuryHy = centuryHy;
+        this.centuryEn = centuryEn;
+        this.centuryFr = centuryFr;
+        this.justificationOfTheNumberingBasedOnLithographyHy = justificationOfTheNumberingBasedOnLithographyHy;
+        this.justificationOfTheNumberingBasedOnLithographyEn = justificationOfTheNumberingBasedOnLithographyEn;
+        this.justificationOfTheNumberingBasedOnLithographyFr = justificationOfTheNumberingBasedOnLithographyFr;
+        this.chronologicalTableOfTheStudHy = chronologicalTableOfTheStudHy;
+        this.chronologicalTableOfTheStudEn = chronologicalTableOfTheStudEn;
+        this.chronologicalTableOfTheStudFr = chronologicalTableOfTheStudFr;
+        this.authorHy = authorHy;
+        this.authorEn = authorEn;
+        this.authorFr = authorFr;
     }
 
     @Override
@@ -99,21 +96,21 @@ public class HistoricalReference {
         return "HistoricalReference{" +
             "id=" + id +
             ", monument=" + monument +
-            ", culturalAffiliationArmenian='" + culturalAffiliationArmenian + '\'' +
-            ", culturalAffiliationEnglish='" + culturalAffiliationEnglish + '\'' +
-            ", culturalAffiliationFrench='" + culturalAffiliationFrench + '\'' +
-            ", centuryArmenian='" + centuryArmenian + '\'' +
-            ", centuryEnglish='" + centuryEnglish + '\'' +
-            ", centuryFrench='" + centuryFrench + '\'' +
-            ", justificationOfTheNumberingBasedOnLithographyArmenian='" + justificationOfTheNumberingBasedOnLithographyArmenian + '\'' +
-            ", justificationOfTheNumberingBasedOnLithographyEnglish='" + justificationOfTheNumberingBasedOnLithographyEnglish + '\'' +
-            ", justificationOfTheNumberingBasedOnLithographyFrench='" + justificationOfTheNumberingBasedOnLithographyFrench + '\'' +
-            ", chronologicalTableOfTheStudArmenian='" + chronologicalTableOfTheStudArmenian + '\'' +
-            ", chronologicalTableOfTheStudEnglish='" + chronologicalTableOfTheStudEnglish + '\'' +
-            ", chronologicalTableOfTheStudFrench='" + chronologicalTableOfTheStudFrench + '\'' +
-            ", authorArmenian='" + authorArmenian + '\'' +
-            ", authorEnglish='" + authorEnglish + '\'' +
-            ", authorFrench='" + authorFrench + '\'' +
+            ", culturalAffiliationHy='" + culturalAffiliationHy + '\'' +
+            ", culturalAffiliationEn='" + culturalAffiliationEn + '\'' +
+            ", culturalAffiliationFr='" + culturalAffiliationFr + '\'' +
+            ", centuryHy='" + centuryHy + '\'' +
+            ", centuryEn='" + centuryEn + '\'' +
+            ", centuryFr='" + centuryFr + '\'' +
+            ", justificationOfTheNumberingBasedOnLithographyHy='" + justificationOfTheNumberingBasedOnLithographyHy + '\'' +
+            ", justificationOfTheNumberingBasedOnLithographyEn='" + justificationOfTheNumberingBasedOnLithographyEn + '\'' +
+            ", justificationOfTheNumberingBasedOnLithographyFr='" + justificationOfTheNumberingBasedOnLithographyFr + '\'' +
+            ", chronologicalTableOfTheStudHy='" + chronologicalTableOfTheStudHy + '\'' +
+            ", chronologicalTableOfTheStudEn='" + chronologicalTableOfTheStudEn + '\'' +
+            ", chronologicalTableOfTheStudFr='" + chronologicalTableOfTheStudFr + '\'' +
+            ", authorHy='" + authorHy + '\'' +
+            ", authorEn='" + authorEn + '\'' +
+            ", authorFr='" + authorFr + '\'' +
             '}';
     }
 }

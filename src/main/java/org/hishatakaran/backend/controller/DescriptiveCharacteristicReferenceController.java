@@ -7,7 +7,6 @@ import org.hishatakaran.backend.repository.DescriptiveCharacteristicReferenceRep
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/descriptive-characteristics")
@@ -25,14 +24,14 @@ public class DescriptiveCharacteristicReferenceController {
     }
 
     @GetMapping("/{id}")
-    public DescriptiveCharacteristicResponseDto getById(@PathVariable UUID id) {
+    public DescriptiveCharacteristicResponseDto getById(@PathVariable Long id) {
         return DescriptiveCharacteristicMapper.toDto(
             descriptiveRepository.findById(id).orElseThrow()
         );
     }
 
     @GetMapping("/monument/{monumentId}")
-    public List<DescriptiveCharacteristicResponseDto> getByMonument(@PathVariable UUID monumentId) {
+    public List<DescriptiveCharacteristicResponseDto> getByMonument(@PathVariable Long monumentId) {
         return descriptiveRepository.findByMonumentId(monumentId)
             .stream()
             .map(DescriptiveCharacteristicMapper::toDto)

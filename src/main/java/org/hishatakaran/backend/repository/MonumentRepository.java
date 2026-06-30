@@ -7,15 +7,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import java.util.List;
-import java.util.UUID;
 
-public interface MonumentRepository extends JpaRepository<Monument, UUID>, JpaSpecificationExecutor<Monument> {
+public interface MonumentRepository extends JpaRepository<Monument, Long>, JpaSpecificationExecutor<Monument> {
     List<Monument> findByStatus(Status status);
 
-    List<Monument> findByRegionId(Integer regionId);
+    List<Monument> findByRegionId(Long region_id);
 
-    List<Monument> findBySettlementId(Integer settlementId);
+    List<Monument> findBySettlementId(Long settlement_id);
 
-    List<Monument> findByMonumentTypeArmenianOrMonumentTypeEnglishOrMonumentTypeEnglish(MonumentType monumentTypeArmenian, MonumentType monumentTypeEnglish, MonumentType monumentTypeFrench);
+    List<Monument> findByMonumentTypeHyOrMonumentTypeEnOrMonumentTypeFr(String monumentTypeHy, String monumentTypeEn, String monumentTypeFr);
 
 }

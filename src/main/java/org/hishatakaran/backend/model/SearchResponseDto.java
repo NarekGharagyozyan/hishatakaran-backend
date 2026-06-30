@@ -10,12 +10,8 @@ import lombok.Getter;
 public class SearchResponseDto {
 
     private List<MonumentResponseDto> monuments;
-
     private List<RegionResponseDto> regions;
-
     private List<SettlementResponseDto> settlements;
-
     private List<NewsResponseDto> news;
-
     private List<LibraryResponseDto> libraries;
 }

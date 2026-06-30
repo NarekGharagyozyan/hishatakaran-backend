@@ -9,12 +9,12 @@ public class NewsMapper {
 
     return new NewsResponseDto(
         news.getId(),
-        news.getTitleArmenian(),
-        news.getTitleEnglish(),
-        news.getTitleFrench(),
-        news.getTextArmenian(),
-        news.getTextEnglish(),
-        news.getTextFrench(),
+        news.getTitleHy(),
+        news.getTitleEn(),
+        news.getTitleFr(),
+        news.getTextHy(),
+        news.getTextEn(),
+        news.getTextFr(),
         news.getPictures(),
         news.getStatus().name()
     );

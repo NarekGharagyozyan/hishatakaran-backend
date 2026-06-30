@@ -1,7 +1,5 @@
 package org.hishatakaran.backend.model;
 
-import java.util.UUID;
-
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -12,22 +10,22 @@ import lombok.Setter;
 public class DescriptiveCharacteristicResponseDto {
 
     private final Long id;
-    private final String typeArmenian;
-    private final String typeEnglish;
-    private final String typeFrench;
-    private final String colorArmenian;
-    private final String colorEnglish;
-    private final String colorFrench;
-    private final String buildingMaterialArmenian;
-    private final String buildingMaterialEnglish;
-    private final String buildingMaterialFrench;
-    private final String implementationTechniqueArmenian;
-    private final String implementationTechniqueEnglish;
-    private final String implementationTechniqueFrench;
-    private final String stateOfMonumentArmenian;
-    private final String stateOfMonumentEnglish;
-    private final String stateOfMonumentFrench;
-    private final String valuationArmenian;
-    private final String valuationEnglish;
-    private final String valuationFrench;
+    private final String typeHy;
+    private final String typeEn;
+    private final String typeFr;
+    private final String colorHy;
+    private final String colorEn;
+    private final String colorFr;
+    private final String buildingMaterialHy;
+    private final String buildingMaterialEn;
+    private final String buildingMaterialFr;
+    private final String implementationTechniqueHy;
+    private final String implementationTechniqueEn;
+    private final String implementationTechniqueFr;
+    private final String stateOfMonumentHy;
+    private final String stateOfMonumentEn;
+    private final String stateOfMonumentFr;
+    private final String valuationHy;
+    private final String valuationEn;
+    private final String valuationFr;
 }

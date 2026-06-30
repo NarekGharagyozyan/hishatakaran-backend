@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class MonumentFilterRequest {
 
-    private Integer regionId;
-    private Integer settlementId;
+    private Long regionId;
+    private Long settlementId;
     private MonumentType monumentType;
 }

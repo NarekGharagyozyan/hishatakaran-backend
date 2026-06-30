@@ -33,11 +33,11 @@ public class Settlement {
     private Long id;
 
     @Column(nullable = false)
-    private String nameArmenian;
+    private String nameHy;
     @Column(nullable = false)
-    private String nameEnglish;
+    private String nameEn;
     @Column(nullable = false)
-    private String nameFrench;
+    private String nameFr;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "region", nullable = false)
@@ -51,9 +51,9 @@ public class Settlement {
     public String toString() {
         return "Settlement{" +
             "id=" + id +
-            ", nameArmenian='" + nameArmenian + '\'' +
-            ", nameEnglish='" + nameEnglish + '\'' +
-            ", nameFrench='" + nameFrench + '\'' +
+            ", nameHy='" + nameHy + '\'' +
+            ", nameEn='" + nameEn + '\'' +
+            ", nameFr='" + nameFr + '\'' +
             ", region=" + region +
             '}';
     }

@@ -10,9 +10,9 @@ public class SettlementMapper {
 
     return new SettlementResponseDto(
         settlement.getId(),
-        settlement.getNameArmenian(),
-        settlement.getNameEnglish(),
-        settlement.getNameFrench()
+        settlement.getNameHy(),
+        settlement.getNameEn(),
+        settlement.getNameFr()
     );
   }
 }

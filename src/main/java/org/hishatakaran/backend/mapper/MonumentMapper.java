@@ -16,13 +16,13 @@ public class MonumentMapper {
         MonumentResponseDto.MonumentResponseDtoBuilder monumentDtoBuilder = MonumentResponseDto.builder();
 
         monumentDtoBuilder.id(m.getId());
-        monumentDtoBuilder.nameArmenian(m.getNameArmenian());
-        monumentDtoBuilder.nameEnglish(m.getNameEnglish());
-        monumentDtoBuilder.nameFrench(m.getNameFrench());
+        monumentDtoBuilder.nameHy(m.getNameHy());
+        monumentDtoBuilder.nameEn(m.getNameEn());
+        monumentDtoBuilder.nameFr(m.getNameFr());
         monumentDtoBuilder.status(m.getStatus().name());
-        monumentDtoBuilder.monumentTypeArmenian(m.getMonumentTypeArmenian());
-        monumentDtoBuilder.monumentTypeEnglish(m.getMonumentTypeEnglish());
-        monumentDtoBuilder.monumentTypeFrench(m.getMonumentTypeFrench());
+        monumentDtoBuilder.monumentTypeHy(m.getMonumentTypeHy());
+        monumentDtoBuilder.monumentTypeEn(m.getMonumentTypeEn());
+        monumentDtoBuilder.monumentTypeFr(m.getMonumentTypeFr());
 
         if (m.getRegion() != null) {
             monumentDtoBuilder.region(RegionMapper.toDto(m.getRegion()));
@@ -32,30 +32,30 @@ public class MonumentMapper {
             monumentDtoBuilder.settlement(SettlementMapper.toDto(m.getSettlement()));
         }
 
-        monumentDtoBuilder.specialNameArmenian(m.getSpecialNameArmenian());
-        monumentDtoBuilder.specialNameEnglish(m.getSpecialNameEnglish());
-        monumentDtoBuilder.specialNameFrench(m.getSpecialNameFrench());
-        monumentDtoBuilder.anotherNamesArmenian(m.getAnotherNamesArmenian());
-        monumentDtoBuilder.anotherNamesEnglish(m.getAnotherNamesEnglish());
-        monumentDtoBuilder.anotherNamesFrench(m.getAnotherNamesFrench());
+        monumentDtoBuilder.specialNameHy(m.getSpecialNameHy());
+        monumentDtoBuilder.specialNameEn(m.getSpecialNameEn());
+        monumentDtoBuilder.specialNameFr(m.getSpecialNameFr());
+        monumentDtoBuilder.anotherNamesHy(m.getAnotherNamesHy());
+        monumentDtoBuilder.anotherNamesEn(m.getAnotherNamesEn());
+        monumentDtoBuilder.anotherNamesFr(m.getAnotherNamesFr());
 
-        monumentDtoBuilder.historyArmenian(m.getHistoryArmenian());
-        monumentDtoBuilder.historyEnglish(m.getHistoryEnglish());
-        monumentDtoBuilder.historyFrench(m.getHistoryFrench());
-        monumentDtoBuilder.originalAffiliationArmenian(m.getOriginalAffiliationArmenian());
-        monumentDtoBuilder.originalAffiliationEnglish(m.getOriginalAffiliationEnglish());
-        monumentDtoBuilder.originalAffiliationFrench(m.getOriginalAffiliationFrench());
-        monumentDtoBuilder.storageUnitNameArmenian(m.getStorageUnitNameArmenian());
-        monumentDtoBuilder.storageUnitNameEnglish(m.getStorageUnitNameEnglish());
-        monumentDtoBuilder.storageUnitNameFrench(m.getStorageUnitNameFrench());
-        monumentDtoBuilder.conditionArmenian(m.getConditionArmenian());
-        monumentDtoBuilder.conditionEnglish(m.getConditionEnglish());
-        monumentDtoBuilder.conditionFrench(m.getConditionFrench());
+        monumentDtoBuilder.historyHy(m.getHistoryHy());
+        monumentDtoBuilder.historyEn(m.getHistoryEn());
+        monumentDtoBuilder.historyFr(m.getHistoryFr());
+        monumentDtoBuilder.originalAffiliationHy(m.getOriginalAffiliationHy());
+        monumentDtoBuilder.originalAffiliationEn(m.getOriginalAffiliationEn());
+        monumentDtoBuilder.originalAffiliationFr(m.getOriginalAffiliationFr());
+        monumentDtoBuilder.storageUnitNameHy(m.getStorageUnitNameHy());
+        monumentDtoBuilder.storageUnitNameEn(m.getStorageUnitNameEn());
+        monumentDtoBuilder.storageUnitNameFr(m.getStorageUnitNameFr());
+        monumentDtoBuilder.conditionHy(m.getConditionHy());
+        monumentDtoBuilder.conditionEn(m.getConditionEn());
+        monumentDtoBuilder.conditionFr(m.getConditionFr());
 
         monumentDtoBuilder.pictures(m.getPictures());
 
-        monumentDtoBuilder.createdAt(m.getCreatedAt());
-        monumentDtoBuilder.updatedAt(m.getUpdatedAt());
+        monumentDtoBuilder.createdAt(m.getCreatedAt().toEpochSecond());
+        monumentDtoBuilder.updatedAt(m.getUpdatedAt().toEpochSecond());
 
         monumentDtoBuilder.bibliography(
             m.getBibliography()

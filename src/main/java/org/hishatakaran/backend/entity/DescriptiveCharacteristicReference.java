@@ -1,7 +1,5 @@
 package org.hishatakaran.backend.entity;
 
-import java.util.UUID;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -32,75 +30,76 @@ public class DescriptiveCharacteristicReference {
     @JoinColumn(name = "monument", nullable = false)
     private Monument monument;
 
-    private String theBuildingMaterialArmenian;
-    private String theBuildingMaterialEnglish;
-    private String theBuildingMaterialFrench;
-    private String typeArmenian;
-    private String typeEnglish;
-    private String typeFrench;
+    private String theBuildingMaterialHy;
+    private String theBuildingMaterialEn;
+    private String theBuildingMaterialFr;
+    private String typeHy;
+    private String typeEn;
+    private String typeFr;
 
-    private String colorArmenian;
-    private String colorEnglish;
-    private String colorFrench;
-
-    @Column(columnDefinition = "TEXT")
-    private String implementationTechniqueArmenian;
-    @Column(columnDefinition = "TEXT")
-    private String implementationTechniqueEnglish;
-    @Column(columnDefinition = "TEXT")
-    private String implementationTechniqueFrench;
-
-    private String stateOfMonumentArmenian;
-    private String stateOfMonumentEnglish;
-    private String stateOfMonumentFrench;
+    private String colorHy;
+    private String colorEn;
+    private String colorFr;
 
     @Column(columnDefinition = "TEXT")
-    private String valuationArmenian;
+    private String implementationTechniqueHy;
     @Column(columnDefinition = "TEXT")
-    private String valuationEnglish;
+    private String implementationTechniqueEn;
     @Column(columnDefinition = "TEXT")
-    private String valuationFrench;
+    private String implementationTechniqueFr;
+
+    private String stateOfMonumentHy;
+    private String stateOfMonumentEn;
+    private String stateOfMonumentFr;
+
+    @Column(columnDefinition = "TEXT")
+    private String valuationHy;
+    @Column(columnDefinition = "TEXT")
+    private String valuationEn;
+    @Column(columnDefinition = "TEXT")
+    private String valuationFr;
 
     public DescriptiveCharacteristicReference(
         Monument monument,
-        String theBuildingMaterialArmenian,
-        String theBuildingMaterialEnglish,
-        String theBuildingMaterialFrench,
-        String typeArmenian,
-        String typeEnglish,
-        String typeFrench,
-        String colorArmenian,
-        String colorEnglish,
-        String colorFrench,
-        String implementationTechniqueArmenian,
-        String implementationTechniqueEnglish,
-        String implementationTechniqueFrench,
-        String stateOfMonumentArmenian,
-        String stateOfMonumentEnglish,
-        String stateOfMonumentFrench,
-        String valuationArmenian,
-        String valuationEnglish,
-        String valuationFrench)
+        String theBuildingMaterialHy,
+        String theBuildingMaterialEn,
+        String theBuildingMaterialFr,
+        String typeHy,
+        String typeEn,
+        String typeFr,
+        String colorHy,
+        String colorEn,
+        String colorFr,
+        String implementationTechniqueHy,
+        String implementationTechniqueEn,
+        String implementationTechniqueFr,
+        String stateOfMonumentHy,
+        String stateOfMonumentEn,
+        String stateOfMonumentFr,
+        String valuationHy,
+        String valuationEn,
+        String valuationFr
+    )
     {
         this.monument = monument;
-        this.theBuildingMaterialArmenian = theBuildingMaterialArmenian;
-        this.theBuildingMaterialEnglish = theBuildingMaterialEnglish;
-        this.theBuildingMaterialFrench = theBuildingMaterialFrench;
-        this.typeArmenian = typeArmenian;
-        this.typeEnglish = typeEnglish;
-        this.typeFrench = typeFrench;
-        this.colorArmenian = colorArmenian;
-        this.colorEnglish = colorEnglish;
-        this.colorFrench = colorFrench;
-        this.implementationTechniqueArmenian = implementationTechniqueArmenian;
-        this.implementationTechniqueEnglish = implementationTechniqueEnglish;
-        this.implementationTechniqueFrench = implementationTechniqueFrench;
-        this.stateOfMonumentArmenian = stateOfMonumentArmenian;
-        this.stateOfMonumentEnglish = stateOfMonumentEnglish;
-        this.stateOfMonumentFrench = stateOfMonumentFrench;
-        this.valuationArmenian = valuationArmenian;
-        this.valuationEnglish = valuationEnglish;
-        this.valuationFrench = valuationFrench;
+        this.theBuildingMaterialHy = theBuildingMaterialHy;
+        this.theBuildingMaterialEn = theBuildingMaterialEn;
+        this.theBuildingMaterialFr = theBuildingMaterialFr;
+        this.typeHy = typeHy;
+        this.typeEn = typeEn;
+        this.typeFr = typeFr;
+        this.colorHy = colorHy;
+        this.colorEn = colorEn;
+        this.colorFr = colorFr;
+        this.implementationTechniqueHy = implementationTechniqueHy;
+        this.implementationTechniqueEn = implementationTechniqueEn;
+        this.implementationTechniqueFr = implementationTechniqueFr;
+        this.stateOfMonumentHy = stateOfMonumentHy;
+        this.stateOfMonumentEn = stateOfMonumentEn;
+        this.stateOfMonumentFr = stateOfMonumentFr;
+        this.valuationHy = valuationHy;
+        this.valuationEn = valuationEn;
+        this.valuationFr = valuationFr;
     }
 
     @Override
@@ -108,24 +107,24 @@ public class DescriptiveCharacteristicReference {
         return "DescriptiveCharacteristicReference{" +
             "id=" + id +
             ", monument=" + monument +
-            ", theBuildingMaterialArmenian='" + theBuildingMaterialArmenian + '\'' +
-            ", theBuildingMaterialEnglish='" + theBuildingMaterialEnglish + '\'' +
-            ", theBuildingMaterialFrench='" + theBuildingMaterialFrench + '\'' +
-            ", typeArmenian='" + typeArmenian + '\'' +
-            ", typeEnglish='" + typeEnglish + '\'' +
-            ", typeFrench='" + typeFrench + '\'' +
-            ", colorArmenian='" + colorArmenian + '\'' +
-            ", colorEnglish='" + colorEnglish + '\'' +
-            ", colorFrench='" + colorFrench + '\'' +
-            ", implementationTechniqueArmenian='" + implementationTechniqueArmenian + '\'' +
-            ", implementationTechniqueEnglish='" + implementationTechniqueEnglish + '\'' +
-            ", implementationTechniqueFrench='" + implementationTechniqueFrench + '\'' +
-            ", stateOfMonumentArmenian='" + stateOfMonumentArmenian + '\'' +
-            ", stateOfMonumentEnglish='" + stateOfMonumentEnglish + '\'' +
-            ", stateOfMonumentFrench='" + stateOfMonumentFrench + '\'' +
-            ", valuationArmenian='" + valuationArmenian + '\'' +
-            ", valuationEnglish='" + valuationEnglish + '\'' +
-            ", valuationFrench='" + valuationFrench + '\'' +
+            ", theBuildingMaterialHy='" + theBuildingMaterialHy + '\'' +
+            ", theBuildingMaterialEn='" + theBuildingMaterialEn + '\'' +
+            ", theBuildingMaterialFr='" + theBuildingMaterialFr + '\'' +
+            ", typeHy='" + typeHy + '\'' +
+            ", typeEn='" + typeEn + '\'' +
+            ", typeFr='" + typeFr + '\'' +
+            ", colorHy='" + colorHy + '\'' +
+            ", colorEn='" + colorEn + '\'' +
+            ", colorFr='" + colorFr + '\'' +
+            ", implementationTechniqueHy='" + implementationTechniqueHy + '\'' +
+            ", implementationTechniqueEn='" + implementationTechniqueEn + '\'' +
+            ", implementationTechniqueFr='" + implementationTechniqueFr + '\'' +
+            ", stateOfMonumentHy='" + stateOfMonumentHy + '\'' +
+            ", stateOfMonumentEn='" + stateOfMonumentEn + '\'' +
+            ", stateOfMonumentFr='" + stateOfMonumentFr + '\'' +
+            ", valuationHy='" + valuationHy + '\'' +
+            ", valuationEn='" + valuationEn + '\'' +
+            ", valuationFr='" + valuationFr + '\'' +
             '}';
     }
 }

@@ -1,17 +1,16 @@
 package org.hishatakaran.backend.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+@AllArgsConstructor
 @Getter
 @Setter
-@RequiredArgsConstructor
-public class NewsAiResponseDto {
+public class ProgramLinkResponseDto {
+
   private String titleHy;
   private String titleEn;
   private String titleFr;
-  private String textHy;
-  private String textEn;
-  private String textFr;
+  private String url;
 }

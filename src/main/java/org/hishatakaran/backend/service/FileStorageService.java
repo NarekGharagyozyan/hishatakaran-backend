@@ -13,30 +13,43 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class FileStorageService {
 
-    private final Path rootLocation = Paths.get("images");
-
     public String saveImage(MultipartFile file, String folder) {
 
         String extension = getExtension(
                 Objects.requireNonNull(file.getOriginalFilename())
         );
 
-        String fileName =
-                UUID.randomUUID() + "." + extension;
+        String fileName = UUID.randomUUID() + "." + extension;
 
-        Path target =
-                rootLocation
-                        .resolve(folder)
-                        .resolve(fileName);
+        Path target = Paths.get("images")
+            .resolve(folder)
+            .resolve(fileName);
 
         try {
-
             Files.createDirectories(target.getParent());
-
             file.transferTo(target);
-
             return "/images/" + folder + "/" + fileName;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
+    public String savefile(MultipartFile file, String folder) {
+
+        String extension = getExtension(
+            Objects.requireNonNull(file.getOriginalFilename())
+        );
+
+        String fileName = UUID.randomUUID() + "." + extension;
+
+        Path target = Paths.get("files")
+            .resolve(folder)
+            .resolve(fileName);
+
+        try {
+            Files.createDirectories(target.getParent());
+            file.transferTo(target);
+            return "/files/" + folder + "/" + fileName;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

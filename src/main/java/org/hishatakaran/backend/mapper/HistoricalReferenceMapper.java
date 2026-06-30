@@ -9,21 +9,21 @@ public class HistoricalReferenceMapper {
 
         return new HistoricalReferenceResponseDto(
             historicalReference.getId(),
-            historicalReference.getCulturalAffiliationArmenian(),
-            historicalReference.getCulturalAffiliationEnglish(),
-            historicalReference.getCulturalAffiliationFrench(),
-            historicalReference.getCenturyArmenian(),
-            historicalReference.getCenturyEnglish(),
-            historicalReference.getCenturyFrench(),
-            historicalReference.getJustificationOfTheNumberingBasedOnLithographyArmenian(),
-            historicalReference.getJustificationOfTheNumberingBasedOnLithographyEnglish(),
-            historicalReference.getJustificationOfTheNumberingBasedOnLithographyFrench(),
-            historicalReference.getChronologicalTableOfTheStudArmenian(),
-            historicalReference.getChronologicalTableOfTheStudEnglish(),
-            historicalReference.getChronologicalTableOfTheStudFrench(),
-            historicalReference.getAuthorArmenian(),
-            historicalReference.getAuthorEnglish(),
-            historicalReference.getAuthorFrench()
+            historicalReference.getCulturalAffiliationHy(),
+            historicalReference.getCulturalAffiliationEn(),
+            historicalReference.getCulturalAffiliationFr(),
+            historicalReference.getCenturyHy(),
+            historicalReference.getCenturyEn(),
+            historicalReference.getCenturyFr(),
+            historicalReference.getJustificationOfTheNumberingBasedOnLithographyHy(),
+            historicalReference.getJustificationOfTheNumberingBasedOnLithographyEn(),
+            historicalReference.getJustificationOfTheNumberingBasedOnLithographyFr(),
+            historicalReference.getChronologicalTableOfTheStudHy(),
+            historicalReference.getChronologicalTableOfTheStudEn(),
+            historicalReference.getChronologicalTableOfTheStudFr(),
+            historicalReference.getAuthorHy(),
+            historicalReference.getAuthorEn(),
+            historicalReference.getAuthorFr()
         );
     }
 }

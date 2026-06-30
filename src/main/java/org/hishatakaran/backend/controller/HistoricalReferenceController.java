@@ -7,7 +7,6 @@ import org.hishatakaran.backend.repository.HistoricalReferenceRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/historical-references")
@@ -25,14 +24,14 @@ public class HistoricalReferenceController {
     }
 
     @GetMapping("/{id}")
-    public HistoricalReferenceResponseDto getById(@PathVariable UUID id) {
+    public HistoricalReferenceResponseDto getById(@PathVariable Long id) {
         return HistoricalReferenceMapper.toDto(
             historicalReferenceRepository.findById(id).orElseThrow()
         );
     }
 
     @GetMapping("/monument/{monumentId}")
-    public List<HistoricalReferenceResponseDto> getByMonument(@PathVariable UUID monumentId) {
+    public List<HistoricalReferenceResponseDto> getByMonument(@PathVariable Long monumentId) {
         return historicalReferenceRepository.findByMonumentId(monumentId)
             .stream()
             .map(HistoricalReferenceMapper::toDto)

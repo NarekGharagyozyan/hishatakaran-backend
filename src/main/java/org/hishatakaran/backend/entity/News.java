@@ -2,7 +2,6 @@ package org.hishatakaran.backend.entity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import org.hishatakaran.backend.model.Status;
 
@@ -34,20 +33,20 @@ public class News {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String titleArmenian;
+    private String titleHy;
 
-    private String titleEnglish;
+    private String titleEn;
 
-    private String titleFrench;
-
-    @Column(columnDefinition = "TEXT")
-    private String textArmenian;
+    private String titleFr;
 
     @Column(columnDefinition = "TEXT")
-    private String textEnglish;
+    private String textHy;
 
     @Column(columnDefinition = "TEXT")
-    private String textFrench;
+    private String textEn;
+
+    @Column(columnDefinition = "TEXT")
+    private String textFr;
 
     @ElementCollection
     @CollectionTable(name = "news_pictures", joinColumns = @JoinColumn(name = "news_id"))

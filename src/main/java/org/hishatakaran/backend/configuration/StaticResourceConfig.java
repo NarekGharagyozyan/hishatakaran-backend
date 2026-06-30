@@ -17,5 +17,9 @@ public class StaticResourceConfig
                 .addResourceLocations(
                         "file:images/"
                 );
+        registry.addResourceHandler("/files/**")
+            .addResourceLocations(
+                "file:files/"
+            );
     }
 }

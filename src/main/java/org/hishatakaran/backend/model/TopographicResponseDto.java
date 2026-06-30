@@ -1,7 +1,5 @@
 package org.hishatakaran.backend.model;
 
-import java.util.UUID;
-
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -12,25 +10,25 @@ import lombok.Setter;
 public class TopographicResponseDto {
 
     private final Long id;
-    private final String provinceArmenian;
-    private final String provinceEnglish;
-    private final String provinceFrench;
-    private final String addressArmenian;
-    private final String addressEnglish;
-    private final String addressFrench;
-    private final String topographyArmenian;
-    private final String topographyEnglish;
-    private final String topographyFrench;
-    private final String distanceFromResidenceArmenian;
-    private final String distanceFromResidenceEnglish;
-    private final String distanceFromResidenceFrench;
+    private final String provinceHy;
+    private final String provinceEn;
+    private final String provinceFr;
+    private final String addressHy;
+    private final String addressEn;
+    private final String addressFr;
+    private final String topographyHy;
+    private final String topographyEn;
+    private final String topographyFr;
+    private final String distanceFromResidenceHy;
+    private final String distanceFromResidenceEn;
+    private final String distanceFromResidenceFr;
     private final String latitude;
     private final String longitude;
     private final Integer altitude;
-    private final String hydrographyArmenian;
-    private final String hydrographyEnglish;
-    private final String hydrographyFrench;
-    private final String descriptionArmenian;
-    private final String descriptionEnglish;
-    private final String descriptionFrench;
+    private final String hydrographyHy;
+    private final String hydrographyEn;
+    private final String hydrographyFr;
+    private final String descriptionHy;
+    private final String descriptionEn;
+    private final String descriptionFr;
 }

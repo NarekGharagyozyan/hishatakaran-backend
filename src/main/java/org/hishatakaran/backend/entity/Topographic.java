@@ -1,7 +1,5 @@
 package org.hishatakaran.backend.entity;
 
-import java.util.UUID;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -32,88 +30,89 @@ public class Topographic {
     @JoinColumn(name = "monument", nullable = false)
     private Monument monument;
 
-    private String provinceArmenian;
-    private String provinceEnglish;
-    private String provinceFrench;
+    private String provinceHy;
+    private String provinceEn;
+    private String provinceFr;
 
-    private String addressArmenian;
-    private String addressEnglish;
-    private String addressFrench;
+    private String addressHy;
+    private String addressEn;
+    private String addressFr;
 
     @Column(columnDefinition = "TEXT")
-    private String topographyArmenian;
+    private String topographyHy;
     @Column(columnDefinition = "TEXT")
-    private String topographyEnglish;
+    private String topographyEn;
     @Column(columnDefinition = "TEXT")
-    private String topographyFrench;
+    private String topographyFr;
 
-    private String distanceFromResidenceArmenian;
-    private String distanceFromResidenceEnglish;
-    private String distanceFromResidenceFrench;
+    private String distanceFromResidenceHy;
+    private String distanceFromResidenceEn;
+    private String distanceFromResidenceFr;
     private String longitude;
     private String latitude;
     private Integer altitude;
 
     @Column(columnDefinition = "TEXT")
-    private String hydrographyArmenian;
+    private String hydrographyHy;
     @Column(columnDefinition = "TEXT")
-    private String hydrographyEnglish;
+    private String hydrographyEn;
     @Column(columnDefinition = "TEXT")
-    private String hydrographyFrench;
+    private String hydrographyFr;
 
     @Column(columnDefinition = "TEXT")
-    private String descriptionArmenian;
+    private String descriptionHy;
     @Column(columnDefinition = "TEXT")
-    private String descriptionEnglish;
+    private String descriptionEn;
     @Column(columnDefinition = "TEXT")
-    private String descriptionFrench;
+    private String descriptionFr;
 
     public Topographic(
         Monument monument,
-        String provinceArmenian,
-        String provinceEnglish,
-        String provinceFrench,
-        String addressArmenian,
-        String addressEnglish,
-        String addressFrench,
-        String topographyArmenian,
-        String topographyEnglish,
-        String topographyFrench,
-        String distanceFromResidenceArmenian,
-        String distanceFromResidenceEnglish,
-        String distanceFromResidenceFrench,
+        String provinceHy,
+        String provinceEn,
+        String provinceFr,
+        String addressHy,
+        String addressEn,
+        String addressFr,
+        String topographyHy,
+        String topographyEn,
+        String topographyFr,
+        String distanceFromResidenceHy,
+        String distanceFromResidenceEn,
+        String distanceFromResidenceFr,
         String latitude,
         String longitude,
         Integer altitude,
-        String hydrographyArmenian,
-        String hydrographyEnglish,
-        String hydrographyFrench,
-        String descriptionArmenian,
-        String descriptionEnglish,
-        String descriptionFrench)
+        String hydrographyHy,
+        String hydrographyEn,
+        String hydrographyFr,
+        String descriptionHy,
+        String descriptionEn,
+        String descriptionFr
+    )
     {
         this.monument = monument;
-        this.provinceArmenian = provinceArmenian;
-        this.provinceEnglish = provinceEnglish;
-        this.provinceFrench = provinceFrench;
-        this.addressArmenian = addressArmenian;
-        this.addressEnglish = addressEnglish;
-        this.addressFrench = addressFrench;
-        this.topographyArmenian = topographyArmenian;
-        this.topographyEnglish = topographyEnglish;
-        this.topographyFrench = topographyFrench;
-        this.distanceFromResidenceArmenian = distanceFromResidenceArmenian;
-        this.distanceFromResidenceEnglish = distanceFromResidenceEnglish;
-        this.distanceFromResidenceFrench = distanceFromResidenceFrench;
+        this.provinceHy = provinceHy;
+        this.provinceEn = provinceEn;
+        this.provinceFr = provinceFr;
+        this.addressHy = addressHy;
+        this.addressEn = addressEn;
+        this.addressFr = addressFr;
+        this.topographyHy = topographyHy;
+        this.topographyEn = topographyEn;
+        this.topographyFr = topographyFr;
+        this.distanceFromResidenceHy = distanceFromResidenceHy;
+        this.distanceFromResidenceEn = distanceFromResidenceEn;
+        this.distanceFromResidenceFr = distanceFromResidenceFr;
         this.latitude = latitude;
         this.longitude = longitude;
         this.altitude = altitude;
-        this.hydrographyArmenian = hydrographyArmenian;
-        this.hydrographyEnglish = hydrographyEnglish;
-        this.hydrographyFrench = hydrographyFrench;
-        this.descriptionArmenian = descriptionArmenian;
-        this.descriptionEnglish = descriptionEnglish;
-        this.descriptionFrench = descriptionFrench;
+        this.hydrographyHy = hydrographyHy;
+        this.hydrographyEn = hydrographyEn;
+        this.hydrographyFr = hydrographyFr;
+        this.descriptionHy = descriptionHy;
+        this.descriptionEn = descriptionEn;
+        this.descriptionFr = descriptionFr;
     }
 
     @Override
@@ -121,27 +120,27 @@ public class Topographic {
         return "Topographic{" +
             "id=" + id +
             ", monument=" + monument +
-            ", provinceArmenian='" + provinceArmenian + '\'' +
-            ", provinceEnglish='" + provinceEnglish + '\'' +
-            ", provinceFrench='" + provinceFrench + '\'' +
-            ", addressArmenian='" + addressArmenian + '\'' +
-            ", addressEnglish='" + addressEnglish + '\'' +
-            ", addressFrench='" + addressFrench + '\'' +
-            ", topographyArmenian='" + topographyArmenian + '\'' +
-            ", topographyEnglish='" + topographyEnglish + '\'' +
-            ", topographyFrench='" + topographyFrench + '\'' +
-            ", distanceFromResidenceArmenian='" + distanceFromResidenceArmenian + '\'' +
-            ", distanceFromResidenceEnglish='" + distanceFromResidenceEnglish + '\'' +
-            ", distanceFromResidenceFrench='" + distanceFromResidenceFrench + '\'' +
+            ", provinceHy='" + provinceHy + '\'' +
+            ", provinceEn='" + provinceEn + '\'' +
+            ", provinceFr='" + provinceFr + '\'' +
+            ", addressHy='" + addressHy + '\'' +
+            ", addressEn='" + addressEn + '\'' +
+            ", addressFr='" + addressFr + '\'' +
+            ", topographyHy='" + topographyHy + '\'' +
+            ", topographyEn='" + topographyEn + '\'' +
+            ", topographyFr='" + topographyFr + '\'' +
+            ", distanceFromResidenceHy='" + distanceFromResidenceHy + '\'' +
+            ", distanceFromResidenceEn='" + distanceFromResidenceEn + '\'' +
+            ", distanceFromResidenceFr='" + distanceFromResidenceFr + '\'' +
             ", longitude='" + longitude + '\'' +
             ", latitude='" + latitude + '\'' +
             ", altitude=" + altitude +
-            ", hydrographyArmenian='" + hydrographyArmenian + '\'' +
-            ", hydrographyEnglish='" + hydrographyEnglish + '\'' +
-            ", hydrographyFrench='" + hydrographyFrench + '\'' +
-            ", descriptionArmenian='" + descriptionArmenian + '\'' +
-            ", descriptionEnglish='" + descriptionEnglish + '\'' +
-            ", descriptionFrench='" + descriptionFrench + '\'' +
+            ", hydrographyHy='" + hydrographyHy + '\'' +
+            ", hydrographyEn='" + hydrographyEn + '\'' +
+            ", hydrographyFr='" + hydrographyFr + '\'' +
+            ", descriptionHy='" + descriptionHy + '\'' +
+            ", descriptionEn='" + descriptionEn + '\'' +
+            ", descriptionFr='" + descriptionFr + '\'' +
             '}';
     }
 }

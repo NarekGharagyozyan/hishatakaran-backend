@@ -1,6 +1,5 @@
 package org.hishatakaran.backend.entity;
 
-import java.util.UUID;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

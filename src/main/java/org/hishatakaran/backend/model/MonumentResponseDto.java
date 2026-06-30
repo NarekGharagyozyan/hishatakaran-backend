@@ -3,7 +3,6 @@ package org.hishatakaran.backend.model;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.UUID;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -17,41 +16,41 @@ import lombok.Setter;
 public class MonumentResponseDto {
 
     private final Long id;
-    private final String nameArmenian;
-    private final String nameEnglish;
-    private final String nameFrench;
+    private final String nameHy;
+    private final String nameEn;
+    private final String nameFr;
     private final String status;
-    private final String monumentTypeArmenian;
-    private final String monumentTypeEnglish;
-    private final String monumentTypeFrench;
+    private final String monumentTypeHy;
+    private final String monumentTypeEn;
+    private final String monumentTypeFr;
 
     private final RegionResponseDto region;
     private final SettlementResponseDto settlement;
 
-    private final String specialNameArmenian;
-    private final String specialNameEnglish;
-    private final String specialNameFrench;
-    private final List<String> anotherNamesArmenian;
-    private final List<String> anotherNamesEnglish;
-    private final List<String> anotherNamesFrench;
+    private final String specialNameHy;
+    private final String specialNameEn;
+    private final String specialNameFr;
+    private final List<String> anotherNamesHy;
+    private final List<String> anotherNamesEn;
+    private final List<String> anotherNamesFr;
 
-    private final String historyArmenian;
-    private final String historyEnglish;
-    private final String historyFrench;
-    private final String originalAffiliationArmenian;
-    private final String originalAffiliationEnglish;
-    private final String originalAffiliationFrench;
-    private final String storageUnitNameArmenian;
-    private final String storageUnitNameEnglish;
-    private final String storageUnitNameFrench;
-    private final String conditionArmenian;
-    private final String conditionEnglish;
-    private final String conditionFrench;
+    private final String historyHy;
+    private final String historyEn;
+    private final String historyFr;
+    private final String originalAffiliationHy;
+    private final String originalAffiliationEn;
+    private final String originalAffiliationFr;
+    private final String storageUnitNameHy;
+    private final String storageUnitNameEn;
+    private final String storageUnitNameFr;
+    private final String conditionHy;
+    private final String conditionEn;
+    private final String conditionFr;
 
     private final List<String> pictures;
 
-    private final ZonedDateTime createdAt;
-    private final ZonedDateTime updatedAt;
+    private final Long createdAt;
+    private final Long updatedAt;
 
     private final List<BibliographyResponseDto> bibliography;
     private final TopographicResponseDto topographics;

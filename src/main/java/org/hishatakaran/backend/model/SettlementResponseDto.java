@@ -1,8 +1,5 @@
 package org.hishatakaran.backend.model;
 
-import java.util.List;
-import java.util.UUID;
-
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -13,7 +10,7 @@ import lombok.Setter;
 public class SettlementResponseDto {
 
     private final Long id;
-    private final String nameArmenian;
-    private final String nameEnglish;
-    private final String nameFrench;
+    private final String nameHy;
+    private final String nameEn;
+    private final String nameFr;
 }

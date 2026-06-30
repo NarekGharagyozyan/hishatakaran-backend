@@ -30,11 +30,11 @@ public class Region {
     private Long id;
 
     @Column(nullable = false)
-    private String nameArmenian;
+    private String nameHy;
     @Column(nullable = false)
-    private String nameEnglish;
+    private String nameEn;
     @Column(nullable = false)
-    private String nameFrench;
+    private String nameFr;
 
     @OneToMany(mappedBy = "region")
     @JsonManagedReference
@@ -47,9 +47,9 @@ public class Region {
     public String toString() {
         return "Region{" +
             "id=" + id +
-            ", nameArmenian='" + nameArmenian + '\'' +
-            ", nameEnglish='" + nameEnglish + '\'' +
-            ", nameFrench='" + nameFrench + '\'' +
+            ", nameHy='" + nameHy + '\'' +
+            ", nameEn='" + nameEn + '\'' +
+            ", nameFr='" + nameFr + '\'' +
             ", monuments=" + monuments +
             '}';
     }

@@ -2,25 +2,18 @@ package org.hishatakaran.backend.controller;
 
 import lombok.RequiredArgsConstructor;
 
-import org.hishatakaran.backend.Scraper;
 import org.hishatakaran.backend.mapper.MonumentMapper;
 import org.hishatakaran.backend.model.MonumentFilterRequest;
 import org.hishatakaran.backend.model.MonumentRequestDto;
 import org.hishatakaran.backend.model.MonumentResponseDto;
 import org.hishatakaran.backend.model.MonumentType;
-import org.hishatakaran.backend.model.NewsRequestDto;
-import org.hishatakaran.backend.model.NewsResponseDto;
 import org.hishatakaran.backend.model.Status;
 import org.hishatakaran.backend.repository.MonumentRepository;
 import org.hishatakaran.backend.service.MonumentService;
-import org.springframework.data.domain.Page;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.awt.print.Pageable;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/monuments")
@@ -55,9 +48,9 @@ public class MonumentController {
     @GetMapping
     public List<MonumentResponseDto> getMonumentsByFilter(
         @RequestParam(required = false)
-        Integer regionId,
+        Long regionId,
         @RequestParam(required = false)
-        Integer settlementId,
+        Long settlementId,
         @RequestParam(required = false)
         MonumentType monumentType
     ) {
@@ -73,7 +66,7 @@ public class MonumentController {
     }
 
     @GetMapping("/{id}")
-    public MonumentResponseDto getById(@PathVariable UUID id) {
+    public MonumentResponseDto getById(@PathVariable Long id) {
         return MonumentMapper.toDto(
             monumentRepository.findById(id).orElseThrow()
         );
@@ -88,7 +81,7 @@ public class MonumentController {
     }
 
     @GetMapping("/region/{regionId}")
-    public List<MonumentResponseDto> getByRegion(@PathVariable Integer regionId) {
+    public List<MonumentResponseDto> getByRegion(@PathVariable Long regionId) {
         return monumentRepository.findByRegionId(regionId)
             .stream()
             .map(MonumentMapper::toDto)
@@ -96,7 +89,7 @@ public class MonumentController {
     }
 
     @GetMapping("/settlement/{settlementId}")
-    public List<MonumentResponseDto> getBySettlement(@PathVariable Integer settlementId) {
+    public List<MonumentResponseDto> getBySettlement(@PathVariable Long settlementId) {
         return monumentRepository.findBySettlementId(settlementId)
             .stream()
             .map(MonumentMapper::toDto)
@@ -104,8 +97,8 @@ public class MonumentController {
     }
 
     @GetMapping("/type/{type}")
-    public List<MonumentResponseDto> getByType(@PathVariable MonumentType type) {
-        return monumentRepository.findByMonumentTypeArmenianOrMonumentTypeEnglishOrMonumentTypeEnglish(type, type, type)
+    public List<MonumentResponseDto> getByType(@PathVariable String type) {
+        return monumentRepository.findByMonumentTypeHyOrMonumentTypeEnOrMonumentTypeFr(type, type, type)
             .stream()
             .map(MonumentMapper::toDto)
             .toList();

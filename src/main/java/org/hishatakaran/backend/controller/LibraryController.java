@@ -7,7 +7,6 @@ import org.hishatakaran.backend.repository.LibraryRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/library")
@@ -25,7 +24,7 @@ public class LibraryController {
     }
 
     @GetMapping("/{id}")
-    public LibraryResponseDto getById(@PathVariable UUID id) {
+    public LibraryResponseDto getById(@PathVariable Long id) {
         return LibraryMapper.toDto(
             libraryRepository.findById(id).orElseThrow()
         );

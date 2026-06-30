@@ -1,147 +1,114 @@
-INSERT INTO regions (id, name)
-VALUES (1, 'Shirak');
+insert into regions(id, name_hy, name_en, name_fr)
+values
+    (1, 'Ասկերանի շրջան', 'Askerani District', 'district d''Askerani'),
+    (2, 'Հադրութի շրջան', 'Hadruti District', 'district de Hadruti'),
+    (3, 'Մարտակերտի շրջան', 'Martakerti District', 'district de Martakerti'),
+    (4, 'Մարտունու շրջան (Արցախ)', 'Martunu District (Artsʻakh)', 'district de Martunu (Artsʻakh)'),
+    (5, 'Նոր Շահումյանի (Քարվաճառ) շրջան', 'New Shahumyani (Kʻarvachar) District', 'district de Nouveau Shahumyani (Kʻarvachar)'),
+    (6, 'Շահումյանի շրջան', 'Shahumyani District', 'district de Shahumyani'),
+    (7, 'Շուշիի շրջան', 'Shushii District', 'district de Shushii'),
+    (8, 'Ստեփանակերտ', 'Stepʻanakert', 'Stepʻanakert'),
+    (9, 'Քաշաթաղի շրջան', 'Kʻashatʻaghi District', 'district de Kʻashatʻaghi');
 
-INSERT INTO settlements (id, region)
-VALUES (1, 1);
+insert into settlements(id, name_en, name_fr, name_hy, region)
+values
+    (1,  'Akna', 'Akna', 'Ակնա', 1),
+    (2,  'Aknaghbyur', 'Aknaghbyur', 'Ակնաղբյուր', 1),
+    (3,  'Aygestan', 'Aygestan', 'Այգեստան', 1),
+    (4,  'Askeran', 'Askeran', 'Ասկերան', 1),
+    (5,  'Astghashen', 'Astghashen', 'Աստղաշեն', 1),
+    (6,  'Avetaranotsʻ', 'Avetaranotsʻ', 'Ավետարանոց', 1),
+    (7,  'Armenakavan', 'Armenakavan', 'Արմենակավան', 1),
+    (8,  'Berkʻadzor', 'Berkʻadzor', 'Բերքաձոր', 1),
+    (9,  'Dahraz', 'Dahraz', 'Դահրազ', 1),
+    (10, 'Dahrav', 'Dahrav', 'Դահրավ', 1),
+    (11, 'Dashushen', 'Dashushen', 'Դաշուշեն', 1),
+    (12, 'Ivanyan', 'Ivanyan', 'Իվանյան', 1),
+    (13, 'Lusadzor', 'Lusadzor', 'Լուսաձոր', 1),
+    (14, 'Khantsʻkʻ', 'Khantsʻkʻ', 'Խանցք', 1),
+    (15, 'Khachen', 'Khachen', 'Խաչեն', 1),
+    (16, 'Khachmach', 'Khachmach', 'Խաչմաչ', 1),
+    (17, 'Khnatsʻakh', 'Khnatsʻakh', 'Խնածախ', 1),
+    (18, 'Khnapat', 'Khnapat', 'Խնապատ', 1),
+    (19, 'Khndzristan', 'Khndzristan', 'Խնձրիստան', 1),
+    (20, 'Khramort', 'Khramort', 'Խրամորթ', 1),
+    (21, 'Tsaghkashat', 'Tsaghkashat', 'Ծաղկաշատ', 1),
+    (22, 'Red Village', 'Village rouge','Կարմիր գյուղ', 1),
+    (23, 'Harav', 'Harav','Հարավ', 1),
+    (24, 'Hilis', 'Hilis','Հիլիս', 1),
+    (25, 'Madatashen', 'Madatashen',   'Մադաթաշեն', 1),
+    (26, 'Mkhitarashen', 'Mkhitarashen', 'Մխիթարաշեն', 1),
+    (27, 'Moshkhmhat', 'Moshkhmhat',   'Մոշխմհատ', 1),
+    (28, 'Nakhijevanik', 'Nakhijevanik', 'Նախիջևանիկ', 1),
+    (29, 'Lower Sznek', 'Bas Sznek',    'Ներքին Սզնեք', 1),
+    (30, 'Noragyugh', 'Noragyugh',    'Նորագյուղ', 1),
+    (31, 'Shosh', 'Shosh','Շոշ', 1),
+    (32, 'Ulupap', 'Ulupap', 'Ուլուպապ', 1),
+    (33, 'Ughtasar', 'Ughtasar', 'Ուղտասար', 1),
+    (34, 'Patara', 'Patara', 'Պատարա', 1),
+    (35, 'Jraghatsʻner', 'Jraghatsʻner', 'Ջրաղացներ', 1),
+    (36, 'Rev', 'Rev',  'Ռև', 1),
+    (37, 'Sarnaghbyur', 'Sarnaghbyur', 'Սառնաղբյուր', 1),
+    (38, 'Sardarashen', 'Sardarashen', 'Սարդարաշեն', 1),
+    (39, 'Sarushen', 'Sarushen', 'Սարուշեն', 1),
+    (40, 'Sghnakh', 'Sghnakh', 'Սղնախ', 1),
+    (41, 'Surenavan', 'Surenavan', 'Սուրենավան', 1),
+    (42, 'Varazabun', 'Varazabun', 'Վարազաբուն', 1),
+    (43, 'Vardadzor', 'Vardadzor', 'Վարդաձոր', 1),
+    (44, 'Upper Ghlijbagh', 'Haut Ghlijbagh', 'Վերին Ղլիջբաղ', 1),
+    (45, 'Upper Sznek', 'Haut Sznek', 'Վերին Սզնեք', 1),
+    (46, 'Pʻarrukh', 'Pʻarrukh', 'Փառուխ', 1),
+    (47, 'Kʻaraglukh', 'Kʻaraglukh', 'Քարագլուխ', 1),
+    (48, 'Kʻyatʻukʻ', 'Kʻyatʻukʻ', 'Քյաթուկ', 1),
+    (49, 'Kʻṙasni', 'Kʻṙasni', 'Քռասնի', 1),
 
-INSERT INTO state_of_monument (name)
-VALUES ('GOOD');
-
-INSERT INTO library (id, title, book_url, cover_url)
-VALUES (
-           UUID_TO_BIN('11111111-1111-1111-1111-111111111111'),
-           'Sample Book',
-           'https://example.com/book.pdf',
-           'https://example.com/cover.jpg'
-       );
-
-INSERT INTO monuments (
-    id,
-    status,
-    name,
-    region,
-    settlement,
-    monument_type,
-    special_name,
-    history,
-    original_affiliation,
-    storage_unit_name,
-    monument_condition,
-    created_at,
-    updated_at
-)
-VALUES (
-           UUID_TO_BIN('22222222-2222-2222-2222-222222222222'),
-           'PUBLISHED',
-           'Sample Monument',
-           1,
-           1,
-           'ARCHAEOLOGICAL',
-           'Special Monument',
-           'Sample monument history',
-           'Ancient Culture',
-           'National Museum',
-           'Well Preserved',
-           NOW(),
-           NOW()
-       );
-
-INSERT INTO monument_another_names (monument_id, another_name)
-VALUES (UUID_TO_BIN('22222222-2222-2222-2222-222222222222'), 'Alternative Monument Name');
-
-INSERT INTO monument_pictures (monument_id, picture_url)
-VALUES (UUID_TO_BIN('22222222-2222-2222-2222-222222222222'), 'https://example.com/monument.jpg');
-
-INSERT INTO bibliography (id, monument)
-VALUES (
-           UUID_TO_BIN('33333333-3333-3333-3333-333333333333'),
-           UUID_TO_BIN('22222222-2222-2222-2222-222222222222')
-       );
-
-INSERT INTO bibliography_urls (bibliography_id, url)
-VALUES (
-           UUID_TO_BIN('33333333-3333-3333-3333-333333333333'),
-           'https://example.com/bibliography'
-       );
-
-INSERT INTO topographics (
-    id,
-    monument,
-    region_history,
-    address,
-    topography,
-    distance_from_residence,
-    altitude,
-    hydrography,
-    description
-)
-VALUES (
-           UUID_TO_BIN('44444444-4444-4444-4444-444444444444'),
-           UUID_TO_BIN('22222222-2222-2222-2222-222222222222'),
-           'Historic Shirak',
-           'Shirak Province',
-           'Mountain slope',
-           '2 km',
-           1500,
-           'Nearby river',
-           'Topographic sample description'
-       );
-
-INSERT INTO historical_references (
-    id,
-    monument,
-    cultural_affiliation,
-    century,
-    justification_of_the_numbering_based_on_lithography,
-    chronological_table_of_the_stud,
-    author
-)
-VALUES (
-           UUID_TO_BIN('55555555-5555-5555-5555-555555555555'),
-           UUID_TO_BIN('22222222-2222-2222-2222-222222222222'),
-           'Urartian',
-           '8th century BC',
-           'Based on inscription style',
-           'Chronological sample table',
-           'Historian Name'
-       );
-
-INSERT INTO descriptive_characteristic_reference (
-    id,
-    monument,
-    the_building_material,
-    type,
-    color,
-    implementation_technique,
-    state_of_monument,
-    valuation
-)
-VALUES (
-           UUID_TO_BIN('66666666-6666-6666-6666-666666666666'),
-           UUID_TO_BIN('22222222-2222-2222-2222-222222222222'),
-           'Basalt',
-           'Temple structure',
-           'BLACK',
-           'Stone carving',
-           'GOOD',
-           'High historical value'
-       );
-
-INSERT INTO news (
-    id,
-    title,
-    text,
-    status
-)
-VALUES (
-           UUID_TO_BIN('77777777-7777-7777-7777-777777777777'),
-           'Sample News',
-           'Sample news content',
-           'PUBLISHED'
-       );
-
-INSERT INTO news_pictures (news_id, picture_url)
-VALUES (
-           UUID_TO_BIN('77777777-7777-7777-7777-777777777777'),
-           'https://example.com/news.jpg'
-       );
+    (50, 'Azokh', 'Azokh', 'Ազոխ', 2),
+    (51, 'Aknaghbyur', 'Aknaghbyur', 'Ակնաղբյուր', 2),
+    (52, 'Aygostan', 'Aygostan', 'Այգոստան', 2),
+    (53, 'Aradzamugh', 'Aradzamugh', 'Առաջամուղ', 2),
+    (54, 'Arak’el', 'Arakel', 'Առաքել', 2),
+    (55, 'Araksavan', 'Araksavan', 'Արաքսավան', 2),
+    (56, 'Arevshat', 'Arevshat', 'Արևշատ', 2),
+    (57, 'Banadzor', 'Banadzor', 'Բանաձոր', 2),
+    (58, 'Drakhtik', 'Drakhtik', 'Դրախտիկ', 2),
+    (59, 'Taghaser', 'Taghaser', 'Թաղասեռ', 2),
+    (60, 'Taghot', 'Taghot', 'Թաղոտ', 2),
+    (61, 'Khandzadzor', 'Khandzadzor', 'Խանձաձոր', 2),
+    (62, 'Khtsaberd', 'Khtsaberd', 'Խծաբերդ', 2),
+    (63, 'Tsakuri', 'Tsakouri', 'Ծակուռի', 2),
+    (64, 'Tsaghkavank’', 'Tsaghkavank', 'Ծաղկավանք', 2),
+    (65, 'Tsamdzor', 'Tsamdzor', 'Ծամձոր', 2),
+    (66, 'Karmrakuch', 'Karmrakoutch', 'Կարմրակուճ', 2),
+    (67, 'Karmrak’ar', 'Karmrakar', 'Կարմրաքար', 2),
+    (68, 'Hadrut’', 'Hadrout', 'Հադրութ', 2),
+    (69, 'Hakaku', 'Hakakou', 'Հակակու', 2),
+    (70, 'Haykavan', 'Haykavan', 'Հայկավան', 2),
+    (71, 'Hartashen', 'Hartashen', 'Հարթաշեն', 2),
+    (72, 'Hin Tagher', 'Hin Tagher', 'Հին Թաղեր', 2),
+    (73, 'Hogher', 'Hogher', 'Հողեր', 2),
+    (74, 'Dzoragyugh', 'Dzoragyugh', 'Ձորագյուղ', 2),
+    (75, 'Ghashchilar', 'Ghashchilar', 'Ղաշչիլար', 2),
+    (76, 'Mariamadzor', 'Mariamadzor', 'Մարիամաձոր', 2),
+    (77, 'Melik’ashen', 'Melikashen', 'Մելիքաշեն', 2),
+    (78, 'Mekhakavan', 'Mekhakavan', 'Մեխակավան', 2),
+    (79, 'Mets Tagher', 'Mets Tagher', 'Մեծ Թաղեր', 2),
+    (80, 'Mokhrenes', 'Mokhrenes', 'Մոխրենես', 2),
+    (81, 'Norashen', 'Norashen', 'Նորաշեն', 2),
+    (82, 'Ukhtadzor', 'Oukhtadzor', 'Ուխտաձոր', 2),
+    (83, 'Petrosashen', 'Petrosashen', 'Պետրոսաշեն', 2),
+    (84, 'Plet’ants’', 'Pletants', 'Պլեթանց', 2),
+    (85, 'Jraberd', 'Djraberd', 'Ջրաբերդ', 2),
+    (86, 'Jrakus', 'Djrakous', 'Ջրակուս', 2),
+    (87, 'Saralandzh', 'Saralandj', 'Սարալանջ', 2),
+    (88, 'Sarishen', 'Sarishen', 'Սարիշեն', 2),
+    (89, 'Spitakashen', 'Spitakashen', 'Սպիտակաշեն', 2),
+    (90, 'Vaghaver', 'Vaghaver', 'Վաղավեր', 2),
+    (91, 'Vank’', 'Vank', 'Վանք', 2),
+    (92, 'Vardashat', 'Vardashat', 'Վարդաշատ', 2),
+    (93, 'Tyak’', 'Tyak', 'Տյաք', 2),
+    (94, 'Togh', 'Togh', 'Տող', 2),
+    (95, 'Tumi', 'Toumi', 'Տումի', 2),
+    (96, 'Ts’or', 'Tsor', 'Ցոր', 2),
+    (97, 'K’araglukh', 'Karagloukh', 'Քարագլուխ', 2),
+    (98, 'K’aring', 'Karing', 'Քարինգ', 2),
+    (99, 'Kyurat’agh', 'Kyuratagh', 'Քյուրաթաղ', 2)

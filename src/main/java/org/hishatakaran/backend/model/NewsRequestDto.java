@@ -1,7 +1,6 @@
 package org.hishatakaran.backend.model;
 
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.web.multipart.MultipartFile;
 

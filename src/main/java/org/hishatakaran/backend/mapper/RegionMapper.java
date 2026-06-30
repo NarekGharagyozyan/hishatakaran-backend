@@ -9,9 +9,9 @@ public class RegionMapper {
 
     return new RegionResponseDto(
         region.getId(),
-        region.getNameArmenian(),
-        region.getNameEnglish(),
-        region.getNameFrench()
+        region.getNameHy(),
+        region.getNameEn(),
+        region.getNameFr()
     );
   }
 }

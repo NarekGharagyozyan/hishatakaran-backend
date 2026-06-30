@@ -24,7 +24,7 @@ public class RegionController {
     }
 
     @GetMapping("/{id}")
-    public RegionResponseDto getById(@PathVariable Integer id) {
+    public RegionResponseDto getById(@PathVariable Long id) {
         return RegionMapper.toDto(
             regionRepository.findById(id).orElseThrow()
         );

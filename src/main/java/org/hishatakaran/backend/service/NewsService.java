@@ -41,12 +41,12 @@ public class NewsService {
     News news;
     if (newsAiResponseDto != null) {
       news = new News();
-      news.setTitleArmenian(newsAiResponseDto.getTitleArmenian());
-      news.setTitleEnglish(newsAiResponseDto.getTitleEnglish());
-      news.setTitleFrench(newsAiResponseDto.getTitleFrench());
-      news.setTextArmenian(newsAiResponseDto.getTextArmenian());
-      news.setTextEnglish(newsAiResponseDto.getTextEnglish());
-      news.setTextFrench(newsAiResponseDto.getTextFrench());
+      news.setTitleHy(newsAiResponseDto.getTitleHy());
+      news.setTitleEn(newsAiResponseDto.getTitleEn());
+      news.setTitleFr(newsAiResponseDto.getTitleFr());
+      news.setTextHy(newsAiResponseDto.getTextHy());
+      news.setTextEn(newsAiResponseDto.getTextEn());
+      news.setTextFr(newsAiResponseDto.getTextFr());
       news.setPictures(generateImagePaths(newsDto.getPictures()));
       news.setStatus(Status.DRAFT);
     }

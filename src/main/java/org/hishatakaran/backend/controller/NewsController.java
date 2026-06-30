@@ -1,7 +1,6 @@
 package org.hishatakaran.backend.controller;
 
 import java.util.List;
-import java.util.UUID;
 
 import org.hishatakaran.backend.mapper.NewsMapper;
 import org.hishatakaran.backend.model.NewsRequestDto;
@@ -43,7 +42,7 @@ public class NewsController {
     }
 
     @GetMapping("/{id}")
-    public NewsResponseDto getById(@PathVariable UUID id) {
+    public NewsResponseDto getById(@PathVariable Long id) {
         return NewsMapper.toDto(
             newsRepository.findById(id).orElseThrow()
         );

@@ -1,7 +1,5 @@
 package org.hishatakaran.backend.model;
 
-import java.util.UUID;
-
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -12,19 +10,19 @@ import lombok.Setter;
 public class HistoricalReferenceResponseDto {
 
     private final Long id;
-    private final String culturalAffiliationArmenian;
-    private final String culturalAffiliationEnglish;
-    private final String culturalAffiliationFrench;
-    private final String centuryArmenian;
-    private final String centuryEnglish;
-    private final String centuryFrench;
-    private final String justificationOfTheNumberingBasedOnLithographyArmenian;
-    private final String justificationOfTheNumberingBasedOnLithographyEnglish;
-    private final String justificationOfTheNumberingBasedOnLithographyFrench;
-    private final String chronologicalTableOfTheStudArmenian;
-    private final String chronologicalTableOfTheStudEnglish;
-    private final String chronologicalTableOfTheStudFrench;
-    private final String authorArmenian;
-    private final String authorEnglish;
-    private final String authorFrench;
+    private final String culturalAffiliationHy;
+    private final String culturalAffiliationEn;
+    private final String culturalAffiliationFr;
+    private final String centuryHy;
+    private final String centuryEn;
+    private final String centuryFr;
+    private final String justificationOfTheNumberingBasedOnLithographyHy;
+    private final String justificationOfTheNumberingBasedOnLithographyEn;
+    private final String justificationOfTheNumberingBasedOnLithographyFr;
+    private final String chronologicalTableOfTheStudHy;
+    private final String chronologicalTableOfTheStudEn;
+    private final String chronologicalTableOfTheStudFr;
+    private final String authorHy;
+    private final String authorEn;
+    private final String authorFr;
 }

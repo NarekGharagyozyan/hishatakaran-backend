@@ -24,14 +24,14 @@ public class SettlementController {
     }
 
     @GetMapping("/{id}")
-    public SettlementResponseDto getById(@PathVariable Integer id) {
+    public SettlementResponseDto getById(@PathVariable Long id) {
         return SettlementMapper.toDto(
             settlementRepository.findById(id).orElseThrow()
         );
     }
 
     @GetMapping("/region/{regionId}")
-    public List<SettlementResponseDto> getByRegion(@PathVariable Integer regionId) {
+    public List<SettlementResponseDto> getByRegion(@PathVariable Long regionId) {
         return settlementRepository.findByRegionId(regionId)
             .stream()
             .map(SettlementMapper::toDto)

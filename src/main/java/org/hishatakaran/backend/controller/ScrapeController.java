@@ -1,6 +1,5 @@
 package org.hishatakaran.backend.controller;
 
-import java.util.UUID;
 
 import org.hishatakaran.backend.Scraper;
 import org.springframework.web.bind.annotation.GetMapping;

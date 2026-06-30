@@ -2,7 +2,6 @@ package org.hishatakaran.backend.entity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import org.hishatakaran.backend.model.Status;
 
@@ -44,9 +43,9 @@ public class Monument extends BaseEntity{
     @Column(nullable = false)
     private Status status;
 
-    private String nameArmenian;
-    private String nameEnglish;
-    private String nameFrench;
+    private String nameHy;
+    private String nameEn;
+    private String nameFr;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "region", nullable = false)
@@ -56,54 +55,54 @@ public class Monument extends BaseEntity{
     @JoinColumn(name = "settlement", nullable = false)
     private Settlement settlement;
 
-    private String monumentTypeArmenian;
-    private String monumentTypeEnglish;
-    private String monumentTypeFrench;
+    private String monumentTypeHy;
+    private String monumentTypeEn;
+    private String monumentTypeFr;
 
-    private String specialNameArmenian;
-    private String specialNameEnglish;
-    private String specialNameFrench;
-
-    @ElementCollection
-    @CollectionTable(name = "monument_another_names_armenian", joinColumns = @JoinColumn(name = "monument_id"))
-    @Column(name = "another_names_armenian")
-    private List<String> anotherNamesArmenian = new ArrayList<>();
+    private String specialNameHy;
+    private String specialNameEn;
+    private String specialNameFr;
 
     @ElementCollection
-    @CollectionTable(name = "monument_another_names_english", joinColumns = @JoinColumn(name = "monument_id"))
-    @Column(name = "another_names_english")
-    private List<String> anotherNamesEnglish = new ArrayList<>();
+    @CollectionTable(name = "monument_another_names_hy", joinColumns = @JoinColumn(name = "monument_id"))
+    @Column(name = "another_names_hy")
+    private List<String> anotherNamesHy = new ArrayList<>();
 
     @ElementCollection
-    @CollectionTable(name = "monument_another_names_french", joinColumns = @JoinColumn(name = "monument_id"))
-    @Column(name = "another_names_french")
-    private List<String> anotherNamesFrench = new ArrayList<>();
+    @CollectionTable(name = "monument_another_names_en", joinColumns = @JoinColumn(name = "monument_id"))
+    @Column(name = "another_names_en")
+    private List<String> anotherNamesEn = new ArrayList<>();
+
+    @ElementCollection
+    @CollectionTable(name = "monument_another_names_fr", joinColumns = @JoinColumn(name = "monument_id"))
+    @Column(name = "another_names_fr")
+    private List<String> anotherNamesFr = new ArrayList<>();
 
     @Column(columnDefinition = "TEXT")
-    private String historyArmenian;
+    private String historyHy;
 
     @Column(columnDefinition = "TEXT")
-    private String historyEnglish;
+    private String historyEn;
 
     @Column(columnDefinition = "TEXT")
-    private String historyFrench;
+    private String historyFr;
 
-    private String originalAffiliationArmenian;
-    private String originalAffiliationEnglish;
-    private String originalAffiliationFrench;
+    private String originalAffiliationHy;
+    private String originalAffiliationEn;
+    private String originalAffiliationFr;
 
-    private String storageUnitNameArmenian;
-    private String storageUnitNameEnglish;
-    private String storageUnitNameFrench;
+    private String storageUnitNameHy;
+    private String storageUnitNameEn;
+    private String storageUnitNameFr;
 
-    @Column(name = "monument_condition_armenian")
-    private String conditionArmenian;
+    @Column(name = "monument_condition_hy")
+    private String conditionHy;
 
-    @Column(name = "monument_condition_english")
-    private String conditionEnglish;
+    @Column(name = "monument_condition_en")
+    private String conditionEn;
 
-    @Column(name = "monument_condition_french")
-    private String conditionFrench;
+    @Column(name = "monument_condition_fr")
+    private String conditionFr;
 
     @ElementCollection
     @CollectionTable(name = "monument_pictures", joinColumns = @JoinColumn(name = "monument_id"))
@@ -126,32 +125,32 @@ public class Monument extends BaseEntity{
 
     public Monument(
         Status status,
-        String nameArmenian,
-        String nameEnglish,
-        String nameFrench,
+        String nameHy,
+        String nameEn,
+        String nameFr,
         Region region,
         Settlement settlement,
-        String monumentTypeArmenian,
-        String monumentTypeEnglish,
-        String monumentTypeFrench,
-        String specialNameArmenian,
-        String specialNameEnglish,
-        String specialNameFrench,
-        List<String> anotherNamesArmenian,
-        List<String> anotherNamesEnglish,
-        List<String> anotherNamesFrench,
-        String historyArmenian,
-        String historyEnglish,
-        String historyFrench,
-        String originalAffiliationArmenian,
-        String originalAffiliationEnglish,
-        String originalAffiliationFrench,
-        String storageUnitNameArmenian,
-        String storageUnitNameEnglish,
-        String storageUnitNameFrench,
-        String conditionArmenian,
-        String conditionEnglish,
-        String conditionFrench,
+        String monumentTypeHy,
+        String monumentTypeEn,
+        String monumentTypeFr,
+        String specialNameHy,
+        String specialNameEn,
+        String specialNameFr,
+        List<String> anotherNamesHy,
+        List<String> anotherNamesEn,
+        List<String> anotherNamesFr,
+        String historyHy,
+        String historyEn,
+        String historyFr,
+        String originalAffiliationHy,
+        String originalAffiliationEn,
+        String originalAffiliationFr,
+        String storageUnitNameHy,
+        String storageUnitNameEn,
+        String storageUnitNameFr,
+        String conditionHy,
+        String conditionEn,
+        String conditionFr,
         List<String> pictures,
         List<Bibliography> bibliography,
         Topographic topographics,
@@ -160,32 +159,32 @@ public class Monument extends BaseEntity{
         String signature)
     {
         this.status = status;
-        this.nameArmenian = nameArmenian;
-        this.nameEnglish = nameEnglish;
-        this.nameFrench = nameFrench;
+        this.nameHy = nameHy;
+        this.nameEn = nameEn;
+        this.nameFr = nameFr;
         this.region = region;
         this.settlement = settlement;
-        this.monumentTypeArmenian = monumentTypeArmenian;
-        this.monumentTypeEnglish = monumentTypeEnglish;
-        this.monumentTypeFrench = monumentTypeFrench;
-        this.specialNameArmenian = specialNameArmenian;
-        this.specialNameEnglish = specialNameEnglish;
-        this.specialNameFrench = specialNameFrench;
-        this.anotherNamesArmenian = anotherNamesArmenian;
-        this.anotherNamesEnglish = anotherNamesEnglish;
-        this.anotherNamesFrench = anotherNamesFrench;
-        this.historyArmenian = historyArmenian;
-        this.historyEnglish = historyEnglish;
-        this.historyFrench = historyFrench;
-        this.originalAffiliationArmenian = originalAffiliationArmenian;
-        this.originalAffiliationEnglish = originalAffiliationEnglish;
-        this.originalAffiliationFrench = originalAffiliationFrench;
-        this.storageUnitNameArmenian = storageUnitNameArmenian;
-        this.storageUnitNameEnglish = storageUnitNameEnglish;
-        this.storageUnitNameFrench = storageUnitNameFrench;
-        this.conditionArmenian = conditionArmenian;
-        this.conditionEnglish = conditionEnglish;
-        this.conditionFrench = conditionFrench;
+        this.monumentTypeHy = monumentTypeHy;
+        this.monumentTypeEn = monumentTypeEn;
+        this.monumentTypeFr = monumentTypeFr;
+        this.specialNameHy = specialNameHy;
+        this.specialNameEn = specialNameEn;
+        this.specialNameFr = specialNameFr;
+        this.anotherNamesHy = anotherNamesHy;
+        this.anotherNamesEn = anotherNamesEn;
+        this.anotherNamesFr = anotherNamesFr;
+        this.historyHy = historyHy;
+        this.historyEn = historyEn;
+        this.historyFr = historyFr;
+        this.originalAffiliationHy = originalAffiliationHy;
+        this.originalAffiliationEn = originalAffiliationEn;
+        this.originalAffiliationFr = originalAffiliationFr;
+        this.storageUnitNameHy = storageUnitNameHy;
+        this.storageUnitNameEn = storageUnitNameEn;
+        this.storageUnitNameFr = storageUnitNameFr;
+        this.conditionHy = conditionHy;
+        this.conditionEn = conditionEn;
+        this.conditionFr = conditionFr;
         this.pictures = pictures;
         this.bibliography = bibliography;
         this.topographics = topographics;
@@ -199,32 +198,32 @@ public class Monument extends BaseEntity{
         return "Monument{" +
             "id=" + id +
             ", status=" + status +
-            ", nameArmenian='" + nameArmenian + '\'' +
-            ", nameEnglish='" + nameEnglish + '\'' +
-            ", nameFrench='" + nameFrench + '\'' +
+            ", nameHy='" + nameHy + '\'' +
+            ", nameEn='" + nameEn + '\'' +
+            ", nameFr='" + nameFr + '\'' +
             ", region=" + region +
             ", settlement=" + settlement +
-            ", monumentTypeArmenian='" + monumentTypeArmenian + '\'' +
-            ", monumentTypeEnglish='" + monumentTypeEnglish + '\'' +
-            ", monumentTypeFrench='" + monumentTypeFrench + '\'' +
-            ", specialNameArmenian='" + specialNameArmenian + '\'' +
-            ", specialNameEnglish='" + specialNameEnglish + '\'' +
-            ", specialNameFrench='" + specialNameFrench + '\'' +
-            ", anotherNamesArmenian=" + anotherNamesArmenian +
-            ", anotherNamesEnglish=" + anotherNamesEnglish +
-            ", anotherNamesFrench=" + anotherNamesFrench +
-            ", historyArmenian='" + historyArmenian + '\'' +
-            ", historyEnglish='" + historyEnglish + '\'' +
-            ", historyFrench='" + historyFrench + '\'' +
-            ", originalAffiliationArmenian='" + originalAffiliationArmenian + '\'' +
-            ", originalAffiliationEnglish='" + originalAffiliationEnglish + '\'' +
-            ", originalAffiliationFrench='" + originalAffiliationFrench + '\'' +
-            ", storageUnitNameArmenian='" + storageUnitNameArmenian + '\'' +
-            ", storageUnitNameEnglish='" + storageUnitNameEnglish + '\'' +
-            ", storageUnitNameFrench='" + storageUnitNameFrench + '\'' +
-            ", conditionArmenian='" + conditionArmenian + '\'' +
-            ", conditionEnglish='" + conditionEnglish + '\'' +
-            ", conditionFrench='" + conditionFrench + '\'' +
+            ", monumentTypeHy='" + monumentTypeHy + '\'' +
+            ", monumentTypeEn='" + monumentTypeEn + '\'' +
+            ", monumentTypeFr='" + monumentTypeFr + '\'' +
+            ", specialNameHy='" + specialNameHy + '\'' +
+            ", specialNameEn='" + specialNameEn + '\'' +
+            ", specialNameFr='" + specialNameFr + '\'' +
+            ", anotherNamesHy=" + anotherNamesHy +
+            ", anotherNamesEn=" + anotherNamesEn +
+            ", anotherNamesFr=" + anotherNamesFr +
+            ", historyHy='" + historyHy + '\'' +
+            ", historyEn='" + historyEn + '\'' +
+            ", historyFr='" + historyFr + '\'' +
+            ", originalAffiliationHy='" + originalAffiliationHy + '\'' +
+            ", originalAffiliationEn='" + originalAffiliationEn + '\'' +
+            ", originalAffiliationFr='" + originalAffiliationFr + '\'' +
+            ", storageUnitNameHy='" + storageUnitNameHy + '\'' +
+            ", storageUnitNameEn='" + storageUnitNameEn + '\'' +
+            ", storageUnitNameFr='" + storageUnitNameFr + '\'' +
+            ", conditionHy='" + conditionHy + '\'' +
+            ", conditionEn='" + conditionEn + '\'' +
+            ", conditionFr='" + conditionFr + '\'' +
             ", pictures=" + pictures +
             ", bibliography=" + bibliography +
             ", topographics=" + topographics +

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.hishatakaran.backend.model.MonumentRequestDto;
+import org.hishatakaran.backend.model.ProgramRequestDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
@@ -36,23 +37,23 @@ public class GeminiService {
         .build();
   }
 
-  public String requestGeminiForNews(String titleArmenian, String textArmenian) {
+  public String requestGeminiForNews(String titleHy, String textHy) {
     String prompt = """
         I will provide you with a title and text in Armenian.
         You must translate them into English and French and return the result in the following format:
         {
-          "titleArmenian": "...",
-          "titleEnglish": "...",
-          "titleFrench": "..."
-          "textArmenian": "...",
-          "textEnglish": "...",
-          "textFrench": "..."
+          "titleHy": "...",
+          "titleEn": "...",
+          "titleFr": "..."
+          "textHy": "...",
+          "textEn": "...",
+          "textFr": "..."
         }
                 
         Do not modify the Armenian text unless it contains grammatical, spelling, or punctuation errors.
         If there are any issues, correct them while preserving the original meaning.
                 
-        Here is the title: """ + titleArmenian + " And here is the text: " + textArmenian;
+        Here is the title: """ + titleHy + " And here is the text: " + textHy;
     Content content = Content.builder()
         .parts(
             List.of(
@@ -277,112 +278,112 @@ NOW EXTRACT DATA FROM THIS HTML:
     Map<String, Schema> allProperties = new HashMap<>();
 
     // Базовые текстовые поля
-    allProperties.put("nameArmenian", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("nameEnglish", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("nameFrench", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("nameHy", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("nameEn", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("nameFr", Schema.builder().type(Type.Known.STRING).build());
 
-    allProperties.put("specialNameArmenian", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("specialNameEnglish", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("specialNameFrench", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("specialNamHy", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("specialNameEn", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("specialNameFr", Schema.builder().type(Type.Known.STRING).build());
 
     // Массивы (anotherNames)
-    allProperties.put("anotherNamesArmenian", Schema.builder()
+    allProperties.put("anotherNamesHy", Schema.builder()
         .type(Type.Known.ARRAY)
         .items(Schema.builder().type(Type.Known.STRING).build())
         .build());
-    allProperties.put("anotherNamesEnglish", Schema.builder()
+    allProperties.put("anotherNamesEn", Schema.builder()
         .type(Type.Known.ARRAY)
         .items(Schema.builder().type(Type.Known.STRING).build())
         .build());
-    allProperties.put("anotherNamesFrench", Schema.builder()
+    allProperties.put("anotherNamesFr", Schema.builder()
         .type(Type.Known.ARRAY)
         .items(Schema.builder().type(Type.Known.STRING).build())
         .build());
 
 
-    allProperties.put("monumentTypeArmenian", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("monumentTypeEnglish", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("monumentTypeFrench", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("monumentTypeHy", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("monumentTypeEn", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("monumentTypeFr", Schema.builder().type(Type.Known.STRING).build());
 
-    allProperties.put("provinceArmenian", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("provinceEnglish", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("provinceFrench", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("provinceHy", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("provinceEn", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("provinceFr", Schema.builder().type(Type.Known.STRING).build());
 
-    allProperties.put("originalAffiliationArmenian", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("originalAffiliationEnglish", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("originalAffiliationFrench", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("originalAffiliationHy", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("originalAffiliationEn", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("originalAffiliationFr", Schema.builder().type(Type.Known.STRING).build());
 
-    allProperties.put("storageUnitNameArmenian", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("storageUnitNameEnglish", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("storageUnitNameFrench", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("storageUnitNameHy", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("storageUnitNameEn", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("storageUnitNameFr", Schema.builder().type(Type.Known.STRING).build());
 
-    allProperties.put("conditionArmenian", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("conditionEnglish", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("conditionFrench", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("conditionHy", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("conditionEn", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("conditionFr", Schema.builder().type(Type.Known.STRING).build());
 
-    allProperties.put("addressArmenian", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("addressEnglish", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("addressFrench", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("addressHy", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("addressEn", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("addressFr", Schema.builder().type(Type.Known.STRING).build());
 
-    allProperties.put("topographyArmenian", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("topographyEnglish", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("topographyFrench", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("topographyHy", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("topographyEn", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("topographyFr", Schema.builder().type(Type.Known.STRING).build());
 
-    allProperties.put("distanceFromResidenceArmenian", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("distanceFromResidenceEnglish", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("distanceFromResidenceFrench", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("distanceFromResidenceHy", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("distanceFromResidenceEn", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("distanceFromResidenceFr", Schema.builder().type(Type.Known.STRING).build());
 
-    allProperties.put("hydrographyArmenian", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("hydrographyEnglish", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("hydrographyFrench", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("hydrographyHy", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("hydrographyEn", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("hydrographyFr", Schema.builder().type(Type.Known.STRING).build());
 
-    allProperties.put("descriptionArmenian", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("descriptionEnglish", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("descriptionFrench", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("descriptionHy", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("descriptionEn", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("descriptionFr", Schema.builder().type(Type.Known.STRING).build());
 
-    allProperties.put("culturalAffiliationArmenian", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("culturalAffiliationEnglish", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("culturalAffiliationFrench", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("culturalAffiliationHy", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("culturalAffiliationEn", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("culturalAffiliationFr", Schema.builder().type(Type.Known.STRING).build());
 
-    allProperties.put("centuryArmenian", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("centuryEnglish", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("centuryFrench", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("centuryHy", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("centuryEn", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("centuryFr", Schema.builder().type(Type.Known.STRING).build());
 
-    allProperties.put("justificationOfTheNumberingBasedOnLithographyArmenian", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("justificationOfTheNumberingBasedOnLithographyEnglish", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("justificationOfTheNumberingBasedOnLithographyFrench", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("justificationOfTheNumberingBasedOnLithographyHy", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("justificationOfTheNumberingBasedOnLithographyEn", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("justificationOfTheNumberingBasedOnLithographyFr", Schema.builder().type(Type.Known.STRING).build());
 
-    allProperties.put("chronologicalTableOfTheStudArmenian", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("chronologicalTableOfTheStudEnglish", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("chronologicalTableOfTheStudFrench", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("chronologicalTableOfTheStudHy", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("chronologicalTableOfTheStudEn", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("chronologicalTableOfTheStudFr", Schema.builder().type(Type.Known.STRING).build());
 
-    allProperties.put("authorArmenian", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("authorEnglish", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("authorFrench", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("authorHy", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("authorEn", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("authorFr", Schema.builder().type(Type.Known.STRING).build());
 
-    allProperties.put("theBuildingMaterialArmenian", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("theBuildingMaterialEnglish", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("theBuildingMaterialFrench", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("theBuildingMaterialHy", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("theBuildingMaterialEn", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("theBuildingMaterialFr", Schema.builder().type(Type.Known.STRING).build());
 
-    allProperties.put("typeArmenian", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("typeEnglish", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("typeFrench", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("typeHy", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("typeEn", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("typeFr", Schema.builder().type(Type.Known.STRING).build());
 
-    allProperties.put("colorArmenian", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("colorEnglish", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("colorFrench", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("colorHy", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("colorEn", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("colorFr", Schema.builder().type(Type.Known.STRING).build());
 
-    allProperties.put("implementationTechniqueArmenian", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("implementationTechniqueEnglish", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("implementationTechniqueFrench", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("implementationTechniqueHy", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("implementationTechniqueEn", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("implementationTechniqueFr", Schema.builder().type(Type.Known.STRING).build());
 
-    allProperties.put("stateOfMonumentArmenian", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("stateOfMonumentEnglish", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("stateOfMonumentFrench", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("stateOfMonumentHy", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("stateOfMonumentEn", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("stateOfMonumentFr", Schema.builder().type(Type.Known.STRING).build());
 
-    allProperties.put("valuationArmenian", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("valuationEnglish", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("valuationFrench", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("valuationHy", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("valuationEn", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("valuationFr", Schema.builder().type(Type.Known.STRING).build());
 
     // 2. Строим финальную схему, передавая карту целиком ОДИН РАЗ
     Schema schema = Schema.builder()
@@ -544,5 +545,73 @@ NOW EXTRACT DATA FROM THIS HTML:
         null);
 
     return response.text();*/
+
+  public String requestGeminiForPrograms(ProgramRequestDto programRequestDto) {
+    Map<String, Schema> allProperties = new HashMap<>();
+
+    // Основные поля
+    allProperties.put("titleHy", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("titleEn", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("titleFr", Schema.builder().type(Type.Known.STRING).build());
+
+    allProperties.put("descriptionHy", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("descriptionEn", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("descriptionFr", Schema.builder().type(Type.Known.STRING).build());
+
+    // --- СТРУКТУРА ДЛЯ ССЫЛОК (ВЛОЖЕННЫЙ ОБЪЕКТ) ---
+    Map<String, Schema> linkProperties = new HashMap<>();
+    linkProperties.put("linkTitleHy", Schema.builder().type(Type.Known.STRING).build());
+    linkProperties.put("linkTitleEn", Schema.builder().type(Type.Known.STRING).build());
+    linkProperties.put("linkTitleFr", Schema.builder().type(Type.Known.STRING).build());
+    linkProperties.put("link", Schema.builder().type(Type.Known.STRING).build());
+
+    Schema linkItemSchema = Schema.builder()
+        .type(Type.Known.OBJECT)
+        .properties(linkProperties)
+        .build();
+
+    // Добавляем массив links в основные свойства
+    allProperties.put("links", Schema.builder()
+        .type(Type.Known.ARRAY)
+        .items(linkItemSchema) // Указываем, что массив состоит из объектов linkItemSchema
+        .build());
+    // -----------------------------------------------
+
+    Schema schema = Schema.builder()
+        .type(Type.Known.OBJECT)
+        .properties(allProperties)
+        .build();
+
+    GenerateContentConfig config = GenerateContentConfig.builder()
+        .responseMimeType("application/json")
+        .responseSchema(schema)
+        .build();
+
+    // Рекомендую немного уточнить промпт, чтобы модель точно поняла задачу со ссылками
+    String prompt = """
+    I am providing you with a DTO containing Armenian historical monument data.
+    You must translate all text fields into English and French.
+            
+    CRITICAL RULES:
+    1. Do not modify the Armenian text unless it contains grammatical, spelling, or punctuation errors. If there are issues, correct them while preserving the original meaning.
+    2. For the 'links' array: translate the title of each link into English and French, and keep the 'link' URL exactly as it is (DO NOT modify or translate URLs).
+    3. Populate all fields according to the requested JSON schema.
+            
+    Here is the DTO data:
+    """ + programRequestDto.toString();
+
+    Content content = Content.builder()
+        .parts(List.of(Part.builder().text(prompt).build()))
+        .build();
+
+    GenerateContentResponse response = client.models.generateContent(
+        "gemini-2.5-flash",
+        content,
+        config
+    );
+
+    System.out.println(response.text());
+    return response.text();
+  }
 
 }

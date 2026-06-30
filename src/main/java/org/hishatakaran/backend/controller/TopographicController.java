@@ -8,7 +8,6 @@ import org.hishatakaran.backend.repository.TopographicRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/topographics")
@@ -26,14 +25,14 @@ public class TopographicController {
     }
 
     @GetMapping("/{id}")
-    public TopographicResponseDto getById(@PathVariable UUID id) {
+    public TopographicResponseDto getById(@PathVariable Long id) {
         return TopographicMapper.toDto(
             topographicRepository.findById(id).orElseThrow()
         );
     }
 
     @GetMapping("/monument/{monumentId}")
-    public List<TopographicResponseDto> getByMonument(@PathVariable UUID monumentId) {
+    public List<TopographicResponseDto> getByMonument(@PathVariable Long monumentId) {
         return topographicRepository.findByMonumentId(monumentId)
             .stream()
             .map(TopographicMapper::toDto)
