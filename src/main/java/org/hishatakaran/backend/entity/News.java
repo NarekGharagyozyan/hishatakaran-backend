@@ -49,9 +49,9 @@ public class News {
     private String textFr;
 
     @ElementCollection
-    @CollectionTable(name = "news_pictures", joinColumns = @JoinColumn(name = "news_id"))
-    @Column(name = "picture_url")
-    private List<String> pictures = new ArrayList<>();
+    @CollectionTable(name = "news_images", joinColumns = @JoinColumn(name = "news_id"))
+    @Column(name = "images_url")
+    private List<String> images = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

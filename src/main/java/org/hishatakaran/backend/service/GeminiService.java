@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.hishatakaran.backend.model.LibraryRequestDto;
 import org.hishatakaran.backend.model.MonumentRequestDto;
 import org.hishatakaran.backend.model.ProgramRequestDto;
 import org.springframework.beans.factory.annotation.Value;
@@ -282,7 +283,7 @@ NOW EXTRACT DATA FROM THIS HTML:
     allProperties.put("nameEn", Schema.builder().type(Type.Known.STRING).build());
     allProperties.put("nameFr", Schema.builder().type(Type.Known.STRING).build());
 
-    allProperties.put("specialNamHy", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("specialNameHy", Schema.builder().type(Type.Known.STRING).build());
     allProperties.put("specialNameEn", Schema.builder().type(Type.Known.STRING).build());
     allProperties.put("specialNameFr", Schema.builder().type(Type.Known.STRING).build());
 
@@ -599,6 +600,61 @@ NOW EXTRACT DATA FROM THIS HTML:
             
     Here is the DTO data:
     """ + programRequestDto.toString();
+
+    Content content = Content.builder()
+        .parts(List.of(Part.builder().text(prompt).build()))
+        .build();
+
+    GenerateContentResponse response = client.models.generateContent(
+        "gemini-2.5-flash",
+        content,
+        config
+    );
+
+    System.out.println(response.text());
+    return response.text();
+  }
+
+  public String requestGeminiForLibrary(LibraryRequestDto libraryRequestDto) {
+    Map<String, Schema> allProperties = new HashMap<>();
+
+    // Основные поля
+    allProperties.put("titleHy", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("titleEn", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("titleFr", Schema.builder().type(Type.Known.STRING).build());
+
+    allProperties.put("descriptionHy", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("descriptionEn", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("descriptionFr", Schema.builder().type(Type.Known.STRING).build());
+
+    allProperties.put("copyrightTextHy", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("copyrightTextEn", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("copyrightTextFr", Schema.builder().type(Type.Known.STRING).build());
+
+    allProperties.put("authorsHy", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("authorsEn", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("authorsFr", Schema.builder().type(Type.Known.STRING).build());
+
+    Schema schema = Schema.builder()
+        .type(Type.Known.OBJECT)
+        .properties(allProperties)
+        .build();
+
+    GenerateContentConfig config = GenerateContentConfig.builder()
+        .responseMimeType("application/json")
+        .responseSchema(schema)
+        .build();
+
+    String prompt = """
+    I am providing you with a DTO containing Armenian historical library data.
+    You must translate all text fields into English and French.
+            
+    CRITICAL RULES:
+    1. Do not modify the Armenian text unless it contains grammatical, spelling, or punctuation errors. If there are issues, correct them while preserving the original meaning.
+    2. Populate all fields according to the requested JSON schema.
+            
+    Here is the DTO data:
+    """ + libraryRequestDto.toString();
 
     Content content = Content.builder()
         .parts(List.of(Part.builder().text(prompt).build()))

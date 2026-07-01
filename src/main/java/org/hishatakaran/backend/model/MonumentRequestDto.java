@@ -28,7 +28,7 @@ public class MonumentRequestDto {
   private String storageUnitName;
   private String condition;
 
-  private List<String> pictures;
+  private List<String> images;
 
   private List<BibliographyRequestDto> bibliography;
   private TopographicRequestDto topographics;
@@ -51,7 +51,7 @@ public class MonumentRequestDto {
         ", originalAffiliation='" + originalAffiliation + '\'' +
         ", storageUnitName='" + storageUnitName + '\'' +
         ", condition='" + condition + '\'' +
-        ", pictures=" + pictures +
+        ", images=" + images +
         ", bibliography=" + bibliography +
         ", topographics=" + topographics +
         ", historicalReferences=" + historicalReferences +

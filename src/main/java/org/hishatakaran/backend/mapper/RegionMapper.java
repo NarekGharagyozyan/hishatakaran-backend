@@ -1,6 +1,7 @@
 package org.hishatakaran.backend.mapper;
 
 import org.hishatakaran.backend.entity.Region;
+import org.hishatakaran.backend.model.LanguagesResponseDto;
 import org.hishatakaran.backend.model.RegionResponseDto;
 
 public class RegionMapper {
@@ -9,9 +10,11 @@ public class RegionMapper {
 
     return new RegionResponseDto(
         region.getId(),
-        region.getNameHy(),
-        region.getNameEn(),
-        region.getNameFr()
+        new LanguagesResponseDto(
+            region.getNameHy(),
+            region.getNameEn(),
+            region.getNameFr()
+        )
     );
   }
 }

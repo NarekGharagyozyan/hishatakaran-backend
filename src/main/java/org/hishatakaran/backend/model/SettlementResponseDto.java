@@ -10,7 +10,5 @@ import lombok.Setter;
 public class SettlementResponseDto {
 
     private final Long id;
-    private final String nameHy;
-    private final String nameEn;
-    private final String nameFr;
+    private final LanguagesResponseDto name;
 }

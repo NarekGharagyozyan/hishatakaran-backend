@@ -10,7 +10,11 @@ import lombok.Setter;
 public class LibraryResponseDto {
 
     private final Long id;
-    private final String title;
+    private final LanguagesResponseDto title;
+    private final LanguagesResponseDto description;
+    private final LanguagesResponseDto copyrightText;
+    private final String copyrightUrl;
     private final String bookUrl;
     private final String coverUrl;
+    private final LanguagesResponseDto authors;
 }

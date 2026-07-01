@@ -32,9 +32,9 @@ public class MonumentController {
 
     @PostMapping("/uploadImages")
     public List<String> uploadImages(
-        @RequestPart(value = "pictures") List<MultipartFile> pictures
+        @RequestPart(value = "images") List<MultipartFile> images
     ) {
-        return monumentService.generateImagePaths(pictures);
+        return monumentService.generateImagePaths(images);
     }
 
     /*@GetMapping

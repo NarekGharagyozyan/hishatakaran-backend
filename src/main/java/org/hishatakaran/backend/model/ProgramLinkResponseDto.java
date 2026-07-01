@@ -9,8 +9,6 @@ import lombok.Setter;
 @Setter
 public class ProgramLinkResponseDto {
 
-  private String titleHy;
-  private String titleEn;
-  private String titleFr;
+  private LanguagesResponseDto title;
   private String url;
 }

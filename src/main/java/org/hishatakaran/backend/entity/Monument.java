@@ -105,9 +105,9 @@ public class Monument extends BaseEntity{
     private String conditionFr;
 
     @ElementCollection
-    @CollectionTable(name = "monument_pictures", joinColumns = @JoinColumn(name = "monument_id"))
-    @Column(name = "picture_url")
-    private List<String> pictures = new ArrayList<>();
+    @CollectionTable(name = "monument_imagess", joinColumns = @JoinColumn(name = "monument_id"))
+    @Column(name = "image_url")
+    private List<String> images = new ArrayList<>();
 
     @OneToMany(mappedBy = "monument", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Bibliography> bibliography;
@@ -151,7 +151,7 @@ public class Monument extends BaseEntity{
         String conditionHy,
         String conditionEn,
         String conditionFr,
-        List<String> pictures,
+        List<String> images,
         List<Bibliography> bibliography,
         Topographic topographics,
         HistoricalReference historicalReferences,
@@ -185,7 +185,7 @@ public class Monument extends BaseEntity{
         this.conditionHy = conditionHy;
         this.conditionEn = conditionEn;
         this.conditionFr = conditionFr;
-        this.pictures = pictures;
+        this.images = images;
         this.bibliography = bibliography;
         this.topographics = topographics;
         this.historicalReferences = historicalReferences;
@@ -224,7 +224,7 @@ public class Monument extends BaseEntity{
             ", conditionHy='" + conditionHy + '\'' +
             ", conditionEn='" + conditionEn + '\'' +
             ", conditionFr='" + conditionFr + '\'' +
-            ", pictures=" + pictures +
+            ", images=" + images +
             ", bibliography=" + bibliography +
             ", topographics=" + topographics +
             ", historicalReferences=" + historicalReferences +

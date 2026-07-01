@@ -14,13 +14,8 @@ public class ProgramResponseDto {
   private final Long id;
   private final Status status;
 
-  private final String titleHy;
-  private final String titleEn;
-  private final String titleFr;
-
-  private final String descriptionHy;
-  private final String descriptionEn;
-  private final String descriptionFr;
+  private final LanguagesResponseDto title;
+  private final LanguagesResponseDto description;
 
   private final List<String> images;
 

@@ -15,5 +15,5 @@ public class NewsRequestDto {
 
     private final String title;
     private final String text;
-    private final List<MultipartFile> pictures;
+    private final List<MultipartFile> images;
 }

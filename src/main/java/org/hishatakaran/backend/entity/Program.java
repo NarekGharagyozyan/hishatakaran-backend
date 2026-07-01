@@ -49,7 +49,7 @@ public class Program extends BaseEntity{
 
   @ElementCollection
   @CollectionTable(name = "program_images", joinColumns = @JoinColumn(name = "program_id"))
-  @Column(name = "picture_urls")
+  @Column(name = "image_urls")
   private List<String> images = new ArrayList<>();
 
   private String pdf;

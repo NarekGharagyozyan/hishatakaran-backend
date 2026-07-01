@@ -84,7 +84,7 @@ public class MonumentService {
                 monumentAiResponseDto.getConditionHy(),
                 monumentAiResponseDto.getConditionEn(),
                 monumentAiResponseDto.getConditionFr(),
-                monumentRequestDto.getPictures(),
+                monumentRequestDto.getImages(),
                 new ArrayList<>(),
                 null,
                 null,

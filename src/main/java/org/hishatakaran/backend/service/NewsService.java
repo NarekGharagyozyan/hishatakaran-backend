@@ -47,7 +47,7 @@ public class NewsService {
       news.setTextHy(newsAiResponseDto.getTextHy());
       news.setTextEn(newsAiResponseDto.getTextEn());
       news.setTextFr(newsAiResponseDto.getTextFr());
-      news.setPictures(generateImagePaths(newsDto.getPictures()));
+      news.setImages(generateImagePaths(newsDto.getImages()));
       news.setStatus(Status.DRAFT);
     }
     else {

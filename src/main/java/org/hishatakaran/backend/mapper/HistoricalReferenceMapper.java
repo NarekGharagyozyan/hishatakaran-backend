@@ -2,6 +2,7 @@ package org.hishatakaran.backend.mapper;
 
 import org.hishatakaran.backend.entity.HistoricalReference;
 import org.hishatakaran.backend.model.HistoricalReferenceResponseDto;
+import org.hishatakaran.backend.model.LanguagesResponseDto;
 
 public class HistoricalReferenceMapper {
 
@@ -9,21 +10,31 @@ public class HistoricalReferenceMapper {
 
         return new HistoricalReferenceResponseDto(
             historicalReference.getId(),
-            historicalReference.getCulturalAffiliationHy(),
-            historicalReference.getCulturalAffiliationEn(),
-            historicalReference.getCulturalAffiliationFr(),
-            historicalReference.getCenturyHy(),
-            historicalReference.getCenturyEn(),
-            historicalReference.getCenturyFr(),
-            historicalReference.getJustificationOfTheNumberingBasedOnLithographyHy(),
-            historicalReference.getJustificationOfTheNumberingBasedOnLithographyEn(),
-            historicalReference.getJustificationOfTheNumberingBasedOnLithographyFr(),
-            historicalReference.getChronologicalTableOfTheStudHy(),
-            historicalReference.getChronologicalTableOfTheStudEn(),
-            historicalReference.getChronologicalTableOfTheStudFr(),
-            historicalReference.getAuthorHy(),
-            historicalReference.getAuthorEn(),
-            historicalReference.getAuthorFr()
+            new LanguagesResponseDto(
+                historicalReference.getCulturalAffiliationHy(),
+                historicalReference.getCulturalAffiliationEn(),
+                historicalReference.getCulturalAffiliationFr()
+            ),
+            new LanguagesResponseDto(
+                historicalReference.getCenturyHy(),
+                historicalReference.getCenturyEn(),
+                historicalReference.getCenturyFr()
+            ),
+            new LanguagesResponseDto(
+                historicalReference.getJustificationOfTheNumberingBasedOnLithographyHy(),
+                historicalReference.getJustificationOfTheNumberingBasedOnLithographyEn(),
+                historicalReference.getJustificationOfTheNumberingBasedOnLithographyFr()
+            ),
+            new LanguagesResponseDto(
+                historicalReference.getChronologicalTableOfTheStudHy(),
+                historicalReference.getChronologicalTableOfTheStudEn(),
+                historicalReference.getChronologicalTableOfTheStudFr()
+            ),
+            new LanguagesResponseDto(
+                historicalReference.getAuthorHy(),
+                historicalReference.getAuthorEn(),
+                historicalReference.getAuthorFr()
+            )
         );
     }
 }

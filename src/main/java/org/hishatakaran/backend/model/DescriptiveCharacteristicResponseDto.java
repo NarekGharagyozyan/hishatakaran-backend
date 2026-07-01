@@ -10,22 +10,10 @@ import lombok.Setter;
 public class DescriptiveCharacteristicResponseDto {
 
     private final Long id;
-    private final String typeHy;
-    private final String typeEn;
-    private final String typeFr;
-    private final String colorHy;
-    private final String colorEn;
-    private final String colorFr;
-    private final String buildingMaterialHy;
-    private final String buildingMaterialEn;
-    private final String buildingMaterialFr;
-    private final String implementationTechniqueHy;
-    private final String implementationTechniqueEn;
-    private final String implementationTechniqueFr;
-    private final String stateOfMonumentHy;
-    private final String stateOfMonumentEn;
-    private final String stateOfMonumentFr;
-    private final String valuationHy;
-    private final String valuationEn;
-    private final String valuationFr;
+    private final LanguagesResponseDto type;
+    private final LanguagesResponseDto color;
+    private final LanguagesResponseDto buildingMaterial;
+    private final LanguagesResponseDto implementationTechnique;
+    private final LanguagesResponseDto stateOfMonument;
+    private final LanguagesResponseDto valuation;
 }

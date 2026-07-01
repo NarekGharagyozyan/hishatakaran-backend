@@ -1,6 +1,7 @@
 package org.hishatakaran.backend.mapper;
 
 import org.hishatakaran.backend.entity.Topographic;
+import org.hishatakaran.backend.model.LanguagesResponseDto;
 import org.hishatakaran.backend.model.TopographicResponseDto;
 
 public class TopographicMapper {
@@ -9,27 +10,39 @@ public class TopographicMapper {
 
         return new TopographicResponseDto(
             topographic.getId(),
-            topographic.getProvinceHy(),
-            topographic.getProvinceEn(),
-            topographic.getProvinceFr(),
-            topographic.getAddressHy(),
-            topographic.getAddressEn(),
-            topographic.getAddressFr(),
-            topographic.getTopographyHy(),
-            topographic.getTopographyEn(),
-            topographic.getTopographyFr(),
-            topographic.getDistanceFromResidenceHy(),
-            topographic.getDistanceFromResidenceEn(),
-            topographic.getDistanceFromResidenceFr(),
+            new LanguagesResponseDto(
+                topographic.getProvinceHy(),
+                topographic.getProvinceEn(),
+                topographic.getProvinceFr()
+            ),
+            new LanguagesResponseDto(
+                topographic.getAddressHy(),
+                topographic.getAddressEn(),
+                topographic.getAddressFr()
+            ),
+            new LanguagesResponseDto(
+                topographic.getTopographyHy(),
+                topographic.getTopographyEn(),
+                topographic.getTopographyFr()
+            ),
+            new LanguagesResponseDto(
+                topographic.getDistanceFromResidenceHy(),
+                topographic.getDistanceFromResidenceEn(),
+                topographic.getDistanceFromResidenceFr()
+            ),
             topographic.getLatitude(),
             topographic.getLongitude(),
             topographic.getAltitude(),
-            topographic.getHydrographyHy(),
-            topographic.getHydrographyEn(),
-            topographic.getHydrographyFr(),
-            topographic.getDescriptionHy(),
-            topographic.getDescriptionEn(),
-            topographic.getDescriptionFr()
+            new LanguagesResponseDto(
+                topographic.getHydrographyHy(),
+                topographic.getHydrographyEn(),
+                topographic.getHydrographyFr()
+            ),
+            new LanguagesResponseDto(
+                topographic.getDescriptionHy(),
+                topographic.getDescriptionEn(),
+                topographic.getDescriptionFr()
+            )
         );
     }
 }

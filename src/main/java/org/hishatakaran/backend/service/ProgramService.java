@@ -1,5 +1,7 @@
 package org.hishatakaran.backend.service;
 
+import static java.util.Collections.emptyList;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -45,30 +47,36 @@ public class ProgramService {
       MultipartFile cover
   )
   {
-    ProgramRequestDto programRequestDto = objectMapper.readValue(stringData, ProgramRequestDto.class);
+    ProgramAiResponseDto programAiResponseDto = null;
+    if (stringData != null)
+    {
+      ProgramRequestDto programRequestDto = objectMapper.readValue(stringData, ProgramRequestDto.class);
 
-    String requestGeminiForPrograms = geminiService.requestGeminiForPrograms(programRequestDto);
-    ProgramAiResponseDto programAiResponseDto = objectMapper.readValue(
-        requestGeminiForPrograms,
-        ProgramAiResponseDto.class
-    );
+      String requestGeminiForPrograms = geminiService.requestGeminiForPrograms(programRequestDto);
+      programAiResponseDto = objectMapper.readValue(
+          requestGeminiForPrograms,
+          ProgramAiResponseDto.class
+      );
+    }
 
     Program program = new Program(
         Status.DRAFT,
-        programAiResponseDto.getTitleHy(),
-        programAiResponseDto.getTitleEn(),
-        programAiResponseDto.getTitleFr(),
-        programAiResponseDto.getDescriptionHy(),
-        programAiResponseDto.getDescriptionEn(),
-        programAiResponseDto.getDescriptionFr(),
-        images.stream()
+        programAiResponseDto != null ? programAiResponseDto.getTitleHy() : null,
+        programAiResponseDto != null ? programAiResponseDto.getTitleEn() : null,
+        programAiResponseDto != null ? programAiResponseDto.getTitleFr() : null,
+        programAiResponseDto != null ? programAiResponseDto.getDescriptionHy() : null,
+        programAiResponseDto != null ? programAiResponseDto.getDescriptionEn() : null,
+        programAiResponseDto != null ? programAiResponseDto.getDescriptionFr() : null,
+        images != null
+            ? images.stream()
             .map(image -> fileStorageService.saveImage(image, "programs"))
-            .toList(),
+            .toList()
+        : null,
         fileStorageService.savefile(pdf, "programs"),
         fileStorageService.saveImage(cover, "programs"),
-        new ArrayList<>()
+        null
     );
-    program.setLinks(programAiResponseDto.getLinks().stream()
+    program.setLinks(programAiResponseDto != null ? programAiResponseDto.getLinks().stream()
         .map(link -> new ProgramLink(
             program,
             link.getLinkTitleHy(),
@@ -76,7 +84,8 @@ public class ProgramService {
             link.getLinkTitleFr(),
             link.getLink())
         )
-        .toList());
+        .toList()
+        : null);
 
     Program savedProgram = programRepository.save(program);
     return ProgramMapper.toResponseDto(savedProgram);

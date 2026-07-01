@@ -1,7 +1,7 @@
 package org.hishatakaran.backend.mapper;
 
-import org.hishatakaran.backend.entity.Monument;
 import org.hishatakaran.backend.entity.Settlement;
+import org.hishatakaran.backend.model.LanguagesResponseDto;
 import org.hishatakaran.backend.model.SettlementResponseDto;
 
 public class SettlementMapper {
@@ -10,9 +10,11 @@ public class SettlementMapper {
 
     return new SettlementResponseDto(
         settlement.getId(),
-        settlement.getNameHy(),
-        settlement.getNameEn(),
-        settlement.getNameFr()
+        new LanguagesResponseDto(
+            settlement.getNameHy(),
+            settlement.getNameEn(),
+            settlement.getNameFr()
+        )
     );
   }
 }

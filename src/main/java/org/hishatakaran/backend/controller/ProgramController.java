@@ -36,8 +36,8 @@ public class ProgramController {
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ProgramResponseDto> uploadFiles(
-        @RequestPart("data") String stringData,
-        @RequestPart("images") List<MultipartFile> images,
+        @RequestPart(value = "data", required = false) String stringData,
+        @RequestPart(value = "images", required = false) List<MultipartFile> images,
         @RequestPart("pdf") MultipartFile pdf,
         @RequestPart("cover") MultipartFile cover
     ){
