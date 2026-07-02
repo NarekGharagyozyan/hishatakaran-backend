@@ -1,19 +1,17 @@
 package org.hishatakaran.backend.model;
 
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
-public class LanguagesResponseDto {
-
-  private String hy;
-  private String en;
-  private String fr;
+@AllArgsConstructor
+public class ContactUsRequestDto {
+  private String name;
+  private String emailOrPhoneNumber;
+  private String message;
 }
+

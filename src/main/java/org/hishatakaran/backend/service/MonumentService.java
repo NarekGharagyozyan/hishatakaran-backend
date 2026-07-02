@@ -213,14 +213,16 @@ public class MonumentService {
             );
         }
 
-        if (request.getMonumentType() != null) {
+        if (request.getMonumentType() != null && !request.getMonumentType().isBlank()) {
 
-            spec = spec.and(
-                    (root, query, cb) ->
-                            cb.equal(
-                                    root.get("monumentType"),
-                                    request.getMonumentType()
-                            )
+            String monumentType = request.getMonumentType().trim().toLowerCase();
+
+            spec = spec.and((root, query, cb) ->
+                cb.or(
+                    cb.equal(cb.lower(root.get("monumentTypeHy")), monumentType),
+                    cb.equal(cb.lower(root.get("monumentTypeEn")), monumentType),
+                    cb.equal(cb.lower(root.get("monumentTypeFr")), monumentType)
+                )
             );
         }
 

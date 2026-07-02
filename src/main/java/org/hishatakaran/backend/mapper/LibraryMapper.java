@@ -17,14 +17,14 @@ public class LibraryMapper {
                 library.getTitleFr()
             )
             : null,
-        library.getDescriptionHy() != null && !library.getDescriptionHy().isBlank()
+        library.getDescriptionHy() != null && !library.getDescriptionHy().isBlank() && !library.getDescriptionHy().equals("null")
             ? new LanguagesResponseDto(
                 library.getDescriptionHy(),
                 library.getDescriptionEn(),
                 library.getDescriptionFr()
             )
           : null,
-        library.getCopyrightTextHy() != null && !library.getCopyrightTextHy().isBlank()
+        library.getCopyrightTextHy() != null && !library.getCopyrightTextHy().isBlank() && !library.getCopyrightTextHy().equals("null")
             ? new LanguagesResponseDto(
               library.getCopyrightTextHy(),
               library.getCopyrightTextEn(),
@@ -34,7 +34,7 @@ public class LibraryMapper {
         library.getCopyrightUrl(),
         library.getBookUrl(),
         library.getCoverUrl(),
-        library.getAuthorsHy() != null && !library.getAuthorsHy().isBlank()
+        library.getAuthorsHy() != null && !library.getAuthorsHy().isBlank() && !library.getAuthorsHy().equals("null")
             ? new LanguagesResponseDto(
               library.getAuthorsHy(),
               library.getAuthorsEn(),

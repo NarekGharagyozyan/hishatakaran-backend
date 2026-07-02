@@ -3,6 +3,7 @@ package org.hishatakaran.backend.controller;
 import lombok.RequiredArgsConstructor;
 
 import org.hishatakaran.backend.mapper.MonumentMapper;
+import org.hishatakaran.backend.model.LanguagesResponseDto;
 import org.hishatakaran.backend.model.MonumentFilterRequest;
 import org.hishatakaran.backend.model.MonumentRequestDto;
 import org.hishatakaran.backend.model.MonumentResponseDto;
@@ -52,7 +53,7 @@ public class MonumentController {
         @RequestParam(required = false)
         Long settlementId,
         @RequestParam(required = false)
-        MonumentType monumentType
+        String monumentType
     ) {
 
         MonumentFilterRequest request =
@@ -101,6 +102,19 @@ public class MonumentController {
         return monumentRepository.findByMonumentTypeHyOrMonumentTypeEnOrMonumentTypeFr(type, type, type)
             .stream()
             .map(MonumentMapper::toDto)
+            .toList();
+    }
+
+    @GetMapping("/type")
+    public List<LanguagesResponseDto> getAllMonumentTypes() {
+        return monumentRepository.findAll()
+            .stream()
+            .map(monument -> new LanguagesResponseDto(
+                monument.getMonumentTypeHy(),
+                monument.getMonumentTypeEn(),
+                monument.getMonumentTypeFr()
+            ))
+            .distinct()
             .toList();
     }
 

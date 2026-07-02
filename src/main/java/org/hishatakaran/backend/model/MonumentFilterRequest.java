@@ -9,5 +9,5 @@ public class MonumentFilterRequest {
 
     private Long regionId;
     private Long settlementId;
-    private MonumentType monumentType;
+    private String monumentType;
 }

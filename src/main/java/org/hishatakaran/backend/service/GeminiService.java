@@ -8,6 +8,7 @@ import java.util.Map;
 import org.hishatakaran.backend.model.LibraryRequestDto;
 import org.hishatakaran.backend.model.MonumentRequestDto;
 import org.hishatakaran.backend.model.ProgramRequestDto;
+import org.hishatakaran.backend.model.TeamMemberRequestDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
@@ -655,6 +656,61 @@ NOW EXTRACT DATA FROM THIS HTML:
             
     Here is the DTO data:
     """ + libraryRequestDto.toString();
+
+    Content content = Content.builder()
+        .parts(List.of(Part.builder().text(prompt).build()))
+        .build();
+
+    GenerateContentResponse response = client.models.generateContent(
+        "gemini-2.5-flash",
+        content,
+        config
+    );
+
+    System.out.println(response.text());
+    return response.text();
+  }
+
+  public String requestGeminiForTeamMember(TeamMemberRequestDto teamMemberRequestDto) {
+    Map<String, Schema> allProperties = new HashMap<>();
+
+    // Основные поля
+    allProperties.put("nameHy", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("nameEn", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("nameFr", Schema.builder().type(Type.Known.STRING).build());
+
+    allProperties.put("surnameHy", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("surnameEn", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("surnameFr", Schema.builder().type(Type.Known.STRING).build());
+
+    allProperties.put("descriptionHy", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("descriptionEn", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("descriptionFr", Schema.builder().type(Type.Known.STRING).build());
+
+    allProperties.put("positionHy", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("positionEn", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("positionFr", Schema.builder().type(Type.Known.STRING).build());
+
+    Schema schema = Schema.builder()
+        .type(Type.Known.OBJECT)
+        .properties(allProperties)
+        .build();
+
+    GenerateContentConfig config = GenerateContentConfig.builder()
+        .responseMimeType("application/json")
+        .responseSchema(schema)
+        .build();
+
+    String prompt = """
+    I am providing you with a DTO containing our new team member data.
+    You must translate all text fields into English and French.
+            
+    CRITICAL RULES:
+    1. Do not modify the Armenian text unless it contains grammatical, spelling, or punctuation errors. If there are issues, correct them while preserving the original meaning.
+    2. Populate all fields according to the requested JSON schema.
+            
+    Here is the DTO data:
+    """ + teamMemberRequestDto.toString();
 
     Content content = Content.builder()
         .parts(List.of(Part.builder().text(prompt).build()))

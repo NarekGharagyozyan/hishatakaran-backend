@@ -17,4 +17,6 @@ public interface MonumentRepository extends JpaRepository<Monument, Long>, JpaSp
 
     List<Monument> findByMonumentTypeHyOrMonumentTypeEnOrMonumentTypeFr(String monumentTypeHy, String monumentTypeEn, String monumentTypeFr);
 
+
+
 }
