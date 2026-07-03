@@ -105,7 +105,7 @@ public class Monument extends BaseEntity{
     private String conditionFr;
 
     @ElementCollection
-    @CollectionTable(name = "monument_imagess", joinColumns = @JoinColumn(name = "monument_id"))
+    @CollectionTable(name = "monument_images", joinColumns = @JoinColumn(name = "monument_id"))
     @Column(name = "image_url")
     private List<String> images = new ArrayList<>();
 

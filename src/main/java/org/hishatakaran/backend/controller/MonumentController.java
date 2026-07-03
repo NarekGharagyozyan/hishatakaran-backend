@@ -5,16 +5,20 @@ import lombok.RequiredArgsConstructor;
 import org.hishatakaran.backend.mapper.MonumentMapper;
 import org.hishatakaran.backend.model.LanguagesResponseDto;
 import org.hishatakaran.backend.model.MonumentFilterRequest;
+import org.hishatakaran.backend.model.MonumentImagesResponseDto;
 import org.hishatakaran.backend.model.MonumentRequestDto;
 import org.hishatakaran.backend.model.MonumentResponseDto;
 import org.hishatakaran.backend.model.MonumentType;
+import org.hishatakaran.backend.model.MonumentTypesResponseDto;
 import org.hishatakaran.backend.model.Status;
 import org.hishatakaran.backend.repository.MonumentRepository;
 import org.hishatakaran.backend.service.MonumentService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.IntStream;
 
 @RestController
 @RequestMapping("/api/monuments")
@@ -105,9 +109,9 @@ public class MonumentController {
             .toList();
     }
 
-    @GetMapping("/type")
-    public List<LanguagesResponseDto> getAllMonumentTypes() {
-        return monumentRepository.findAll()
+    @GetMapping("/types")
+    public List<MonumentTypesResponseDto> getAllMonumentTypes() {
+        List<LanguagesResponseDto> types = monumentRepository.findAll()
             .stream()
             .map(monument -> new LanguagesResponseDto(
                 monument.getMonumentTypeHy(),
@@ -115,6 +119,43 @@ public class MonumentController {
                 monument.getMonumentTypeFr()
             ))
             .distinct()
+            .toList();
+
+        return IntStream.range(0, types.size())
+            .mapToObj(i -> new MonumentTypesResponseDto(
+                (long) (i + 1),
+                types.get(i)
+            ))
+            .toList();
+    }
+
+    @GetMapping("/images")
+    public List<MonumentImagesResponseDto> getMonumentImages(
+        @RequestParam(required = false)
+        Long regionId,
+        @RequestParam(required = false)
+        Long settlementId,
+        @RequestParam(required = false)
+        String monumentType
+    ) {
+        MonumentFilterRequest request =
+            new MonumentFilterRequest();
+
+        request.setRegionId(regionId);
+        request.setSettlementId(settlementId);
+        request.setMonumentType(monumentType);
+
+        List<String> images = monumentService.filter(request)
+            .stream()
+            .map(MonumentResponseDto::getImages)
+            .flatMap(Collection::stream)
+            .toList();
+
+        return IntStream.range(0, images.size())
+            .mapToObj(i -> new MonumentImagesResponseDto(
+                (long) i + 1,
+                images.get(i)
+            ))
             .toList();
     }
 
