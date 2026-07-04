@@ -21,7 +21,7 @@ public class MonumentRequestDto {
   private Long settlementId;
   private String monumentType;
   private String specialName;
-  private List<String> anotherNames;
+  private String anotherNames;
   private String history;
 
   private String originalAffiliation;
@@ -29,6 +29,8 @@ public class MonumentRequestDto {
   private String condition;
 
   private List<String> images;
+  private List<String> videos;
+  private List<String> measurements;
 
   private List<BibliographyRequestDto> bibliography;
   private TopographicRequestDto topographics;

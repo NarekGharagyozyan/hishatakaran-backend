@@ -21,9 +21,9 @@ public class MonumentAiResponseDto {
   private String specialNameEn;
   private String specialNameFr;
 
-  private List<String> anotherNamesHy;
-  private List<String> anotherNamesEn;
-  private List<String> anotherNamesFr;
+  private String anotherNamesHy;
+  private String anotherNamesEn;
+  private String anotherNamesFr;
 
   private String monumentTypeHy;
   private String monumentTypeEn;

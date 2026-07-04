@@ -162,7 +162,6 @@ public class GeminiService {
 
     allProperties.put("showInMainPage", Schema.builder().type(Type.Known.BOOLEAN).build());
 
-    // 2. schema object
     Schema schema = Schema.builder()
         .type(Type.Known.OBJECT)
         .properties(allProperties)
@@ -275,11 +274,8 @@ NOW EXTRACT DATA FROM THIS HTML:
 //  )
   public String requestGeminiForMonuments(MonumentRequestDto monumentRequestDto) {
 
-    System.out.println("method requestGeminiForMonuments called");
-    // 1. Создаем ОДНУ общую карту для всех свойств
     Map<String, Schema> allProperties = new HashMap<>();
 
-    // Базовые текстовые поля
     allProperties.put("nameHy", Schema.builder().type(Type.Known.STRING).build());
     allProperties.put("nameEn", Schema.builder().type(Type.Known.STRING).build());
     allProperties.put("nameFr", Schema.builder().type(Type.Known.STRING).build());
@@ -288,20 +284,9 @@ NOW EXTRACT DATA FROM THIS HTML:
     allProperties.put("specialNameEn", Schema.builder().type(Type.Known.STRING).build());
     allProperties.put("specialNameFr", Schema.builder().type(Type.Known.STRING).build());
 
-    // Массивы (anotherNames)
-    allProperties.put("anotherNamesHy", Schema.builder()
-        .type(Type.Known.ARRAY)
-        .items(Schema.builder().type(Type.Known.STRING).build())
-        .build());
-    allProperties.put("anotherNamesEn", Schema.builder()
-        .type(Type.Known.ARRAY)
-        .items(Schema.builder().type(Type.Known.STRING).build())
-        .build());
-    allProperties.put("anotherNamesFr", Schema.builder()
-        .type(Type.Known.ARRAY)
-        .items(Schema.builder().type(Type.Known.STRING).build())
-        .build());
-
+    allProperties.put("anotherNamesHy", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("anotherNamesEn", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("anotherNamesFr", Schema.builder().type(Type.Known.STRING).build());
 
     allProperties.put("monumentTypeHy", Schema.builder().type(Type.Known.STRING).build());
     allProperties.put("monumentTypeEn", Schema.builder().type(Type.Known.STRING).build());
@@ -387,13 +372,11 @@ NOW EXTRACT DATA FROM THIS HTML:
     allProperties.put("valuationEn", Schema.builder().type(Type.Known.STRING).build());
     allProperties.put("valuationFr", Schema.builder().type(Type.Known.STRING).build());
 
-    // 2. Строим финальную схему, передавая карту целиком ОДИН РАЗ
     Schema schema = Schema.builder()
         .type(Type.Known.OBJECT)
         .properties(allProperties)
         .build();
 
-    // Дальше ваш код остается без изменений...
     GenerateContentConfig config = GenerateContentConfig.builder()
         .responseMimeType("application/json")
         .responseSchema(schema)
@@ -420,138 +403,12 @@ NOW EXTRACT DATA FROM THIS HTML:
         config
     );
 
-    System.out.println(response.text());
     return response.text();
   }
-    /*String prompt = """
-        I will provide you DTO with armenian fields.
-        You must translate fields into English and French and return the row data result (json) in the following format:
-        
-        {
-          "nameArmenian" : "...",
-          "nameEnglish" : "...",
-          "nameFrench" : "...",
-        
-          "specialNameArmenian" : "...",
-          "specialNameEnglish" : "...",
-          "specialNameFrench" : "...",
-        
-          "anotherNamesArmenian" : ["...","..."],
-          "anotherNamesEnglish" : ["...","..."],
-          "anotherNamesFrench" : ["...","..."],
-        
-          "provinceArmenian" : "...",
-          "provinceEnglish" : "...",
-          "provinceFrench" : "...",
-        
-          "originalAffiliationArmenian" : "...",
-          "originalAffiliationEnglish" : "...",
-          "originalAffiliationFrench" : "...",
-        
-          "storageUnitNameArmenian" : "...",
-          "storageUnitNameEnglish" : "...",
-          "storageUnitNameFrench" : "...",
-        
-          "conditionArmenian" : "...",
-          "conditionEnglish" : "...",
-          "conditionFrench" : "...",
-        
-          "regionArmenian" : "...",
-          "regionEnglish" : "...",
-          "regionFrench" : "...",
-        
-          "addressArmenian" : "...",
-          "addressEnglish" : "...",
-          "addressFrench" : "...",
-        
-          "topographyArmenian" : "...",
-          "topographyEnglish" : "...",
-          "topographyFrench" : "...",
-        
-          "distanceFromResidenceArmenian" : "...",
-          "distanceFromResidenceEnglish" : "...",
-          "distanceFromResidenceFrench" : "...",
-        
-          "hydrographyArmenian" : "...",
-          "hydrographyEnglish" : "...",
-          "hydrographyFrench" : "...",
-        
-          "descriptionArmenian" : "...",
-          "descriptionEnglish" : "...",
-          "descriptionFrench" : "...",
-        
-          "culturalAffiliationArmenian" : "...",
-          "culturalAffiliationEnglish" : "...",
-          "culturalAffiliationFrench" : "...",
-        
-          "centuryArmenian" : "...",
-          "centuryEnglish" : "...",
-          "centuryFrench" : "...",
-        
-          "justificationOfTheNumberingBasedOnLithographyArmenian" : "...",
-          "justificationOfTheNumberingBasedOnLithographyEnglish" : "...",
-          "justificationOfTheNumberingBasedOnLithographyFrench" : "...",
-        
-          "chronologicalTableOfTheStudArmenian" : "...",
-          "chronologicalTableOfTheStudEnglish" : "...",
-          "chronologicalTableOfTheStudFrench" : "...",
-        
-          "authorArmenian" : "...",
-          "authorEnglish" : "...",
-          "authorFrench" : "...",
-        
-          "theBuildingMaterialArmenian" : "...",
-          "theBuildingMaterialEnglish" : "...",
-          "theBuildingMaterialFrench" : "...",
-        
-          "typeArmenian" : "...",
-          "typeEnglish" : "...",
-          "typeFrench" : "...",
-        
-          "colorArmenian" : "...",
-          "colorEnglish" : "...",
-          "colorFrench" : "...",
-        
-          "implementationTechniqueArmenian" : "...",
-          "implementationTechniqueEnglish" : "...",
-          "implementationTechniqueFrench" : "...",
-        
-          "stateOfMonumentArmenian" : "...",
-          "stateOfMonumentEnglish" : "...",
-          "stateOfMonumentFrench" : "...",
-
-          "valuationArmenian" : "...",
-          "valuationEnglish" : "...",
-          "valuationFrench" : "..."
-        }
-        
-        Do not modify the Armenian text unless it contains grammatical, spelling, or punctuation errors.
-        If there are any issues, correct them while preserving the original meaning.
-        Here is dto: """ + monumentRequestDto.toString() + """
-        """;
-
-    System.out.println("method requestGeminiForMonuments called");
-
-    Content content = Content.builder()
-        .parts(
-            List.of(
-                Part.builder()
-                    .text(prompt)
-                    .build()
-            )
-        )
-        .build();
-    GenerateContentResponse response = client.models.generateContent(
-        "gemini-2.5-flash",
-        content,
-        null);
-
-    return response.text();*/
 
   public String requestGeminiForPrograms(ProgramRequestDto programRequestDto) {
     Map<String, Schema> allProperties = new HashMap<>();
 
-    // Основные поля
     allProperties.put("titleHy", Schema.builder().type(Type.Known.STRING).build());
     allProperties.put("titleEn", Schema.builder().type(Type.Known.STRING).build());
     allProperties.put("titleFr", Schema.builder().type(Type.Known.STRING).build());
@@ -560,7 +417,6 @@ NOW EXTRACT DATA FROM THIS HTML:
     allProperties.put("descriptionEn", Schema.builder().type(Type.Known.STRING).build());
     allProperties.put("descriptionFr", Schema.builder().type(Type.Known.STRING).build());
 
-    // --- СТРУКТУРА ДЛЯ ССЫЛОК (ВЛОЖЕННЫЙ ОБЪЕКТ) ---
     Map<String, Schema> linkProperties = new HashMap<>();
     linkProperties.put("linkTitleHy", Schema.builder().type(Type.Known.STRING).build());
     linkProperties.put("linkTitleEn", Schema.builder().type(Type.Known.STRING).build());
@@ -572,12 +428,10 @@ NOW EXTRACT DATA FROM THIS HTML:
         .properties(linkProperties)
         .build();
 
-    // Добавляем массив links в основные свойства
     allProperties.put("links", Schema.builder()
         .type(Type.Known.ARRAY)
-        .items(linkItemSchema) // Указываем, что массив состоит из объектов linkItemSchema
+        .items(linkItemSchema)
         .build());
-    // -----------------------------------------------
 
     Schema schema = Schema.builder()
         .type(Type.Known.OBJECT)
@@ -589,7 +443,6 @@ NOW EXTRACT DATA FROM THIS HTML:
         .responseSchema(schema)
         .build();
 
-    // Рекомендую немного уточнить промпт, чтобы модель точно поняла задачу со ссылками
     String prompt = """
     I am providing you with a DTO containing Armenian historical monument data.
     You must translate all text fields into English and French.
@@ -619,7 +472,6 @@ NOW EXTRACT DATA FROM THIS HTML:
   public String requestGeminiForLibrary(LibraryRequestDto libraryRequestDto) {
     Map<String, Schema> allProperties = new HashMap<>();
 
-    // Основные поля
     allProperties.put("titleHy", Schema.builder().type(Type.Known.STRING).build());
     allProperties.put("titleEn", Schema.builder().type(Type.Known.STRING).build());
     allProperties.put("titleFr", Schema.builder().type(Type.Known.STRING).build());
@@ -674,7 +526,6 @@ NOW EXTRACT DATA FROM THIS HTML:
   public String requestGeminiForTeamMember(TeamMemberRequestDto teamMemberRequestDto) {
     Map<String, Schema> allProperties = new HashMap<>();
 
-    // Основные поля
     allProperties.put("nameHy", Schema.builder().type(Type.Known.STRING).build());
     allProperties.put("nameEn", Schema.builder().type(Type.Known.STRING).build());
     allProperties.put("nameFr", Schema.builder().type(Type.Known.STRING).build());

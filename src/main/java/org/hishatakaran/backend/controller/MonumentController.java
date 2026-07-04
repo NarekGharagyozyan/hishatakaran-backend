@@ -39,7 +39,14 @@ public class MonumentController {
     public List<String> uploadImages(
         @RequestPart(value = "images") List<MultipartFile> images
     ) {
-        return monumentService.generateImagePaths(images);
+        return monumentService.generateImagesPaths(images);
+    }
+
+    @PostMapping("/uploadMeasurements")
+    public List<String> uploadMeasurements(
+        @RequestPart(value = "measurements") List<MultipartFile> measurements
+    ) {
+        return monumentService.generateMeasurementsPaths(measurements);
     }
 
     /*@GetMapping
@@ -155,6 +162,66 @@ public class MonumentController {
             .mapToObj(i -> new MonumentImagesResponseDto(
                 (long) i + 1,
                 images.get(i)
+            ))
+            .toList();
+    }
+
+    @GetMapping("/videos")
+    public List<MonumentImagesResponseDto> getMonumentVideos(
+        @RequestParam(required = false)
+        Long regionId,
+        @RequestParam(required = false)
+        Long settlementId,
+        @RequestParam(required = false)
+        String monumentType
+    ) {
+        MonumentFilterRequest request =
+            new MonumentFilterRequest();
+
+        request.setRegionId(regionId);
+        request.setSettlementId(settlementId);
+        request.setMonumentType(monumentType);
+
+        List<String> videos = monumentService.filter(request)
+            .stream()
+            .map(MonumentResponseDto::getVideos)
+            .flatMap(Collection::stream)
+            .toList();
+
+        return IntStream.range(0, videos.size())
+            .mapToObj(i -> new MonumentImagesResponseDto(
+                (long) i + 1,
+                videos.get(i)
+            ))
+            .toList();
+    }
+
+    @GetMapping("/measurements")
+    public List<MonumentImagesResponseDto> getMonumentMeasurements(
+        @RequestParam(required = false)
+        Long regionId,
+        @RequestParam(required = false)
+        Long settlementId,
+        @RequestParam(required = false)
+        String monumentType
+    ) {
+        MonumentFilterRequest request =
+            new MonumentFilterRequest();
+
+        request.setRegionId(regionId);
+        request.setSettlementId(settlementId);
+        request.setMonumentType(monumentType);
+
+        List<String> measurements = monumentService.filter(request)
+            .stream()
+            .map(MonumentResponseDto::getMeasurements)
+            .flatMap(Collection::stream)
+            .toList();
+
+        return IntStream.range(0, measurements.size())
+            .mapToObj(i -> new MonumentImagesResponseDto(
+                (long) i + 1,
+                measurements.get(i)
             ))
             .toList();
     }

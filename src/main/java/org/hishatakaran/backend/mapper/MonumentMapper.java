@@ -3,7 +3,6 @@ package org.hishatakaran.backend.mapper;
 import org.hishatakaran.backend.entity.Monument;
 import org.hishatakaran.backend.model.BibliographyResponseDto;
 import org.hishatakaran.backend.model.LanguagesResponseDto;
-import org.hishatakaran.backend.model.LanguagesWithListResponseDto;
 import org.hishatakaran.backend.model.MonumentResponseDto;
 
 public class MonumentMapper {
@@ -39,7 +38,7 @@ public class MonumentMapper {
             m.getSpecialNameEn(),
             m.getSpecialNameFr()
         ));
-        monumentDtoBuilder.anotherNames(new LanguagesWithListResponseDto(
+        monumentDtoBuilder.anotherNames(new LanguagesResponseDto(
             m.getAnotherNamesHy(),
             m.getAnotherNamesEn(),
             m.getAnotherNamesFr()
@@ -67,6 +66,8 @@ public class MonumentMapper {
         ));
 
         monumentDtoBuilder.images(m.getImages());
+        monumentDtoBuilder.videos(m.getVideos());
+        monumentDtoBuilder.measurements(m.getMeasurements());
 
         monumentDtoBuilder.createdAt(m.getCreatedAt().toEpochSecond());
         monumentDtoBuilder.updatedAt(m.getUpdatedAt().toEpochSecond());

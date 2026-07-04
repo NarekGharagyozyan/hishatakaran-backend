@@ -1,22 +1,18 @@
 package org.hishatakaran.backend.service;
 
-import java.awt.print.Pageable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import org.hishatakaran.backend.entity.Bibliography;
 import org.hishatakaran.backend.entity.DescriptiveCharacteristicReference;
 import org.hishatakaran.backend.entity.HistoricalReference;
 import org.hishatakaran.backend.entity.Monument;
-import org.hishatakaran.backend.entity.Region;
 import org.hishatakaran.backend.entity.Topographic;
 import org.hishatakaran.backend.mapper.MonumentMapper;
 import org.hishatakaran.backend.model.MonumentAiResponseDto;
 import org.hishatakaran.backend.model.MonumentFilterRequest;
 import org.hishatakaran.backend.model.MonumentRequestDto;
 import org.hishatakaran.backend.model.MonumentResponseDto;
-import org.hishatakaran.backend.model.NewsAiResponseDto;
 import org.hishatakaran.backend.model.Status;
 import org.hishatakaran.backend.repository.MonumentRepository;
 import org.hishatakaran.backend.repository.RegionRepository;
@@ -27,9 +23,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.RequiredArgsConstructor;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 @RequiredArgsConstructor
@@ -85,6 +81,8 @@ public class MonumentService {
                 monumentAiResponseDto.getConditionEn(),
                 monumentAiResponseDto.getConditionFr(),
                 monumentRequestDto.getImages(),
+                monumentRequestDto.getVideos(),
+                monumentRequestDto.getMeasurements(),
                 new ArrayList<>(),
                 null,
                 null,
@@ -233,10 +231,19 @@ public class MonumentService {
                 .toList();
     }
 
-    public List<String> generateImagePaths(List<MultipartFile> files) {
+    public List<String> generateImagesPaths(List<MultipartFile> files) {
         if (files != null) {
             return files.stream()
-                .map(file -> fileStorageService.saveImage(file, "monuments"))
+                .map(file -> fileStorageService.saveImage(file, "monument_images"))
+                .toList();
+        }
+        return null;
+    }
+
+    public List<String> generateMeasurementsPaths(List<MultipartFile> files) {
+        if (files != null) {
+            return files.stream()
+                .map(file -> fileStorageService.saveImage(file, "monument_measurements"))
                 .toList();
         }
         return null;

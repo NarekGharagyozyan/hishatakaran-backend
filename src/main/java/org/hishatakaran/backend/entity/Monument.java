@@ -63,20 +63,9 @@ public class Monument extends BaseEntity{
     private String specialNameEn;
     private String specialNameFr;
 
-    @ElementCollection
-    @CollectionTable(name = "monument_another_names_hy", joinColumns = @JoinColumn(name = "monument_id"))
-    @Column(name = "another_names_hy")
-    private List<String> anotherNamesHy = new ArrayList<>();
-
-    @ElementCollection
-    @CollectionTable(name = "monument_another_names_en", joinColumns = @JoinColumn(name = "monument_id"))
-    @Column(name = "another_names_en")
-    private List<String> anotherNamesEn = new ArrayList<>();
-
-    @ElementCollection
-    @CollectionTable(name = "monument_another_names_fr", joinColumns = @JoinColumn(name = "monument_id"))
-    @Column(name = "another_names_fr")
-    private List<String> anotherNamesFr = new ArrayList<>();
+    private String anotherNamesHy;
+    private String anotherNamesEn;
+    private String anotherNamesFr;
 
     @Column(columnDefinition = "TEXT")
     private String historyHy;
@@ -109,6 +98,16 @@ public class Monument extends BaseEntity{
     @Column(name = "image_url")
     private List<String> images = new ArrayList<>();
 
+    @ElementCollection
+    @CollectionTable(name = "monument_videos", joinColumns = @JoinColumn(name = "monument_id"))
+    @Column(name = "video_url")
+    private List<String> videos = new ArrayList<>();
+
+    @ElementCollection
+    @CollectionTable(name = "monument_measurements", joinColumns = @JoinColumn(name = "monument_id"))
+    @Column(name = "measurement_url")
+    private List<String> measurements = new ArrayList<>();
+
     @OneToMany(mappedBy = "monument", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Bibliography> bibliography;
 
@@ -136,9 +135,9 @@ public class Monument extends BaseEntity{
         String specialNameHy,
         String specialNameEn,
         String specialNameFr,
-        List<String> anotherNamesHy,
-        List<String> anotherNamesEn,
-        List<String> anotherNamesFr,
+        String anotherNamesHy,
+        String anotherNamesEn,
+        String anotherNamesFr,
         String historyHy,
         String historyEn,
         String historyFr,
@@ -152,6 +151,8 @@ public class Monument extends BaseEntity{
         String conditionEn,
         String conditionFr,
         List<String> images,
+        List<String> videos,
+        List<String> measurements,
         List<Bibliography> bibliography,
         Topographic topographics,
         HistoricalReference historicalReferences,
@@ -186,6 +187,8 @@ public class Monument extends BaseEntity{
         this.conditionEn = conditionEn;
         this.conditionFr = conditionFr;
         this.images = images;
+        this.videos = videos;
+        this.measurements = measurements;
         this.bibliography = bibliography;
         this.topographics = topographics;
         this.historicalReferences = historicalReferences;
@@ -224,7 +227,6 @@ public class Monument extends BaseEntity{
             ", conditionHy='" + conditionHy + '\'' +
             ", conditionEn='" + conditionEn + '\'' +
             ", conditionFr='" + conditionFr + '\'' +
-            ", images=" + images +
             ", bibliography=" + bibliography +
             ", topographics=" + topographics +
             ", historicalReferences=" + historicalReferences +

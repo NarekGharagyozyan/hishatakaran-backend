@@ -22,7 +22,7 @@ public class MonumentResponseDto {
     private final SettlementResponseDto settlement;
 
     private final LanguagesResponseDto specialName;
-    private final LanguagesWithListResponseDto anotherNames;
+    private final LanguagesResponseDto anotherNames;
 
     private final LanguagesResponseDto history;
     private final LanguagesResponseDto originalAffiliation;
@@ -30,6 +30,8 @@ public class MonumentResponseDto {
     private final LanguagesResponseDto condition;
 
     private final List<String> images;
+    private final List<String> videos;
+    private final List<String> measurements;
 
     private final Long createdAt;
     private final Long updatedAt;
