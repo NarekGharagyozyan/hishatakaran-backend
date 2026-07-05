@@ -30,7 +30,7 @@ public class MonumentResponseDto {
     private final LanguagesResponseDto condition;
 
     private final List<String> images;
-    private final List<String> videos;
+    private final List<MonumentVideoResponseDto> videos;
     private final List<String> measurements;
 
     private final Long createdAt;

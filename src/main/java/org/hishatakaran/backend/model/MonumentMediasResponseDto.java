@@ -7,8 +7,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @RequiredArgsConstructor
-public class MonumentImagesResponseDto {
+public class MonumentMediasResponseDto {
 
   private final Long id;
-  private final String image;
+  private final String media;
 }

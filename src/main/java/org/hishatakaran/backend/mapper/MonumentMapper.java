@@ -4,6 +4,8 @@ import org.hishatakaran.backend.entity.Monument;
 import org.hishatakaran.backend.model.BibliographyResponseDto;
 import org.hishatakaran.backend.model.LanguagesResponseDto;
 import org.hishatakaran.backend.model.MonumentResponseDto;
+import org.hishatakaran.backend.model.MonumentVideoResponseDto;
+import org.hishatakaran.backend.service.YouTubeService;
 
 public class MonumentMapper {
 
@@ -66,7 +68,18 @@ public class MonumentMapper {
         ));
 
         monumentDtoBuilder.images(m.getImages());
-        monumentDtoBuilder.videos(m.getVideos());
+        monumentDtoBuilder.videos(m.getVideos()
+            .stream()
+            .map(video -> new MonumentVideoResponseDto(
+                new LanguagesResponseDto(
+                    video.getTitleHy(),
+                    video.getTitleEn(),
+                    video.getTitleFr()
+                ),
+                YouTubeService.extractVideoId(video.getUrl())
+            ))
+            .toList()
+        );
         monumentDtoBuilder.measurements(m.getMeasurements());
 
         monumentDtoBuilder.createdAt(m.getCreatedAt().toEpochSecond());

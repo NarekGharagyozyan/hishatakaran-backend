@@ -14,28 +14,28 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "program_links")
+@Table(name = "monument_videos")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProgramLink {
+public class MonumentVideo {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "program", nullable = false)
-  private Program program;
+  @JoinColumn(name = "monument", nullable = false)
+  private Monument monument;
 
   private String titleHy;
   private String titleEn;
   private String titleFr;
   private String url;
 
-  public ProgramLink(Program program, String titleHy, String titleEn, String titleFr, String url) {
-    this.program = program;
+  public MonumentVideo(Monument monument, String titleHy, String titleEn, String titleFr, String url) {
+    this.monument = monument;
     this.titleHy = titleHy;
     this.titleEn = titleEn;
     this.titleFr = titleFr;
@@ -44,9 +44,9 @@ public class ProgramLink {
 
   @Override
   public String toString() {
-    return "Bibliography{" +
+    return "MonumentVideo{" +
         "id=" + id +
-        ", program=" + program +
+        ", monument=" + monument +
         ", titleHy='" + titleHy + '\'' +
         ", titleEn='" + titleEn + '\'' +
         ", titleFr='" + titleFr + '\'' +

@@ -3,6 +3,7 @@ package org.hishatakaran.backend.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hishatakaran.backend.model.MonumentVideoRequestDto;
 import org.hishatakaran.backend.model.Status;
 
 
@@ -98,10 +99,8 @@ public class Monument extends BaseEntity{
     @Column(name = "image_url")
     private List<String> images = new ArrayList<>();
 
-    @ElementCollection
-    @CollectionTable(name = "monument_videos", joinColumns = @JoinColumn(name = "monument_id"))
-    @Column(name = "video_url")
-    private List<String> videos = new ArrayList<>();
+    @OneToMany(mappedBy = "monument", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MonumentVideo> videos = new ArrayList<>();
 
     @ElementCollection
     @CollectionTable(name = "monument_measurements", joinColumns = @JoinColumn(name = "monument_id"))
@@ -151,7 +150,7 @@ public class Monument extends BaseEntity{
         String conditionEn,
         String conditionFr,
         List<String> images,
-        List<String> videos,
+        List<MonumentVideo> videos,
         List<String> measurements,
         List<Bibliography> bibliography,
         Topographic topographics,
@@ -212,9 +211,9 @@ public class Monument extends BaseEntity{
             ", specialNameHy='" + specialNameHy + '\'' +
             ", specialNameEn='" + specialNameEn + '\'' +
             ", specialNameFr='" + specialNameFr + '\'' +
-            ", anotherNamesHy=" + anotherNamesHy +
-            ", anotherNamesEn=" + anotherNamesEn +
-            ", anotherNamesFr=" + anotherNamesFr +
+            ", anotherNamesHy='" + anotherNamesHy + '\'' +
+            ", anotherNamesEn='" + anotherNamesEn + '\'' +
+            ", anotherNamesFr='" + anotherNamesFr + '\'' +
             ", historyHy='" + historyHy + '\'' +
             ", historyEn='" + historyEn + '\'' +
             ", historyFr='" + historyFr + '\'' +
@@ -227,6 +226,9 @@ public class Monument extends BaseEntity{
             ", conditionHy='" + conditionHy + '\'' +
             ", conditionEn='" + conditionEn + '\'' +
             ", conditionFr='" + conditionFr + '\'' +
+            ", images=" + images +
+            ", videos=" + videos +
+            ", measurements=" + measurements +
             ", bibliography=" + bibliography +
             ", topographics=" + topographics +
             ", historicalReferences=" + historicalReferences +

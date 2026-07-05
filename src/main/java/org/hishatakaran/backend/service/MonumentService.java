@@ -7,6 +7,7 @@ import org.hishatakaran.backend.entity.Bibliography;
 import org.hishatakaran.backend.entity.DescriptiveCharacteristicReference;
 import org.hishatakaran.backend.entity.HistoricalReference;
 import org.hishatakaran.backend.entity.Monument;
+import org.hishatakaran.backend.entity.MonumentVideo;
 import org.hishatakaran.backend.entity.Topographic;
 import org.hishatakaran.backend.mapper.MonumentMapper;
 import org.hishatakaran.backend.model.MonumentAiResponseDto;
@@ -81,7 +82,7 @@ public class MonumentService {
                 monumentAiResponseDto.getConditionEn(),
                 monumentAiResponseDto.getConditionFr(),
                 monumentRequestDto.getImages(),
-                monumentRequestDto.getVideos(),
+                new ArrayList<>(),
                 monumentRequestDto.getMeasurements(),
                 new ArrayList<>(),
                 null,
@@ -168,6 +169,18 @@ public class MonumentService {
                 monumentAiResponseDto.getValuationFr()
             );
             monument.setDescriptiveCharacteristics(descriptiveCharacteristicReference);
+            monument.setVideos(
+                monumentAiResponseDto.getVideos()
+                    .stream()
+                    .map(video -> new MonumentVideo(
+                        monument,
+                        video.getVideoTitleHy(),
+                        video.getVideoTitleEn(),
+                        video.getVideoTitleFr(),
+                        video.getUrl()
+                    ))
+                    .toList()
+            );
             Monument savedMonument = monumentRepository.save(monument);
             return MonumentMapper.toDto(savedMonument);
         } else {

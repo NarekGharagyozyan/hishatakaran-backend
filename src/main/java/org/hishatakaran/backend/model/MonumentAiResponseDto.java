@@ -108,4 +108,17 @@ public class MonumentAiResponseDto {
   private String valuationHy;
   private String valuationEn;
   private String valuationFr;
+
+  private List<MonumentVideo> videos;
+
+  @Setter
+  @Getter
+  @AllArgsConstructor
+  @NoArgsConstructor
+  public static class MonumentVideo {
+    private String videoTitleHy;
+    private String videoTitleEn;
+    private String videoTitleFr;
+    private String url;
+  }
 }

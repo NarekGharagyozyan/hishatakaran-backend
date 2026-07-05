@@ -372,6 +372,22 @@ NOW EXTRACT DATA FROM THIS HTML:
     allProperties.put("valuationEn", Schema.builder().type(Type.Known.STRING).build());
     allProperties.put("valuationFr", Schema.builder().type(Type.Known.STRING).build());
 
+    Map<String, Schema> monumentVideosProperties = new HashMap<>();
+    monumentVideosProperties.put("videoTitleHy", Schema.builder().type(Type.Known.STRING).build());
+    monumentVideosProperties.put("videoTitleEn", Schema.builder().type(Type.Known.STRING).build());
+    monumentVideosProperties.put("videoTitleFr", Schema.builder().type(Type.Known.STRING).build());
+    monumentVideosProperties.put("url", Schema.builder().type(Type.Known.STRING).build());
+
+    Schema monumentVideoItemSchema = Schema.builder()
+        .type(Type.Known.OBJECT)
+        .properties(monumentVideosProperties)
+        .build();
+
+    allProperties.put("videos", Schema.builder()
+        .type(Type.Known.ARRAY)
+        .items(monumentVideoItemSchema)
+        .build());
+
     Schema schema = Schema.builder()
         .type(Type.Known.OBJECT)
         .properties(allProperties)

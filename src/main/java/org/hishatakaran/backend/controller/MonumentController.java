@@ -5,11 +5,11 @@ import lombok.RequiredArgsConstructor;
 import org.hishatakaran.backend.mapper.MonumentMapper;
 import org.hishatakaran.backend.model.LanguagesResponseDto;
 import org.hishatakaran.backend.model.MonumentFilterRequest;
-import org.hishatakaran.backend.model.MonumentImagesResponseDto;
+import org.hishatakaran.backend.model.MonumentMediasResponseDto;
 import org.hishatakaran.backend.model.MonumentRequestDto;
 import org.hishatakaran.backend.model.MonumentResponseDto;
-import org.hishatakaran.backend.model.MonumentType;
 import org.hishatakaran.backend.model.MonumentTypesResponseDto;
+import org.hishatakaran.backend.model.MonumentVideoResponseDto;
 import org.hishatakaran.backend.model.Status;
 import org.hishatakaran.backend.repository.MonumentRepository;
 import org.hishatakaran.backend.service.MonumentService;
@@ -137,7 +137,7 @@ public class MonumentController {
     }
 
     @GetMapping("/images")
-    public List<MonumentImagesResponseDto> getMonumentImages(
+    public List<MonumentMediasResponseDto> getMonumentImages(
         @RequestParam(required = false)
         Long regionId,
         @RequestParam(required = false)
@@ -159,7 +159,7 @@ public class MonumentController {
             .toList();
 
         return IntStream.range(0, images.size())
-            .mapToObj(i -> new MonumentImagesResponseDto(
+            .mapToObj(i -> new MonumentMediasResponseDto(
                 (long) i + 1,
                 images.get(i)
             ))
@@ -167,7 +167,7 @@ public class MonumentController {
     }
 
     @GetMapping("/videos")
-    public List<MonumentImagesResponseDto> getMonumentVideos(
+    public List<MonumentVideoResponseDto> getMonumentVideos(
         @RequestParam(required = false)
         Long regionId,
         @RequestParam(required = false)
@@ -182,22 +182,15 @@ public class MonumentController {
         request.setSettlementId(settlementId);
         request.setMonumentType(monumentType);
 
-        List<String> videos = monumentService.filter(request)
+        return monumentService.filter(request)
             .stream()
             .map(MonumentResponseDto::getVideos)
             .flatMap(Collection::stream)
             .toList();
-
-        return IntStream.range(0, videos.size())
-            .mapToObj(i -> new MonumentImagesResponseDto(
-                (long) i + 1,
-                videos.get(i)
-            ))
-            .toList();
     }
 
     @GetMapping("/measurements")
-    public List<MonumentImagesResponseDto> getMonumentMeasurements(
+    public List<MonumentMediasResponseDto> getMonumentMeasurements(
         @RequestParam(required = false)
         Long regionId,
         @RequestParam(required = false)
@@ -219,7 +212,7 @@ public class MonumentController {
             .toList();
 
         return IntStream.range(0, measurements.size())
-            .mapToObj(i -> new MonumentImagesResponseDto(
+            .mapToObj(i -> new MonumentMediasResponseDto(
                 (long) i + 1,
                 measurements.get(i)
             ))

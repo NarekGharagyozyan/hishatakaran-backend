@@ -29,7 +29,7 @@ public class MonumentRequestDto {
   private String condition;
 
   private List<String> images;
-  private List<String> videos;
+  private List<MonumentVideoRequestDto> videos;
   private List<String> measurements;
 
   private List<BibliographyRequestDto> bibliography;
@@ -48,18 +48,20 @@ public class MonumentRequestDto {
         ", settlementId=" + settlementId +
         ", monumentType='" + monumentType + '\'' +
         ", specialName='" + specialName + '\'' +
-        ", anotherNames=" + anotherNames +
+        ", anotherNames='" + anotherNames + '\'' +
         ", history='" + history + '\'' +
         ", originalAffiliation='" + originalAffiliation + '\'' +
         ", storageUnitName='" + storageUnitName + '\'' +
         ", condition='" + condition + '\'' +
         ", images=" + images +
+        ", videos=" + videos +
+        ", measurements=" + measurements +
         ", bibliography=" + bibliography +
         ", topographics=" + topographics +
         ", historicalReferences=" + historicalReferences +
         ", descriptiveCharacteristics=" + descriptiveCharacteristics +
         ", showInMainPage=" + showInMainPage +
-        ", signature=" + signature +
+        ", signature='" + signature + '\'' +
         '}';
   }
 }
