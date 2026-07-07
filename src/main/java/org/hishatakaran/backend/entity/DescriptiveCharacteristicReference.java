@@ -33,6 +33,19 @@ public class DescriptiveCharacteristicReference {
     private String theBuildingMaterialHy;
     private String theBuildingMaterialEn;
     private String theBuildingMaterialFr;
+
+    private String openingsEntrancesHy;
+    private String openingsEntrancesEn;
+    private String openingsEntrancesFr;
+
+    private String constructionsHy;
+    private String constructionsEn;
+    private String constructionsFr;
+
+    private String roofHy;
+    private String roofEn;
+    private String roofFr;
+
     private String typeHy;
     private String typeEn;
     private String typeFr;
@@ -59,32 +72,29 @@ public class DescriptiveCharacteristicReference {
     @Column(columnDefinition = "TEXT")
     private String valuationFr;
 
-    public DescriptiveCharacteristicReference(
-        Monument monument,
-        String theBuildingMaterialHy,
+    public DescriptiveCharacteristicReference(Monument monument, String theBuildingMaterialHy,
         String theBuildingMaterialEn,
-        String theBuildingMaterialFr,
-        String typeHy,
-        String typeEn,
-        String typeFr,
-        String colorHy,
-        String colorEn,
-        String colorFr,
-        String implementationTechniqueHy,
-        String implementationTechniqueEn,
-        String implementationTechniqueFr,
-        String stateOfMonumentHy,
-        String stateOfMonumentEn,
-        String stateOfMonumentFr,
-        String valuationHy,
-        String valuationEn,
-        String valuationFr
-    )
-    {
+        String theBuildingMaterialFr, String openingsEntrancesHy, String openingsEntrancesEn,
+        String openingsEntrancesFr,
+        String constructionsHy, String constructionsEn, String constructionsFr, String roofHy, String roofEn,
+        String roofFr,
+        String typeHy, String typeEn, String typeFr, String colorHy, String colorEn, String colorFr,
+        String implementationTechniqueHy, String implementationTechniqueEn, String implementationTechniqueFr,
+        String stateOfMonumentHy, String stateOfMonumentEn, String stateOfMonumentFr, String valuationHy,
+        String valuationEn, String valuationFr) {
         this.monument = monument;
         this.theBuildingMaterialHy = theBuildingMaterialHy;
         this.theBuildingMaterialEn = theBuildingMaterialEn;
         this.theBuildingMaterialFr = theBuildingMaterialFr;
+        this.openingsEntrancesHy = openingsEntrancesHy;
+        this.openingsEntrancesEn = openingsEntrancesEn;
+        this.openingsEntrancesFr = openingsEntrancesFr;
+        this.constructionsHy = constructionsHy;
+        this.constructionsEn = constructionsEn;
+        this.constructionsFr = constructionsFr;
+        this.roofHy = roofHy;
+        this.roofEn = roofEn;
+        this.roofFr = roofFr;
         this.typeHy = typeHy;
         this.typeEn = typeEn;
         this.typeFr = typeFr;
@@ -110,6 +120,15 @@ public class DescriptiveCharacteristicReference {
             ", theBuildingMaterialHy='" + theBuildingMaterialHy + '\'' +
             ", theBuildingMaterialEn='" + theBuildingMaterialEn + '\'' +
             ", theBuildingMaterialFr='" + theBuildingMaterialFr + '\'' +
+            ", openingsEntrancesHy='" + openingsEntrancesHy + '\'' +
+            ", openingsEntrancesEn='" + openingsEntrancesEn + '\'' +
+            ", openingsEntrancesFr='" + openingsEntrancesFr + '\'' +
+            ", constructionsHy='" + constructionsHy + '\'' +
+            ", constructionsEn='" + constructionsEn + '\'' +
+            ", constructionsFr='" + constructionsFr + '\'' +
+            ", roofHy='" + roofHy + '\'' +
+            ", roofEn='" + roofEn + '\'' +
+            ", roofFr='" + roofFr + '\'' +
             ", typeHy='" + typeHy + '\'' +
             ", typeEn='" + typeEn + '\'' +
             ", typeFr='" + typeFr + '\'' +

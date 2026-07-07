@@ -9,6 +9,9 @@ import lombok.Setter;
 @Getter
 public class DescriptiveCharacteristicReferenceRequestDto {
 
+  private String openingsEntrances;
+  private String constructions;
+  private String roof;
   private String theBuildingMaterial;
   private String type;
   private String color;
@@ -19,7 +22,10 @@ public class DescriptiveCharacteristicReferenceRequestDto {
   @Override
   public String toString() {
     return "DescriptiveCharacteristicReferenceRequestDto{" +
-        "theBuildingMaterial='" + theBuildingMaterial + '\'' +
+        "openingsEntrances='" + openingsEntrances + '\'' +
+        ", constructions='" + constructions + '\'' +
+        ", roof='" + roof + '\'' +
+        ", theBuildingMaterial='" + theBuildingMaterial + '\'' +
         ", type='" + type + '\'' +
         ", color='" + color + '\'' +
         ", implementationTechnique='" + implementationTechnique + '\'' +

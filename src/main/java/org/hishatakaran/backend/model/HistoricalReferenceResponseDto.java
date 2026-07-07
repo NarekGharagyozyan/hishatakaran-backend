@@ -14,5 +14,6 @@ public class HistoricalReferenceResponseDto {
     private final LanguagesResponseDto century;
     private final LanguagesResponseDto justificationOfTheNumberingBasedOnLithography;
     private final LanguagesResponseDto chronologicalTableOfTheStud;
+    private final LanguagesResponseDto chronologicalTableOfTheMonumentsStudy;
     private final LanguagesResponseDto author;
 }

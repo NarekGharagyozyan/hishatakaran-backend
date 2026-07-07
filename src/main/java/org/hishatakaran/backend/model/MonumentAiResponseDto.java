@@ -29,9 +29,13 @@ public class MonumentAiResponseDto {
   private String monumentTypeEn;
   private String monumentTypeFr;
 
-  private String provinceHy;
-  private String provinceEn;
-  private String provinceFr;
+  private String historyHy;
+  private String historyEn;
+  private String historyFr;
+
+  private String topographicRegionHy;
+  private String topographicRegionEn;
+  private String topographicRegionFr;
 
   private String originalAffiliationHy;
   private String originalAffiliationEn;
@@ -81,6 +85,10 @@ public class MonumentAiResponseDto {
   private String chronologicalTableOfTheStudEn;
   private String chronologicalTableOfTheStudFr;
 
+  private String chronologicalTableOfTheMonumentsStudyHy;
+  private String chronologicalTableOfTheMonumentsStudyEn;
+  private String chronologicalTableOfTheMonumentsStudyFr;
+
   private String authorHy;
   private String authorEn;
   private String authorFr;
@@ -88,6 +96,18 @@ public class MonumentAiResponseDto {
   private String theBuildingMaterialHy;
   private String theBuildingMaterialEn;
   private String theBuildingMaterialFr;
+
+  private String openingsEntrancesHy;
+  private String openingsEntrancesEn;
+  private String openingsEntrancesFr;
+
+  private String constructionsHy;
+  private String constructionsEn;
+  private String constructionsFr;
+
+  private String roofHy;
+  private String roofEn;
+  private String roofFr;
 
   private String typeHy;
   private String typeEn;

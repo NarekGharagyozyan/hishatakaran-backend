@@ -10,7 +10,7 @@ import lombok.Setter;
 public class TopographicResponseDto {
 
     private final Long id;
-    private final LanguagesResponseDto province;
+    private final LanguagesResponseDto region;
     private final LanguagesResponseDto address;
     private final LanguagesResponseDto topography;
     private final LanguagesResponseDto distanceFromResidence;

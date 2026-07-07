@@ -10,6 +10,21 @@ public class DescriptiveCharacteristicMapper {
         return new DescriptiveCharacteristicResponseDto(
             descriptive.getId(),
             new LanguagesResponseDto(
+                descriptive.getOpeningsEntrancesHy(),
+                descriptive.getOpeningsEntrancesEn(),
+                descriptive.getOpeningsEntrancesFr()
+            ),
+            new LanguagesResponseDto(
+                descriptive.getConstructionsHy(),
+                descriptive.getConstructionsEn(),
+                descriptive.getConstructionsFr()
+            ),
+            new LanguagesResponseDto(
+                descriptive.getRoofHy(),
+                descriptive.getRoofEn(),
+                descriptive.getRoofFr()
+            ),
+            new LanguagesResponseDto(
                 descriptive.getTypeHy(),
                 descriptive.getTypeEn(),
                 descriptive.getTypeFr()

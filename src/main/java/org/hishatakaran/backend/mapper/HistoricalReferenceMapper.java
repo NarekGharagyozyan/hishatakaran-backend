@@ -31,6 +31,11 @@ public class HistoricalReferenceMapper {
                 historicalReference.getChronologicalTableOfTheStudFr()
             ),
             new LanguagesResponseDto(
+                historicalReference.getChronologicalTableOfTheMonumentsStudyHy(),
+                historicalReference.getChronologicalTableOfTheMonumentsStudyEn(),
+                historicalReference.getChronologicalTableOfTheMonumentsStudyFr()
+            ),
+            new LanguagesResponseDto(
                 historicalReference.getAuthorHy(),
                 historicalReference.getAuthorEn(),
                 historicalReference.getAuthorFr()

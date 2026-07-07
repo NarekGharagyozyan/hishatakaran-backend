@@ -30,9 +30,12 @@ public class Topographic {
     @JoinColumn(name = "monument", nullable = false)
     private Monument monument;
 
-    private String provinceHy;
-    private String provinceEn;
-    private String provinceFr;
+    @Column(columnDefinition = "TEXT")
+    private String regionHy;
+    @Column(columnDefinition = "TEXT")
+    private String regionEn;
+    @Column(columnDefinition = "TEXT")
+    private String regionFr;
 
     private String addressHy;
     private String addressEn;
@@ -68,9 +71,9 @@ public class Topographic {
 
     public Topographic(
         Monument monument,
-        String provinceHy,
-        String provinceEn,
-        String provinceFr,
+        String regionHy,
+        String regionEn,
+        String regionFr,
         String addressHy,
         String addressEn,
         String addressFr,
@@ -92,9 +95,9 @@ public class Topographic {
     )
     {
         this.monument = monument;
-        this.provinceHy = provinceHy;
-        this.provinceEn = provinceEn;
-        this.provinceFr = provinceFr;
+        this.regionHy = regionHy;
+        this.regionEn = regionEn;
+        this.regionFr = regionFr;
         this.addressHy = addressHy;
         this.addressEn = addressEn;
         this.addressFr = addressFr;
@@ -120,9 +123,9 @@ public class Topographic {
         return "Topographic{" +
             "id=" + id +
             ", monument=" + monument +
-            ", provinceHy='" + provinceHy + '\'' +
-            ", provinceEn='" + provinceEn + '\'' +
-            ", provinceFr='" + provinceFr + '\'' +
+            ", regionHy='" + regionHy + '\'' +
+            ", regionEn='" + regionEn + '\'' +
+            ", regionFr='" + regionFr + '\'' +
             ", addressHy='" + addressHy + '\'' +
             ", addressEn='" + addressEn + '\'' +
             ", addressFr='" + addressFr + '\'' +

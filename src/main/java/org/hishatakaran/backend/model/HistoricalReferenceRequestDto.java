@@ -13,6 +13,7 @@ public class HistoricalReferenceRequestDto {
   private String century;
   private String justificationOfTheNumberingBasedOnLithography;
   private String chronologicalTableOfTheStud;
+  private String chronologicalTableOfTheMonumentsStudy;
   private String author;
 
   @Override
@@ -22,6 +23,7 @@ public class HistoricalReferenceRequestDto {
         ", century='" + century + '\'' +
         ", justificationOfTheNumberingBasedOnLithography='" + justificationOfTheNumberingBasedOnLithography + '\'' +
         ", chronologicalTableOfTheStud='" + chronologicalTableOfTheStud + '\'' +
+        ", chronologicalTableOfTheMonumentsStudy='" + chronologicalTableOfTheMonumentsStudy + '\'' +
         ", author='" + author + '\'' +
         '}';
   }

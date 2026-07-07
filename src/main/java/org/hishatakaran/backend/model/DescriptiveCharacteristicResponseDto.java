@@ -10,6 +10,9 @@ import lombok.Setter;
 public class DescriptiveCharacteristicResponseDto {
 
     private final Long id;
+    private final LanguagesResponseDto openingsEntrances;
+    private final LanguagesResponseDto constructions;
+    private final LanguagesResponseDto roof;
     private final LanguagesResponseDto type;
     private final LanguagesResponseDto color;
     private final LanguagesResponseDto buildingMaterial;

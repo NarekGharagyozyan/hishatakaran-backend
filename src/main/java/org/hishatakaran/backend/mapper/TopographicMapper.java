@@ -11,9 +11,9 @@ public class TopographicMapper {
         return new TopographicResponseDto(
             topographic.getId(),
             new LanguagesResponseDto(
-                topographic.getProvinceHy(),
-                topographic.getProvinceEn(),
-                topographic.getProvinceFr()
+                topographic.getRegionHy(),
+                topographic.getRegionEn(),
+                topographic.getRegionFr()
             ),
             new LanguagesResponseDto(
                 topographic.getAddressHy(),

@@ -51,28 +51,24 @@ public class HistoricalReference {
     @Column(columnDefinition = "TEXT")
     private String chronologicalTableOfTheStudFr;
 
+    @Column(columnDefinition = "TEXT")
+    private String chronologicalTableOfTheMonumentsStudyHy;
+    @Column(columnDefinition = "TEXT")
+    private String chronologicalTableOfTheMonumentsStudyEn;
+    @Column(columnDefinition = "TEXT")
+    private String chronologicalTableOfTheMonumentsStudyFr;
+
     private String authorHy;
     private String authorEn;
     private String authorFr;
 
-    public HistoricalReference(
-        Monument monument,
-        String culturalAffiliationHy,
-        String culturalAffiliationEn,
-        String culturalAffiliationFr,
-        String centuryHy,
-        String centuryEn,
-        String centuryFr,
-        String justificationOfTheNumberingBasedOnLithographyHy,
-        String justificationOfTheNumberingBasedOnLithographyEn,
-        String justificationOfTheNumberingBasedOnLithographyFr,
-        String chronologicalTableOfTheStudHy,
-        String chronologicalTableOfTheStudEn,
-        String chronologicalTableOfTheStudFr,
-        String authorHy,
-        String authorEn,
-        String authorFr)
-    {
+    public HistoricalReference(Monument monument, String culturalAffiliationHy, String culturalAffiliationEn,
+        String culturalAffiliationFr, String centuryHy, String centuryEn, String centuryFr,
+        String justificationOfTheNumberingBasedOnLithographyHy, String justificationOfTheNumberingBasedOnLithographyEn,
+        String justificationOfTheNumberingBasedOnLithographyFr, String chronologicalTableOfTheStudHy,
+        String chronologicalTableOfTheStudEn, String chronologicalTableOfTheStudFr,
+        String chronologicalTableOfTheMonumentsStudyHy, String chronologicalTableOfTheMonumentsStudyEn,
+        String chronologicalTableOfTheMonumentsStudyFr, String authorHy, String authorEn, String authorFr) {
         this.monument = monument;
         this.culturalAffiliationHy = culturalAffiliationHy;
         this.culturalAffiliationEn = culturalAffiliationEn;
@@ -86,6 +82,9 @@ public class HistoricalReference {
         this.chronologicalTableOfTheStudHy = chronologicalTableOfTheStudHy;
         this.chronologicalTableOfTheStudEn = chronologicalTableOfTheStudEn;
         this.chronologicalTableOfTheStudFr = chronologicalTableOfTheStudFr;
+        this.chronologicalTableOfTheMonumentsStudyHy = chronologicalTableOfTheMonumentsStudyHy;
+        this.chronologicalTableOfTheMonumentsStudyEn = chronologicalTableOfTheMonumentsStudyEn;
+        this.chronologicalTableOfTheMonumentsStudyFr = chronologicalTableOfTheMonumentsStudyFr;
         this.authorHy = authorHy;
         this.authorEn = authorEn;
         this.authorFr = authorFr;
@@ -108,6 +107,9 @@ public class HistoricalReference {
             ", chronologicalTableOfTheStudHy='" + chronologicalTableOfTheStudHy + '\'' +
             ", chronologicalTableOfTheStudEn='" + chronologicalTableOfTheStudEn + '\'' +
             ", chronologicalTableOfTheStudFr='" + chronologicalTableOfTheStudFr + '\'' +
+            ", chronologicalTableOfTheMonumentsStudyHy='" + chronologicalTableOfTheMonumentsStudyHy + '\'' +
+            ", chronologicalTableOfTheMonumentsStudyEn='" + chronologicalTableOfTheMonumentsStudyEn + '\'' +
+            ", chronologicalTableOfTheMonumentsStudyFr='" + chronologicalTableOfTheMonumentsStudyFr + '\'' +
             ", authorHy='" + authorHy + '\'' +
             ", authorEn='" + authorEn + '\'' +
             ", authorFr='" + authorFr + '\'' +

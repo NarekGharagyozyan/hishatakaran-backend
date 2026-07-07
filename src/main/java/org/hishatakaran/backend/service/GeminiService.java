@@ -292,9 +292,13 @@ NOW EXTRACT DATA FROM THIS HTML:
     allProperties.put("monumentTypeEn", Schema.builder().type(Type.Known.STRING).build());
     allProperties.put("monumentTypeFr", Schema.builder().type(Type.Known.STRING).build());
 
-    allProperties.put("provinceHy", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("provinceEn", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("provinceFr", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("topographicRegionHy", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("topographicRegionEn", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("topographicRegionFr", Schema.builder().type(Type.Known.STRING).build());
+
+    allProperties.put("historyHy", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("historyEn", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("historyFr", Schema.builder().type(Type.Known.STRING).build());
 
     allProperties.put("originalAffiliationHy", Schema.builder().type(Type.Known.STRING).build());
     allProperties.put("originalAffiliationEn", Schema.builder().type(Type.Known.STRING).build());
@@ -344,6 +348,10 @@ NOW EXTRACT DATA FROM THIS HTML:
     allProperties.put("chronologicalTableOfTheStudEn", Schema.builder().type(Type.Known.STRING).build());
     allProperties.put("chronologicalTableOfTheStudFr", Schema.builder().type(Type.Known.STRING).build());
 
+    allProperties.put("chronologicalTableOfTheMonumentsStudyHy", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("chronologicalTableOfTheMonumentsStudyEn", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("chronologicalTableOfTheMonumentsStudyFr", Schema.builder().type(Type.Known.STRING).build());
+
     allProperties.put("authorHy", Schema.builder().type(Type.Known.STRING).build());
     allProperties.put("authorEn", Schema.builder().type(Type.Known.STRING).build());
     allProperties.put("authorFr", Schema.builder().type(Type.Known.STRING).build());
@@ -351,6 +359,18 @@ NOW EXTRACT DATA FROM THIS HTML:
     allProperties.put("theBuildingMaterialHy", Schema.builder().type(Type.Known.STRING).build());
     allProperties.put("theBuildingMaterialEn", Schema.builder().type(Type.Known.STRING).build());
     allProperties.put("theBuildingMaterialFr", Schema.builder().type(Type.Known.STRING).build());
+
+    allProperties.put("openingsEntrancesHy", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("openingsEntrancesEn", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("openingsEntrancesFr", Schema.builder().type(Type.Known.STRING).build());
+
+    allProperties.put("constructionsHy", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("constructionsEn", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("constructionsFr", Schema.builder().type(Type.Known.STRING).build());
+
+    allProperties.put("roofHy", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("roofEn", Schema.builder().type(Type.Known.STRING).build());
+    allProperties.put("roofFr", Schema.builder().type(Type.Known.STRING).build());
 
     allProperties.put("typeHy", Schema.builder().type(Type.Known.STRING).build());
     allProperties.put("typeEn", Schema.builder().type(Type.Known.STRING).build());
