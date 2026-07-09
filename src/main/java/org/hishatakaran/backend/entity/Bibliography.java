@@ -30,12 +30,16 @@ public class Bibliography {
     @JoinColumn(name = "monument", nullable = false)
     private Monument monument;
 
-    private String title;
+    private String titleHy;
+    private String titleEn;
+    private String titleFr;
     private String url;
 
-    public Bibliography(Monument monument, String title, String url) {
+    public Bibliography(Monument monument, String titleHy, String titleEn, String titleFr, String url) {
         this.monument = monument;
-        this.title = title;
+        this.titleHy = titleHy;
+        this.titleEn = titleEn;
+        this.titleFr = titleFr;
         this.url = url;
     }
 
@@ -43,8 +47,9 @@ public class Bibliography {
     public String toString() {
         return "Bibliography{" +
             "id=" + id +
-            ", monument=" + monument +
-            ", title='" + title + '\'' +
+            ", titleHy='" + titleHy + '\'' +
+            ", titleEn='" + titleEn + '\'' +
+            ", titleFr='" + titleFr + '\'' +
             ", url='" + url + '\'' +
             '}';
     }

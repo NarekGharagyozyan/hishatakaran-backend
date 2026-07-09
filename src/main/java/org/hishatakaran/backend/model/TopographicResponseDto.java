@@ -16,7 +16,7 @@ public class TopographicResponseDto {
     private final LanguagesResponseDto distanceFromResidence;
     private final String latitude;
     private final String longitude;
-    private final Integer altitude;
+    private final LanguagesResponseDto altitude;
     private final LanguagesResponseDto hydrography;
     private final LanguagesResponseDto description;
 }

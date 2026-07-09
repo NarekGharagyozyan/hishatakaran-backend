@@ -9,47 +9,47 @@ public class DescriptiveCharacteristicMapper {
     public static DescriptiveCharacteristicResponseDto toDto(DescriptiveCharacteristicReference descriptive) {
         return new DescriptiveCharacteristicResponseDto(
             descriptive.getId(),
-            new LanguagesResponseDto(
+            LanguagesResponseDto.of(
                 descriptive.getOpeningsEntrancesHy(),
                 descriptive.getOpeningsEntrancesEn(),
                 descriptive.getOpeningsEntrancesFr()
             ),
-            new LanguagesResponseDto(
+            LanguagesResponseDto.of(
                 descriptive.getConstructionsHy(),
                 descriptive.getConstructionsEn(),
                 descriptive.getConstructionsFr()
             ),
-            new LanguagesResponseDto(
+            LanguagesResponseDto.of(
                 descriptive.getRoofHy(),
                 descriptive.getRoofEn(),
                 descriptive.getRoofFr()
             ),
-            new LanguagesResponseDto(
+            LanguagesResponseDto.of(
                 descriptive.getTypeHy(),
                 descriptive.getTypeEn(),
                 descriptive.getTypeFr()
             ),
-            new LanguagesResponseDto(
+            LanguagesResponseDto.of(
                 descriptive.getColorHy(),
                 descriptive.getColorEn(),
                 descriptive.getColorFr()
             ),
-            new LanguagesResponseDto(
+            LanguagesResponseDto.of(
                 descriptive.getTheBuildingMaterialHy(),
                 descriptive.getTheBuildingMaterialEn(),
                 descriptive.getTheBuildingMaterialFr()
             ),
-            new LanguagesResponseDto(
+            LanguagesResponseDto.of(
                 descriptive.getImplementationTechniqueHy(),
                 descriptive.getImplementationTechniqueEn(),
                 descriptive.getImplementationTechniqueFr()
             ),
-            new LanguagesResponseDto(
+            LanguagesResponseDto.of(
                 descriptive.getStateOfMonumentHy(),
                 descriptive.getStateOfMonumentEn(),
                 descriptive.getStateOfMonumentFr()
             ),
-            new LanguagesResponseDto(
+            LanguagesResponseDto.of(
                 descriptive.getValuationHy(),
                 descriptive.getValuationEn(),
                 descriptive.getValuationFr()

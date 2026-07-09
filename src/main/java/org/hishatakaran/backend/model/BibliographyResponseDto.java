@@ -10,6 +10,6 @@ import lombok.Setter;
 public class BibliographyResponseDto {
 
     private final Long id;
-    private final String title;
+    private final LanguagesResponseDto title;
     private final String url;
 }

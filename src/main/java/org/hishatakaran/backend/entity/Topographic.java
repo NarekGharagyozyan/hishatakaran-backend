@@ -8,8 +8,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,13 +22,14 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Topographic {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "monument", nullable = false)
     private Monument monument;
 
@@ -53,7 +56,10 @@ public class Topographic {
     private String distanceFromResidenceFr;
     private String longitude;
     private String latitude;
-    private Integer altitude;
+
+    private String altitudeHy;
+    private String altitudeEn;
+    private String altitudeFr;
 
     @Column(columnDefinition = "TEXT")
     private String hydrographyHy;
@@ -85,7 +91,9 @@ public class Topographic {
         String distanceFromResidenceFr,
         String latitude,
         String longitude,
-        Integer altitude,
+        String altitudeHy,
+        String altitudeEn,
+        String altitudeFr,
         String hydrographyHy,
         String hydrographyEn,
         String hydrographyFr,
@@ -109,7 +117,9 @@ public class Topographic {
         this.distanceFromResidenceFr = distanceFromResidenceFr;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.altitude = altitude;
+        this.altitudeHy = altitudeHy;
+        this.altitudeEn = altitudeEn;
+        this.altitudeFr = altitudeFr;
         this.hydrographyHy = hydrographyHy;
         this.hydrographyEn = hydrographyEn;
         this.hydrographyFr = hydrographyFr;
@@ -122,7 +132,6 @@ public class Topographic {
     public String toString() {
         return "Topographic{" +
             "id=" + id +
-            ", monument=" + monument +
             ", regionHy='" + regionHy + '\'' +
             ", regionEn='" + regionEn + '\'' +
             ", regionFr='" + regionFr + '\'' +
@@ -137,7 +146,9 @@ public class Topographic {
             ", distanceFromResidenceFr='" + distanceFromResidenceFr + '\'' +
             ", longitude='" + longitude + '\'' +
             ", latitude='" + latitude + '\'' +
-            ", altitude=" + altitude +
+            ", altitudeHy=" + altitudeHy +
+            ", altitudeEn=" + altitudeEn +
+            ", altitudeFr=" + altitudeFr +
             ", hydrographyHy='" + hydrographyHy + '\'' +
             ", hydrographyEn='" + hydrographyEn + '\'' +
             ", hydrographyFr='" + hydrographyFr + '\'' +

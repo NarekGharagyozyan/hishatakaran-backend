@@ -15,13 +15,13 @@ public class MonumentMapper {
         MonumentResponseDto.MonumentResponseDtoBuilder monumentDtoBuilder = MonumentResponseDto.builder();
 
         monumentDtoBuilder.id(m.getId());
-        monumentDtoBuilder.name(new LanguagesResponseDto(
+        monumentDtoBuilder.name(LanguagesResponseDto.of(
             m.getNameHy(),
             m.getNameEn(),
             m.getNameFr()
         ));
         monumentDtoBuilder.status(m.getStatus().name());
-        monumentDtoBuilder.monumentType(new LanguagesResponseDto(
+        monumentDtoBuilder.monumentType(LanguagesResponseDto.of(
             m.getMonumentTypeHy(),
             m.getMonumentTypeEn(),
             m.getMonumentTypeFr()
@@ -35,33 +35,33 @@ public class MonumentMapper {
             monumentDtoBuilder.settlement(SettlementMapper.toDto(m.getSettlement()));
         }
 
-        monumentDtoBuilder.specialName(new LanguagesResponseDto(
+        monumentDtoBuilder.specialName(LanguagesResponseDto.of(
             m.getSpecialNameHy(),
             m.getSpecialNameEn(),
             m.getSpecialNameFr()
         ));
-        monumentDtoBuilder.anotherNames(new LanguagesResponseDto(
+        monumentDtoBuilder.anotherNames(LanguagesResponseDto.of(
             m.getAnotherNamesHy(),
             m.getAnotherNamesEn(),
             m.getAnotherNamesFr()
         ));
 
-        monumentDtoBuilder.history(new LanguagesResponseDto(
+        monumentDtoBuilder.history(LanguagesResponseDto.of(
             m.getHistoryHy(),
             m.getHistoryEn(),
             m.getHistoryFr()
         ));
-        monumentDtoBuilder.originalAffiliation(new LanguagesResponseDto(
+        monumentDtoBuilder.originalAffiliation(LanguagesResponseDto.of(
             m.getOriginalAffiliationHy(),
             m.getOriginalAffiliationEn(),
             m.getOriginalAffiliationFr()
         ));
-        monumentDtoBuilder.storageUnitName(new LanguagesResponseDto(
+        monumentDtoBuilder.storageUnitName(LanguagesResponseDto.of(
             m.getStorageUnitNameHy(),
             m.getStorageUnitNameEn(),
             m.getStorageUnitNameFr()
         ));
-        monumentDtoBuilder.condition(new LanguagesResponseDto(
+        monumentDtoBuilder.condition(LanguagesResponseDto.of(
             m.getConditionHy(),
             m.getConditionEn(),
             m.getConditionFr()
@@ -71,7 +71,7 @@ public class MonumentMapper {
         monumentDtoBuilder.videos(m.getVideos()
             .stream()
             .map(video -> new MonumentVideoResponseDto(
-                new LanguagesResponseDto(
+                LanguagesResponseDto.of(
                     video.getTitleHy(),
                     video.getTitleEn(),
                     video.getTitleFr()
@@ -88,7 +88,13 @@ public class MonumentMapper {
         monumentDtoBuilder.bibliography(
             m.getBibliography()
                 .stream()
-                .map(bibliography -> new BibliographyResponseDto(bibliography.getId(), bibliography.getTitle(),
+                .map(bibliography -> new BibliographyResponseDto(
+                    bibliography.getId(),
+                    LanguagesResponseDto.of(
+                        bibliography.getTitleHy(),
+                        bibliography.getTitleEn(),
+                        bibliography.getTitleFr()
+                    ),
                     bibliography.getUrl()))
                 .toList()
         );
@@ -96,7 +102,7 @@ public class MonumentMapper {
         monumentDtoBuilder.topographics(TopographicMapper.toDto(m.getTopographics()));
         monumentDtoBuilder.historicalReferences(HistoricalReferenceMapper.toDto(m.getHistoricalReferences()));
         monumentDtoBuilder.descriptiveCharacteristics(DescriptiveCharacteristicMapper.toDto(m.getDescriptiveCharacteristics()));
-
+        monumentDtoBuilder.signature(m.getSignature());
 
         return monumentDtoBuilder.build();
     }

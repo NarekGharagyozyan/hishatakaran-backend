@@ -55,6 +55,21 @@ public class FileStorageService {
         }
     }
 
+    public void deleteImage(String imagePath) {
+        if (imagePath == null || imagePath.isBlank()) {
+            return;
+        }
+
+        try {
+            Path path = Paths.get("images")
+                .resolve(imagePath.replaceFirst("^/images/", ""));
+
+            Files.deleteIfExists(path);
+        } catch (IOException e) {
+            throw new RuntimeException("Cannot delete file: " + imagePath, e);
+        }
+    }
+
     private String getExtension(String filename) {
 
         int index = filename.lastIndexOf('.');

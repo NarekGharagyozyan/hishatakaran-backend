@@ -10,32 +10,32 @@ public class HistoricalReferenceMapper {
 
         return new HistoricalReferenceResponseDto(
             historicalReference.getId(),
-            new LanguagesResponseDto(
+            LanguagesResponseDto.of(
                 historicalReference.getCulturalAffiliationHy(),
                 historicalReference.getCulturalAffiliationEn(),
                 historicalReference.getCulturalAffiliationFr()
             ),
-            new LanguagesResponseDto(
+            LanguagesResponseDto.of(
                 historicalReference.getCenturyHy(),
                 historicalReference.getCenturyEn(),
                 historicalReference.getCenturyFr()
             ),
-            new LanguagesResponseDto(
+            LanguagesResponseDto.of(
                 historicalReference.getJustificationOfTheNumberingBasedOnLithographyHy(),
                 historicalReference.getJustificationOfTheNumberingBasedOnLithographyEn(),
                 historicalReference.getJustificationOfTheNumberingBasedOnLithographyFr()
             ),
-            new LanguagesResponseDto(
+            LanguagesResponseDto.of(
                 historicalReference.getChronologicalTableOfTheStudHy(),
                 historicalReference.getChronologicalTableOfTheStudEn(),
                 historicalReference.getChronologicalTableOfTheStudFr()
             ),
-            new LanguagesResponseDto(
+            LanguagesResponseDto.of(
                 historicalReference.getChronologicalTableOfTheMonumentsStudyHy(),
                 historicalReference.getChronologicalTableOfTheMonumentsStudyEn(),
                 historicalReference.getChronologicalTableOfTheMonumentsStudyFr()
             ),
-            new LanguagesResponseDto(
+            LanguagesResponseDto.of(
                 historicalReference.getAuthorHy(),
                 historicalReference.getAuthorEn(),
                 historicalReference.getAuthorFr()

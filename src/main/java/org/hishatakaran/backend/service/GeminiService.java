@@ -5,15 +5,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.hishatakaran.backend.entity.DescriptiveCharacteristicReference;
+import org.hishatakaran.backend.entity.HistoricalReference;
+import org.hishatakaran.backend.entity.Monument;
+import org.hishatakaran.backend.entity.Topographic;
 import org.hishatakaran.backend.model.LibraryRequestDto;
 import org.hishatakaran.backend.model.MonumentRequestDto;
+import org.hishatakaran.backend.model.MonumentTranslationDto;
 import org.hishatakaran.backend.model.ProgramRequestDto;
 import org.hishatakaran.backend.model.TeamMemberRequestDto;
+import org.hishatakaran.backend.model.TranslationLanguage;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.genai.Client;
 import com.google.genai.types.Content;
 import com.google.genai.types.GenerateContentConfig;
@@ -23,14 +31,18 @@ import com.google.genai.types.Schema;
 import com.google.genai.types.Type;
 
 import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class GeminiService {
 
   @Value("${gemini.api.key}")
   private String apiKey;
 
   private Client client;
+
+  private final ObjectMapper objectMapper;
 
   @PostConstruct
   public void init() {
@@ -340,6 +352,22 @@ NOW EXTRACT DATA FROM THIS HTML:
     allProperties.put("centuryEn", Schema.builder().type(Type.Known.STRING).build());
     allProperties.put("centuryFr", Schema.builder().type(Type.Known.STRING).build());
 
+    Map<String, Schema> bibliographyProperties = new HashMap<>();
+    bibliographyProperties.put("titleHy", Schema.builder().type(Type.Known.STRING).build());
+    bibliographyProperties.put("titleEn", Schema.builder().type(Type.Known.STRING).build());
+    bibliographyProperties.put("titleFr", Schema.builder().type(Type.Known.STRING).build());
+    bibliographyProperties.put("url", Schema.builder().type(Type.Known.STRING).build());
+
+    Schema bibliographyItemSchema = Schema.builder()
+        .type(Type.Known.OBJECT)
+        .properties(bibliographyProperties)
+        .build();
+
+    allProperties.put("bibliography", Schema.builder()
+        .type(Type.Known.ARRAY)
+        .items(bibliographyItemSchema)
+        .build());
+
     allProperties.put("justificationOfTheNumberingBasedOnLithographyHy", Schema.builder().type(Type.Known.STRING).build());
     allProperties.put("justificationOfTheNumberingBasedOnLithographyEn", Schema.builder().type(Type.Known.STRING).build());
     allProperties.put("justificationOfTheNumberingBasedOnLithographyFr", Schema.builder().type(Type.Known.STRING).build());
@@ -611,6 +639,601 @@ NOW EXTRACT DATA FROM THIS HTML:
 
     System.out.println(response.text());
     return response.text();
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  public MonumentTranslationDto translateMonument(
+      Monument monument,
+      TranslationLanguage language
+  ) {
+
+    String prompt = buildTranslationPrompt(monument, language);
+
+    GenerateContentConfig config = GenerateContentConfig.builder()
+        .responseMimeType("application/json")
+        .responseSchema(createTranslationSchema())
+        .build();
+
+
+    Content content = Content.builder()
+        .parts(List.of(
+            Part.builder()
+                .text(prompt)
+                .build()
+        ))
+        .build();
+
+
+    GenerateContentResponse response =
+        client.models.generateContent(
+            "gemini-2.5-flash",
+            content,
+            config
+        );
+
+
+    try {
+
+      return objectMapper.readValue(
+          response.text(),
+          MonumentTranslationDto.class
+      );
+
+    } catch (JsonProcessingException e) {
+
+      throw new RuntimeException(
+          "Cannot parse Gemini translation response",
+          e
+      );
+    }
+  }
+
+  private String buildTranslationPrompt(
+      Monument monument,
+      TranslationLanguage language
+  ) {
+
+    String targetLanguage =
+        language == TranslationLanguage.EN
+            ? "English"
+            : "French";
+
+
+    return """
+        You are a professional translator specializing in Armenian historical monuments.
+
+        Translate the Armenian monument data into %s.
+
+        RULES:
+        1. Translate only text.
+        2. Preserve historical terminology.
+        3. Do not summarize.
+        4. Do not add information.
+        5. Return ONLY valid JSON matching the schema.
+        6. Include every field defined in the schema.
+        7. Never omit properties.
+        8. If a value is missing, return null instead of the string "null".
+        9. Translate every text field.
+        10. Translate titles inside videos and bibliography.
+        11. Do not translate ids, urls or coordinates.
+
+
+        Armenian monument data:
+
+        %s
+
+        """
+        .formatted(
+            targetLanguage,
+            createArmenianTranslationObject(monument)
+        );
+  }
+
+  private Map<String,Object> createArmenianTranslationObject(
+      Monument monument
+  ) {
+
+    Map<String,Object> data = new HashMap<>();
+
+
+    data.put(
+        "name",
+        monument.getNameHy()
+    );
+
+    data.put(
+        "monumentType",
+        monument.getMonumentTypeHy()
+    );
+
+    data.put(
+        "specialName",
+        monument.getSpecialNameHy()
+    );
+
+    data.put(
+        "anotherNames",
+        monument.getAnotherNamesHy()
+    );
+
+    data.put(
+        "history",
+        monument.getHistoryHy()
+    );
+
+    data.put(
+        "originalAffiliation",
+        monument.getOriginalAffiliationHy()
+    );
+
+    data.put(
+        "storageUnitName",
+        monument.getStorageUnitNameHy()
+    );
+
+    data.put(
+        "condition",
+        monument.getConditionHy()
+    );
+
+    data.put(
+        "videos",
+        monument.getVideos()
+            .stream()
+            .map(v -> {
+
+              Map<String, Object> map = new HashMap<>();
+
+              map.put(
+                  "title",
+                  v.getTitleHy()
+              );
+
+              return map;
+
+            })
+            .toList()
+    );
+
+    data.put(
+        "bibliography",
+        monument.getBibliography()
+            .stream()
+            .map(b -> {
+
+              Map<String, Object> map = new HashMap<>();
+
+              map.put(
+                  "title",
+                  b.getTitleHy()
+              );
+
+              return map;
+
+            })
+            .toList()
+    );
+
+
+    data.put(
+        "topographics",
+        createTopographicTranslationObject(
+            monument.getTopographics()
+        )
+    );
+
+
+    data.put(
+        "historicalReferences",
+        createHistoricalTranslationObject(
+            monument.getHistoricalReferences()
+        )
+    );
+
+
+    data.put(
+        "descriptiveCharacteristics",
+        createDescriptiveTranslationObject(
+            monument.getDescriptiveCharacteristics()
+        )
+    );
+
+
+    return data;
+  }
+
+  private Map<String,Object> createTopographicTranslationObject(
+      Topographic topographic
+  ) {
+
+    if(topographic == null)
+      return null;
+
+
+    Map<String,Object> data = new HashMap<>();
+
+
+    data.put(
+        "region",
+        topographic.getRegionHy()
+    );
+
+    data.put(
+        "address",
+        topographic.getAddressHy()
+    );
+
+    data.put(
+        "topography",
+        topographic.getTopographyHy()
+    );
+
+    data.put(
+        "distanceFromResidence",
+        topographic.getDistanceFromResidenceHy()
+    );
+
+    data.put(
+        "altitude",
+        topographic.getAltitudeHy()
+    );
+
+    data.put(
+        "hydrography",
+        topographic.getHydrographyHy()
+    );
+
+    data.put(
+        "description",
+        topographic.getDescriptionHy()
+    );
+
+
+    return data;
+  }
+
+  private Map<String,Object> createHistoricalTranslationObject(
+      HistoricalReference reference
+  ) {
+
+    if(reference == null)
+      return null;
+
+
+    Map<String,Object> data = new HashMap<>();
+
+
+    data.put(
+        "culturalAffiliation",
+        reference.getCulturalAffiliationHy()
+    );
+
+
+    data.put(
+        "century",
+        reference.getCenturyHy()
+    );
+
+
+    data.put(
+        "justificationOfTheNumberingBasedOnLithography",
+        reference.getJustificationOfTheNumberingBasedOnLithographyHy()
+    );
+
+
+    data.put(
+        "chronologicalTableOfTheStud",
+        reference.getChronologicalTableOfTheStudHy()
+    );
+
+
+    data.put(
+        "chronologicalTableOfTheMonumentsStudy",
+        reference.getChronologicalTableOfTheMonumentsStudyHy()
+    );
+
+
+    data.put(
+        "author",
+        reference.getAuthorHy()
+    );
+
+
+    return data;
+  }
+
+
+  private Map<String,Object> createDescriptiveTranslationObject(
+      DescriptiveCharacteristicReference reference
+  ) {
+
+    if(reference == null)
+      return null;
+
+
+    Map<String,Object> data = new HashMap<>();
+
+
+    data.put(
+        "theBuildingMaterial",
+        reference.getTheBuildingMaterialHy()
+    );
+
+    data.put(
+        "openingsEntrances",
+        reference.getOpeningsEntrancesHy()
+    );
+
+    data.put(
+        "constructions",
+        reference.getConstructionsHy()
+    );
+
+    data.put(
+        "roof",
+        reference.getRoofHy()
+    );
+
+    data.put(
+        "type",
+        reference.getTypeHy()
+    );
+
+    data.put(
+        "color",
+        reference.getColorHy()
+    );
+
+    data.put(
+        "implementationTechnique",
+        reference.getImplementationTechniqueHy()
+    );
+
+    data.put(
+        "stateOfMonument",
+        reference.getStateOfMonumentHy()
+    );
+
+    data.put(
+        "valuation",
+        reference.getValuationHy()
+    );
+
+
+    return data;
+  }
+
+  private Schema createTranslationSchema() {
+
+    Map<String, Schema> properties = new HashMap<>();
+
+    properties.put("name", stringSchema());
+
+    properties.put("monumentType", stringSchema());
+
+    properties.put("specialName", stringSchema());
+
+    properties.put("anotherNames", stringSchema());
+
+    properties.put("history", stringSchema());
+
+    properties.put("originalAffiliation", stringSchema());
+
+    properties.put("storageUnitName", stringSchema());
+
+    properties.put("condition", stringSchema());
+
+    properties.put("topographics", topographicSchema());
+
+    properties.put("historicalReferences", historicalSchema());
+
+    properties.put("descriptiveCharacteristics", descriptiveSchema());
+
+    properties.put(
+        "videos",
+        Schema.builder()
+            .type(Type.Known.ARRAY)
+            .items(videoSchema())
+            .build()
+    );
+
+    properties.put(
+        "bibliography",
+        Schema.builder()
+            .type(Type.Known.ARRAY)
+            .items(bibliographySchema())
+            .build()
+    );
+
+    return Schema.builder()
+        .type(Type.Known.OBJECT)
+        .properties(properties)
+        .build();
+  }
+
+  private Schema topographicSchema() {
+
+    Map<String, Schema> properties = new HashMap<>();
+
+    properties.put("region", stringSchema());
+
+    properties.put("address", stringSchema());
+
+    properties.put("topography", stringSchema());
+
+    properties.put(
+        "distanceFromResidence",
+        stringSchema()
+    );
+
+    properties.put(
+        "altitude",
+        stringSchema()
+    );
+
+    properties.put(
+        "hydrography",
+        stringSchema()
+    );
+
+    properties.put(
+        "description",
+        stringSchema()
+    );
+
+
+    return Schema.builder()
+        .type(Type.Known.OBJECT)
+        .properties(properties)
+        .build();
+  }
+
+  private Schema historicalSchema() {
+
+    Map<String, Schema> properties = new HashMap<>();
+
+    properties.put(
+        "culturalAffiliation",
+        stringSchema()
+    );
+
+    properties.put(
+        "century",
+        stringSchema()
+    );
+
+    properties.put(
+        "justificationOfTheNumberingBasedOnLithography",
+        stringSchema()
+    );
+
+    properties.put(
+        "chronologicalTableOfTheStud",
+        stringSchema()
+    );
+
+    properties.put(
+        "chronologicalTableOfTheMonumentsStudy",
+        stringSchema()
+    );
+
+    properties.put(
+        "author",
+        stringSchema()
+    );
+
+
+    return Schema.builder()
+        .type(Type.Known.OBJECT)
+        .properties(properties)
+        .build();
+  }
+
+  private Schema descriptiveSchema() {
+
+    Map<String, Schema> properties = new HashMap<>();
+
+
+    properties.put(
+        "theBuildingMaterial",
+        stringSchema()
+    );
+
+    properties.put(
+        "openingsEntrances",
+        stringSchema()
+    );
+
+    properties.put(
+        "constructions",
+        stringSchema()
+    );
+
+    properties.put(
+        "roof",
+        stringSchema()
+    );
+
+    properties.put(
+        "type",
+        stringSchema()
+    );
+
+    properties.put(
+        "color",
+        stringSchema()
+    );
+
+    properties.put(
+        "implementationTechnique",
+        stringSchema()
+    );
+
+    properties.put(
+        "stateOfMonument",
+        stringSchema()
+    );
+
+    properties.put(
+        "valuation",
+        stringSchema()
+    );
+
+
+    return Schema.builder()
+        .type(Type.Known.OBJECT)
+        .properties(properties)
+        .build();
+  }
+
+  private Schema videoSchema() {
+
+    Map<String, Schema> properties = new HashMap<>();
+
+    properties.put(
+        "title",
+        stringSchema()
+    );
+
+
+    return Schema.builder()
+        .type(Type.Known.OBJECT)
+        .properties(properties)
+        .build();
+  }
+
+  private Schema bibliographySchema() {
+
+    Map<String, Schema> properties = new HashMap<>();
+
+    properties.put(
+        "title",
+        stringSchema()
+    );
+
+
+    return Schema.builder()
+        .type(Type.Known.OBJECT)
+        .properties(properties)
+        .build();
+  }
+
+  private Schema stringSchema() {
+    return Schema.builder()
+        .type(Type.Known.STRING)
+        .build();
   }
 
 }

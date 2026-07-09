@@ -10,35 +10,39 @@ public class TopographicMapper {
 
         return new TopographicResponseDto(
             topographic.getId(),
-            new LanguagesResponseDto(
+            LanguagesResponseDto.of(
                 topographic.getRegionHy(),
                 topographic.getRegionEn(),
                 topographic.getRegionFr()
             ),
-            new LanguagesResponseDto(
+            LanguagesResponseDto.of(
                 topographic.getAddressHy(),
                 topographic.getAddressEn(),
                 topographic.getAddressFr()
             ),
-            new LanguagesResponseDto(
+            LanguagesResponseDto.of(
                 topographic.getTopographyHy(),
                 topographic.getTopographyEn(),
                 topographic.getTopographyFr()
             ),
-            new LanguagesResponseDto(
+            LanguagesResponseDto.of(
                 topographic.getDistanceFromResidenceHy(),
                 topographic.getDistanceFromResidenceEn(),
                 topographic.getDistanceFromResidenceFr()
             ),
             topographic.getLatitude(),
             topographic.getLongitude(),
-            topographic.getAltitude(),
-            new LanguagesResponseDto(
+            LanguagesResponseDto.of(
+                topographic.getAltitudeHy(),
+                topographic.getAltitudeEn(),
+                topographic.getAltitudeFr()
+            ),
+            LanguagesResponseDto.of(
                 topographic.getHydrographyHy(),
                 topographic.getHydrographyEn(),
                 topographic.getHydrographyFr()
             ),
-            new LanguagesResponseDto(
+            LanguagesResponseDto.of(
                 topographic.getDescriptionHy(),
                 topographic.getDescriptionEn(),
                 topographic.getDescriptionFr()

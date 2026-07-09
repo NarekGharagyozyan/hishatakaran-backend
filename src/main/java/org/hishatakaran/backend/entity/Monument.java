@@ -3,7 +3,6 @@ package org.hishatakaran.backend.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hishatakaran.backend.model.MonumentVideoRequestDto;
 import org.hishatakaran.backend.model.Status;
 
 
@@ -24,9 +23,11 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name = "monuments")
@@ -34,6 +35,16 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
+@ToString(exclude = {
+    "region",
+    "settlement",
+    "videos",
+    "bibliography",
+    "topographics",
+    "historicalReferences",
+    "descriptiveCharacteristics"
+})
 public class Monument extends BaseEntity{
 
     @Id
@@ -110,16 +121,17 @@ public class Monument extends BaseEntity{
     @OneToMany(mappedBy = "monument", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Bibliography> bibliography;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "monument", cascade = CascadeType.ALL, orphanRemoval = true)
     private Topographic topographics;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "monument", cascade = CascadeType.ALL, orphanRemoval = true)
     private HistoricalReference historicalReferences;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "monument", cascade = CascadeType.ALL, orphanRemoval = true)
     private DescriptiveCharacteristicReference descriptiveCharacteristics;
 
     private String signature;
+    private Boolean showInMainPage;
 
     public Monument(
         Status status,
@@ -193,47 +205,5 @@ public class Monument extends BaseEntity{
         this.historicalReferences = historicalReferences;
         this.descriptiveCharacteristics = descriptiveCharacteristics;
         this.signature = signature;
-    }
-
-    @Override
-    public String toString() {
-        return "Monument{" +
-            "id=" + id +
-            ", status=" + status +
-            ", nameHy='" + nameHy + '\'' +
-            ", nameEn='" + nameEn + '\'' +
-            ", nameFr='" + nameFr + '\'' +
-            ", region=" + region +
-            ", settlement=" + settlement +
-            ", monumentTypeHy='" + monumentTypeHy + '\'' +
-            ", monumentTypeEn='" + monumentTypeEn + '\'' +
-            ", monumentTypeFr='" + monumentTypeFr + '\'' +
-            ", specialNameHy='" + specialNameHy + '\'' +
-            ", specialNameEn='" + specialNameEn + '\'' +
-            ", specialNameFr='" + specialNameFr + '\'' +
-            ", anotherNamesHy='" + anotherNamesHy + '\'' +
-            ", anotherNamesEn='" + anotherNamesEn + '\'' +
-            ", anotherNamesFr='" + anotherNamesFr + '\'' +
-            ", historyHy='" + historyHy + '\'' +
-            ", historyEn='" + historyEn + '\'' +
-            ", historyFr='" + historyFr + '\'' +
-            ", originalAffiliationHy='" + originalAffiliationHy + '\'' +
-            ", originalAffiliationEn='" + originalAffiliationEn + '\'' +
-            ", originalAffiliationFr='" + originalAffiliationFr + '\'' +
-            ", storageUnitNameHy='" + storageUnitNameHy + '\'' +
-            ", storageUnitNameEn='" + storageUnitNameEn + '\'' +
-            ", storageUnitNameFr='" + storageUnitNameFr + '\'' +
-            ", conditionHy='" + conditionHy + '\'' +
-            ", conditionEn='" + conditionEn + '\'' +
-            ", conditionFr='" + conditionFr + '\'' +
-            ", images=" + images +
-            ", videos=" + videos +
-            ", measurements=" + measurements +
-            ", bibliography=" + bibliography +
-            ", topographics=" + topographics +
-            ", historicalReferences=" + historicalReferences +
-            ", descriptiveCharacteristics=" + descriptiveCharacteristics +
-            ", signature='" + signature + '\'' +
-            '}';
     }
 }

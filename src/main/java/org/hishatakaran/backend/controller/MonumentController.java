@@ -11,6 +11,7 @@ import org.hishatakaran.backend.model.MonumentResponseDto;
 import org.hishatakaran.backend.model.MonumentTypesResponseDto;
 import org.hishatakaran.backend.model.MonumentVideoResponseDto;
 import org.hishatakaran.backend.model.Status;
+import org.hishatakaran.backend.model.TranslationLanguage;
 import org.hishatakaran.backend.repository.MonumentRepository;
 import org.hishatakaran.backend.service.MonumentService;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +34,26 @@ public class MonumentController {
         @RequestBody MonumentRequestDto monumentRequestDto
     ) {
         return monumentService.postMonument(monumentRequestDto);
+    }
+
+    @PostMapping("/{id}/translate/{language}")
+    public MonumentResponseDto translate(
+        @PathVariable Long id,
+        @PathVariable TranslationLanguage language
+    ) {
+        return monumentService.translate(id, language);
+    }
+
+    @PostMapping("/{id}/publish")
+    public MonumentResponseDto publishMonument(
+        @PathVariable Long id
+    ) {
+        return monumentService.publish(id);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteMonument(@PathVariable Long id) {
+        monumentService.deleteMonument(id);
     }
 
     @PostMapping("/uploadImages")
