@@ -57,7 +57,7 @@ public class MonumentTranslationService {
         }
 
 
-        boolean en = language == TranslationLanguage.EN;
+        boolean en = language == TranslationLanguage.en;
 
 
         if(en){
@@ -140,7 +140,7 @@ public class MonumentTranslationService {
         }
 
 
-        if (language == TranslationLanguage.EN) {
+        if (language == TranslationLanguage.en) {
 
             topographic.setRegionEn(clean(dto.getRegion()));
             topographic.setAddressEn(clean(dto.getAddress()));
@@ -182,7 +182,7 @@ public class MonumentTranslationService {
         }
 
 
-        if (language == TranslationLanguage.EN) {
+        if (language == TranslationLanguage.en) {
 
             historicalReference.setCulturalAffiliationEn(
                 clean(dto.getCulturalAffiliation())
@@ -247,7 +247,7 @@ public class MonumentTranslationService {
         }
 
 
-        if (language == TranslationLanguage.EN) {
+        if (language == TranslationLanguage.en) {
 
 
             descriptive.setTheBuildingMaterialEn(
@@ -353,7 +353,7 @@ public class MonumentTranslationService {
                 dto.get(i);
 
 
-            if(language == TranslationLanguage.EN) {
+            if(language == TranslationLanguage.en) {
 
                 video.setTitleEn(
                     clean(translation.getTitle())
@@ -397,7 +397,7 @@ public class MonumentTranslationService {
 
 
 
-            if(language == TranslationLanguage.EN) {
+            if(language == TranslationLanguage.en) {
 
                 item.setTitleEn(
                     clean(translation.getTitle())

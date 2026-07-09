@@ -706,7 +706,7 @@ NOW EXTRACT DATA FROM THIS HTML:
   ) {
 
     String targetLanguage =
-        language == TranslationLanguage.EN
+        language == TranslationLanguage.en
             ? "English"
             : "French";
 
