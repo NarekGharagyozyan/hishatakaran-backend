@@ -1,15 +1,12 @@
 package org.hishatakaran.backend.repository;
 
 import org.hishatakaran.backend.entity.Monument;
-import org.hishatakaran.backend.model.MonumentType;
-import org.hishatakaran.backend.model.Status;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import java.util.List;
 
 public interface MonumentRepository extends JpaRepository<Monument, Long>, JpaSpecificationExecutor<Monument> {
-    List<Monument> findByStatus(Status status);
 
     List<Monument> findByRegionId(Long region_id);
 

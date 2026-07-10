@@ -5,7 +5,6 @@ import java.util.List;
 import org.hishatakaran.backend.mapper.NewsMapper;
 import org.hishatakaran.backend.model.NewsRequestDto;
 import org.hishatakaran.backend.model.NewsResponseDto;
-import org.hishatakaran.backend.model.Status;
 import org.hishatakaran.backend.repository.NewsRepository;
 import org.hishatakaran.backend.service.NewsService;
 import org.springframework.http.MediaType;
@@ -48,11 +47,4 @@ public class NewsController {
         );
     }
 
-    @GetMapping("/status/{status}")
-    public List<NewsResponseDto> getByStatus(@PathVariable Status status) {
-        return newsRepository.findByStatus(status)
-            .stream()
-            .map(NewsMapper::toDto)
-            .toList();
-    }
 }

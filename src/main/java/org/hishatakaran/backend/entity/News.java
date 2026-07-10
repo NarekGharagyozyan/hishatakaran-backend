@@ -3,14 +3,10 @@ package org.hishatakaran.backend.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hishatakaran.backend.model.Status;
-
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -53,7 +49,5 @@ public class News {
     @Column(name = "images_url")
     private List<String> images = new ArrayList<>();
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Status status;
+    private Boolean isPublished;
 }

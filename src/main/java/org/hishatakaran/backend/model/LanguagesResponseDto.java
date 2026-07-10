@@ -37,6 +37,17 @@ public class LanguagesResponseDto{
     );
   }
 
+  public void setHy(String hy) {
+    this.hy = hy;
+  }
+
+  public void setEn(String en) {
+    this.en = en;
+  }
+
+  public void setFr(String fr) {
+    this.fr = fr;
+  }
 
   private static boolean isEmpty(String value) {
 

@@ -15,5 +15,5 @@ public class NewsResponseDto {
     private final LanguagesResponseDto title;
     private final LanguagesResponseDto text;
     private final List<String> images;
-    private final String status;
+    private final Boolean isPublished;
 }

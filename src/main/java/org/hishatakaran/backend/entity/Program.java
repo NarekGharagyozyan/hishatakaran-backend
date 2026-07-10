@@ -3,15 +3,11 @@ package org.hishatakaran.backend.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hishatakaran.backend.model.Status;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -35,9 +31,7 @@ public class Program extends BaseEntity{
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Enumerated(EnumType.STRING)
-  @Column(nullable = false)
-  private Status status;
+  private Boolean isPublished;
 
   private String titleHy;
   private String titleEn;
@@ -58,9 +52,9 @@ public class Program extends BaseEntity{
   @OneToMany(mappedBy = "program", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<ProgramLink> links = new ArrayList<>();
 
-  public Program(Status status, String titleHy, String titleEn, String titleFr, String descriptionHy,
+  public Program(Boolean isPublished, String titleHy, String titleEn, String titleFr, String descriptionHy,
       String descriptionEn, String descriptionFr, List<String> images, String pdf, String cover, List<ProgramLink> links) {
-    this.status = status;
+    this.isPublished = isPublished;
     this.titleHy = titleHy;
     this.titleEn = titleEn;
     this.titleFr = titleFr;

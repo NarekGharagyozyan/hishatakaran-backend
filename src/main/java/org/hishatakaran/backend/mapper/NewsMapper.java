@@ -21,7 +21,7 @@ public class NewsMapper {
             news.getTextFr()
         ),
         news.getImages(),
-        news.getStatus().name()
+        news.getIsPublished()
     );
   }
 }

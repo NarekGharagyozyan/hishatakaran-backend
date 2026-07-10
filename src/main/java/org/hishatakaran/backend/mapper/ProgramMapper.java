@@ -10,7 +10,7 @@ public class ProgramMapper {
   public static ProgramResponseDto toResponseDto(Program program) {
     return new ProgramResponseDto(
         program.getId(),
-        program.getStatus(),
+        program.getIsPublished(),
         program.getTitleHy() != null ? new LanguagesResponseDto(
             program.getTitleHy(),
             program.getTitleEn(),

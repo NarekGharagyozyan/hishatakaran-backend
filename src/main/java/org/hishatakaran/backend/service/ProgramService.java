@@ -12,7 +12,6 @@ import org.hishatakaran.backend.mapper.ProgramMapper;
 import org.hishatakaran.backend.model.ProgramAiResponseDto;
 import org.hishatakaran.backend.model.ProgramRequestDto;
 import org.hishatakaran.backend.model.ProgramResponseDto;
-import org.hishatakaran.backend.model.Status;
 import org.hishatakaran.backend.repository.ProgramRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -60,7 +59,7 @@ public class ProgramService {
     }
 
     Program program = new Program(
-        Status.DRAFT,
+        Boolean.FALSE,
         programAiResponseDto != null ? programAiResponseDto.getTitleHy() : null,
         programAiResponseDto != null ? programAiResponseDto.getTitleEn() : null,
         programAiResponseDto != null ? programAiResponseDto.getTitleFr() : null,

@@ -4,13 +4,13 @@ import lombok.RequiredArgsConstructor;
 
 import org.hishatakaran.backend.mapper.MonumentMapper;
 import org.hishatakaran.backend.model.LanguagesResponseDto;
+import org.hishatakaran.backend.model.MonumentEditDto;
 import org.hishatakaran.backend.model.MonumentFilterRequest;
 import org.hishatakaran.backend.model.MonumentMediasResponseDto;
 import org.hishatakaran.backend.model.MonumentRequestDto;
 import org.hishatakaran.backend.model.MonumentResponseDto;
 import org.hishatakaran.backend.model.MonumentTypesResponseDto;
 import org.hishatakaran.backend.model.MonumentVideoResponseDto;
-import org.hishatakaran.backend.model.Status;
 import org.hishatakaran.backend.model.TranslationLanguage;
 import org.hishatakaran.backend.repository.MonumentRepository;
 import org.hishatakaran.backend.service.MonumentService;
@@ -42,6 +42,14 @@ public class MonumentController {
         @PathVariable TranslationLanguage language
     ) {
         return monumentService.translate(id, language);
+    }
+
+    @PutMapping("/{id}")
+    public MonumentResponseDto updateMonument(
+        @PathVariable Long id,
+        @RequestBody MonumentEditDto monumentRequestDto
+    ){
+        return monumentService.updateMonument(id, monumentRequestDto);
     }
 
     @PostMapping("/{id}/publish")
@@ -103,14 +111,6 @@ public class MonumentController {
         return MonumentMapper.toDto(
             monumentRepository.findById(id).orElseThrow()
         );
-    }
-
-    @GetMapping("/status/{status}")
-    public List<MonumentResponseDto> getByStatus(@PathVariable Status status) {
-        return monumentRepository.findByStatus(status)
-            .stream()
-            .map(MonumentMapper::toDto)
-            .toList();
     }
 
     @GetMapping("/region/{regionId}")

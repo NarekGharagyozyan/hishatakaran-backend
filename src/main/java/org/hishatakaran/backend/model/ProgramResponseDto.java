@@ -12,7 +12,7 @@ import lombok.Setter;
 public class ProgramResponseDto {
 
   private final Long id;
-  private final Status status;
+  private final Boolean isPublished;
 
   private final LanguagesResponseDto title;
   private final LanguagesResponseDto description;

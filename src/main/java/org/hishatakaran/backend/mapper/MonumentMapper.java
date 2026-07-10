@@ -20,7 +20,7 @@ public class MonumentMapper {
             m.getNameEn(),
             m.getNameFr()
         ));
-        monumentDtoBuilder.status(m.getStatus().name());
+        monumentDtoBuilder.isPublished(m.getIsPublished());
         monumentDtoBuilder.monumentType(LanguagesResponseDto.of(
             m.getMonumentTypeHy(),
             m.getMonumentTypeEn(),
@@ -76,7 +76,8 @@ public class MonumentMapper {
                     video.getTitleEn(),
                     video.getTitleFr()
                 ),
-                YouTubeService.extractVideoId(video.getUrl())
+                YouTubeService.extractVideoId(video.getUrl()),
+                video.getUrl()
             ))
             .toList()
         );

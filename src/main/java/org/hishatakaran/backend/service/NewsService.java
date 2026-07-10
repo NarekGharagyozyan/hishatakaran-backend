@@ -7,7 +7,6 @@ import org.hishatakaran.backend.mapper.NewsMapper;
 import org.hishatakaran.backend.model.NewsAiResponseDto;
 import org.hishatakaran.backend.model.NewsRequestDto;
 import org.hishatakaran.backend.model.NewsResponseDto;
-import org.hishatakaran.backend.model.Status;
 import org.hishatakaran.backend.repository.NewsRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -48,7 +47,7 @@ public class NewsService {
       news.setTextEn(newsAiResponseDto.getTextEn());
       news.setTextFr(newsAiResponseDto.getTextFr());
       news.setImages(generateImagePaths(newsDto.getImages()));
-      news.setStatus(Status.DRAFT);
+      news.setIsPublished(Boolean.FALSE);
     }
     else {
       throw new RuntimeException("Something went wrong when mapping data from ai model");

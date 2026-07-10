@@ -11,5 +11,5 @@ public class MonumentVideoResponseDto {
 
   private final LanguagesResponseDto title;
   private final String id;
-
+  private final String url;
 }

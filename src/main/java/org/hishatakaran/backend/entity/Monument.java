@@ -3,16 +3,11 @@ package org.hishatakaran.backend.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hishatakaran.backend.model.Status;
-
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -50,10 +45,7 @@ public class Monument extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Status status;
+    private Boolean isPublished;
 
     private String nameHy;
     private String nameEn;
@@ -134,7 +126,7 @@ public class Monument extends BaseEntity{
     private Boolean showInMainPage;
 
     public Monument(
-        Status status,
+        Boolean isPublished,
         String nameHy,
         String nameEn,
         String nameFr,
@@ -170,7 +162,7 @@ public class Monument extends BaseEntity{
         DescriptiveCharacteristicReference descriptiveCharacteristics,
         String signature)
     {
-        this.status = status;
+        this.isPublished = isPublished;
         this.nameHy = nameHy;
         this.nameEn = nameEn;
         this.nameFr = nameFr;
