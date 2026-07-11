@@ -325,8 +325,8 @@ public class MonumentService {
             monument.setMonumentTypeFr(monumentEditDto.getMonumentType().getFr());
         }
 
-        monument.setRegion(regionRepository.findById(monumentEditDto.getRegion()).orElseThrow(() -> new RuntimeException("Region not found")));
-        monument.setSettlement(settlementRepository.findById(monumentEditDto.getSettlement()).orElseThrow(() -> new RuntimeException("Settlement not found")));
+        monument.setRegion(regionRepository.findById(monumentEditDto.getRegionId()).orElseThrow(() -> new RuntimeException("Region not found")));
+        monument.setSettlement(settlementRepository.findById(monumentEditDto.getSettlementId()).orElseThrow(() -> new RuntimeException("Settlement not found")));
 
         if(monumentEditDto.getHistory() != null)
         {
