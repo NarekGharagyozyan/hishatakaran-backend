@@ -19,7 +19,7 @@ public class MonumentRequestDto {
   private String name;
   private Long regionId;
   private Long settlementId;
-  private String monumentType;
+  private Long monumentTypeId;
   private String specialName;
   private String anotherNames;
   private String history;
@@ -46,7 +46,7 @@ public class MonumentRequestDto {
         "name='" + name + '\'' +
         ", regionId=" + regionId +
         ", settlementId=" + settlementId +
-        ", monumentType='" + monumentType + '\'' +
+        ", monumentTypeId='" + monumentTypeId + '\'' +
         ", specialName='" + specialName + '\'' +
         ", anotherNames='" + anotherNames + '\'' +
         ", history='" + history + '\'' +

@@ -13,6 +13,7 @@ import org.hishatakaran.backend.model.MonumentTypesResponseDto;
 import org.hishatakaran.backend.model.MonumentVideoResponseDto;
 import org.hishatakaran.backend.model.TranslationLanguage;
 import org.hishatakaran.backend.repository.MonumentRepository;
+import org.hishatakaran.backend.repository.MonumentTypesRepository;
 import org.hishatakaran.backend.service.MonumentService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,21 +23,22 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 @RestController
-@RequestMapping("/api/monuments")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class MonumentController {
 
     private final MonumentRepository monumentRepository;
+    private final MonumentTypesRepository monumentTypesRepository;
     private final MonumentService monumentService;
 
-    @PostMapping
+    @PostMapping("/admin/monuments")
     public MonumentResponseDto postMonument(
         @RequestBody MonumentRequestDto monumentRequestDto
     ) {
         return monumentService.postMonument(monumentRequestDto);
     }
 
-    @PostMapping("/{id}/translate/{language}")
+    @PostMapping("/admin/monuments/{id}/translate/{language}")
     public MonumentResponseDto translate(
         @PathVariable Long id,
         @PathVariable TranslationLanguage language
@@ -44,7 +46,7 @@ public class MonumentController {
         return monumentService.translate(id, language);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/admin/monuments/{id}")
     public MonumentResponseDto updateMonument(
         @PathVariable Long id,
         @RequestBody MonumentEditDto monumentRequestDto
@@ -52,26 +54,26 @@ public class MonumentController {
         return monumentService.updateMonument(id, monumentRequestDto);
     }
 
-    @PostMapping("/{id}/publish")
+    @PostMapping("/monuments/{id}/publish")
     public MonumentResponseDto publishMonument(
         @PathVariable Long id
     ) {
         return monumentService.publish(id);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/monuments/{id}")
     public void deleteMonument(@PathVariable Long id) {
         monumentService.deleteMonument(id);
     }
 
-    @PostMapping("/uploadImages")
+    @PostMapping("/monuments/uploadImages")
     public List<String> uploadImages(
         @RequestPart(value = "images") List<MultipartFile> images
     ) {
         return monumentService.generateImagesPaths(images);
     }
 
-    @PostMapping("/uploadMeasurements")
+    @PostMapping("/monuments/uploadMeasurements")
     public List<String> uploadMeasurements(
         @RequestPart(value = "measurements") List<MultipartFile> measurements
     ) {
@@ -86,7 +88,7 @@ public class MonumentController {
             .toList();
     }*/
 
-    @GetMapping
+    @GetMapping("/monuments")
     public List<MonumentResponseDto> getMonumentsByFilter(
         @RequestParam(required = false)
         Long regionId,
@@ -106,14 +108,14 @@ public class MonumentController {
         return monumentService.filter(request);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/monuments/{id}")
     public MonumentResponseDto getById(@PathVariable Long id) {
         return MonumentMapper.toDto(
             monumentRepository.findById(id).orElseThrow()
         );
     }
 
-    @GetMapping("/region/{regionId}")
+    @GetMapping("/monuments/region/{regionId}")
     public List<MonumentResponseDto> getByRegion(@PathVariable Long regionId) {
         return monumentRepository.findByRegionId(regionId)
             .stream()
@@ -121,7 +123,7 @@ public class MonumentController {
             .toList();
     }
 
-    @GetMapping("/settlement/{settlementId}")
+    @GetMapping("/monuments/settlement/{settlementId}")
     public List<MonumentResponseDto> getBySettlement(@PathVariable Long settlementId) {
         return monumentRepository.findBySettlementId(settlementId)
             .stream()
@@ -129,35 +131,31 @@ public class MonumentController {
             .toList();
     }
 
-    @GetMapping("/type/{type}")
-    public List<MonumentResponseDto> getByType(@PathVariable String type) {
-        return monumentRepository.findByMonumentTypeHyOrMonumentTypeEnOrMonumentTypeFr(type, type, type)
-            .stream()
-            .map(MonumentMapper::toDto)
-            .toList();
-    }
+//    @GetMapping("/monuments/type/{type}")
+//    public List<MonumentResponseDto> getByType(@PathVariable String type) {
+//        return monumentRepository.findByMonumentTypeHyOrMonumentTypeEnOrMonumentTypeFr(type, type, type)
+//            .stream()
+//            .map(MonumentMapper::toDto)
+//            .toList();
+//    }
 
-    @GetMapping("/types")
+    @GetMapping("/monuments/types")
     public List<MonumentTypesResponseDto> getAllMonumentTypes() {
-        List<LanguagesResponseDto> types = monumentRepository.findAll()
+        return monumentTypesRepository.findAll()
             .stream()
-            .map(monument -> new LanguagesResponseDto(
-                monument.getMonumentTypeHy(),
-                monument.getMonumentTypeEn(),
-                monument.getMonumentTypeFr()
+            .map(monumentType -> new MonumentTypesResponseDto(
+                monumentType.getId(),
+                new LanguagesResponseDto(
+                    monumentType.getNameHy(),
+                    monumentType.getNameEn(),
+                    monumentType.getNameFr()
+                )
             ))
             .distinct()
             .toList();
-
-        return IntStream.range(0, types.size())
-            .mapToObj(i -> new MonumentTypesResponseDto(
-                (long) (i + 1),
-                types.get(i)
-            ))
-            .toList();
     }
 
-    @GetMapping("/images")
+    @GetMapping("/monuments/images")
     public List<MonumentMediasResponseDto> getMonumentImages(
         @RequestParam(required = false)
         Long regionId,
@@ -187,7 +185,7 @@ public class MonumentController {
             .toList();
     }
 
-    @GetMapping("/videos")
+    @GetMapping("/monuments/videos")
     public List<MonumentVideoResponseDto> getMonumentVideos(
         @RequestParam(required = false)
         Long regionId,
@@ -210,7 +208,7 @@ public class MonumentController {
             .toList();
     }
 
-    @GetMapping("/measurements")
+    @GetMapping("/monuments/measurements")
     public List<MonumentMediasResponseDto> getMonumentMeasurements(
         @RequestParam(required = false)
         Long regionId,

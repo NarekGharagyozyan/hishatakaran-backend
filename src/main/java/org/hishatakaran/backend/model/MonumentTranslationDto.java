@@ -12,8 +12,6 @@ public class MonumentTranslationDto {
 
     private String name;
 
-    private String monumentType;
-
     private String specialName;
 
     private String anotherNames;

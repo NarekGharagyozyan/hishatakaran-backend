@@ -1,8 +1,6 @@
 package org.hishatakaran.backend.service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.hishatakaran.backend.entity.Bibliography;
 import org.hishatakaran.backend.entity.DescriptiveCharacteristicReference;
@@ -15,9 +13,9 @@ import org.hishatakaran.backend.model.MonumentEditDto;
 import org.hishatakaran.backend.model.MonumentFilterRequest;
 import org.hishatakaran.backend.model.MonumentRequestDto;
 import org.hishatakaran.backend.model.MonumentResponseDto;
-import org.hishatakaran.backend.model.MonumentVideoResponseDto;
 import org.hishatakaran.backend.model.TranslationLanguage;
 import org.hishatakaran.backend.repository.MonumentRepository;
+import org.hishatakaran.backend.repository.MonumentTypesRepository;
 import org.hishatakaran.backend.repository.RegionRepository;
 import org.hishatakaran.backend.repository.SettlementRepository;
 import org.springframework.data.domain.Sort;
@@ -39,6 +37,7 @@ public class MonumentService {
     private final ObjectMapper objectMapper;
     private final RegionRepository regionRepository;
     private final SettlementRepository settlementRepository;
+    private final MonumentTypesRepository monumentTypesRepository;
     private final MonumentTranslationService monumentTranslationService;
     private final FileStorageService fileStorageService;
 
@@ -207,12 +206,14 @@ public class MonumentService {
         Monument monument = Monument.builder()
             .isPublished(Boolean.FALSE)
             .nameHy(monumentRequestDto.getName())
-            .monumentTypeHy(monumentRequestDto.getMonumentType())
+            .monumentType(monumentTypesRepository.findById(monumentRequestDto.getMonumentTypeId()).orElseThrow(
+                () -> new RuntimeException("There is no monument type with that id.")
+            ))
             .specialNameHy(monumentRequestDto.getSpecialName())
             .region(regionRepository.findById(monumentRequestDto.getRegionId()).orElseThrow(
                 () -> new RuntimeException("There is no region with that id.")))
             .settlement(settlementRepository.findById(monumentRequestDto.getSettlementId()).orElseThrow(
-                () -> new RuntimeException("There is no region with that id.")))
+                () -> new RuntimeException("There is no settlement with that id.")))
             .anotherNamesHy(monumentRequestDto.getAnotherNames())
             .historyHy(monumentRequestDto.getHistory())
             .originalAffiliationHy(monumentRequestDto.getOriginalAffiliation())
@@ -318,13 +319,7 @@ public class MonumentService {
             monument.setAnotherNamesFr(monumentEditDto.getAnotherNames().getFr());
         }
 
-        if (monumentEditDto.getMonumentType() != null)
-        {
-            monument.setMonumentTypeHy(monumentEditDto.getMonumentType().getHy());
-            monument.setMonumentTypeEn(monumentEditDto.getMonumentType().getEn());
-            monument.setMonumentTypeFr(monumentEditDto.getMonumentType().getFr());
-        }
-
+        monument.setMonumentType(monumentTypesRepository.findById(monumentEditDto.getMonumentTypeId()).orElseThrow(() -> new RuntimeException("Monument type not found")));
         monument.setRegion(regionRepository.findById(monumentEditDto.getRegionId()).orElseThrow(() -> new RuntimeException("Region not found")));
         monument.setSettlement(settlementRepository.findById(monumentEditDto.getSettlementId()).orElseThrow(() -> new RuntimeException("Settlement not found")));
 

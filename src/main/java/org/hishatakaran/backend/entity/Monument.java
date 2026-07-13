@@ -34,6 +34,7 @@ import lombok.ToString;
 @ToString(exclude = {
     "region",
     "settlement",
+    "monument_type",
     "videos",
     "bibliography",
     "topographics",
@@ -59,9 +60,9 @@ public class Monument extends BaseEntity{
     @JoinColumn(name = "settlement", nullable = false)
     private Settlement settlement;
 
-    private String monumentTypeHy;
-    private String monumentTypeEn;
-    private String monumentTypeFr;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "monument_type", nullable = false)
+    private MonumentTypes monumentType;
 
     private String specialNameHy;
     private String specialNameEn;
@@ -132,9 +133,7 @@ public class Monument extends BaseEntity{
         String nameFr,
         Region region,
         Settlement settlement,
-        String monumentTypeHy,
-        String monumentTypeEn,
-        String monumentTypeFr,
+        MonumentTypes monumentType,
         String specialNameHy,
         String specialNameEn,
         String specialNameFr,
@@ -168,9 +167,7 @@ public class Monument extends BaseEntity{
         this.nameFr = nameFr;
         this.region = region;
         this.settlement = settlement;
-        this.monumentTypeHy = monumentTypeHy;
-        this.monumentTypeEn = monumentTypeEn;
-        this.monumentTypeFr = monumentTypeFr;
+        this.monumentType = monumentType;
         this.specialNameHy = specialNameHy;
         this.specialNameEn = specialNameEn;
         this.specialNameFr = specialNameFr;

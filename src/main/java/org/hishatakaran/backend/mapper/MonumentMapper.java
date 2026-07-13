@@ -21,11 +21,7 @@ public class MonumentMapper {
             m.getNameFr()
         ));
         monumentDtoBuilder.isPublished(m.getIsPublished());
-        monumentDtoBuilder.monumentType(LanguagesResponseDto.of(
-            m.getMonumentTypeHy(),
-            m.getMonumentTypeEn(),
-            m.getMonumentTypeFr()
-        ));
+        monumentDtoBuilder.monumentType(MonumentTypeMapper.toDto(m.getMonumentType()));
 
         if (m.getRegion() != null) {
             monumentDtoBuilder.region(RegionMapper.toDto(m.getRegion()));

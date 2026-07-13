@@ -63,7 +63,6 @@ public class MonumentTranslationService {
         if(en){
 
             monument.setNameEn(clean(dto.getName()));
-            monument.setMonumentTypeEn(clean(dto.getMonumentType()));
             monument.setSpecialNameEn(clean(dto.getSpecialName()));
             monument.setAnotherNamesEn(clean(dto.getAnotherNames()));
             monument.setHistoryEn(clean(dto.getHistory()));
@@ -74,7 +73,6 @@ public class MonumentTranslationService {
         } else {
 
             monument.setNameFr(clean(dto.getName()));
-            monument.setMonumentTypeFr(clean(dto.getMonumentType()));
             monument.setSpecialNameFr(clean(dto.getSpecialName()));
             monument.setAnotherNamesFr(clean(dto.getAnotherNames()));
             monument.setHistoryFr(clean(dto.getHistory()));

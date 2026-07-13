@@ -23,6 +23,12 @@ spring:
       enabled: true
 
 server:
+  servlet:
+    session:
+      cookie:
+        http-only: true
+        secure: false
+      store-type: jdbc
   port: 8888
 
 app:

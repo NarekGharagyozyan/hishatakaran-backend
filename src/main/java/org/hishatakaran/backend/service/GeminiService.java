@@ -754,11 +754,6 @@ NOW EXTRACT DATA FROM THIS HTML:
     );
 
     data.put(
-        "monumentType",
-        monument.getMonumentTypeHy()
-    );
-
-    data.put(
         "specialName",
         monument.getSpecialNameHy()
     );

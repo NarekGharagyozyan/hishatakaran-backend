@@ -16,7 +16,7 @@ public class MonumentResponseDto {
     private final Long id;
     private final LanguagesResponseDto name;
     private final Boolean isPublished;
-    private final LanguagesResponseDto monumentType;
+    private final MonumentTypesResponseDto monumentType;
 
     private final RegionResponseDto region;
     private final SettlementResponseDto settlement;

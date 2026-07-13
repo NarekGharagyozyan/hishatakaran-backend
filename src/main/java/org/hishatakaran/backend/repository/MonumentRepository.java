@@ -12,7 +12,7 @@ public interface MonumentRepository extends JpaRepository<Monument, Long>, JpaSp
 
     List<Monument> findBySettlementId(Long settlement_id);
 
-    List<Monument> findByMonumentTypeHyOrMonumentTypeEnOrMonumentTypeFr(String monumentTypeHy, String monumentTypeEn, String monumentTypeFr);
+    //List<Monument> findByMonumentTypeHyOrMonumentTypeEnOrMonumentTypeFr(String monumentTypeHy, String monumentTypeEn, String monumentTypeFr);
 
 
 
