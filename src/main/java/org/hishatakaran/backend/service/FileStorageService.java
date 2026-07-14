@@ -70,6 +70,21 @@ public class FileStorageService {
         }
     }
 
+    public void deleteFile(String filePath) {
+        if (filePath == null || filePath.isBlank()) {
+            return;
+        }
+
+        try {
+            Path path = Paths.get("files")
+                .resolve(filePath.replaceFirst("^/files/", ""));
+
+            Files.deleteIfExists(path);
+        } catch (IOException e) {
+            throw new RuntimeException("Cannot delete file: " + filePath, e);
+        }
+    }
+
     private String getExtension(String filename) {
 
         int index = filename.lastIndexOf('.');
