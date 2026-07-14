@@ -1,9 +1,10 @@
 package org.hishatakaran.backend.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.hishatakaran.backend.model.MonumentResponseDto;
 import org.hishatakaran.backend.model.ProgramResponseDto;
+import org.hishatakaran.backend.model.TranslationLanguage;
 import org.hishatakaran.backend.service.ProgramService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,13 +20,13 @@ import org.springframework.web.multipart.MultipartFile;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/programs")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class ProgramController {
 
     private final ProgramService programService;
 
-    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(path = "/admin/programs", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ProgramResponseDto> uploadFiles(
         @RequestPart(value = "data", required = false) String stringData,
         @RequestPart(value = "images", required = false) List<MultipartFile> images,
@@ -37,14 +38,22 @@ public class ProgramController {
 
     }
 
-    @GetMapping("/{id}")
+    @PostMapping("/admin/programs/{id}/translate/{language}")
+    public ProgramResponseDto translate(
+        @PathVariable Long id,
+        @PathVariable TranslationLanguage language
+    ) {
+        return programService.translate(id, language);
+    }
+
+    @GetMapping("programs/{id}")
     public ResponseEntity<ProgramResponseDto> findProgramById(
         @PathVariable("id") Long id
     ){
         return ResponseEntity.ok(programService.getProgramById(id));
     }
 
-    @GetMapping
+    @GetMapping("/programs")
     public ResponseEntity<List<ProgramResponseDto>> findAllProgram(){
         return ResponseEntity.ok(programService.getAllPrograms());
     }

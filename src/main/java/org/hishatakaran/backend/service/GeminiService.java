@@ -8,11 +8,15 @@ import java.util.Map;
 import org.hishatakaran.backend.entity.DescriptiveCharacteristicReference;
 import org.hishatakaran.backend.entity.HistoricalReference;
 import org.hishatakaran.backend.entity.Monument;
+import org.hishatakaran.backend.entity.Program;
+import org.hishatakaran.backend.entity.ProgramLink;
 import org.hishatakaran.backend.entity.Topographic;
 import org.hishatakaran.backend.model.LibraryRequestDto;
+import org.hishatakaran.backend.model.LinkTranslationDto;
 import org.hishatakaran.backend.model.MonumentRequestDto;
 import org.hishatakaran.backend.model.MonumentTranslationDto;
 import org.hishatakaran.backend.model.ProgramRequestDto;
+import org.hishatakaran.backend.model.ProgramTranslationDto;
 import org.hishatakaran.backend.model.TeamMemberRequestDto;
 import org.hishatakaran.backend.model.TranslationLanguage;
 import org.springframework.beans.factory.annotation.Value;
@@ -647,9 +651,261 @@ NOW EXTRACT DATA FROM THIS HTML:
 
 
 
+  public void translateProgram(
+      Program program,
+      TranslationLanguage language
+  ) throws JsonProcessingException {
+
+    String prompt =
+        buildProgramTranslationPrompt(
+            program,
+            language
+        );
+
+    GenerateContentConfig config =
+        GenerateContentConfig.builder()
+            .responseMimeType("application/json")
+            .responseSchema(programTranslationSchema())
+            .build();
+
+    Content content =
+        Content.builder()
+            .parts(List.of(
+                Part.builder()
+                    .text(prompt)
+                    .build()
+            ))
+            .build();
+
+    GenerateContentResponse response =
+        client.models.generateContent(
+            "gemini-2.5-flash",
+            content,
+            config
+        );
+
+    ProgramTranslationDto dto =
+        objectMapper.readValue(
+            response.text(),
+            ProgramTranslationDto.class
+        );
+
+    applyTranslation(
+        program,
+        dto,
+        language
+    );
+  }
+
+  private String buildProgramTranslationPrompt(
+      Program program,
+      TranslationLanguage language
+  ) {
+
+    String targetLanguage =
+        language == TranslationLanguage.en
+            ? "English"
+            : "French";
+
+    return """
+        You are a professional translator.
+
+        Translate the Armenian program data into %s.
+
+        RULES:
+        1. Translate only text.
+        2. Do not summarize.
+        3. Do not rewrite.
+        4. Keep the order of arrays.
+        5. Return ONLY JSON matching the schema.
+        6. Do not invent values.
+        7. If a value is null, return null.
+
+        Armenian program data:
+
+        %s
+        """
+        .formatted(
+            targetLanguage,
+            createTranslationObject(program)
+        );
+  }
+
+  private List<Map<String,Object>> createLinks(
+      List<ProgramLink> links
+  ) {
+
+    if (links == null)
+      return null;
+
+    return links.stream()
+        .map(link -> {
+
+          Map<String,Object> map =
+              new HashMap<>();
+
+          map.put(
+              "linkTitle",
+              link.getTitleHy()
+          );
+
+          return map;
+
+        })
+        .toList();
+  }
+
+  private Map<String,Object> createTranslationObject(
+      Program program
+  ) {
+
+    Map<String,Object> data =
+        new HashMap<>();
+
+    data.put(
+        "title",
+        program.getTitleHy()
+    );
+
+    data.put(
+        "description",
+        program.getDescriptionHy()
+    );
+
+    data.put(
+        "links",
+        createLinks(program.getLinks())
+    );
+
+    return data;
+  }
 
 
+  private Schema programTranslationSchema() {
 
+    Map<String, Schema> properties =
+        new HashMap<>();
+
+    properties.put(
+        "title",
+        stringSchema()
+    );
+
+    properties.put(
+        "description",
+        stringSchema()
+    );
+
+    properties.put(
+        "links",
+        Schema.builder()
+            .type(Type.Known.ARRAY)
+            .items(linkSchema())
+            .build()
+    );
+
+    return Schema.builder()
+        .type(Type.Known.OBJECT)
+        .properties(properties)
+        .build();
+  }
+
+  private Schema linkSchema() {
+
+    Map<String, Schema> properties =
+        new HashMap<>();
+
+    properties.put(
+        "linkTitle",
+        stringSchema()
+    );
+
+    return Schema.builder()
+        .type(Type.Known.OBJECT)
+        .properties(properties)
+        .build();
+  }
+
+  private void applyTranslation(
+      Program program,
+      ProgramTranslationDto dto,
+      TranslationLanguage language
+  ) {
+
+    if (dto == null) {
+      return;
+    }
+
+    boolean en =
+        language == TranslationLanguage.en;
+
+    if (en) {
+
+      program.setTitleEn(
+          dto.getTitle()
+      );
+
+      program.setDescriptionEn(
+          dto.getDescription()
+      );
+
+    } else {
+
+      program.setTitleFr(
+          dto.getTitle()
+      );
+
+      program.setDescriptionFr(
+          dto.getDescription()
+      );
+
+    }
+
+    applyLinksTranslation(
+        program.getLinks(),
+        dto.getLinks(),
+        language
+    );
+  }
+
+  private void applyLinksTranslation(
+      List<ProgramLink> links,
+      List<LinkTranslationDto> dto,
+      TranslationLanguage language
+  ) {
+
+    if (links == null || dto == null) {
+      return;
+    }
+
+    int size =
+        Math.min(
+            links.size(),
+            dto.size()
+        );
+
+    for (int i = 0; i < size; i++) {
+
+      ProgramLink link = links.get(i);
+
+      LinkTranslationDto translation =
+          dto.get(i);
+
+      if (language == TranslationLanguage.en) {
+
+        link.setTitleEn(
+            translation.getLinkTitle()
+        );
+
+      } else {
+
+        link.setTitleFr(
+            translation.getLinkTitle()
+        );
+
+      }
+    }
+  }
 
 
 
@@ -1015,8 +1271,6 @@ NOW EXTRACT DATA FROM THIS HTML:
     Map<String, Schema> properties = new HashMap<>();
 
     properties.put("name", stringSchema());
-
-    properties.put("monumentType", stringSchema());
 
     properties.put("specialName", stringSchema());
 

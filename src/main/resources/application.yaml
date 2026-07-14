@@ -29,6 +29,7 @@ server:
         http-only: true
         secure: false
       store-type: jdbc
+      timeout: 8h
   port: 8888
 
 app:

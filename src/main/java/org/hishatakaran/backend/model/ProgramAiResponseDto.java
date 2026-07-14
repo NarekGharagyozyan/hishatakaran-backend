@@ -7,30 +7,25 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Setter
 @Getter
-@AllArgsConstructor
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class ProgramAiResponseDto {
 
-  private String titleHy;
-  private String titleEn;
-  private String titleFr;
+  private String title;
+  private String description;
 
-  private String descriptionHy;
-  private String descriptionEn;
-  private String descriptionFr;
+  private List<ProgramLinkDto> links;
 
-  private List<ProgramLink> links;
-
-  @Setter
   @Getter
-  @AllArgsConstructor
+  @Setter
   @NoArgsConstructor
-  public static class ProgramLink {
-    private String linkTitleHy;
-    private String linkTitleEn;
-    private String linkTitleFr;
+  @AllArgsConstructor
+  public static class ProgramLinkDto {
+
+    private String linkTitle;
     private String link;
   }
+
 }

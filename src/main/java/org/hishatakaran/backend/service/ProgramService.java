@@ -12,10 +12,12 @@ import org.hishatakaran.backend.mapper.ProgramMapper;
 import org.hishatakaran.backend.model.ProgramAiResponseDto;
 import org.hishatakaran.backend.model.ProgramRequestDto;
 import org.hishatakaran.backend.model.ProgramResponseDto;
+import org.hishatakaran.backend.model.TranslationLanguage;
 import org.hishatakaran.backend.repository.ProgramRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import tools.jackson.databind.ObjectMapper;
 
@@ -27,6 +29,7 @@ public class ProgramService {
   private final ObjectMapper objectMapper;
   private final GeminiService geminiService;
   private final FileStorageService fileStorageService;
+  private final ProgramTranslationService programTranslationService;
 
   public List<ProgramResponseDto> getAllPrograms() {
     return programRepository.findAll()
@@ -46,48 +49,63 @@ public class ProgramService {
       MultipartFile cover
   )
   {
-    ProgramAiResponseDto programAiResponseDto = null;
+    ProgramRequestDto programRequestDto = null;
     if (stringData != null)
     {
-      ProgramRequestDto programRequestDto = objectMapper.readValue(stringData, ProgramRequestDto.class);
-
-      String requestGeminiForPrograms = geminiService.requestGeminiForPrograms(programRequestDto);
-      programAiResponseDto = objectMapper.readValue(
-          requestGeminiForPrograms,
-          ProgramAiResponseDto.class
-      );
+      programRequestDto = objectMapper.readValue(stringData, ProgramRequestDto.class);
     }
 
-    Program program = new Program(
-        Boolean.FALSE,
-        programAiResponseDto != null ? programAiResponseDto.getTitleHy() : null,
-        programAiResponseDto != null ? programAiResponseDto.getTitleEn() : null,
-        programAiResponseDto != null ? programAiResponseDto.getTitleFr() : null,
-        programAiResponseDto != null ? programAiResponseDto.getDescriptionHy() : null,
-        programAiResponseDto != null ? programAiResponseDto.getDescriptionEn() : null,
-        programAiResponseDto != null ? programAiResponseDto.getDescriptionFr() : null,
-        images != null
-            ? images.stream()
-            .map(image -> fileStorageService.saveImage(image, "programs"))
-            .toList()
-        : null,
-        fileStorageService.savefile(pdf, "programs"),
-        fileStorageService.saveImage(cover, "programs"),
-        null
-    );
-    program.setLinks(programAiResponseDto != null ? programAiResponseDto.getLinks().stream()
-        .map(link -> new ProgramLink(
-            program,
-            link.getLinkTitleHy(),
-            link.getLinkTitleEn(),
-            link.getLinkTitleFr(),
-            link.getLink())
-        )
-        .toList()
-        : null);
+    Program program = new Program();
+
+    program.setIsPublished(Boolean.FALSE);
+    if (programRequestDto != null)
+    {
+      program.setTitleHy(programRequestDto.getTitle());
+      program.setDescriptionHy(programRequestDto.getDescription());
+      if (programRequestDto.getLinks() != null) {
+        program.setLinks(programRequestDto.getLinks().stream()
+            .map(link -> new ProgramLink(
+                program,
+                link.getTitle(),
+                null,
+                null,
+                link.getUrl())
+            )
+            .toList());
+      }
+    }
+    List<String> savedImages = null;
+    if (images != null)
+    {
+       savedImages = images.stream()
+          .map(image -> fileStorageService.saveImage(image, "programs"))
+          .toList();
+    }
+    program.setImages(savedImages);
+    program.setPdf(fileStorageService.savefile(pdf, "programs"));
+    program.setCover(fileStorageService.saveImage(cover, "programs"));
 
     Program savedProgram = programRepository.save(program);
     return ProgramMapper.toResponseDto(savedProgram);
   }
 
+  @Transactional
+  public ProgramResponseDto translate(
+      Long id,
+      TranslationLanguage language
+  ) {
+
+    Program program =
+        programRepository.findById(id)
+            .orElseThrow();
+
+    programTranslationService.translate(
+        program,
+        language
+    );
+
+    return ProgramMapper.toResponseDto(
+        programRepository.save(program)
+    );
+  }
 }
