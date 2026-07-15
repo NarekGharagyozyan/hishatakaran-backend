@@ -10,7 +10,7 @@ public class RegionMapper {
 
     return new RegionResponseDto(
         region.getId(),
-        new LanguagesResponseDto(
+        LanguagesResponseDto.of(
             region.getNameHy(),
             region.getNameEn(),
             region.getNameFr()

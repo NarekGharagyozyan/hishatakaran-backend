@@ -1,5 +1,6 @@
 package org.hishatakaran.backend.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -25,17 +26,20 @@ public class Footnote {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Integer orderNumber;
+    private Long orderNumber;
 
+    @Column(columnDefinition = "TEXT")
     private String textHy;
+    @Column(columnDefinition = "TEXT")
     private String textEn;
+    @Column(columnDefinition = "TEXT")
     private String textFr;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "monument_id")
     private Monument monument;
 
-    public Footnote(Monument monument, Integer orderNumber, String textHy, String textEn, String textFr) {
+    public Footnote(Monument monument, Long orderNumber, String textHy, String textEn, String textFr) {
         this.monument = monument;
         this.orderNumber = orderNumber;
         this.textHy = textHy;

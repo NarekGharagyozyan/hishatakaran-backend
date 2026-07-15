@@ -145,7 +145,7 @@ public class MonumentController {
             .stream()
             .map(monumentType -> new MonumentTypesResponseDto(
                 monumentType.getId(),
-                new LanguagesResponseDto(
+                LanguagesResponseDto.of(
                     monumentType.getNameHy(),
                     monumentType.getNameEn(),
                     monumentType.getNameFr()

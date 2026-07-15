@@ -26,6 +26,7 @@ public class MonumentEditDto {
   private List<String> images;
   private List<String> measurements;
   private List<MonumentVideoResponseDto> videos;
+  private List<FootnoteResponseDto> footnotes;
   private List<BibliographyResponseDto> bibliography;
   private TopographicResponseDto topographics;
   private HistoricalReferenceResponseDto historicalReferences;

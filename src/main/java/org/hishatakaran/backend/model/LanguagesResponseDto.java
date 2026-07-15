@@ -1,6 +1,5 @@
 package org.hishatakaran.backend.model;
 
-import java.util.Objects;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;

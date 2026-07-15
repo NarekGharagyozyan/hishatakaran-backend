@@ -49,8 +49,11 @@ public class Monument extends BaseEntity{
     private Long id;
     private Boolean isPublished;
 
+    @Column(columnDefinition = "TEXT")
     private String nameHy;
+    @Column(columnDefinition = "TEXT")
     private String nameEn;
+    @Column(columnDefinition = "TEXT")
     private String nameFr;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -65,37 +68,45 @@ public class Monument extends BaseEntity{
     @JoinColumn(name = "monument_type", nullable = false)
     private MonumentTypes monumentType;
 
+    @Column(columnDefinition = "TEXT")
     private String specialNameHy;
+    @Column(columnDefinition = "TEXT")
     private String specialNameEn;
+    @Column(columnDefinition = "TEXT")
     private String specialNameFr;
 
+    @Column(columnDefinition = "TEXT")
     private String anotherNamesHy;
+    @Column(columnDefinition = "TEXT")
     private String anotherNamesEn;
+    @Column(columnDefinition = "TEXT")
     private String anotherNamesFr;
 
     @Column(columnDefinition = "TEXT")
     private String historyHy;
-
     @Column(columnDefinition = "TEXT")
     private String historyEn;
-
     @Column(columnDefinition = "TEXT")
     private String historyFr;
 
+    @Column(columnDefinition = "TEXT")
     private String originalAffiliationHy;
+    @Column(columnDefinition = "TEXT")
     private String originalAffiliationEn;
+    @Column(columnDefinition = "TEXT")
     private String originalAffiliationFr;
 
+    @Column(columnDefinition = "TEXT")
     private String storageUnitNameHy;
+    @Column(columnDefinition = "TEXT")
     private String storageUnitNameEn;
+    @Column(columnDefinition = "TEXT")
     private String storageUnitNameFr;
 
     @Column(name = "monument_condition_hy")
     private String conditionHy;
-
     @Column(name = "monument_condition_en")
     private String conditionEn;
-
     @Column(name = "monument_condition_fr")
     private String conditionFr;
 

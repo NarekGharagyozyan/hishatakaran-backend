@@ -10,12 +10,12 @@ public class NewsMapper {
 
     return new NewsResponseDto(
         news.getId(),
-        new LanguagesResponseDto(
+        LanguagesResponseDto.of(
             news.getTitleHy(),
             news.getTitleEn(),
             news.getTitleFr()
         ),
-        new LanguagesResponseDto(
+        LanguagesResponseDto.of(
             news.getTextHy(),
             news.getTextEn(),
             news.getTextFr()

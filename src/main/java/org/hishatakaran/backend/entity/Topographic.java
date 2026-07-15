@@ -40,8 +40,11 @@ public class Topographic {
     @Column(columnDefinition = "TEXT")
     private String regionFr;
 
+    @Column(columnDefinition = "TEXT")
     private String addressHy;
+    @Column(columnDefinition = "TEXT")
     private String addressEn;
+    @Column(columnDefinition = "TEXT")
     private String addressFr;
 
     @Column(columnDefinition = "TEXT")
@@ -51,14 +54,21 @@ public class Topographic {
     @Column(columnDefinition = "TEXT")
     private String topographyFr;
 
+    @Column(columnDefinition = "TEXT")
     private String distanceFromResidenceHy;
+    @Column(columnDefinition = "TEXT")
     private String distanceFromResidenceEn;
+    @Column(columnDefinition = "TEXT")
     private String distanceFromResidenceFr;
+
     private String longitude;
     private String latitude;
 
+    @Column(columnDefinition = "TEXT")
     private String altitudeHy;
+    @Column(columnDefinition = "TEXT")
     private String altitudeEn;
+    @Column(columnDefinition = "TEXT")
     private String altitudeFr;
 
     @Column(columnDefinition = "TEXT")

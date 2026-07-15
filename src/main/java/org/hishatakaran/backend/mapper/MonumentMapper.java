@@ -84,8 +84,9 @@ public class MonumentMapper {
             m.getFootnotes()
                 .stream()
                 .map(footnote -> new FootnoteResponseDto(
+                    footnote.getId(),
                     footnote.getOrderNumber(),
-                    new LanguagesResponseDto(
+                    LanguagesResponseDto.of(
                         footnote.getTextHy(),
                         footnote.getTextEn(),
                         footnote.getTextFr()

@@ -10,7 +10,7 @@ public class SettlementMapper {
 
     return new SettlementResponseDto(
         settlement.getId(),
-        new LanguagesResponseDto(
+        LanguagesResponseDto.of(
             settlement.getNameHy(),
             settlement.getNameEn(),
             settlement.getNameFr()

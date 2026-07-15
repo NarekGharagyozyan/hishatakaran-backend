@@ -9,6 +9,7 @@ import lombok.Setter;
 @RequiredArgsConstructor
 public class FootnoteResponseDto {
 
-  private final Integer orderNumber;
+  private final Long id;
+  private final Long orderNumber;
   private final LanguagesResponseDto text;
 }

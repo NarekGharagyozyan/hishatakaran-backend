@@ -10,7 +10,7 @@ public class MonumentTypeMapper {
 
     return new MonumentTypesResponseDto(
         monumentTypes.getId(),
-        new LanguagesResponseDto(
+        LanguagesResponseDto.of(
             monumentTypes.getNameHy(),
             monumentTypes.getNameEn(),
             monumentTypes.getNameFr()

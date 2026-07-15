@@ -33,28 +33,46 @@ public class DescriptiveCharacteristicReference {
     @JoinColumn(name = "monument", nullable = false)
     private Monument monument;
 
+    @Column(columnDefinition = "TEXT")
     private String theBuildingMaterialHy;
+    @Column(columnDefinition = "TEXT")
     private String theBuildingMaterialEn;
+    @Column(columnDefinition = "TEXT")
     private String theBuildingMaterialFr;
 
+    @Column(columnDefinition = "TEXT")
     private String openingsEntrancesHy;
+    @Column(columnDefinition = "TEXT")
     private String openingsEntrancesEn;
+    @Column(columnDefinition = "TEXT")
     private String openingsEntrancesFr;
 
+    @Column(columnDefinition = "TEXT")
     private String constructionsHy;
+    @Column(columnDefinition = "TEXT")
     private String constructionsEn;
+    @Column(columnDefinition = "TEXT")
     private String constructionsFr;
 
+    @Column(columnDefinition = "TEXT")
     private String roofHy;
+    @Column(columnDefinition = "TEXT")
     private String roofEn;
+    @Column(columnDefinition = "TEXT")
     private String roofFr;
 
+    @Column(columnDefinition = "TEXT")
     private String typeHy;
+    @Column(columnDefinition = "TEXT")
     private String typeEn;
+    @Column(columnDefinition = "TEXT")
     private String typeFr;
 
+    @Column(columnDefinition = "TEXT")
     private String colorHy;
+    @Column(columnDefinition = "TEXT")
     private String colorEn;
+    @Column(columnDefinition = "TEXT")
     private String colorFr;
 
     @Column(columnDefinition = "TEXT")
@@ -64,8 +82,11 @@ public class DescriptiveCharacteristicReference {
     @Column(columnDefinition = "TEXT")
     private String implementationTechniqueFr;
 
+    @Column(columnDefinition = "TEXT")
     private String stateOfMonumentHy;
+    @Column(columnDefinition = "TEXT")
     private String stateOfMonumentEn;
+    @Column(columnDefinition = "TEXT")
     private String stateOfMonumentFr;
 
     @Column(columnDefinition = "TEXT")

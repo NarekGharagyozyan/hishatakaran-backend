@@ -319,6 +319,7 @@ public class MonumentService {
         return MonumentMapper.toDto(savedMonument);
     }
 
+    @Transactional
     public MonumentResponseDto updateMonument(Long id, MonumentEditDto monumentEditDto) {
         Monument monument = monumentRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Monument not found"));
@@ -411,6 +412,21 @@ public class MonumentService {
             topographics = new Topographic();
             topographics.setMonument(monument);
             monument.setTopographics(topographics);
+        }
+
+        monument.getFootnotes().clear();
+        if (monumentEditDto.getFootnotes() != null)
+        {
+            monumentEditDto.getFootnotes()
+                .stream()
+                .map(footnoteResponseDto -> new Footnote(
+                    monument,
+                    footnoteResponseDto.getOrderNumber(),
+                    footnoteResponseDto.getText().getHy(),
+                    footnoteResponseDto.getText().getEn(),
+                    footnoteResponseDto.getText().getFr()
+                ))
+                .forEach(monument.getFootnotes()::add);
         }
 
         topographics.setRegionHy(

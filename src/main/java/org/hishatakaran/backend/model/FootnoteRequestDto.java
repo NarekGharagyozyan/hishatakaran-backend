@@ -7,6 +7,6 @@ import lombok.Setter;
 @Setter
 public class FootnoteRequestDto {
 
-    private Integer orderNumber;
+    private Long orderNumber;
     private String text;
 }

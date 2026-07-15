@@ -33,11 +33,18 @@ public class HistoricalReference {
     @JoinColumn(name = "monument", nullable = false)
     private Monument monument;
 
+    @Column(columnDefinition = "TEXT")
     private String culturalAffiliationHy;
+    @Column(columnDefinition = "TEXT")
     private String culturalAffiliationEn;
+    @Column(columnDefinition = "TEXT")
     private String culturalAffiliationFr;
+
+    @Column(columnDefinition = "TEXT")
     private String centuryHy;
+    @Column(columnDefinition = "TEXT")
     private String centuryEn;
+    @Column(columnDefinition = "TEXT")
     private String centuryFr;
 
     @Column(columnDefinition = "TEXT")
@@ -61,8 +68,11 @@ public class HistoricalReference {
     @Column(columnDefinition = "TEXT")
     private String chronologicalTableOfTheMonumentsStudyFr;
 
+    @Column(columnDefinition = "TEXT")
     private String authorHy;
+    @Column(columnDefinition = "TEXT")
     private String authorEn;
+    @Column(columnDefinition = "TEXT")
     private String authorFr;
 
     public HistoricalReference(Monument monument, String culturalAffiliationHy, String culturalAffiliationEn,

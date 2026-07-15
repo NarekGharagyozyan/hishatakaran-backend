@@ -11,12 +11,12 @@ public class ProgramMapper {
     return new ProgramResponseDto(
         program.getId(),
         program.getIsPublished(),
-        program.getTitleHy() != null ? new LanguagesResponseDto(
+        program.getTitleHy() != null ? LanguagesResponseDto.of(
             program.getTitleHy(),
             program.getTitleEn(),
             program.getTitleFr()
         ) : null,
-        program.getDescriptionHy() != null ? new LanguagesResponseDto(
+        program.getDescriptionHy() != null ? LanguagesResponseDto.of(
             program.getDescriptionHy(),
             program.getDescriptionEn(),
             program.getDescriptionFr()
@@ -27,7 +27,7 @@ public class ProgramMapper {
         program.getLinks() != null ? program.getLinks()
             .stream()
             .map(link -> new ProgramLinkResponseDto(
-                new LanguagesResponseDto(
+                LanguagesResponseDto.of(
                     link.getTitleHy(),
                     link.getTitleEn(),
                     link.getTitleFr()

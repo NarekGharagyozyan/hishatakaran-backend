@@ -9,22 +9,22 @@ public class TeamMemberMapper {
   public static TeamMemberResponseDto toResponseDto(TeamMembers teamMembers)
   {
     return new TeamMemberResponseDto(
-        new LanguagesResponseDto(
+        LanguagesResponseDto.of(
             teamMembers.getNameHy(),
             teamMembers.getNameEn(),
             teamMembers.getNameFr()
         ),
-        new LanguagesResponseDto(
+        LanguagesResponseDto.of(
             teamMembers.getSurnameHy(),
             teamMembers.getSurnameEn(),
             teamMembers.getSurnameFr()
         ),
-        new LanguagesResponseDto(
+        LanguagesResponseDto.of(
             teamMembers.getDescriptionHy(),
             teamMembers.getDescriptionEn(),
             teamMembers.getDescriptionFr()
         ),
-        new LanguagesResponseDto(
+        LanguagesResponseDto.of(
             teamMembers.getPositionHy(),
             teamMembers.getPositionEn(),
             teamMembers.getPositionFr()
