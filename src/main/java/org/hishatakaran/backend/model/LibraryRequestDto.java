@@ -17,6 +17,8 @@ public class LibraryRequestDto {
   private String description;
   private String copyrightText;
   private String copyrightUrl;
+  private String cover;
+  private String pdf;
   private String authors;
 
   @Override

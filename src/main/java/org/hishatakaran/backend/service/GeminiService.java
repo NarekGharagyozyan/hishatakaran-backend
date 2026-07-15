@@ -984,6 +984,7 @@ NOW EXTRACT DATA FROM THIS HTML:
         9. Translate every text field.
         10. Translate titles inside videos and bibliography.
         11. Do not translate ids, urls or coordinates.
+        12. If there are html tags in the text, they must remain in place after translation.
 
 
         Armenian monument data:
