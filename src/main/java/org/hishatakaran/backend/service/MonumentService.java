@@ -226,27 +226,34 @@ public class MonumentService {
             .showInMainPage(monumentRequestDto.getShowInMainPage())
             .build();
 
-        List<Footnote> footnotes = monumentRequestDto.getFootnotes()
-            .stream()
-            .map(footnoteRequestDto -> new Footnote(
-                monument,
-                footnoteRequestDto.getOrderNumber(),
-                footnoteRequestDto.getText(),
-                null,
-                null
-            ))
-            .toList();
+        List<Footnote> footnotes = null;
+        if(monumentRequestDto.getFootnotes() != null){
+            footnotes = monumentRequestDto.getFootnotes()
+                .stream()
+                .map(footnoteRequestDto -> new Footnote(
+                    monument,
+                    footnoteRequestDto.getOrderNumber(),
+                    footnoteRequestDto.getText(),
+                    null,
+                    null
+                ))
+                .toList();
+        }
 
-        List<Bibliography> bibliographies = monumentRequestDto.getBibliography()
-            .stream()
-            .map(bibliographyRequestDto -> new Bibliography(
-                monument,
-                bibliographyRequestDto.getTitle(),
-                null,
-                null,
-                bibliographyRequestDto.getUrl())
-            )
-            .toList();
+        List<Bibliography> bibliographies = null;
+        if (monumentRequestDto.getBibliography() != null)
+        {
+            bibliographies = monumentRequestDto.getBibliography()
+                .stream()
+                .map(bibliographyRequestDto -> new Bibliography(
+                    monument,
+                    bibliographyRequestDto.getTitle(),
+                    null,
+                    null,
+                    bibliographyRequestDto.getUrl())
+                )
+                .toList();
+        }
 
         Topographic topographic = Topographic.builder()
             .monument(monument)
@@ -292,18 +299,22 @@ public class MonumentService {
         monument.setTopographics(topographic);
         monument.setHistoricalReferences(historicalReference);
         monument.setDescriptiveCharacteristics(descriptiveCharacteristicReference);
-        monument.setVideos(
-            monumentRequestDto.getVideos()
-                .stream()
-                .map(video -> new MonumentVideo(
-                    monument,
-                    video.getTitle(),
-                    null,
-                    null,
-                    video.getUrl()
-                ))
-                .toList()
-        );
+
+        if (monumentRequestDto.getVideos() != null)
+        {
+            monument.setVideos(
+                monumentRequestDto.getVideos()
+                    .stream()
+                    .map(video -> new MonumentVideo(
+                        monument,
+                        video.getTitle(),
+                        null,
+                        null,
+                        video.getUrl()
+                    ))
+                    .toList()
+            );
+        }
         Monument savedMonument = monumentRepository.save(monument);
         return MonumentMapper.toDto(savedMonument);
     }
