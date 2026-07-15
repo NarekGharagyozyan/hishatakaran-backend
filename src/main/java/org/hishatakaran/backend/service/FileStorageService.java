@@ -4,14 +4,40 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+import org.hishatakaran.backend.model.EntityType;
+import org.hishatakaran.backend.model.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class FileStorageService {
+
+    public List<String> uploadMedia(List<MultipartFile> files, EntityType entityType, MediaType mediaType) {
+
+        List<String> links = new ArrayList<>();
+        files.forEach(file -> {
+            String extension = getExtension(
+                Objects.requireNonNull(file.getOriginalFilename())
+            );
+            String fileName = UUID.randomUUID() + "." + extension;
+            Path target = Paths.get(mediaType.name())
+                .resolve(entityType.name())
+                .resolve(fileName);
+            try {
+                Files.createDirectories(target.getParent());
+                file.transferTo(target);
+                links.add("/" + mediaType.name() + "/" + entityType.name() + "/" + fileName);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        return links;
+    }
 
     public String saveImage(MultipartFile file, String folder) {
 

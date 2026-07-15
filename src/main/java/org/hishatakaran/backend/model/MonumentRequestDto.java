@@ -37,6 +37,8 @@ public class MonumentRequestDto {
   private HistoricalReferenceRequestDto historicalReferences;
   private DescriptiveCharacteristicReferenceRequestDto descriptiveCharacteristics;
 
+  private List<FootnoteRequestDto> footnotes;
+
   private Boolean showInMainPage;
   private String signature;
 

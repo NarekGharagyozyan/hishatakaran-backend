@@ -16,6 +16,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -110,6 +111,10 @@ public class Monument extends BaseEntity{
     @CollectionTable(name = "monument_measurements", joinColumns = @JoinColumn(name = "monument_id"))
     @Column(name = "measurement_url")
     private List<String> measurements = new ArrayList<>();
+
+    @OneToMany(mappedBy = "monument", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderBy("orderNumber ASC")
+    private List<Footnote> footnotes = new ArrayList<>();
 
     @OneToMany(mappedBy = "monument", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Bibliography> bibliography;

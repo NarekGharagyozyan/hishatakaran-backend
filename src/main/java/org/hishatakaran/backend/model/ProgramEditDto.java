@@ -12,7 +12,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProgramEditDto {
-  private Boolean isPublished;
   private LanguagesResponseDto title;
   private LanguagesResponseDto description;
   private List<String> images;

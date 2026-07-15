@@ -15,6 +15,9 @@ public class ProgramRequestDto {
   private String title;
   private String description;
   private List<ProgramLinkRequestDto> links;
+  private List<String> images;
+  private String cover;
+  private String pdf;
 
   @Override
   public String toString() {

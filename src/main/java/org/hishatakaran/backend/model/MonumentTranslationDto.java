@@ -24,6 +24,8 @@ public class MonumentTranslationDto {
 
     private String condition;
 
+    private List<FootnoteTranslationDto> footnotes;
+
     private TopographicTranslationDto topographics;
 
     private HistoricalReferenceTranslationDto historicalReferences;

@@ -23,8 +23,6 @@ import tools.jackson.databind.ObjectMapper;
 public class ProgramService {
 
   private final ProgramRepository programRepository;
-  private final ObjectMapper objectMapper;
-  private final GeminiService geminiService;
   private final FileStorageService fileStorageService;
   private final ProgramTranslationService programTranslationService;
 
@@ -42,8 +40,6 @@ public class ProgramService {
   public ProgramResponseDto editProgram(Long id, ProgramEditDto programEditDto) {
 
     Program program = programRepository.findById(id).orElseThrow(() -> new RuntimeException("Program not found"));
-
-    program.setIsPublished(programEditDto.getIsPublished());
 
     if (programEditDto.getTitle() != null)
     {
@@ -95,47 +91,29 @@ public class ProgramService {
   }
 
   public ProgramResponseDto postProgram(
-      String stringData,
-      List<MultipartFile> images,
-      MultipartFile pdf,
-      MultipartFile cover
+      ProgramRequestDto programRequestDto
   )
   {
-    ProgramRequestDto programRequestDto = null;
-    if (stringData != null)
-    {
-      programRequestDto = objectMapper.readValue(stringData, ProgramRequestDto.class);
-    }
 
     Program program = new Program();
 
     program.setIsPublished(Boolean.FALSE);
-    if (programRequestDto != null)
-    {
-      program.setTitleHy(programRequestDto.getTitle());
-      program.setDescriptionHy(programRequestDto.getDescription());
-      if (programRequestDto.getLinks() != null) {
-        program.setLinks(programRequestDto.getLinks().stream()
-            .map(link -> new ProgramLink(
-                program,
-                link.getTitle(),
-                null,
-                null,
-                link.getUrl())
-            )
-            .toList());
-      }
+    program.setTitleHy(programRequestDto.getTitle());
+    program.setDescriptionHy(programRequestDto.getDescription());
+    if (programRequestDto.getLinks() != null) {
+      program.setLinks(programRequestDto.getLinks().stream()
+          .map(link -> new ProgramLink(
+              program,
+              link.getTitle(),
+              null,
+              null,
+              link.getUrl())
+          )
+          .toList());
     }
-    List<String> savedImages = null;
-    if (images != null)
-    {
-       savedImages = images.stream()
-          .map(image -> fileStorageService.saveImage(image, "programs"))
-          .toList();
-    }
-    program.setImages(savedImages);
-    program.setPdf(fileStorageService.savefile(pdf, "programs"));
-    program.setCover(fileStorageService.saveImage(cover, "programs"));
+    program.setImages(programRequestDto.getImages());
+    program.setCover(programRequestDto.getCover());
+    program.setPdf(programRequestDto.getPdf());
 
     Program savedProgram = programRepository.save(program);
     return ProgramMapper.toResponseDto(savedProgram);

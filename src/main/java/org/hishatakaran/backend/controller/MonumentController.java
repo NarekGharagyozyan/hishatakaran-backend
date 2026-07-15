@@ -54,19 +54,19 @@ public class MonumentController {
         return monumentService.updateMonument(id, monumentRequestDto);
     }
 
-    @PostMapping("/monuments/{id}/publish")
+    @PostMapping("/admin/monuments/{id}/publish")
     public MonumentResponseDto publishMonument(
         @PathVariable Long id
     ) {
         return monumentService.publish(id);
     }
 
-    @DeleteMapping("/monuments/{id}")
+    @DeleteMapping("/admin/monuments/{id}")
     public void deleteMonument(@PathVariable Long id) {
         monumentService.deleteMonument(id);
     }
 
-    @PostMapping("/monuments/uploadImages")
+    @PostMapping("/admin/monuments/uploadImages")
     public List<String> uploadImages(
         @RequestPart(value = "images") List<MultipartFile> images
     ) {

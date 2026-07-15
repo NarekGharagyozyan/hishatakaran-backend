@@ -4,12 +4,14 @@ import java.util.List;
 
 import org.hishatakaran.backend.entity.Bibliography;
 import org.hishatakaran.backend.entity.DescriptiveCharacteristicReference;
+import org.hishatakaran.backend.entity.Footnote;
 import org.hishatakaran.backend.entity.HistoricalReference;
 import org.hishatakaran.backend.entity.Monument;
 import org.hishatakaran.backend.entity.MonumentVideo;
 import org.hishatakaran.backend.entity.Topographic;
 import org.hishatakaran.backend.model.BibliographyTranslationDto;
 import org.hishatakaran.backend.model.DescriptiveCharacteristicTranslationDto;
+import org.hishatakaran.backend.model.FootnoteTranslationDto;
 import org.hishatakaran.backend.model.HistoricalReferenceTranslationDto;
 import org.hishatakaran.backend.model.MonumentTranslationDto;
 import org.hishatakaran.backend.model.TopographicTranslationDto;
@@ -117,6 +119,14 @@ public class MonumentTranslationService {
             );
         }
 
+        if (dto.getFootnotes() != null) {
+            applyFootnotesTranslation(
+                monument.getFootnotes(),
+                dto.getFootnotes(),
+                language
+            );
+        }
+
 
         if (dto.getBibliography() != null) {
             applyBibliographyTranslation(
@@ -124,6 +134,42 @@ public class MonumentTranslationService {
                 dto.getBibliography(),
                 language
             );
+        }
+    }
+
+    private void applyFootnotesTranslation(
+        List<Footnote> footnotes,
+        List<FootnoteTranslationDto> dto,
+        TranslationLanguage language
+    ) {
+
+        if (footnotes == null || dto == null) {
+            return;
+        }
+
+        int size = Math.min(
+            footnotes.size(),
+            dto.size()
+        );
+
+        for (int i = 0; i < size; i++) {
+
+            Footnote footnote = footnotes.get(i);
+
+            FootnoteTranslationDto translation = dto.get(i);
+
+            if (language == TranslationLanguage.en) {
+
+                footnote.setTextEn(
+                    clean(translation.getText())
+                );
+
+            } else {
+
+                footnote.setTextFr(
+                    clean(translation.getText())
+                );
+            }
         }
     }
 

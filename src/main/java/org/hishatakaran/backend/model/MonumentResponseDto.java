@@ -33,6 +33,8 @@ public class MonumentResponseDto {
     private final List<MonumentVideoResponseDto> videos;
     private final List<String> measurements;
 
+    private final List<FootnoteResponseDto> footnotes;
+
     private final Long createdAt;
     private final Long updatedAt;
 

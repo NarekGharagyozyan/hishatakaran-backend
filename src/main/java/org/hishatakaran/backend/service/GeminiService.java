@@ -1059,6 +1059,21 @@ NOW EXTRACT DATA FROM THIS HTML:
     );
 
     data.put(
+        "footnotes",
+        monument.getFootnotes()
+            .stream()
+            .map(f -> {
+              Map<String, Object> map = new HashMap<>();
+
+              map.put("orderNumber", f.getOrderNumber());
+              map.put("text", f.getTextHy());
+
+              return map;
+            })
+            .toList()
+    );
+
+    data.put(
         "bibliography",
         monument.getBibliography()
             .stream()
@@ -1299,6 +1314,14 @@ NOW EXTRACT DATA FROM THIS HTML:
     );
 
     properties.put(
+        "footnotes",
+        Schema.builder()
+            .type(Type.Known.ARRAY)
+            .items(footnoteSchema())
+            .build()
+    );
+
+    properties.put(
         "bibliography",
         Schema.builder()
             .type(Type.Known.ARRAY)
@@ -1342,6 +1365,28 @@ NOW EXTRACT DATA FROM THIS HTML:
         stringSchema()
     );
 
+
+    return Schema.builder()
+        .type(Type.Known.OBJECT)
+        .properties(properties)
+        .build();
+  }
+
+  private Schema footnoteSchema() {
+
+    Map<String, Schema> properties = new HashMap<>();
+
+    properties.put(
+        "orderNumber",
+        Schema.builder()
+            .type(Type.Known.INTEGER)
+            .build()
+    );
+
+    properties.put(
+        "text",
+        stringSchema()
+    );
 
     return Schema.builder()
         .type(Type.Known.OBJECT)

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hishatakaran.backend.entity.Bibliography;
 import org.hishatakaran.backend.entity.DescriptiveCharacteristicReference;
+import org.hishatakaran.backend.entity.Footnote;
 import org.hishatakaran.backend.entity.HistoricalReference;
 import org.hishatakaran.backend.entity.Monument;
 import org.hishatakaran.backend.entity.MonumentVideo;
@@ -225,6 +226,17 @@ public class MonumentService {
             .showInMainPage(monumentRequestDto.getShowInMainPage())
             .build();
 
+        List<Footnote> footnotes = monumentRequestDto.getFootnotes()
+            .stream()
+            .map(footnoteRequestDto -> new Footnote(
+                monument,
+                footnoteRequestDto.getOrderNumber(),
+                footnoteRequestDto.getText(),
+                null,
+                null
+            ))
+            .toList();
+
         List<Bibliography> bibliographies = monumentRequestDto.getBibliography()
             .stream()
             .map(bibliographyRequestDto -> new Bibliography(
@@ -275,6 +287,7 @@ public class MonumentService {
             .valuationHy(monumentRequestDto.getDescriptiveCharacteristics().getValuation())
             .build();
 
+        monument.setFootnotes(footnotes);
         monument.setBibliography(bibliographies);
         monument.setTopographics(topographic);
         monument.setHistoricalReferences(historicalReference);
@@ -694,8 +707,6 @@ public class MonumentService {
                 ? monumentEditDto.getDescriptiveCharacteristics().getValuation().getFr()
                 : null);
 
-        monument.setIsPublished(monumentEditDto.getIsPublished());
-
         Monument editedMonument = monumentRepository.save(monument);
         return MonumentMapper.toDto(editedMonument);
     }
@@ -837,7 +848,7 @@ public class MonumentService {
     ) {
         Monument monument = monumentRepository.findById(id).orElseThrow(
             () -> new RuntimeException("Monument not found"));
-        monument.setIsPublished(Boolean.TRUE);
+        monument.setIsPublished(!monument.getIsPublished());
         Monument updatedMonument = monumentRepository.save(monument);
         return MonumentMapper.toDto(updatedMonument);
     }

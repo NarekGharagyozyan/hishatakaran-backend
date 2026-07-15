@@ -3,6 +3,7 @@ package org.hishatakaran.backend.controller;
 import java.util.List;
 
 import org.hishatakaran.backend.model.ProgramEditDto;
+import org.hishatakaran.backend.model.ProgramRequestDto;
 import org.hishatakaran.backend.model.ProgramResponseDto;
 import org.hishatakaran.backend.model.TranslationLanguage;
 import org.hishatakaran.backend.service.ProgramService;
@@ -29,15 +30,12 @@ public class ProgramController {
 
     private final ProgramService programService;
 
-    @PostMapping(path = "/admin/programs", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<ProgramResponseDto> uploadFiles(
-        @RequestPart(value = "data", required = false) String stringData,
-        @RequestPart(value = "images", required = false) List<MultipartFile> images,
-        @RequestPart("pdf") MultipartFile pdf,
-        @RequestPart("cover") MultipartFile cover
+    @PostMapping(path = "/admin/programs")
+    public ResponseEntity<ProgramResponseDto> addProgram(
+        @RequestBody ProgramRequestDto programRequestDto
     ){
 
-        return ResponseEntity.ok(programService.postProgram(stringData, images, pdf, cover));
+        return ResponseEntity.ok(programService.postProgram(programRequestDto));
 
     }
 

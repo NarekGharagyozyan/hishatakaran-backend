@@ -2,6 +2,7 @@ package org.hishatakaran.backend.mapper;
 
 import org.hishatakaran.backend.entity.Monument;
 import org.hishatakaran.backend.model.BibliographyResponseDto;
+import org.hishatakaran.backend.model.FootnoteResponseDto;
 import org.hishatakaran.backend.model.LanguagesResponseDto;
 import org.hishatakaran.backend.model.MonumentResponseDto;
 import org.hishatakaran.backend.model.MonumentVideoResponseDto;
@@ -78,6 +79,20 @@ public class MonumentMapper {
             .toList()
         );
         monumentDtoBuilder.measurements(m.getMeasurements());
+
+        monumentDtoBuilder.footnotes(
+            m.getFootnotes()
+                .stream()
+                .map(footnote -> new FootnoteResponseDto(
+                    footnote.getOrderNumber(),
+                    new LanguagesResponseDto(
+                        footnote.getTextHy(),
+                        footnote.getTextEn(),
+                        footnote.getTextFr()
+                    )
+                ))
+                .toList()
+        );
 
         monumentDtoBuilder.createdAt(m.getCreatedAt().toEpochSecond());
         monumentDtoBuilder.updatedAt(m.getUpdatedAt().toEpochSecond());
