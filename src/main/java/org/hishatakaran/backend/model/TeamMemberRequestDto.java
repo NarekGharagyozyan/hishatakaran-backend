@@ -16,6 +16,7 @@ public class TeamMemberRequestDto {
   private String surname;
   private String description;
   private String position;
+  private String image;
   private String url;
 
   @Override

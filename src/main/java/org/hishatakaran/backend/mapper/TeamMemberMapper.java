@@ -6,9 +6,10 @@ import org.hishatakaran.backend.model.TeamMemberResponseDto;
 
 public class TeamMemberMapper {
 
-  public static TeamMemberResponseDto toResponseDto(TeamMembers teamMembers)
+  public static TeamMemberResponseDto toDto(TeamMembers teamMembers)
   {
     return new TeamMemberResponseDto(
+        teamMembers.getId(),
         LanguagesResponseDto.of(
             teamMembers.getNameHy(),
             teamMembers.getNameEn(),

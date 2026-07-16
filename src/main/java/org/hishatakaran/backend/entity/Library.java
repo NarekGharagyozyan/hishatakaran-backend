@@ -32,8 +32,11 @@ public class Library {
     private String titleEn;
     private String titleFr;
 
+    @Column(columnDefinition = "TEXT")
     private String descriptionHy;
+    @Column(columnDefinition = "TEXT")
     private String descriptionEn;
+    @Column(columnDefinition = "TEXT")
     private String descriptionFr;
 
     private String copyrightTextHy;

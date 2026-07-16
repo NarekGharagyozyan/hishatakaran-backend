@@ -9,6 +9,7 @@ import lombok.Setter;
 @RequiredArgsConstructor
 public class TeamMemberResponseDto {
 
+  private final Long id;
   private final LanguagesResponseDto name;
   private final LanguagesResponseDto surname;
   private final LanguagesResponseDto description;

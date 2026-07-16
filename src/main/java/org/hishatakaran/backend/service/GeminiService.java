@@ -7,17 +7,21 @@ import java.util.Map;
 
 import org.hishatakaran.backend.entity.DescriptiveCharacteristicReference;
 import org.hishatakaran.backend.entity.HistoricalReference;
+import org.hishatakaran.backend.entity.Library;
 import org.hishatakaran.backend.entity.Monument;
 import org.hishatakaran.backend.entity.Program;
 import org.hishatakaran.backend.entity.ProgramLink;
+import org.hishatakaran.backend.entity.TeamMembers;
 import org.hishatakaran.backend.entity.Topographic;
 import org.hishatakaran.backend.model.LibraryRequestDto;
+import org.hishatakaran.backend.model.LibraryTranslationDto;
 import org.hishatakaran.backend.model.LinkTranslationDto;
 import org.hishatakaran.backend.model.MonumentRequestDto;
 import org.hishatakaran.backend.model.MonumentTranslationDto;
 import org.hishatakaran.backend.model.ProgramRequestDto;
 import org.hishatakaran.backend.model.ProgramTranslationDto;
 import org.hishatakaran.backend.model.TeamMemberRequestDto;
+import org.hishatakaran.backend.model.TeamMemberTranslationDto;
 import org.hishatakaran.backend.model.TranslationLanguage;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.retry.annotation.Backoff;
@@ -1531,4 +1535,385 @@ NOW EXTRACT DATA FROM THIS HTML:
         .build();
   }
 
+
+
+
+  public void translateLibrary(
+      Library library,
+      TranslationLanguage language
+  ) throws JsonProcessingException {
+
+    String prompt =
+        buildLibraryTranslationPrompt(
+            library,
+            language
+        );
+
+    GenerateContentConfig config =
+        GenerateContentConfig.builder()
+            .responseMimeType("application/json")
+            .responseSchema(libraryTranslationSchema())
+            .build();
+
+    Content content =
+        Content.builder()
+            .parts(List.of(
+                Part.builder()
+                    .text(prompt)
+                    .build()
+            ))
+            .build();
+
+    GenerateContentResponse response =
+        client.models.generateContent(
+            "gemini-2.5-flash",
+            content,
+            config
+        );
+
+    LibraryTranslationDto dto =
+        objectMapper.readValue(
+            response.text(),
+            LibraryTranslationDto.class
+        );
+
+    applyLibraryTranslation(
+        library,
+        dto,
+        language
+    );
+  }
+
+  private String buildLibraryTranslationPrompt(
+      Library library,
+      TranslationLanguage language
+  ) {
+
+    String targetLanguage =
+        language == TranslationLanguage.en
+            ? "English"
+            : "French";
+
+    return """
+        You are a professional translator.
+        
+        Translate the Armenian library metadata into %s.
+        
+        RULES:
+        
+        1. Translate ALL textual fields.
+        2. Return ONLY valid JSON matching the provided schema.
+        3. Do not summarize.
+        4. Do not rewrite or omit information.
+        5. If a field is null, return null.
+        6. Preserve punctuation, years, numbering and bibliography formatting.
+        7. Translate personal names using standard %s transliteration.
+        8. Never leave Armenian text in translated fields.
+        
+        SPECIAL RULE FOR "authors":
+        
+        The "authors" field MUST be fully translated.
+        
+        Translate:
+        - author names
+        - initials
+        - book titles
+        - place names
+        - organization names
+        
+        Keep unchanged:
+        - years
+        - commas
+        - punctuation
+        - bibliography formatting
+        
+        Example:
+        
+        Input:
+        Սարգսյան Գ․, Գնունի Ա․, Մկրտչյան Լ․, 2022- Սարգսյան Գագիկ, Գնունի Արտակ, Մկրտչյան Լևոն, Արցախի Հանրապետության Քաշաթաղի շրջանի ամրոցները, Երևան 2022
+        
+        Output (English):
+        Sargsyan G., Gnuni A., Mkrtchyan L., 2022 – Gagik Sargsyan, Artak Gnuni, Levon Mkrtchyan, Fortresses of Kashatagh Region of the Republic of Artsakh, Yerevan 2022
+        
+        Do NOT return Armenian text inside the "authors" field.
+        
+        Armenian library data:
+        
+        %s
+        """
+        .formatted(
+            targetLanguage,
+            targetLanguage,
+            createLibraryTranslationObject(library)
+        );
+  }
+
+  private Map<String, Object> createLibraryTranslationObject(
+      Library library
+  ) {
+
+    Map<String, Object> data =
+        new HashMap<>();
+
+    data.put(
+        "title",
+        library.getTitleHy()
+    );
+
+    data.put(
+        "description",
+        library.getDescriptionHy()
+    );
+
+    data.put(
+        "copyrightText",
+        library.getCopyrightTextHy()
+    );
+
+    data.put(
+        "authors",
+        library.getAuthorsHy()
+    );
+
+    return data;
+  }
+
+
+
+  private void applyLibraryTranslation(
+      Library library,
+      LibraryTranslationDto dto,
+      TranslationLanguage language
+  ) {
+
+    if (dto == null) {
+      return;
+    }
+
+    boolean en =
+        language == TranslationLanguage.en;
+
+    if (en) {
+
+      library.setTitleEn(
+          dto.getTitle()
+      );
+
+      library.setDescriptionEn(
+          dto.getDescription()
+      );
+
+      library.setCopyrightTextEn(
+          dto.getCopyrightText()
+      );
+
+      library.setAuthorsEn(
+          dto.getAuthors()
+      );
+
+    } else {
+
+      library.setTitleFr(
+          dto.getTitle()
+      );
+
+      library.setDescriptionFr(
+          dto.getDescription()
+      );
+
+      library.setCopyrightTextFr(
+          dto.getCopyrightText()
+      );
+
+      library.setAuthorsFr(
+          dto.getAuthors()
+      );
+    }
+  }
+
+  private Schema libraryTranslationSchema() {
+
+    Map<String, Schema> properties =
+        new HashMap<>();
+
+    properties.put(
+        "title",
+        stringSchema()
+    );
+
+    properties.put(
+        "description",
+        stringSchema()
+    );
+
+    properties.put(
+        "copyrightText",
+        stringSchema()
+    );
+
+    properties.put(
+        "authors",
+        stringSchema()
+    );
+
+    return Schema.builder()
+        .type(Type.Known.OBJECT)
+        .properties(properties)
+        .build();
+  }
+
+  public TeamMemberTranslationDto translateTeamMember(
+      TeamMembers member,
+      TranslationLanguage language
+  ) throws JsonProcessingException {
+
+
+    String prompt =
+        buildTeamMemberTranslationPrompt(
+            member,
+            language
+        );
+
+
+    GenerateContentConfig config =
+        GenerateContentConfig.builder()
+            .responseMimeType("application/json")
+            .responseSchema(teamMemberTranslationSchema())
+            .build();
+
+
+    Content content =
+        Content.builder()
+            .parts(List.of(
+                Part.builder()
+                    .text(prompt)
+                    .build()
+            ))
+            .build();
+
+
+    GenerateContentResponse response =
+        client.models.generateContent(
+            "gemini-2.5-flash",
+            content,
+            config
+        );
+
+
+    return objectMapper.readValue(
+        response.text(),
+        TeamMemberTranslationDto.class
+    );
+  }
+
+  private String buildTeamMemberTranslationPrompt(
+      TeamMembers member,
+      TranslationLanguage language
+  ) {
+
+
+    String targetLanguage =
+        language == TranslationLanguage.en
+            ? "English"
+            : "French";
+
+
+    return """
+    You are a professional translator.
+
+    Translate Armenian team member information into %s.
+
+    RULES:
+
+    1. Translate ALL textual fields.
+    2. Return ONLY JSON matching the schema.
+    3. Do not summarize.
+    4. Do not rewrite information.
+    5. Preserve the original meaning.
+    6. Translate names and surnames using standard %s transliteration.
+    7. If a field is null, return null.
+    8. Never return Armenian characters in translated fields.
+
+    Armenian team member data:
+
+    %s
+    """
+        .formatted(
+            targetLanguage,
+            targetLanguage,
+            createTeamMemberTranslationObject(member)
+        );
+  }
+
+  private Map<String,Object> createTeamMemberTranslationObject(
+      TeamMembers member
+  ) {
+
+    Map<String,Object> data =
+        new HashMap<>();
+
+
+    data.put(
+        "name",
+        member.getNameHy()
+    );
+
+
+    data.put(
+        "surname",
+        member.getSurnameHy()
+    );
+
+
+    data.put(
+        "position",
+        member.getPositionHy()
+    );
+
+
+    data.put(
+        "description",
+        member.getDescriptionHy()
+    );
+
+
+    return data;
+  }
+
+  private Schema teamMemberTranslationSchema() {
+
+
+    Map<String, Schema> properties =
+        new HashMap<>();
+
+
+    properties.put(
+        "name",
+        stringSchema()
+    );
+
+
+    properties.put(
+        "surname",
+        stringSchema()
+    );
+
+
+    properties.put(
+        "position",
+        stringSchema()
+    );
+
+
+    properties.put(
+        "description",
+        stringSchema()
+    );
+
+
+    return Schema.builder()
+        .type(Type.Known.OBJECT)
+        .properties(properties)
+        .build();
+  }
 }
