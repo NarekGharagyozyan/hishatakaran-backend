@@ -14,7 +14,7 @@ public class LibraryResponseDto {
     private final LanguagesResponseDto description;
     private final LanguagesResponseDto copyrightText;
     private final String copyrightUrl;
-    private final String url;
+    private final String pdf;
     private final String coverUrl;
     private final LanguagesResponseDto authors;
 }

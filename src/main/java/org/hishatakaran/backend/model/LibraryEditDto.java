@@ -15,7 +15,7 @@ public class LibraryEditDto {
   private LanguagesResponseDto description;
   private LanguagesResponseDto copyrightText;
   private String copyrightUrl;
-  private String url;
+  private String pdf;
   private String coverUrl;
   private LanguagesResponseDto authors;
 
