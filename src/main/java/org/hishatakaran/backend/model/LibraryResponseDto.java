@@ -15,6 +15,6 @@ public class LibraryResponseDto {
     private final LanguagesResponseDto copyrightText;
     private final String copyrightUrl;
     private final String pdf;
-    private final String coverUrl;
+    private final String cover;
     private final LanguagesResponseDto authors;
 }

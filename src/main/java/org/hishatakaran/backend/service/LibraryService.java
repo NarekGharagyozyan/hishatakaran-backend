@@ -118,7 +118,7 @@ public class LibraryService {
 
     library.setCopyrightUrl(libraryEditDto.getCopyrightUrl());
     library.setBookUrl(libraryEditDto.getPdf());
-    library.setCoverUrl(libraryEditDto.getCoverUrl());
+    library.setCoverUrl(libraryEditDto.getCover());
 
     return LibraryMapper.toDto(libraryRepository.save(library));
   }
