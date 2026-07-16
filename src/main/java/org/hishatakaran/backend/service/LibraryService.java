@@ -1,11 +1,7 @@
 package org.hishatakaran.backend.service;
 
-import java.util.List;
-
 import org.hishatakaran.backend.entity.Library;
-import org.hishatakaran.backend.entity.Program;
 import org.hishatakaran.backend.mapper.LibraryMapper;
-import org.hishatakaran.backend.model.LanguagesResponseDto;
 import org.hishatakaran.backend.model.LibraryEditDto;
 import org.hishatakaran.backend.model.LibraryRequestDto;
 import org.hishatakaran.backend.model.LibraryResponseDto;
@@ -121,7 +117,7 @@ public class LibraryService {
     }
 
     library.setCopyrightUrl(libraryEditDto.getCopyrightUrl());
-    library.setBookUrl(libraryEditDto.getBookUrl());
+    library.setBookUrl(libraryEditDto.getUrl());
     library.setCoverUrl(libraryEditDto.getCoverUrl());
 
     return LibraryMapper.toDto(libraryRepository.save(library));
