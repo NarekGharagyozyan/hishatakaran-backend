@@ -10,10 +10,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TeamMemberEditDto {
-  private LanguagesResponseDto name;
-  private LanguagesResponseDto surname;
+  private LanguagesResponseDto fullName;
   private LanguagesResponseDto description;
   private LanguagesResponseDto position;
   private String url;
+  private String signature;
   private String image;
 }

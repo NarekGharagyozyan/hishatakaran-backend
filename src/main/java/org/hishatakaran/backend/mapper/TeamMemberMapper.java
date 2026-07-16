@@ -11,14 +11,9 @@ public class TeamMemberMapper {
     return new TeamMemberResponseDto(
         teamMembers.getId(),
         LanguagesResponseDto.of(
-            teamMembers.getNameHy(),
-            teamMembers.getNameEn(),
-            teamMembers.getNameFr()
-        ),
-        LanguagesResponseDto.of(
-            teamMembers.getSurnameHy(),
-            teamMembers.getSurnameEn(),
-            teamMembers.getSurnameFr()
+            teamMembers.getFullNameHy(),
+            teamMembers.getFullNameEn(),
+            teamMembers.getFullNameFr()
         ),
         LanguagesResponseDto.of(
             teamMembers.getDescriptionHy(),
@@ -31,6 +26,7 @@ public class TeamMemberMapper {
             teamMembers.getPositionFr()
         ),
         teamMembers.getUrl(),
+        teamMembers.getSignature(),
         teamMembers.getImage()
     );
   }

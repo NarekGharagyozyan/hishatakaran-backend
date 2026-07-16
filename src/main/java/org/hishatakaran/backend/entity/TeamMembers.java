@@ -23,13 +23,9 @@ public class TeamMembers {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  private String nameHy;
-  private String nameEn;
-  private String nameFr;
-
-  private String surnameHy;
-  private String surnameEn;
-  private String surnameFr;
+  private String fullNameHy;
+  private String fullNameEn;
+  private String fullNameFr;
 
   @Column(columnDefinition = "TEXT")
   private String positionHy;
@@ -49,15 +45,14 @@ public class TeamMembers {
 
   private String url;
 
-  public TeamMembers(String nameHy, String nameEn, String nameFr, String surnameHy, String surnameEn, String surnameFr,
+  private String signature;
+
+  public TeamMembers(String fullNameHy, String fullNameEn, String fullNameFr,
       String positionHy, String positionEn, String positionFr, String descriptionHy, String descriptionEn,
-      String descriptionFr, String image, String url) {
-    this.nameHy = nameHy;
-    this.nameEn = nameEn;
-    this.nameFr = nameFr;
-    this.surnameHy = surnameHy;
-    this.surnameEn = surnameEn;
-    this.surnameFr = surnameFr;
+      String descriptionFr, String image, String signature, String url) {
+    this.fullNameHy = fullNameHy;
+    this.fullNameEn = fullNameEn;
+    this.fullNameFr = fullNameFr;
     this.positionHy = positionHy;
     this.positionEn = positionEn;
     this.positionFr = positionFr;
@@ -65,6 +60,7 @@ public class TeamMembers {
     this.descriptionEn = descriptionEn;
     this.descriptionFr = descriptionFr;
     this.image = image;
+    this.signature = signature;
     this.url = url;
   }
 }

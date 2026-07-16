@@ -1854,14 +1854,8 @@ NOW EXTRACT DATA FROM THIS HTML:
 
 
     data.put(
-        "name",
-        member.getNameHy()
-    );
-
-
-    data.put(
-        "surname",
-        member.getSurnameHy()
+        "fullName",
+        member.getFullNameHy()
     );
 
 
@@ -1888,13 +1882,7 @@ NOW EXTRACT DATA FROM THIS HTML:
 
 
     properties.put(
-        "name",
-        stringSchema()
-    );
-
-
-    properties.put(
-        "surname",
+        "fullName",
         stringSchema()
     );
 

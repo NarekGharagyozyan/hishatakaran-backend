@@ -12,20 +12,20 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TeamMemberRequestDto {
-  private String name;
-  private String surname;
+  private String fullName;
   private String description;
   private String position;
   private String image;
+  private String signature;
   private String url;
 
   @Override
   public String toString() {
     return "TeamMemberRequestDto{" +
-        "name='" + name + '\'' +
-        ", surname='" + surname + '\'' +
+        "name='" + fullName + '\'' +
         ", description='" + description + '\'' +
         ", position='" + position + '\'' +
+        ", signature='" + signature + '\'' +
         ", url='" + url + '\'' +
         '}';
   }

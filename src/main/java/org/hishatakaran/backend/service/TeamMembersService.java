@@ -27,10 +27,7 @@ public class TeamMembersService {
   public TeamMemberResponseDto addNewTeamMember(TeamMemberRequestDto teamMemberRequestDto) {
 
     TeamMembers newTeamMemberEntity = new TeamMembers(
-        teamMemberRequestDto.getName(),
-        null,
-        null,
-        teamMemberRequestDto.getSurname(),
+        teamMemberRequestDto.getFullName(),
         null,
         null,
         teamMemberRequestDto.getPosition(),
@@ -40,6 +37,7 @@ public class TeamMembersService {
         null,
         null,
         teamMemberRequestDto.getImage(),
+        teamMemberRequestDto.getSignature(),
         teamMemberRequestDto.getUrl()
     );
     return TeamMemberMapper.toDto(teamMembersRepository.save(newTeamMemberEntity));
@@ -61,30 +59,17 @@ public class TeamMembersService {
   {
     TeamMembers teamMember = teamMembersRepository.findById(id).orElseThrow();
 
-    if (teamMemberEditDto.getName() != null)
+    if (teamMemberEditDto.getFullName() != null)
     {
-      teamMember.setNameHy(teamMemberEditDto.getName().getHy());
-      teamMember.setNameEn(teamMemberEditDto.getName().getEn());
-      teamMember.setNameFr(teamMemberEditDto.getName().getFr());
+      teamMember.setFullNameHy(teamMemberEditDto.getFullName().getHy());
+      teamMember.setFullNameEn(teamMemberEditDto.getFullName().getEn());
+      teamMember.setFullNameFr(teamMemberEditDto.getFullName().getFr());
     }
     else
     {
-      teamMember.setNameHy(null);
-      teamMember.setNameEn(null);
-      teamMember.setNameFr(null);
-    }
-
-    if (teamMemberEditDto.getSurname() != null)
-    {
-      teamMember.setSurnameHy(teamMemberEditDto.getSurname().getHy());
-      teamMember.setSurnameEn(teamMemberEditDto.getSurname().getEn());
-      teamMember.setSurnameFr(teamMemberEditDto.getSurname().getFr());
-    }
-    else
-    {
-      teamMember.setSurnameHy(null);
-      teamMember.setSurnameEn(null);
-      teamMember.setSurnameFr(null);
+      teamMember.setFullNameHy(null);
+      teamMember.setFullNameEn(null);
+      teamMember.setFullNameFr(null);
     }
 
     if (teamMemberEditDto.getPosition() != null)

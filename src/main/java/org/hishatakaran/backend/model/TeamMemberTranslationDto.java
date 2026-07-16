@@ -10,8 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TeamMemberTranslationDto {
-    private String name;
-    private String surname;
+    private String fullName;
     private String position;
     private String description;
 }

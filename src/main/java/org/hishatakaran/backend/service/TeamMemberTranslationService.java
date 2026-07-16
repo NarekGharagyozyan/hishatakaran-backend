@@ -41,13 +41,11 @@ public class TeamMemberTranslationService {
             return;
 
         if(language == TranslationLanguage.en) {
-            member.setNameEn(dto.getName());
-            member.setSurnameEn(dto.getSurname());
+            member.setFullNameEn(dto.getFullName());
             member.setPositionEn(dto.getPosition());
             member.setDescriptionEn(dto.getDescription());
         } else {
-            member.setNameFr(dto.getName());
-            member.setSurnameFr(dto.getSurname());
+            member.setFullNameFr(dto.getFullName());
             member.setPositionFr(dto.getPosition());
             member.setDescriptionFr(dto.getDescription());
         }
