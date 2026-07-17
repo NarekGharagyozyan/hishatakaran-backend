@@ -57,4 +57,11 @@ public class Settlement {
             ", region=" + region +
             '}';
     }
+
+    public Settlement(String nameHy, String nameEn, String nameFr, Region region) {
+        this.nameHy = nameHy;
+        this.nameEn = nameEn;
+        this.nameFr = nameFr;
+        this.region = region;
+    }
 }

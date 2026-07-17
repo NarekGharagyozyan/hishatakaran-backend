@@ -734,6 +734,7 @@ public class MonumentService {
                 ? monumentEditDto.getDescriptiveCharacteristics().getValuation().getFr()
                 : null);
 
+        monument.setSignature(monumentEditDto.getSignature());
         Monument editedMonument = monumentRepository.save(monument);
         return MonumentMapper.toDto(editedMonument);
     }

@@ -20,6 +20,8 @@ import org.hishatakaran.backend.model.MonumentRequestDto;
 import org.hishatakaran.backend.model.MonumentTranslationDto;
 import org.hishatakaran.backend.model.ProgramRequestDto;
 import org.hishatakaran.backend.model.ProgramTranslationDto;
+import org.hishatakaran.backend.model.SettlementRequestDto;
+import org.hishatakaran.backend.model.SettlementTranslationDto;
 import org.hishatakaran.backend.model.TeamMemberRequestDto;
 import org.hishatakaran.backend.model.TeamMemberTranslationDto;
 import org.hishatakaran.backend.model.TranslationLanguage;
@@ -292,367 +294,6 @@ NOW EXTRACT DATA FROM THIS HTML:
 //      maxAttempts = 4,
 //      backoff = @Backoff(delay = 10000, multiplier = 2.0)
 //  )
-  public String requestGeminiForMonuments(MonumentRequestDto monumentRequestDto) {
-
-    Map<String, Schema> allProperties = new HashMap<>();
-
-    allProperties.put("nameHy", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("nameEn", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("nameFr", Schema.builder().type(Type.Known.STRING).build());
-
-    allProperties.put("specialNameHy", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("specialNameEn", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("specialNameFr", Schema.builder().type(Type.Known.STRING).build());
-
-    allProperties.put("anotherNamesHy", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("anotherNamesEn", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("anotherNamesFr", Schema.builder().type(Type.Known.STRING).build());
-
-    allProperties.put("monumentTypeHy", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("monumentTypeEn", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("monumentTypeFr", Schema.builder().type(Type.Known.STRING).build());
-
-    allProperties.put("topographicRegionHy", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("topographicRegionEn", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("topographicRegionFr", Schema.builder().type(Type.Known.STRING).build());
-
-    allProperties.put("historyHy", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("historyEn", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("historyFr", Schema.builder().type(Type.Known.STRING).build());
-
-    allProperties.put("originalAffiliationHy", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("originalAffiliationEn", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("originalAffiliationFr", Schema.builder().type(Type.Known.STRING).build());
-
-    allProperties.put("storageUnitNameHy", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("storageUnitNameEn", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("storageUnitNameFr", Schema.builder().type(Type.Known.STRING).build());
-
-    allProperties.put("conditionHy", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("conditionEn", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("conditionFr", Schema.builder().type(Type.Known.STRING).build());
-
-    allProperties.put("addressHy", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("addressEn", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("addressFr", Schema.builder().type(Type.Known.STRING).build());
-
-    allProperties.put("topographyHy", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("topographyEn", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("topographyFr", Schema.builder().type(Type.Known.STRING).build());
-
-    allProperties.put("distanceFromResidenceHy", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("distanceFromResidenceEn", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("distanceFromResidenceFr", Schema.builder().type(Type.Known.STRING).build());
-
-    allProperties.put("hydrographyHy", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("hydrographyEn", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("hydrographyFr", Schema.builder().type(Type.Known.STRING).build());
-
-    allProperties.put("descriptionHy", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("descriptionEn", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("descriptionFr", Schema.builder().type(Type.Known.STRING).build());
-
-    allProperties.put("culturalAffiliationHy", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("culturalAffiliationEn", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("culturalAffiliationFr", Schema.builder().type(Type.Known.STRING).build());
-
-    allProperties.put("centuryHy", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("centuryEn", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("centuryFr", Schema.builder().type(Type.Known.STRING).build());
-
-    Map<String, Schema> bibliographyProperties = new HashMap<>();
-    bibliographyProperties.put("titleHy", Schema.builder().type(Type.Known.STRING).build());
-    bibliographyProperties.put("titleEn", Schema.builder().type(Type.Known.STRING).build());
-    bibliographyProperties.put("titleFr", Schema.builder().type(Type.Known.STRING).build());
-    bibliographyProperties.put("url", Schema.builder().type(Type.Known.STRING).build());
-
-    Schema bibliographyItemSchema = Schema.builder()
-        .type(Type.Known.OBJECT)
-        .properties(bibliographyProperties)
-        .build();
-
-    allProperties.put("bibliography", Schema.builder()
-        .type(Type.Known.ARRAY)
-        .items(bibliographyItemSchema)
-        .build());
-
-    allProperties.put("justificationOfTheNumberingBasedOnLithographyHy", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("justificationOfTheNumberingBasedOnLithographyEn", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("justificationOfTheNumberingBasedOnLithographyFr", Schema.builder().type(Type.Known.STRING).build());
-
-    allProperties.put("chronologicalTableOfTheStudHy", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("chronologicalTableOfTheStudEn", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("chronologicalTableOfTheStudFr", Schema.builder().type(Type.Known.STRING).build());
-
-    allProperties.put("chronologicalTableOfTheMonumentsStudyHy", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("chronologicalTableOfTheMonumentsStudyEn", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("chronologicalTableOfTheMonumentsStudyFr", Schema.builder().type(Type.Known.STRING).build());
-
-    allProperties.put("authorHy", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("authorEn", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("authorFr", Schema.builder().type(Type.Known.STRING).build());
-
-    allProperties.put("theBuildingMaterialHy", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("theBuildingMaterialEn", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("theBuildingMaterialFr", Schema.builder().type(Type.Known.STRING).build());
-
-    allProperties.put("openingsEntrancesHy", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("openingsEntrancesEn", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("openingsEntrancesFr", Schema.builder().type(Type.Known.STRING).build());
-
-    allProperties.put("constructionsHy", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("constructionsEn", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("constructionsFr", Schema.builder().type(Type.Known.STRING).build());
-
-    allProperties.put("roofHy", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("roofEn", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("roofFr", Schema.builder().type(Type.Known.STRING).build());
-
-    allProperties.put("typeHy", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("typeEn", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("typeFr", Schema.builder().type(Type.Known.STRING).build());
-
-    allProperties.put("colorHy", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("colorEn", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("colorFr", Schema.builder().type(Type.Known.STRING).build());
-
-    allProperties.put("implementationTechniqueHy", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("implementationTechniqueEn", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("implementationTechniqueFr", Schema.builder().type(Type.Known.STRING).build());
-
-    allProperties.put("stateOfMonumentHy", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("stateOfMonumentEn", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("stateOfMonumentFr", Schema.builder().type(Type.Known.STRING).build());
-
-    allProperties.put("valuationHy", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("valuationEn", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("valuationFr", Schema.builder().type(Type.Known.STRING).build());
-
-    Map<String, Schema> monumentVideosProperties = new HashMap<>();
-    monumentVideosProperties.put("videoTitleHy", Schema.builder().type(Type.Known.STRING).build());
-    monumentVideosProperties.put("videoTitleEn", Schema.builder().type(Type.Known.STRING).build());
-    monumentVideosProperties.put("videoTitleFr", Schema.builder().type(Type.Known.STRING).build());
-    monumentVideosProperties.put("url", Schema.builder().type(Type.Known.STRING).build());
-
-    Schema monumentVideoItemSchema = Schema.builder()
-        .type(Type.Known.OBJECT)
-        .properties(monumentVideosProperties)
-        .build();
-
-    allProperties.put("videos", Schema.builder()
-        .type(Type.Known.ARRAY)
-        .items(monumentVideoItemSchema)
-        .build());
-
-    Schema schema = Schema.builder()
-        .type(Type.Known.OBJECT)
-        .properties(allProperties)
-        .build();
-
-    GenerateContentConfig config = GenerateContentConfig.builder()
-        .responseMimeType("application/json")
-        .responseSchema(schema)
-        .build();
-
-    String prompt = """
-      I am providing you with a DTO containing Armenian historical monument data.
-      You must translate all text fields into English and French.
-              
-      CRITICAL RULES:
-      1. Do not modify the Armenian text unless it contains grammatical, spelling, or punctuation errors. If there are issues, correct them while preserving the original meaning.
-      2. Populate all fields according to the requested JSON schema.
-              
-      Here is the DTO data:
-      """ + monumentRequestDto.toString();
-
-    Content content = Content.builder()
-        .parts(List.of(Part.builder().text(prompt).build()))
-        .build();
-
-    GenerateContentResponse response = client.models.generateContent(
-        "gemini-2.5-flash",
-        content,
-        config
-    );
-
-    return response.text();
-  }
-
-  public String requestGeminiForPrograms(ProgramRequestDto programRequestDto) {
-    Map<String, Schema> allProperties = new HashMap<>();
-
-    allProperties.put("titleHy", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("titleEn", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("titleFr", Schema.builder().type(Type.Known.STRING).build());
-
-    allProperties.put("descriptionHy", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("descriptionEn", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("descriptionFr", Schema.builder().type(Type.Known.STRING).build());
-
-    Map<String, Schema> linkProperties = new HashMap<>();
-    linkProperties.put("linkTitleHy", Schema.builder().type(Type.Known.STRING).build());
-    linkProperties.put("linkTitleEn", Schema.builder().type(Type.Known.STRING).build());
-    linkProperties.put("linkTitleFr", Schema.builder().type(Type.Known.STRING).build());
-    linkProperties.put("link", Schema.builder().type(Type.Known.STRING).build());
-
-    Schema linkItemSchema = Schema.builder()
-        .type(Type.Known.OBJECT)
-        .properties(linkProperties)
-        .build();
-
-    allProperties.put("links", Schema.builder()
-        .type(Type.Known.ARRAY)
-        .items(linkItemSchema)
-        .build());
-
-    Schema schema = Schema.builder()
-        .type(Type.Known.OBJECT)
-        .properties(allProperties)
-        .build();
-
-    GenerateContentConfig config = GenerateContentConfig.builder()
-        .responseMimeType("application/json")
-        .responseSchema(schema)
-        .build();
-
-    String prompt = """
-    I am providing you with a DTO containing Armenian historical monument data.
-    You must translate all text fields into English and French.
-            
-    CRITICAL RULES:
-    1. Do not modify the Armenian text unless it contains grammatical, spelling, or punctuation errors. If there are issues, correct them while preserving the original meaning.
-    2. For the 'links' array: translate the title of each link into English and French, and keep the 'link' URL exactly as it is (DO NOT modify or translate URLs).
-    3. Populate all fields according to the requested JSON schema.
-            
-    Here is the DTO data:
-    """ + programRequestDto.toString();
-
-    Content content = Content.builder()
-        .parts(List.of(Part.builder().text(prompt).build()))
-        .build();
-
-    GenerateContentResponse response = client.models.generateContent(
-        "gemini-2.5-flash",
-        content,
-        config
-    );
-
-    System.out.println(response.text());
-    return response.text();
-  }
-
-  public String requestGeminiForLibrary(LibraryRequestDto libraryRequestDto) {
-    Map<String, Schema> allProperties = new HashMap<>();
-
-    allProperties.put("titleHy", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("titleEn", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("titleFr", Schema.builder().type(Type.Known.STRING).build());
-
-    allProperties.put("descriptionHy", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("descriptionEn", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("descriptionFr", Schema.builder().type(Type.Known.STRING).build());
-
-    allProperties.put("copyrightTextHy", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("copyrightTextEn", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("copyrightTextFr", Schema.builder().type(Type.Known.STRING).build());
-
-    allProperties.put("authorsHy", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("authorsEn", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("authorsFr", Schema.builder().type(Type.Known.STRING).build());
-
-    Schema schema = Schema.builder()
-        .type(Type.Known.OBJECT)
-        .properties(allProperties)
-        .build();
-
-    GenerateContentConfig config = GenerateContentConfig.builder()
-        .responseMimeType("application/json")
-        .responseSchema(schema)
-        .build();
-
-    String prompt = """
-    I am providing you with a DTO containing Armenian historical library data.
-    You must translate all text fields into English and French.
-            
-    CRITICAL RULES:
-    1. Do not modify the Armenian text unless it contains grammatical, spelling, or punctuation errors. If there are issues, correct them while preserving the original meaning.
-    2. Populate all fields according to the requested JSON schema.
-            
-    Here is the DTO data:
-    """ + libraryRequestDto.toString();
-
-    Content content = Content.builder()
-        .parts(List.of(Part.builder().text(prompt).build()))
-        .build();
-
-    GenerateContentResponse response = client.models.generateContent(
-        "gemini-2.5-flash",
-        content,
-        config
-    );
-
-    System.out.println(response.text());
-    return response.text();
-  }
-
-  public String requestGeminiForTeamMember(TeamMemberRequestDto teamMemberRequestDto) {
-    Map<String, Schema> allProperties = new HashMap<>();
-
-    allProperties.put("nameHy", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("nameEn", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("nameFr", Schema.builder().type(Type.Known.STRING).build());
-
-    allProperties.put("surnameHy", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("surnameEn", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("surnameFr", Schema.builder().type(Type.Known.STRING).build());
-
-    allProperties.put("descriptionHy", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("descriptionEn", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("descriptionFr", Schema.builder().type(Type.Known.STRING).build());
-
-    allProperties.put("positionHy", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("positionEn", Schema.builder().type(Type.Known.STRING).build());
-    allProperties.put("positionFr", Schema.builder().type(Type.Known.STRING).build());
-
-    Schema schema = Schema.builder()
-        .type(Type.Known.OBJECT)
-        .properties(allProperties)
-        .build();
-
-    GenerateContentConfig config = GenerateContentConfig.builder()
-        .responseMimeType("application/json")
-        .responseSchema(schema)
-        .build();
-
-    String prompt = """
-    I am providing you with a DTO containing our new team member data.
-    You must translate all text fields into English and French.
-            
-    CRITICAL RULES:
-    1. Do not modify the Armenian text unless it contains grammatical, spelling, or punctuation errors. If there are issues, correct them while preserving the original meaning.
-    2. Populate all fields according to the requested JSON schema.
-            
-    Here is the DTO data:
-    """ + teamMemberRequestDto.toString();
-
-    Content content = Content.builder()
-        .parts(List.of(Part.builder().text(prompt).build()))
-        .build();
-
-    GenerateContentResponse response = client.models.generateContent(
-        "gemini-2.5-flash",
-        content,
-        config
-    );
-
-    System.out.println(response.text());
-    return response.text();
-  }
-
-
-
-
-
 
 
   public void translateProgram(
@@ -706,10 +347,9 @@ NOW EXTRACT DATA FROM THIS HTML:
       TranslationLanguage language
   ) {
 
-    String targetLanguage =
-        language == TranslationLanguage.en
-            ? "English"
-            : "French";
+    String targetLanguage = language == TranslationLanguage.en
+        ? "English"
+        : "French";
 
     return """
         You are a professional translator.
@@ -735,9 +375,7 @@ NOW EXTRACT DATA FROM THIS HTML:
         );
   }
 
-  private List<Map<String,Object>> createLinks(
-      List<ProgramLink> links
-  ) {
+  private List<Map<String,Object>> createLinks(List<ProgramLink> links) {
 
     if (links == null)
       return null;
@@ -745,13 +383,9 @@ NOW EXTRACT DATA FROM THIS HTML:
     return links.stream()
         .map(link -> {
 
-          Map<String,Object> map =
-              new HashMap<>();
+          Map<String,Object> map = new HashMap<>();
 
-          map.put(
-              "linkTitle",
-              link.getTitleHy()
-          );
+          map.put("linkTitle", link.getTitleHy());
 
           return map;
 
@@ -759,27 +393,13 @@ NOW EXTRACT DATA FROM THIS HTML:
         .toList();
   }
 
-  private Map<String,Object> createTranslationObject(
-      Program program
-  ) {
+  private Map<String,Object> createTranslationObject(Program program) {
 
-    Map<String,Object> data =
-        new HashMap<>();
+    Map<String,Object> data = new HashMap<>();
 
-    data.put(
-        "title",
-        program.getTitleHy()
-    );
-
-    data.put(
-        "description",
-        program.getDescriptionHy()
-    );
-
-    data.put(
-        "links",
-        createLinks(program.getLinks())
-    );
+    data.put("title", program.getTitleHy());
+    data.put("description", program.getDescriptionHy());
+    data.put("links", createLinks(program.getLinks()));
 
     return data;
   }
@@ -787,18 +407,10 @@ NOW EXTRACT DATA FROM THIS HTML:
 
   private Schema programTranslationSchema() {
 
-    Map<String, Schema> properties =
-        new HashMap<>();
+    Map<String, Schema> properties = new HashMap<>();
 
-    properties.put(
-        "title",
-        stringSchema()
-    );
-
-    properties.put(
-        "description",
-        stringSchema()
-    );
+    properties.put("title", stringSchema());
+    properties.put("description", stringSchema());
 
     properties.put(
         "links",
@@ -816,13 +428,9 @@ NOW EXTRACT DATA FROM THIS HTML:
 
   private Schema linkSchema() {
 
-    Map<String, Schema> properties =
-        new HashMap<>();
+    Map<String, Schema> properties = new HashMap<>();
 
-    properties.put(
-        "linkTitle",
-        stringSchema()
-    );
+    properties.put("linkTitle", stringSchema());
 
     return Schema.builder()
         .type(Type.Known.OBJECT)
@@ -840,28 +448,17 @@ NOW EXTRACT DATA FROM THIS HTML:
       return;
     }
 
-    boolean en =
-        language == TranslationLanguage.en;
+    boolean en = language == TranslationLanguage.en;
 
     if (en) {
 
-      program.setTitleEn(
-          dto.getTitle()
-      );
-
-      program.setDescriptionEn(
-          dto.getDescription()
-      );
+      program.setTitleEn(dto.getTitle());
+      program.setDescriptionEn(dto.getDescription());
 
     } else {
 
-      program.setTitleFr(
-          dto.getTitle()
-      );
-
-      program.setDescriptionFr(
-          dto.getDescription()
-      );
+      program.setTitleFr(dto.getTitle());
+      program.setDescriptionFr(dto.getDescription());
 
     }
 
@@ -911,9 +508,6 @@ NOW EXTRACT DATA FROM THIS HTML:
     }
   }
 
-
-
-
   public MonumentTranslationDto translateMonument(
       Monument monument,
       TranslationLanguage language
@@ -926,7 +520,6 @@ NOW EXTRACT DATA FROM THIS HTML:
         .responseSchema(createTranslationSchema())
         .build();
 
-
     Content content = Content.builder()
         .parts(List.of(
             Part.builder()
@@ -934,7 +527,6 @@ NOW EXTRACT DATA FROM THIS HTML:
                 .build()
         ))
         .build();
-
 
     GenerateContentResponse response =
         client.models.generateContent(
@@ -965,11 +557,9 @@ NOW EXTRACT DATA FROM THIS HTML:
       TranslationLanguage language
   ) {
 
-    String targetLanguage =
-        language == TranslationLanguage.en
-            ? "English"
-            : "French";
-
+    String targetLanguage = language == TranslationLanguage.en
+        ? "English"
+        : "French";
 
     return """
         You are a professional translator specializing in Armenian historical monuments.
@@ -1008,41 +598,13 @@ NOW EXTRACT DATA FROM THIS HTML:
 
     Map<String,Object> data = new HashMap<>();
 
-
-    data.put(
-        "name",
-        monument.getNameHy()
-    );
-
-    data.put(
-        "specialName",
-        monument.getSpecialNameHy()
-    );
-
-    data.put(
-        "anotherNames",
-        monument.getAnotherNamesHy()
-    );
-
-    data.put(
-        "history",
-        monument.getHistoryHy()
-    );
-
-    data.put(
-        "originalAffiliation",
-        monument.getOriginalAffiliationHy()
-    );
-
-    data.put(
-        "storageUnitName",
-        monument.getStorageUnitNameHy()
-    );
-
-    data.put(
-        "condition",
-        monument.getConditionHy()
-    );
+    data.put("name", monument.getNameHy());
+    data.put("specialName", monument.getSpecialNameHy());
+    data.put("anotherNames", monument.getAnotherNamesHy());
+    data.put("history", monument.getHistoryHy());
+    data.put("originalAffiliation", monument.getOriginalAffiliationHy());
+    data.put("storageUnitName", monument.getStorageUnitNameHy());
+    data.put("condition", monument.getConditionHy());
 
     data.put(
         "videos",
@@ -1097,14 +659,12 @@ NOW EXTRACT DATA FROM THIS HTML:
             .toList()
     );
 
-
     data.put(
         "topographics",
         createTopographicTranslationObject(
             monument.getTopographics()
         )
     );
-
 
     data.put(
         "historicalReferences",
@@ -1113,14 +673,12 @@ NOW EXTRACT DATA FROM THIS HTML:
         )
     );
 
-
     data.put(
         "descriptiveCharacteristics",
         createDescriptiveTranslationObject(
             monument.getDescriptiveCharacteristics()
         )
     );
-
 
     return data;
   }
@@ -1132,45 +690,15 @@ NOW EXTRACT DATA FROM THIS HTML:
     if(topographic == null)
       return null;
 
-
     Map<String,Object> data = new HashMap<>();
 
-
-    data.put(
-        "region",
-        topographic.getRegionHy()
-    );
-
-    data.put(
-        "address",
-        topographic.getAddressHy()
-    );
-
-    data.put(
-        "topography",
-        topographic.getTopographyHy()
-    );
-
-    data.put(
-        "distanceFromResidence",
-        topographic.getDistanceFromResidenceHy()
-    );
-
-    data.put(
-        "altitude",
-        topographic.getAltitudeHy()
-    );
-
-    data.put(
-        "hydrography",
-        topographic.getHydrographyHy()
-    );
-
-    data.put(
-        "description",
-        topographic.getDescriptionHy()
-    );
-
+    data.put("region", topographic.getRegionHy());
+    data.put("address", topographic.getAddressHy());
+    data.put("topography", topographic.getTopographyHy());
+    data.put("distanceFromResidence", topographic.getDistanceFromResidenceHy());
+    data.put("altitude", topographic.getAltitudeHy());
+    data.put("hydrography", topographic.getHydrographyHy());
+    data.put("description", topographic.getDescriptionHy());
 
     return data;
   }
@@ -1182,45 +710,14 @@ NOW EXTRACT DATA FROM THIS HTML:
     if(reference == null)
       return null;
 
-
     Map<String,Object> data = new HashMap<>();
 
-
-    data.put(
-        "culturalAffiliation",
-        reference.getCulturalAffiliationHy()
-    );
-
-
-    data.put(
-        "century",
-        reference.getCenturyHy()
-    );
-
-
-    data.put(
-        "justificationOfTheNumberingBasedOnLithography",
-        reference.getJustificationOfTheNumberingBasedOnLithographyHy()
-    );
-
-
-    data.put(
-        "chronologicalTableOfTheStud",
-        reference.getChronologicalTableOfTheStudHy()
-    );
-
-
-    data.put(
-        "chronologicalTableOfTheMonumentsStudy",
-        reference.getChronologicalTableOfTheMonumentsStudyHy()
-    );
-
-
-    data.put(
-        "author",
-        reference.getAuthorHy()
-    );
-
+    data.put("culturalAffiliation", reference.getCulturalAffiliationHy());
+    data.put("century", reference.getCenturyHy());
+    data.put("justificationOfTheNumberingBasedOnLithography", reference.getJustificationOfTheNumberingBasedOnLithographyHy());
+    data.put("chronologicalTableOfTheStud", reference.getChronologicalTableOfTheStudHy());
+    data.put("chronologicalTableOfTheMonumentsStudy", reference.getChronologicalTableOfTheMonumentsStudyHy());
+    data.put("author", reference.getAuthorHy());
 
     return data;
   }
@@ -1233,55 +730,17 @@ NOW EXTRACT DATA FROM THIS HTML:
     if(reference == null)
       return null;
 
-
     Map<String,Object> data = new HashMap<>();
 
-
-    data.put(
-        "theBuildingMaterial",
-        reference.getTheBuildingMaterialHy()
-    );
-
-    data.put(
-        "openingsEntrances",
-        reference.getOpeningsEntrancesHy()
-    );
-
-    data.put(
-        "constructions",
-        reference.getConstructionsHy()
-    );
-
-    data.put(
-        "roof",
-        reference.getRoofHy()
-    );
-
-    data.put(
-        "type",
-        reference.getTypeHy()
-    );
-
-    data.put(
-        "color",
-        reference.getColorHy()
-    );
-
-    data.put(
-        "implementationTechnique",
-        reference.getImplementationTechniqueHy()
-    );
-
-    data.put(
-        "stateOfMonument",
-        reference.getStateOfMonumentHy()
-    );
-
-    data.put(
-        "valuation",
-        reference.getValuationHy()
-    );
-
+    data.put("theBuildingMaterial", reference.getTheBuildingMaterialHy());
+    data.put("openingsEntrances", reference.getOpeningsEntrancesHy());
+    data.put("constructions", reference.getConstructionsHy());
+    data.put("roof", reference.getRoofHy());
+    data.put("type", reference.getTypeHy());
+    data.put("color", reference.getColorHy());
+    data.put("implementationTechnique", reference.getImplementationTechniqueHy());
+    data.put("stateOfMonument", reference.getStateOfMonumentHy());
+    data.put("valuation", reference.getValuationHy());
 
     return data;
   }
@@ -1291,25 +750,15 @@ NOW EXTRACT DATA FROM THIS HTML:
     Map<String, Schema> properties = new HashMap<>();
 
     properties.put("name", stringSchema());
-
     properties.put("specialName", stringSchema());
-
     properties.put("anotherNames", stringSchema());
-
     properties.put("history", stringSchema());
-
     properties.put("originalAffiliation", stringSchema());
-
     properties.put("storageUnitName", stringSchema());
-
     properties.put("condition", stringSchema());
-
     properties.put("topographics", topographicSchema());
-
     properties.put("historicalReferences", historicalSchema());
-
     properties.put("descriptiveCharacteristics", descriptiveSchema());
-
     properties.put(
         "videos",
         Schema.builder()
@@ -1317,7 +766,6 @@ NOW EXTRACT DATA FROM THIS HTML:
             .items(videoSchema())
             .build()
     );
-
     properties.put(
         "footnotes",
         Schema.builder()
@@ -1325,7 +773,6 @@ NOW EXTRACT DATA FROM THIS HTML:
             .items(footnoteSchema())
             .build()
     );
-
     properties.put(
         "bibliography",
         Schema.builder()
@@ -1517,11 +964,7 @@ NOW EXTRACT DATA FROM THIS HTML:
 
     Map<String, Schema> properties = new HashMap<>();
 
-    properties.put(
-        "title",
-        stringSchema()
-    );
-
+    properties.put("title", stringSchema());
 
     return Schema.builder()
         .type(Type.Known.OBJECT)
@@ -1589,10 +1032,9 @@ NOW EXTRACT DATA FROM THIS HTML:
       TranslationLanguage language
   ) {
 
-    String targetLanguage =
-        language == TranslationLanguage.en
-            ? "English"
-            : "French";
+    String targetLanguage = language == TranslationLanguage.en
+        ? "English"
+        : "French";
 
     return """
         You are a professional translator.
@@ -1652,28 +1094,12 @@ NOW EXTRACT DATA FROM THIS HTML:
       Library library
   ) {
 
-    Map<String, Object> data =
-        new HashMap<>();
+    Map<String, Object> data = new HashMap<>();
 
-    data.put(
-        "title",
-        library.getTitleHy()
-    );
-
-    data.put(
-        "description",
-        library.getDescriptionHy()
-    );
-
-    data.put(
-        "copyrightText",
-        library.getCopyrightTextHy()
-    );
-
-    data.put(
-        "authors",
-        library.getAuthorsHy()
-    );
+    data.put("title", library.getTitleHy());
+    data.put("description", library.getDescriptionHy());
+    data.put("copyrightText", library.getCopyrightTextHy());
+    data.put("authors", library.getAuthorsHy());
 
     return data;
   }
@@ -1690,71 +1116,32 @@ NOW EXTRACT DATA FROM THIS HTML:
       return;
     }
 
-    boolean en =
-        language == TranslationLanguage.en;
+    boolean en = language == TranslationLanguage.en;
 
     if (en) {
 
-      library.setTitleEn(
-          dto.getTitle()
-      );
-
-      library.setDescriptionEn(
-          dto.getDescription()
-      );
-
-      library.setCopyrightTextEn(
-          dto.getCopyrightText()
-      );
-
-      library.setAuthorsEn(
-          dto.getAuthors()
-      );
+      library.setTitleEn(dto.getTitle());
+      library.setDescriptionEn(dto.getDescription());
+      library.setCopyrightTextEn(dto.getCopyrightText());
+      library.setAuthorsEn(dto.getAuthors());
 
     } else {
 
-      library.setTitleFr(
-          dto.getTitle()
-      );
-
-      library.setDescriptionFr(
-          dto.getDescription()
-      );
-
-      library.setCopyrightTextFr(
-          dto.getCopyrightText()
-      );
-
-      library.setAuthorsFr(
-          dto.getAuthors()
-      );
+      library.setTitleFr(dto.getTitle());
+      library.setDescriptionFr(dto.getDescription());
+      library.setCopyrightTextFr(dto.getCopyrightText());
+      library.setAuthorsFr(dto.getAuthors());
     }
   }
 
   private Schema libraryTranslationSchema() {
 
-    Map<String, Schema> properties =
-        new HashMap<>();
+    Map<String, Schema> properties = new HashMap<>();
 
-    properties.put(
-        "title",
-        stringSchema()
-    );
-
-    properties.put(
-        "description",
-        stringSchema()
-    );
-
-    properties.put(
-        "copyrightText",
-        stringSchema()
-    );
-
-    properties.put(
-        "authors",
-        stringSchema()
-    );
+    properties.put("title", stringSchema());
+    properties.put("description", stringSchema());
+    properties.put("copyrightText", stringSchema());
+    properties.put("authors", stringSchema());
 
     return Schema.builder()
         .type(Type.Known.OBJECT)
@@ -1768,19 +1155,16 @@ NOW EXTRACT DATA FROM THIS HTML:
   ) throws JsonProcessingException {
 
 
-    String prompt =
-        buildTeamMemberTranslationPrompt(
-            member,
-            language
-        );
-
+    String prompt = buildTeamMemberTranslationPrompt(
+        member,
+        language
+    );
 
     GenerateContentConfig config =
         GenerateContentConfig.builder()
             .responseMimeType("application/json")
             .responseSchema(teamMemberTranslationSchema())
             .build();
-
 
     Content content =
         Content.builder()
@@ -1799,7 +1183,6 @@ NOW EXTRACT DATA FROM THIS HTML:
             config
         );
 
-
     return objectMapper.readValue(
         response.text(),
         TeamMemberTranslationDto.class
@@ -1811,33 +1194,30 @@ NOW EXTRACT DATA FROM THIS HTML:
       TranslationLanguage language
   ) {
 
-
-    String targetLanguage =
-        language == TranslationLanguage.en
-            ? "English"
-            : "French";
-
+    String targetLanguage = language == TranslationLanguage.en
+        ? "English"
+        : "French";
 
     return """
-    You are a professional translator.
-
-    Translate Armenian team member information into %s.
-
-    RULES:
-
-    1. Translate ALL textual fields.
-    2. Return ONLY JSON matching the schema.
-    3. Do not summarize.
-    4. Do not rewrite information.
-    5. Preserve the original meaning.
-    6. Translate names and surnames using standard %s transliteration.
-    7. If a field is null, return null.
-    8. Never return Armenian characters in translated fields.
-
-    Armenian team member data:
-
-    %s
-    """
+      You are a professional translator.
+  
+      Translate Armenian team member information into %s.
+  
+      RULES:
+  
+      1. Translate ALL textual fields.
+      2. Return ONLY JSON matching the schema.
+      3. Do not summarize.
+      4. Do not rewrite information.
+      5. Preserve the original meaning.
+      6. Translate names and surnames using standard %s transliteration.
+      7. If a field is null, return null.
+      8. Never return Armenian characters in translated fields.
+  
+      Armenian team member data:
+  
+      %s
+      """
         .formatted(
             targetLanguage,
             targetLanguage,
@@ -1849,55 +1229,100 @@ NOW EXTRACT DATA FROM THIS HTML:
       TeamMembers member
   ) {
 
-    Map<String,Object> data =
-        new HashMap<>();
+    Map<String,Object> data = new HashMap<>();
 
-
-    data.put(
-        "fullName",
-        member.getFullNameHy()
-    );
-
-
-    data.put(
-        "position",
-        member.getPositionHy()
-    );
-
-
-    data.put(
-        "description",
-        member.getDescriptionHy()
-    );
-
+    data.put("fullName", member.getFullNameHy());
+    data.put("position", member.getPositionHy());
+    data.put("description", member.getDescriptionHy());
 
     return data;
   }
 
   private Schema teamMemberTranslationSchema() {
 
+    Map<String, Schema> properties = new HashMap<>();
 
-    Map<String, Schema> properties =
-        new HashMap<>();
+    properties.put("fullName", stringSchema());
+    properties.put("position", stringSchema());
+    properties.put("description", stringSchema());
 
+    return Schema.builder()
+        .type(Type.Known.OBJECT)
+        .properties(properties)
+        .build();
+  }
 
-    properties.put(
-        "fullName",
-        stringSchema()
+  public SettlementTranslationDto translateSettlement(
+      String armenianName
+  ) throws JsonProcessingException {
+
+    GenerateContentConfig config =
+        GenerateContentConfig.builder()
+            .responseMimeType("application/json")
+            .responseSchema(settlementSchema())
+            .build();
+
+    Content content =
+        Content.builder()
+            .parts(List.of(
+                Part.builder()
+                    .text(buildSettlementPrompt(armenianName))
+                    .build()
+            ))
+            .build();
+
+    GenerateContentResponse response =
+        client.models.generateContent(
+            "gemini-2.5-flash",
+            content,
+            config
+        );
+
+    return objectMapper.readValue(
+        response.text(),
+        SettlementTranslationDto.class
     );
+  }
 
+  private String buildSettlementPrompt(
+      String armenianName
+  ) {
 
-    properties.put(
-        "position",
-        stringSchema()
-    );
+    return """
+      You are an expert in Armenian geographical names.
+      
+      Translate the Armenian settlement name into English and French.
+      
+      IMPORTANT:
+      
+      - This is a proper geographical name.
+      - Do NOT translate its meaning.
+      - Transliterate it.
+      
+      English:
+      - Use the official ALA-LC Romanization for Armenian.
+      
+      French:
+      - Use the same ALA-LC transliteration, adapted only where required by conventional French orthography.
+      
+      Do not invent alternative spellings.
+      
+      Return ONLY JSON.
+      
+      Input:
+      
+      %s
+      """
+        .formatted(armenianName);
+  }
 
+  private Schema settlementSchema() {
 
-    properties.put(
-        "description",
-        stringSchema()
-    );
+    Map<String, Schema> properties = new HashMap<>();
 
+    properties.put("nameHy", stringSchema());
+    properties.put("nameEn", stringSchema());
+    properties.put("nameFr", stringSchema());
 
     return Schema.builder()
         .type(Type.Known.OBJECT)

@@ -14,7 +14,8 @@ public class SettlementMapper {
             settlement.getNameHy(),
             settlement.getNameEn(),
             settlement.getNameFr()
-        )
+        ),
+        settlement.getRegion().getId()
     );
   }
 }

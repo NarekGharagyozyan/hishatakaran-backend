@@ -7,9 +7,8 @@ import lombok.Setter;
 @Setter
 @Getter
 @RequiredArgsConstructor
-public class SettlementResponseDto {
+public class SettlementRequestDto {
 
-    private final Long id;
-    private final LanguagesResponseDto name;
-    private final Long regionId;
+  private final String name;
+
 }
