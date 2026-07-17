@@ -9,8 +9,13 @@ import org.hishatakaran.backend.model.MonumentFilterRequest;
 import org.hishatakaran.backend.model.MonumentMediasResponseDto;
 import org.hishatakaran.backend.model.MonumentRequestDto;
 import org.hishatakaran.backend.model.MonumentResponseDto;
+import org.hishatakaran.backend.model.MonumentTypeEditDto;
+import org.hishatakaran.backend.model.MonumentTypeRequestDto;
 import org.hishatakaran.backend.model.MonumentTypesResponseDto;
 import org.hishatakaran.backend.model.MonumentVideoResponseDto;
+import org.hishatakaran.backend.model.SettlementEditDto;
+import org.hishatakaran.backend.model.SettlementRequestDto;
+import org.hishatakaran.backend.model.SettlementResponseDto;
 import org.hishatakaran.backend.model.TranslationLanguage;
 import org.hishatakaran.backend.repository.MonumentRepository;
 import org.hishatakaran.backend.repository.MonumentTypesRepository;
@@ -236,6 +241,26 @@ public class MonumentController {
                 measurements.get(i)
             ))
             .toList();
+    }
+
+    @PostMapping("/admin/monuments/types")
+    public MonumentTypesResponseDto addNewMonumentType(
+        @RequestBody MonumentTypeRequestDto monumentTypeRequestDto
+    ) {
+        return monumentService.createNewMonumentType(monumentTypeRequestDto);
+    }
+
+    @PutMapping("/admin/monuments/types/{monumentTypeId}")
+    public MonumentTypesResponseDto editMonumentType(
+        @PathVariable Long monumentTypeId,
+        @RequestBody MonumentTypeEditDto monumentTypeEditDto
+    ) {
+        return monumentService.editMonumentType(monumentTypeId, monumentTypeEditDto);
+    }
+
+    @DeleteMapping("/admin/monuments/types/{monumentTypeId}")
+    public void deleteMonumentType(@PathVariable Long monumentTypeId) {
+        monumentTypesRepository.deleteById(monumentTypeId);
     }
 
 }

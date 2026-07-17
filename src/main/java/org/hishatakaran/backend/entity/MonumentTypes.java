@@ -41,4 +41,10 @@ public class MonumentTypes {
 
   @OneToMany(mappedBy = "monumentType")
   private List<Monument> monuments = new ArrayList<>();
+
+  public MonumentTypes(String nameHy, String nameEn, String nameFr) {
+    this.nameHy = nameHy;
+    this.nameEn = nameEn;
+    this.nameFr = nameFr;
+  }
 }

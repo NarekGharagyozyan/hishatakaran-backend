@@ -18,6 +18,7 @@ import org.hishatakaran.backend.model.LibraryTranslationDto;
 import org.hishatakaran.backend.model.LinkTranslationDto;
 import org.hishatakaran.backend.model.MonumentRequestDto;
 import org.hishatakaran.backend.model.MonumentTranslationDto;
+import org.hishatakaran.backend.model.MonumentTypeTranslateDto;
 import org.hishatakaran.backend.model.ProgramRequestDto;
 import org.hishatakaran.backend.model.ProgramTranslationDto;
 import org.hishatakaran.backend.model.SettlementRequestDto;
@@ -1317,6 +1318,78 @@ NOW EXTRACT DATA FROM THIS HTML:
   }
 
   private Schema settlementSchema() {
+
+    Map<String, Schema> properties = new HashMap<>();
+
+    properties.put("nameHy", stringSchema());
+    properties.put("nameEn", stringSchema());
+    properties.put("nameFr", stringSchema());
+
+    return Schema.builder()
+        .type(Type.Known.OBJECT)
+        .properties(properties)
+        .build();
+  }
+
+
+
+
+  public MonumentTypeTranslateDto translateMonumentType(
+      String armenianName
+  ) throws JsonProcessingException {
+
+    GenerateContentConfig config =
+        GenerateContentConfig.builder()
+            .responseMimeType("application/json")
+            .responseSchema(monumentTypesSchema())
+            .build();
+
+    Content content =
+        Content.builder()
+            .parts(List.of(
+                Part.builder()
+                    .text(buildMonumentTypePrompt(armenianName))
+                    .build()
+            ))
+            .build();
+
+    GenerateContentResponse response =
+        client.models.generateContent(
+            "gemini-2.5-flash",
+            content,
+            config
+        );
+
+    return objectMapper.readValue(
+        response.text(),
+        MonumentTypeTranslateDto.class
+    );
+  }
+
+  private String buildMonumentTypePrompt(
+      String armenianName
+  ) {
+
+    return """
+      You are an expert in Armenian monument type.
+
+      Translate the Armenian monument type into English and French.
+      
+      IMPORTANT:
+      
+      - This is a proper monument type name.
+      - Translate its meaning.
+      
+      Return ONLY JSON.
+      
+      Input:
+      
+      %s
+      """
+        .formatted(armenianName);
+  }
+
+  private Schema monumentTypesSchema() {
 
     Map<String, Schema> properties = new HashMap<>();
 

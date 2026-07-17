@@ -7,13 +7,23 @@ import org.hishatakaran.backend.entity.DescriptiveCharacteristicReference;
 import org.hishatakaran.backend.entity.Footnote;
 import org.hishatakaran.backend.entity.HistoricalReference;
 import org.hishatakaran.backend.entity.Monument;
+import org.hishatakaran.backend.entity.MonumentTypes;
 import org.hishatakaran.backend.entity.MonumentVideo;
+import org.hishatakaran.backend.entity.Settlement;
 import org.hishatakaran.backend.entity.Topographic;
 import org.hishatakaran.backend.mapper.MonumentMapper;
+import org.hishatakaran.backend.mapper.MonumentTypeMapper;
+import org.hishatakaran.backend.mapper.SettlementMapper;
 import org.hishatakaran.backend.model.MonumentEditDto;
 import org.hishatakaran.backend.model.MonumentFilterRequest;
 import org.hishatakaran.backend.model.MonumentRequestDto;
 import org.hishatakaran.backend.model.MonumentResponseDto;
+import org.hishatakaran.backend.model.MonumentTypeEditDto;
+import org.hishatakaran.backend.model.MonumentTypeRequestDto;
+import org.hishatakaran.backend.model.MonumentTypeTranslateDto;
+import org.hishatakaran.backend.model.MonumentTypesResponseDto;
+import org.hishatakaran.backend.model.SettlementEditDto;
+import org.hishatakaran.backend.model.SettlementResponseDto;
 import org.hishatakaran.backend.model.TranslationLanguage;
 import org.hishatakaran.backend.repository.MonumentRepository;
 import org.hishatakaran.backend.repository.MonumentTypesRepository;
@@ -24,6 +34,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.transaction.Transactional;
@@ -867,6 +878,35 @@ public class MonumentService {
 
 
         return MonumentMapper.toDto(saved);
+    }
+
+    public MonumentTypesResponseDto editMonumentType(Long monumentTypeId, MonumentTypeEditDto monumentTypeEditDto) {
+        MonumentTypes monumentType = monumentTypesRepository.findById(monumentTypeId).orElseThrow(
+            () -> new RuntimeException("Monument type not found"));
+        monumentType.setNameHy(monumentTypeEditDto.getName().getHy());
+        monumentType.setNameEn(monumentTypeEditDto.getName().getEn());
+        monumentType.setNameFr(monumentTypeEditDto.getName().getFr());
+        MonumentTypes editedMonumentType = monumentTypesRepository.save(monumentType);
+        return MonumentTypeMapper.toDto(editedMonumentType);
+    }
+
+    public MonumentTypesResponseDto createNewMonumentType(MonumentTypeRequestDto monumentTypeRequestDto)
+    {
+        MonumentTypeTranslateDto monumentTypeTranslateDto;
+        try {
+            monumentTypeTranslateDto = geminiService.translateMonumentType(
+                monumentTypeRequestDto.getName()
+            );
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("Failed to translate monument type");
+        }
+
+        MonumentTypes monumentType = new MonumentTypes(
+            monumentTypeTranslateDto.getNameHy(),
+            monumentTypeTranslateDto.getNameEn(),
+            monumentTypeTranslateDto.getNameFr()
+        );
+        return MonumentTypeMapper.toDto(monumentTypesRepository.save(monumentType));
     }
 
 

@@ -30,6 +30,14 @@ public class SettlementController {
             .toList();
     }
 
+    @GetMapping("/settlements")
+    public List<SettlementResponseDto> getAll() {
+        return settlementRepository.findAll()
+            .stream()
+            .map(SettlementMapper::toDto)
+            .toList();
+    }
+
     @PostMapping("/admin/region/{regionId}/settlements")
     public SettlementResponseDto addNewSettlement(
         @PathVariable Long regionId,
