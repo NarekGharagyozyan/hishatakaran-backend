@@ -4,13 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microsoft.playwright.*;
 
-import com.microsoft.playwright.*;
-
-import org.hishatakaran.backend.model.MonumentAiResponseDto;
 import org.hishatakaran.backend.model.MonumentRequestDto;
 import org.hishatakaran.backend.service.GeminiService;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.nio.file.Paths;
 import java.util.*;

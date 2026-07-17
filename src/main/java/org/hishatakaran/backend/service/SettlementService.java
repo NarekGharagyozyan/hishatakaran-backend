@@ -2,7 +2,6 @@ package org.hishatakaran.backend.service;
 
 import org.hishatakaran.backend.entity.Settlement;
 import org.hishatakaran.backend.mapper.SettlementMapper;
-import org.hishatakaran.backend.model.RegionResponseDto;
 import org.hishatakaran.backend.model.SettlementEditDto;
 import org.hishatakaran.backend.model.SettlementRequestDto;
 import org.hishatakaran.backend.model.SettlementResponseDto;

@@ -9,11 +9,9 @@ import org.hishatakaran.backend.entity.HistoricalReference;
 import org.hishatakaran.backend.entity.Monument;
 import org.hishatakaran.backend.entity.MonumentTypes;
 import org.hishatakaran.backend.entity.MonumentVideo;
-import org.hishatakaran.backend.entity.Settlement;
 import org.hishatakaran.backend.entity.Topographic;
 import org.hishatakaran.backend.mapper.MonumentMapper;
 import org.hishatakaran.backend.mapper.MonumentTypeMapper;
-import org.hishatakaran.backend.mapper.SettlementMapper;
 import org.hishatakaran.backend.model.MonumentEditDto;
 import org.hishatakaran.backend.model.MonumentFilterRequest;
 import org.hishatakaran.backend.model.MonumentRequestDto;
@@ -22,8 +20,6 @@ import org.hishatakaran.backend.model.MonumentTypeEditDto;
 import org.hishatakaran.backend.model.MonumentTypeRequestDto;
 import org.hishatakaran.backend.model.MonumentTypeTranslateDto;
 import org.hishatakaran.backend.model.MonumentTypesResponseDto;
-import org.hishatakaran.backend.model.SettlementEditDto;
-import org.hishatakaran.backend.model.SettlementResponseDto;
 import org.hishatakaran.backend.model.TranslationLanguage;
 import org.hishatakaran.backend.repository.MonumentRepository;
 import org.hishatakaran.backend.repository.MonumentTypesRepository;
@@ -35,7 +31,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -46,173 +41,11 @@ public class MonumentService {
 
     private final MonumentRepository monumentRepository;
     private final GeminiService geminiService;
-    private final ObjectMapper objectMapper;
     private final RegionRepository regionRepository;
     private final SettlementRepository settlementRepository;
     private final MonumentTypesRepository monumentTypesRepository;
     private final MonumentTranslationService monumentTranslationService;
     private final FileStorageService fileStorageService;
-
-//    public MonumentResponseDto postMonument(MonumentRequestDto monumentRequestDto) {
-//        String requestGeminiForMonuments = geminiService.requestGeminiForMonuments(monumentRequestDto);
-//        MonumentAiResponseDto monumentAiResponseDto = null;
-//        try {
-//            var cleanJson = extractJson(requestGeminiForMonuments);
-//            monumentAiResponseDto = objectMapper.readValue(cleanJson, MonumentAiResponseDto.class);
-//        }
-//        catch (JsonProcessingException e)
-//        {
-//            e.printStackTrace();
-//        }
-//        if (monumentAiResponseDto != null)
-//        {
-//
-//            Monument monument = new Monument(
-//                Status.DRAFT,
-//                monumentAiResponseDto.getNameHy(),
-//                monumentAiResponseDto.getNameEn(),
-//                monumentAiResponseDto.getNameFr(),
-//                regionRepository.findById(monumentRequestDto.getRegionId()).orElse(null),
-//                settlementRepository.findById(monumentRequestDto.getSettlementId()).orElse(null),
-//                monumentAiResponseDto.getMonumentTypeHy(),
-//                monumentAiResponseDto.getMonumentTypeEn(),
-//                monumentAiResponseDto.getMonumentTypeFr(),
-//                monumentAiResponseDto.getSpecialNameHy(),
-//                monumentAiResponseDto.getSpecialNameEn(),
-//                monumentAiResponseDto.getSpecialNameFr(),
-//                monumentAiResponseDto.getAnotherNamesHy(),
-//                monumentAiResponseDto.getAnotherNamesEn(),
-//                monumentAiResponseDto.getAnotherNamesFr(),
-//                monumentAiResponseDto.getHistoryHy(),
-//                monumentAiResponseDto.getHistoryEn(),
-//                monumentAiResponseDto.getHistoryFr(),
-//                monumentAiResponseDto.getOriginalAffiliationHy(),
-//                monumentAiResponseDto.getOriginalAffiliationEn(),
-//                monumentAiResponseDto.getOriginalAffiliationFr(),
-//                monumentAiResponseDto.getStorageUnitNameHy(),
-//                monumentAiResponseDto.getStorageUnitNameEn(),
-//                monumentAiResponseDto.getStorageUnitNameFr(),
-//                monumentAiResponseDto.getConditionHy(),
-//                monumentAiResponseDto.getConditionEn(),
-//                monumentAiResponseDto.getConditionFr(),
-//                monumentRequestDto.getImages(),
-//                new ArrayList<>(),
-//                monumentRequestDto.getMeasurements(),
-//                new ArrayList<>(),
-//                null,
-//                null,
-//                null,
-//                monumentRequestDto.getSignature()
-//            );
-//            monument.setBibliography(
-//                monumentRequestDto.getBibliography()
-//                    .stream()
-//                    .map(bibliographyRequestDto -> new Bibliography(
-//                        monument,
-//                        bibliographyRequestDto.getTitle(),
-//                        bibliographyRequestDto.getUrl())
-//                    )
-//                    .toList()
-//            );
-//
-//            Topographic topographic = new Topographic(
-//                monument,
-//                monumentAiResponseDto.getTopographicRegionHy(),
-//                monumentAiResponseDto.getTopographicRegionEn(),
-//                monumentAiResponseDto.getTopographicRegionFr(),
-//                monumentAiResponseDto.getAddressHy(),
-//                monumentAiResponseDto.getAddressEn(),
-//                monumentAiResponseDto.getAddressFr(),
-//                monumentAiResponseDto.getTopographyHy(),
-//                monumentAiResponseDto.getTopographyEn(),
-//                monumentAiResponseDto.getTopographyFr(),
-//                monumentAiResponseDto.getDistanceFromResidenceHy(),
-//                monumentAiResponseDto.getDistanceFromResidenceEn(),
-//                monumentAiResponseDto.getDistanceFromResidenceFr(),
-//                monumentRequestDto.getTopographics().getLatitude(),
-//                monumentRequestDto.getTopographics().getLongitude(),
-//                monumentRequestDto.getTopographics().getAltitude(),
-//                monumentAiResponseDto.getHydrographyHy(),
-//                monumentAiResponseDto.getHydrographyEn(),
-//                monumentAiResponseDto.getHydrographyFr(),
-//                monumentAiResponseDto.getDescriptionHy(),
-//                monumentAiResponseDto.getDescriptionEn(),
-//                monumentAiResponseDto.getDescriptionFr()
-//            );
-//            monument.setTopographics(topographic);
-//
-//            HistoricalReference historicalReference = new HistoricalReference(
-//                monument,
-//                monumentAiResponseDto.getCulturalAffiliationHy(),
-//                monumentAiResponseDto.getCulturalAffiliationEn(),
-//                monumentAiResponseDto.getCulturalAffiliationFr(),
-//                monumentAiResponseDto.getCenturyHy(),
-//                monumentAiResponseDto.getCenturyEn(),
-//                monumentAiResponseDto.getCenturyFr(),
-//                monumentAiResponseDto.getJustificationOfTheNumberingBasedOnLithographyHy(),
-//                monumentAiResponseDto.getJustificationOfTheNumberingBasedOnLithographyEn(),
-//                monumentAiResponseDto.getJustificationOfTheNumberingBasedOnLithographyFr(),
-//                monumentAiResponseDto.getChronologicalTableOfTheStudHy(),
-//                monumentAiResponseDto.getChronologicalTableOfTheStudEn(),
-//                monumentAiResponseDto.getChronologicalTableOfTheStudFr(),
-//                monumentAiResponseDto.getChronologicalTableOfTheMonumentsStudyHy(),
-//                monumentAiResponseDto.getChronologicalTableOfTheMonumentsStudyEn(),
-//                monumentAiResponseDto.getChronologicalTableOfTheMonumentsStudyFr(),
-//                monumentAiResponseDto.getAuthorHy(),
-//                monumentAiResponseDto.getAuthorEn(),
-//                monumentAiResponseDto.getAuthorFr()
-//            );
-//            monument.setHistoricalReferences(historicalReference);
-//
-//            DescriptiveCharacteristicReference descriptiveCharacteristicReference = new DescriptiveCharacteristicReference(
-//                monument,
-//                monumentAiResponseDto.getTheBuildingMaterialHy(),
-//                monumentAiResponseDto.getTheBuildingMaterialEn(),
-//                monumentAiResponseDto.getTheBuildingMaterialFr(),
-//                monumentAiResponseDto.getOpeningsEntrancesHy(),
-//                monumentAiResponseDto.getOpeningsEntrancesEn(),
-//                monumentAiResponseDto.getOpeningsEntrancesFr(),
-//                monumentAiResponseDto.getConstructionsHy(),
-//                monumentAiResponseDto.getConstructionsEn(),
-//                monumentAiResponseDto.getConstructionsFr(),
-//                monumentAiResponseDto.getRoofHy(),
-//                monumentAiResponseDto.getRoofEn(),
-//                monumentAiResponseDto.getRoofFr(),
-//                monumentAiResponseDto.getTypeHy(),
-//                monumentAiResponseDto.getTypeEn(),
-//                monumentAiResponseDto.getTypeFr(),
-//                monumentAiResponseDto.getColorHy(),
-//                monumentAiResponseDto.getColorEn(),
-//                monumentAiResponseDto.getColorFr(),
-//                monumentAiResponseDto.getImplementationTechniqueHy(),
-//                monumentAiResponseDto.getImplementationTechniqueEn(),
-//                monumentAiResponseDto.getImplementationTechniqueFr(),
-//                monumentAiResponseDto.getStateOfMonumentHy(),
-//                monumentAiResponseDto.getStateOfMonumentEn(),
-//                monumentAiResponseDto.getStateOfMonumentFr(),
-//                monumentAiResponseDto.getValuationHy(),
-//                monumentAiResponseDto.getValuationEn(),
-//                monumentAiResponseDto.getValuationFr()
-//            );
-//            monument.setDescriptiveCharacteristics(descriptiveCharacteristicReference);
-//            monument.setVideos(
-//                monumentAiResponseDto.getVideos()
-//                    .stream()
-//                    .map(video -> new MonumentVideo(
-//                        monument,
-//                        video.getVideoTitleHy(),
-//                        video.getVideoTitleEn(),
-//                        video.getVideoTitleFr(),
-//                        video.getUrl()
-//                    ))
-//                    .toList()
-//            );
-//            Monument savedMonument = monumentRepository.save(monument);
-//            return MonumentMapper.toDto(savedMonument);
-//        } else {
-//          throw new RuntimeException("MonumentAiResponseDto is null");
-//        }
-//    }
 
     public MonumentResponseDto postMonument(MonumentRequestDto monumentRequestDto) {
         Monument monument = Monument.builder()
@@ -786,29 +619,28 @@ public class MonumentService {
         if (request.getRegionId() != null) {
 
             spec = spec.and(
-                    (root, query, cb) ->
-                            cb.equal(
-                                    root.get("region").get("id"),
-                                    request.getRegionId()
-                            )
+                (root, query, cb) ->
+                    cb.equal(
+                        root.get("region").get("id"),
+                        request.getRegionId()
+                    )
             );
         }
 
         if (request.getSettlementId() != null) {
 
             spec = spec.and(
-                    (root, query, cb) ->
-                            cb.equal(
-                                    root.get("settlement").get("id"),
-                                    request.getSettlementId()
-                            )
+                (root, query, cb) ->
+                    cb.equal(
+                        root.get("settlement").get("id"),
+                        request.getSettlementId()
+                    )
             );
         }
 
         if (request.getMonumentType() != null && !request.getMonumentType().isBlank()) {
 
             String monumentType = request.getMonumentType().trim().toLowerCase();
-
             spec = spec.and((root, query, cb) ->
                 cb.or(
                     cb.equal(cb.lower(root.get("monumentTypeHy")), monumentType),
@@ -843,46 +675,26 @@ public class MonumentService {
         return null;
     }
 
-    private String extractJson(String response) {
-        var start = response.indexOf('{');
-        var end = response.lastIndexOf('}');
-        if (start == -1 || end == -1 || start >= end) {
-            throw new IllegalArgumentException("No valid JSON found in response");
-        }
-        return response.substring(start, end + 1);
-    }
-
     @Transactional
     public MonumentResponseDto translate(
         Long id,
         TranslationLanguage language
     ) {
 
-        Monument monument =
-            monumentRepository.findById(id)
-                .orElseThrow(
-                    () -> new RuntimeException(
-                        "Monument not found"
-                    )
-                );
-
-
-        monumentTranslationService.translate(
-            monument,
-            language
+        Monument monument = monumentRepository.findById(id).orElseThrow(
+            () -> new RuntimeException("Monument not found")
         );
 
-
-        Monument saved =
-            monumentRepository.save(monument);
-
+        monumentTranslationService.translate(monument, language);
+        Monument saved = monumentRepository.save(monument);
 
         return MonumentMapper.toDto(saved);
     }
 
     public MonumentTypesResponseDto editMonumentType(Long monumentTypeId, MonumentTypeEditDto monumentTypeEditDto) {
         MonumentTypes monumentType = monumentTypesRepository.findById(monumentTypeId).orElseThrow(
-            () -> new RuntimeException("Monument type not found"));
+            () -> new RuntimeException("Monument type not found")
+        );
         monumentType.setNameHy(monumentTypeEditDto.getName().getHy());
         monumentType.setNameEn(monumentTypeEditDto.getName().getEn());
         monumentType.setNameFr(monumentTypeEditDto.getName().getFr());
@@ -915,7 +727,8 @@ public class MonumentService {
         Long id
     ) {
         Monument monument = monumentRepository.findById(id).orElseThrow(
-            () -> new RuntimeException("Monument not found"));
+            () -> new RuntimeException("Monument not found")
+        );
         monument.setIsPublished(!monument.getIsPublished());
         Monument updatedMonument = monumentRepository.save(monument);
         return MonumentMapper.toDto(updatedMonument);

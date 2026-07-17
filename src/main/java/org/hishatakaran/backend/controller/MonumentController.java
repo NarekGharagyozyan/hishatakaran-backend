@@ -13,9 +13,6 @@ import org.hishatakaran.backend.model.MonumentTypeEditDto;
 import org.hishatakaran.backend.model.MonumentTypeRequestDto;
 import org.hishatakaran.backend.model.MonumentTypesResponseDto;
 import org.hishatakaran.backend.model.MonumentVideoResponseDto;
-import org.hishatakaran.backend.model.SettlementEditDto;
-import org.hishatakaran.backend.model.SettlementRequestDto;
-import org.hishatakaran.backend.model.SettlementResponseDto;
 import org.hishatakaran.backend.model.TranslationLanguage;
 import org.hishatakaran.backend.repository.MonumentRepository;
 import org.hishatakaran.backend.repository.MonumentTypesRepository;
@@ -85,14 +82,6 @@ public class MonumentController {
         return monumentService.generateMeasurementsPaths(measurements);
     }
 
-    /*@GetMapping
-    public List<MonumentResponseDto> getAll() {
-        return monumentRepository.findAll()
-            .stream()
-            .map(MonumentMapper::toDto)
-            .toList();
-    }*/
-
     @GetMapping("/monuments")
     public List<MonumentResponseDto> getMonumentsByFilter(
         @RequestParam(required = false)
@@ -135,14 +124,6 @@ public class MonumentController {
             .map(MonumentMapper::toDto)
             .toList();
     }
-
-//    @GetMapping("/monuments/type/{type}")
-//    public List<MonumentResponseDto> getByType(@PathVariable String type) {
-//        return monumentRepository.findByMonumentTypeHyOrMonumentTypeEnOrMonumentTypeFr(type, type, type)
-//            .stream()
-//            .map(MonumentMapper::toDto)
-//            .toList();
-//    }
 
     @GetMapping("/monuments/types")
     public List<MonumentTypesResponseDto> getAllMonumentTypes() {

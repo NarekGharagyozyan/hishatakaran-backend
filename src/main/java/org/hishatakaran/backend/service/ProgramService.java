@@ -12,11 +12,9 @@ import org.hishatakaran.backend.model.ProgramResponseDto;
 import org.hishatakaran.backend.model.TranslationLanguage;
 import org.hishatakaran.backend.repository.ProgramRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import tools.jackson.databind.ObjectMapper;
 
 @Service
 @RequiredArgsConstructor
@@ -34,12 +32,16 @@ public class ProgramService {
   }
 
   public ProgramResponseDto getProgramById(Long id) {
-    return ProgramMapper.toResponseDto(Objects.requireNonNull(programRepository.findById(id).orElse(null)));
+    return ProgramMapper.toResponseDto(Objects.requireNonNull(programRepository.findById(id)
+        .orElse(null)
+    ));
   }
 
   public ProgramResponseDto editProgram(Long id, ProgramEditDto programEditDto) {
 
-    Program program = programRepository.findById(id).orElseThrow(() -> new RuntimeException("Program not found"));
+    Program program = programRepository.findById(id).orElseThrow(
+        () -> new RuntimeException("Program not found")
+    );
 
     if (programEditDto.getTitle() != null)
     {

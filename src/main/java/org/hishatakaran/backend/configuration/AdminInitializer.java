@@ -1,10 +1,7 @@
 package org.hishatakaran.backend.configuration;
 
-import java.time.LocalDateTime;
-
 import org.hishatakaran.backend.entity.Admin;
 import org.hishatakaran.backend.repository.AdminRepository;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;

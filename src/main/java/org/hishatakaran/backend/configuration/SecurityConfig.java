@@ -19,11 +19,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-
   private final UserDetailsService userDetailsService;
-
   private final PasswordEncoder passwordEncoder;
-
 
   @Bean
   public AuthenticationManager authenticationManager() {
@@ -42,7 +39,7 @@ public class SecurityConfig {
   @Bean
   public SecurityFilterChain securityFilterChain(
       HttpSecurity http
-  ) throws Exception {
+  ) {
 
     return http
         .csrf(csrf -> csrf
@@ -74,7 +71,6 @@ public class SecurityConfig {
             .anyRequest()
             .permitAll()
         )
-
         .build();
   }
 
