@@ -507,6 +507,19 @@ public class MonumentService {
                 ? monumentEditDto.getHistoricalReferences().getAuthor().getFr()
                 : null);
 
+        historical.setSourceForDeterminingTheAuthorHy(
+            monumentEditDto.getHistoricalReferences().getSourceForDeterminingTheAuthor() != null
+                ? monumentEditDto.getHistoricalReferences().getSourceForDeterminingTheAuthor().getHy()
+                : null);
+        historical.setSourceForDeterminingTheAuthorEn(
+            monumentEditDto.getHistoricalReferences().getSourceForDeterminingTheAuthor() != null
+                ? monumentEditDto.getHistoricalReferences().getSourceForDeterminingTheAuthor().getEn()
+                : null);
+        historical.setSourceForDeterminingTheAuthorFr(
+            monumentEditDto.getHistoricalReferences().getSourceForDeterminingTheAuthor() != null
+                ? monumentEditDto.getHistoricalReferences().getSourceForDeterminingTheAuthor().getFr()
+                : null);
+
         historical.setBriefHistoricalOverviewHy(
             monumentEditDto.getHistoricalReferences().getBriefHistoricalOverview() != null
                 ? monumentEditDto.getHistoricalReferences().getBriefHistoricalOverview().getHy()

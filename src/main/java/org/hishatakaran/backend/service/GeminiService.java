@@ -723,6 +723,7 @@ NOW EXTRACT DATA FROM THIS HTML:
     data.put("chronologicalTableOfTheMonumentsStudy", reference.getChronologicalTableOfTheMonumentsStudyHy());
     data.put("briefHistoricalOverview", reference.getBriefHistoricalOverviewHy());
     data.put("author", reference.getAuthorHy());
+    data.put("sourceForDeterminingTheAuthor", reference.getSourceForDeterminingTheAuthorHy());
 
     return data;
   }
@@ -908,6 +909,11 @@ NOW EXTRACT DATA FROM THIS HTML:
 
     properties.put(
         "author",
+        stringSchema()
+    );
+
+    properties.put(
+        "sourceForDeterminingTheAuthor",
         stringSchema()
     );
 

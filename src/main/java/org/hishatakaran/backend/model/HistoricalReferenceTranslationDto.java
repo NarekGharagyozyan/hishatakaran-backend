@@ -17,5 +17,6 @@ public class HistoricalReferenceTranslationDto {
     private String chronologicalTableOfTheStud;
     private String chronologicalTableOfTheMonumentsStudy;
     private String author;
+    private String sourceForDeterminingTheAuthor;
     private String briefHistoricalOverview;
 }

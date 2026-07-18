@@ -19,5 +19,6 @@ public class HistoricalReferenceResponseDto {
     private final LanguagesResponseDto chronologicalTableOfTheStud;
     private final LanguagesResponseDto chronologicalTableOfTheMonumentsStudy;
     private final LanguagesResponseDto author;
+    private final LanguagesResponseDto sourceForDeterminingTheAuthor;
     private final LanguagesResponseDto briefHistoricalOverview;
 }

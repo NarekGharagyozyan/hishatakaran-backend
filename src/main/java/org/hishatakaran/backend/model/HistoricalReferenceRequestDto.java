@@ -18,6 +18,7 @@ public class HistoricalReferenceRequestDto {
   private String chronologicalTableOfTheStud;
   private String chronologicalTableOfTheMonumentsStudy;
   private String author;
+  private String sourceForDeterminingTheAuthor;
   private String briefHistoricalOverview;
 
   @Override
@@ -32,6 +33,7 @@ public class HistoricalReferenceRequestDto {
         ", chronologicalTableOfTheStud='" + chronologicalTableOfTheStud + '\'' +
         ", chronologicalTableOfTheMonumentsStudy='" + chronologicalTableOfTheMonumentsStudy + '\'' +
         ", author='" + author + '\'' +
+        ", sourceForDeterminingTheAuthor='" + sourceForDeterminingTheAuthor + '\'' +
         ", briefHistoricalOverview='" + briefHistoricalOverview + '\'' +
         '}';
   }

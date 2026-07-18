@@ -264,6 +264,10 @@ public class MonumentTranslationService {
                 clean(dto.getAuthor())
             );
 
+            historicalReference.setSourceForDeterminingTheAuthorEn(
+                clean(dto.getSourceForDeterminingTheAuthor())
+            );
+
             historicalReference.setBriefHistoricalOverviewEn(
                 clean(dto.getBriefHistoricalOverview())
             );
@@ -304,6 +308,10 @@ public class MonumentTranslationService {
 
             historicalReference.setAuthorFr(
                 clean(dto.getAuthor())
+            );
+
+            historicalReference.setSourceForDeterminingTheAuthorFr(
+                clean(dto.getSourceForDeterminingTheAuthor())
             );
 
             historicalReference.setBriefHistoricalOverviewFr(

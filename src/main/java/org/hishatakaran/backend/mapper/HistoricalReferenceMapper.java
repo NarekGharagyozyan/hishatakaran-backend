@@ -56,6 +56,11 @@ public class HistoricalReferenceMapper {
                 historicalReference.getAuthorFr()
             ),
             LanguagesResponseDto.of(
+                historicalReference.getSourceForDeterminingTheAuthorHy(),
+                historicalReference.getSourceForDeterminingTheAuthorEn(),
+                historicalReference.getSourceForDeterminingTheAuthorFr()
+            ),
+            LanguagesResponseDto.of(
                 historicalReference.getBriefHistoricalOverviewHy(),
                 historicalReference.getBriefHistoricalOverviewEn(),
                 historicalReference.getBriefHistoricalOverviewFr()

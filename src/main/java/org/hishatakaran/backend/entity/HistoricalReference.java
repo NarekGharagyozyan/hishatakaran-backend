@@ -97,6 +97,13 @@ public class HistoricalReference {
     private String authorFr;
 
     @Column(columnDefinition = "TEXT")
+    private String sourceForDeterminingTheAuthorHy;
+    @Column(columnDefinition = "TEXT")
+    private String sourceForDeterminingTheAuthorEn;
+    @Column(columnDefinition = "TEXT")
+    private String sourceForDeterminingTheAuthorFr;
+
+    @Column(columnDefinition = "TEXT")
     private String briefHistoricalOverviewHy;
     @Column(columnDefinition = "TEXT")
     private String briefHistoricalOverviewEn;
