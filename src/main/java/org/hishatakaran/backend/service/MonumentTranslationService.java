@@ -70,7 +70,7 @@ public class MonumentTranslationService {
             monument.setHistoryEn(clean(dto.getHistory()));
             monument.setOriginalAffiliationEn(clean(dto.getOriginalAffiliation()));
             monument.setStorageUnitNameEn(clean(dto.getStorageUnitName()));
-            monument.setConditionEn(clean(dto.getCondition()));
+            monument.setIndividuallyCertifiablePartsOfTheStorageUnitEn(clean(dto.getIndividuallyCertifiablePartsOfTheStorageUnit()));
 
         } else {
 
@@ -80,7 +80,7 @@ public class MonumentTranslationService {
             monument.setHistoryFr(clean(dto.getHistory()));
             monument.setOriginalAffiliationFr(clean(dto.getOriginalAffiliation()));
             monument.setStorageUnitNameFr(clean(dto.getStorageUnitName()));
-            monument.setConditionFr(clean(dto.getCondition()));
+            monument.setIndividuallyCertifiablePartsOfTheStorageUnitFr(clean(dto.getIndividuallyCertifiablePartsOfTheStorageUnit()));
         }
 
 
@@ -232,8 +232,20 @@ public class MonumentTranslationService {
                 clean(dto.getCulturalAffiliation())
             );
 
-            historicalReference.setCenturyEn(
-                clean(dto.getCentury())
+            historicalReference.setJustificationOfTheNumberingBasedOnReliableDocumentEn(
+                clean(dto.getJustificationOfTheNumberingBasedOnReliableDocument())
+            );
+
+            historicalReference.setJustificationOfTheNumberingBasedOnBibliographicalSourcesEn(
+                clean(dto.getJustificationOfTheNumberingBasedOnBibliographicalSources())
+            );
+
+            historicalReference.setJustificationOfTheNumberingAccordingIconographyEn(
+                clean(dto.getJustificationOfTheNumberingAccordingIconography())
+            );
+
+            historicalReference.setJustificationOfTheNumberingBasedOnEvidenceEn(
+                clean(dto.getJustificationOfTheNumberingBasedOnEvidence())
             );
 
             historicalReference.setJustificationOfTheNumberingBasedOnLithographyEn(
@@ -252,14 +264,30 @@ public class MonumentTranslationService {
                 clean(dto.getAuthor())
             );
 
+            historicalReference.setBriefHistoricalOverviewEn(
+                clean(dto.getBriefHistoricalOverview())
+            );
+
         } else {
 
             historicalReference.setCulturalAffiliationFr(
                 clean(dto.getCulturalAffiliation())
             );
 
-            historicalReference.setCenturyFr(
-                clean(dto.getCentury())
+            historicalReference.setJustificationOfTheNumberingBasedOnReliableDocumentFr(
+                clean(dto.getJustificationOfTheNumberingBasedOnReliableDocument())
+            );
+
+            historicalReference.setJustificationOfTheNumberingBasedOnBibliographicalSourcesFr(
+                clean(dto.getJustificationOfTheNumberingBasedOnBibliographicalSources())
+            );
+
+            historicalReference.setJustificationOfTheNumberingAccordingIconographyFr(
+                clean(dto.getJustificationOfTheNumberingAccordingIconography())
+            );
+
+            historicalReference.setJustificationOfTheNumberingBasedOnEvidenceFr(
+                clean(dto.getJustificationOfTheNumberingBasedOnEvidence())
             );
 
             historicalReference.setJustificationOfTheNumberingBasedOnLithographyFr(
@@ -276,6 +304,10 @@ public class MonumentTranslationService {
 
             historicalReference.setAuthorFr(
                 clean(dto.getAuthor())
+            );
+
+            historicalReference.setBriefHistoricalOverviewFr(
+                clean(dto.getBriefHistoricalOverview())
             );
         }
     }
@@ -298,6 +330,22 @@ public class MonumentTranslationService {
                 clean(dto.getTheBuildingMaterial())
             );
 
+            descriptive.setArcheologicalOverviewStratigraphyFindingsEn(
+                clean(dto.getArcheologicalOverviewStratigraphyFindings())
+            );
+
+            descriptive.setArchitecturalOverviewEn(
+                clean(dto.getArchitecturalOverview())
+            );
+
+            descriptive.setDecorativeAndMonumentalFeaturesCompositionColoursEn(
+                clean(dto.getDecorativeAndMonumentalFeaturesCompositionColours())
+            );
+
+            descriptive.setOpeningsWindowsEn(
+                clean(dto.getOpeningsWindows())
+            );
+
             descriptive.setOpeningsEntrancesEn(
                 clean(dto.getOpeningsEntrances())
             );
@@ -310,12 +358,40 @@ public class MonumentTranslationService {
                 clean(dto.getRoof())
             );
 
+            descriptive.setLevelsOfConstructionEn(
+                clean(dto.getLevelsOfConstruction())
+            );
+
             descriptive.setTypeEn(
                 clean(dto.getType())
             );
 
-            descriptive.setColorEn(
-                clean(dto.getColor())
+            descriptive.setExteriorEn(
+                clean(dto.getExterior())
+            );
+
+            descriptive.setLengthEn(
+                clean(dto.getLength())
+            );
+
+            descriptive.setWidthEn(
+                clean(dto.getWidth())
+            );
+
+            descriptive.setHeightEn(
+                clean(dto.getHeight())
+            );
+
+            descriptive.setDepthThicknessEn(
+                clean(dto.getDepthThickness())
+            );
+
+            descriptive.setAreaEn(
+                clean(dto.getArea())
+            );
+
+            descriptive.setLengthOfSpanEn(
+                clean(dto.getLengthOfSpan())
             );
 
             descriptive.setImplementationTechniqueEn(
@@ -338,12 +414,32 @@ public class MonumentTranslationService {
                 clean(dto.getTheBuildingMaterial())
             );
 
+            descriptive.setArcheologicalOverviewStratigraphyFindingsFr(
+                clean(dto.getArcheologicalOverviewStratigraphyFindings())
+            );
+
+            descriptive.setArchitecturalOverviewFr(
+                clean(dto.getArchitecturalOverview())
+            );
+
+            descriptive.setDecorativeAndMonumentalFeaturesCompositionColoursFr(
+                clean(dto.getDecorativeAndMonumentalFeaturesCompositionColours())
+            );
+
+            descriptive.setOpeningsWindowsFr(
+                clean(dto.getOpeningsWindows())
+            );
+
             descriptive.setOpeningsEntrancesFr(
                 clean(dto.getOpeningsEntrances())
             );
 
             descriptive.setConstructionsFr(
                 clean(dto.getConstructions())
+            );
+
+            descriptive.setLevelsOfConstructionFr(
+                clean(dto.getLevelsOfConstruction())
             );
 
             descriptive.setRoofFr(
@@ -354,8 +450,32 @@ public class MonumentTranslationService {
                 clean(dto.getType())
             );
 
-            descriptive.setColorFr(
-                clean(dto.getColor())
+            descriptive.setExteriorFr(
+                clean(dto.getExterior())
+            );
+
+            descriptive.setLengthFr(
+                clean(dto.getLength())
+            );
+
+            descriptive.setWidthFr(
+                clean(dto.getWidth())
+            );
+
+            descriptive.setHeightFr(
+                clean(dto.getHeight())
+            );
+
+            descriptive.setDepthThicknessFr(
+                clean(dto.getDepthThickness())
+            );
+
+            descriptive.setAreaFr(
+                clean(dto.getArea())
+            );
+
+            descriptive.setLengthOfSpanFr(
+                clean(dto.getLengthOfSpan())
             );
 
             descriptive.setImplementationTechniqueFr(

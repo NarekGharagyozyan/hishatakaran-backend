@@ -26,7 +26,7 @@ public class MonumentRequestDto {
 
   private String originalAffiliation;
   private String storageUnitName;
-  private String condition;
+  private String individuallyCertifiablePartsOfTheStorageUnit;
 
   private List<String> images;
   private List<MonumentVideoRequestDto> videos;
@@ -48,13 +48,13 @@ public class MonumentRequestDto {
         "name='" + name + '\'' +
         ", regionId=" + regionId +
         ", settlementId=" + settlementId +
-        ", monumentTypeId='" + monumentTypeId + '\'' +
+        ", monumentTypeId=" + monumentTypeId +
         ", specialName='" + specialName + '\'' +
         ", anotherNames='" + anotherNames + '\'' +
         ", history='" + history + '\'' +
         ", originalAffiliation='" + originalAffiliation + '\'' +
         ", storageUnitName='" + storageUnitName + '\'' +
-        ", condition='" + condition + '\'' +
+        ", individuallyCertifiablePartsOfTheStorageUnit='" + individuallyCertifiablePartsOfTheStorageUnit + '\'' +
         ", images=" + images +
         ", videos=" + videos +
         ", measurements=" + measurements +
@@ -62,6 +62,7 @@ public class MonumentRequestDto {
         ", topographics=" + topographics +
         ", historicalReferences=" + historicalReferences +
         ", descriptiveCharacteristics=" + descriptiveCharacteristics +
+        ", footnotes=" + footnotes +
         ", showInMainPage=" + showInMainPage +
         ", signature='" + signature + '\'' +
         '}';

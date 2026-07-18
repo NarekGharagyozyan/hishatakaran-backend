@@ -9,14 +9,13 @@ public class HistoricalReferenceTranslationDto {
 
 
     private String culturalAffiliation;
-
-    private String century;
-
+    private String justificationOfTheNumberingBasedOnReliableDocument;
+    private String justificationOfTheNumberingBasedOnBibliographicalSources;
+    private String justificationOfTheNumberingAccordingIconography;
+    private String justificationOfTheNumberingBasedOnEvidence;
     private String justificationOfTheNumberingBasedOnLithography;
-
     private String chronologicalTableOfTheStud;
-
     private String chronologicalTableOfTheMonumentsStudy;
-
     private String author;
+    private String briefHistoricalOverview;
 }

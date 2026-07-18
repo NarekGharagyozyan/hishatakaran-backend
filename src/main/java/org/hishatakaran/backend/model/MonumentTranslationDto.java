@@ -22,7 +22,7 @@ public class MonumentTranslationDto {
 
     private String storageUnitName;
 
-    private String condition;
+    private String individuallyCertifiablePartsOfTheStorageUnit;
 
     private List<FootnoteTranslationDto> footnotes;
 

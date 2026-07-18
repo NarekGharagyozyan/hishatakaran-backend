@@ -16,14 +16,29 @@ public class HistoricalReferenceMapper {
                 historicalReference.getCulturalAffiliationFr()
             ),
             LanguagesResponseDto.of(
-                historicalReference.getCenturyHy(),
-                historicalReference.getCenturyEn(),
-                historicalReference.getCenturyFr()
-            ),
-            LanguagesResponseDto.of(
                 historicalReference.getJustificationOfTheNumberingBasedOnLithographyHy(),
                 historicalReference.getJustificationOfTheNumberingBasedOnLithographyEn(),
                 historicalReference.getJustificationOfTheNumberingBasedOnLithographyFr()
+            ),
+            LanguagesResponseDto.of(
+                historicalReference.getJustificationOfTheNumberingBasedOnReliableDocumentHy(),
+                historicalReference.getJustificationOfTheNumberingBasedOnReliableDocumentEn(),
+                historicalReference.getJustificationOfTheNumberingBasedOnReliableDocumentFr()
+            ),
+            LanguagesResponseDto.of(
+                historicalReference.getJustificationOfTheNumberingBasedOnBibliographicalSourcesHy(),
+                historicalReference.getJustificationOfTheNumberingBasedOnBibliographicalSourcesEn(),
+                historicalReference.getJustificationOfTheNumberingBasedOnBibliographicalSourcesFr()
+            ),
+            LanguagesResponseDto.of(
+                historicalReference.getJustificationOfTheNumberingAccordingIconographyHy(),
+                historicalReference.getJustificationOfTheNumberingAccordingIconographyEn(),
+                historicalReference.getJustificationOfTheNumberingAccordingIconographyFr()
+            ),
+            LanguagesResponseDto.of(
+                historicalReference.getJustificationOfTheNumberingBasedOnEvidenceHy(),
+                historicalReference.getJustificationOfTheNumberingBasedOnEvidenceEn(),
+                historicalReference.getJustificationOfTheNumberingBasedOnEvidenceFr()
             ),
             LanguagesResponseDto.of(
                 historicalReference.getChronologicalTableOfTheStudHy(),
@@ -39,6 +54,11 @@ public class HistoricalReferenceMapper {
                 historicalReference.getAuthorHy(),
                 historicalReference.getAuthorEn(),
                 historicalReference.getAuthorFr()
+            ),
+            LanguagesResponseDto.of(
+                historicalReference.getBriefHistoricalOverviewHy(),
+                historicalReference.getBriefHistoricalOverviewEn(),
+                historicalReference.getBriefHistoricalOverviewFr()
             )
         );
     }

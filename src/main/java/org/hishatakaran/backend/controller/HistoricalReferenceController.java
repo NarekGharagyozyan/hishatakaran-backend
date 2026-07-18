@@ -30,11 +30,11 @@ public class HistoricalReferenceController {
         );
     }
 
-    @GetMapping("/monument/{monumentId}")
-    public List<HistoricalReferenceResponseDto> getByMonument(@PathVariable Long monumentId) {
-        return historicalReferenceRepository.findByMonumentId(monumentId)
-            .stream()
-            .map(HistoricalReferenceMapper::toDto)
-            .toList();
-    }
+//    @GetMapping("/monument/{monumentId}")
+//    public List<HistoricalReferenceResponseDto> getByMonument(@PathVariable Long monumentId) {
+//        return historicalReferenceRepository.findByMonumentId(monumentId)
+//            .stream()
+//            .map(HistoricalReferenceMapper::toDto)
+//            .toList();
+//    }
 }

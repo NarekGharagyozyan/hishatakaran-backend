@@ -10,6 +10,26 @@ public class DescriptiveCharacteristicMapper {
         return new DescriptiveCharacteristicResponseDto(
             descriptive.getId(),
             LanguagesResponseDto.of(
+                descriptive.getArcheologicalOverviewStratigraphyFindingsHy(),
+                descriptive.getArcheologicalOverviewStratigraphyFindingsEn(),
+                descriptive.getArcheologicalOverviewStratigraphyFindingsFr()
+            ),
+            LanguagesResponseDto.of(
+                descriptive.getArchitecturalOverviewHy(),
+                descriptive.getArchitecturalOverviewEn(),
+                descriptive.getArchitecturalOverviewFr()
+            ),
+            LanguagesResponseDto.of(
+                descriptive.getDecorativeAndMonumentalFeaturesCompositionColoursHy(),
+                descriptive.getDecorativeAndMonumentalFeaturesCompositionColoursEn(),
+                descriptive.getDecorativeAndMonumentalFeaturesCompositionColoursFr()
+            ),
+            LanguagesResponseDto.of(
+                descriptive.getOpeningsWindowsHy(),
+                descriptive.getOpeningsWindowsEn(),
+                descriptive.getOpeningsWindowsFr()
+            ),
+            LanguagesResponseDto.of(
                 descriptive.getOpeningsEntrancesHy(),
                 descriptive.getOpeningsEntrancesEn(),
                 descriptive.getOpeningsEntrancesFr()
@@ -30,9 +50,9 @@ public class DescriptiveCharacteristicMapper {
                 descriptive.getTypeFr()
             ),
             LanguagesResponseDto.of(
-                descriptive.getColorHy(),
-                descriptive.getColorEn(),
-                descriptive.getColorFr()
+                descriptive.getLevelsOfConstructionHy(),
+                descriptive.getLevelsOfConstructionEn(),
+                descriptive.getLevelsOfConstructionFr()
             ),
             LanguagesResponseDto.of(
                 descriptive.getTheBuildingMaterialHy(),
@@ -40,9 +60,44 @@ public class DescriptiveCharacteristicMapper {
                 descriptive.getTheBuildingMaterialFr()
             ),
             LanguagesResponseDto.of(
+                descriptive.getExteriorHy(),
+                descriptive.getExteriorEn(),
+                descriptive.getExteriorFr()
+            ),
+            LanguagesResponseDto.of(
                 descriptive.getImplementationTechniqueHy(),
                 descriptive.getImplementationTechniqueEn(),
                 descriptive.getImplementationTechniqueFr()
+            ),
+            LanguagesResponseDto.of(
+                descriptive.getLengthHy(),
+                descriptive.getLengthEn(),
+                descriptive.getLengthFr()
+            ),
+            LanguagesResponseDto.of(
+                descriptive.getWidthHy(),
+                descriptive.getWidthEn(),
+                descriptive.getWidthFr()
+            ),
+            LanguagesResponseDto.of(
+                descriptive.getHeightHy(),
+                descriptive.getHeightEn(),
+                descriptive.getHeightFr()
+            ),
+            LanguagesResponseDto.of(
+                descriptive.getDepthThicknessHy(),
+                descriptive.getDepthThicknessEn(),
+                descriptive.getDepthThicknessFr()
+            ),
+            LanguagesResponseDto.of(
+                descriptive.getAreaHy(),
+                descriptive.getAreaEn(),
+                descriptive.getAreaFr()
+            ),
+            LanguagesResponseDto.of(
+                descriptive.getLengthOfSpanHy(),
+                descriptive.getLengthOfSpanEn(),
+                descriptive.getLengthOfSpanFr()
             ),
             LanguagesResponseDto.of(
                 descriptive.getStateOfMonumentHy(),

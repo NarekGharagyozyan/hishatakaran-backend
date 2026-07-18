@@ -27,7 +27,7 @@ public class MonumentResponseDto {
     private final LanguagesResponseDto history;
     private final LanguagesResponseDto originalAffiliation;
     private final LanguagesResponseDto storageUnitName;
-    private final LanguagesResponseDto condition;
+    private final LanguagesResponseDto individuallyCertifiablePartsOfTheStorageUnit;
 
     private final List<String> images;
     private final List<MonumentVideoResponseDto> videos;

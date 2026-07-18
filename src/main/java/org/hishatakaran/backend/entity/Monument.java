@@ -103,12 +103,12 @@ public class Monument extends BaseEntity{
     @Column(columnDefinition = "TEXT")
     private String storageUnitNameFr;
 
-    @Column(name = "monument_condition_hy")
-    private String conditionHy;
-    @Column(name = "monument_condition_en")
-    private String conditionEn;
-    @Column(name = "monument_condition_fr")
-    private String conditionFr;
+    @Column(columnDefinition = "TEXT")
+    private String individuallyCertifiablePartsOfTheStorageUnitHy;
+    @Column(columnDefinition = "TEXT")
+    private String individuallyCertifiablePartsOfTheStorageUnitEn;
+    @Column(columnDefinition = "TEXT")
+    private String individuallyCertifiablePartsOfTheStorageUnitFr;
 
     @ElementCollection
     @CollectionTable(name = "monument_images", joinColumns = @JoinColumn(name = "monument_id"))
@@ -142,8 +142,7 @@ public class Monument extends BaseEntity{
     private String signature;
     private Boolean showInMainPage;
 
-    public Monument(
-        Boolean isPublished,
+    public Monument(Boolean isPublished,
         String nameHy,
         String nameEn,
         String nameFr,
@@ -165,18 +164,20 @@ public class Monument extends BaseEntity{
         String storageUnitNameHy,
         String storageUnitNameEn,
         String storageUnitNameFr,
-        String conditionHy,
-        String conditionEn,
-        String conditionFr,
+        String individuallyCertifiablePartsOfTheStorageUnitHy,
+        String individuallyCertifiablePartsOfTheStorageUnitEn,
+        String individuallyCertifiablePartsOfTheStorageUnitFr,
         List<String> images,
         List<MonumentVideo> videos,
         List<String> measurements,
+        List<Footnote> footnotes,
         List<Bibliography> bibliography,
         Topographic topographics,
         HistoricalReference historicalReferences,
         DescriptiveCharacteristicReference descriptiveCharacteristics,
-        String signature)
-    {
+        String signature,
+        Boolean showInMainPage
+    ) {
         this.isPublished = isPublished;
         this.nameHy = nameHy;
         this.nameEn = nameEn;
@@ -199,16 +200,18 @@ public class Monument extends BaseEntity{
         this.storageUnitNameHy = storageUnitNameHy;
         this.storageUnitNameEn = storageUnitNameEn;
         this.storageUnitNameFr = storageUnitNameFr;
-        this.conditionHy = conditionHy;
-        this.conditionEn = conditionEn;
-        this.conditionFr = conditionFr;
+        this.individuallyCertifiablePartsOfTheStorageUnitHy = individuallyCertifiablePartsOfTheStorageUnitHy;
+        this.individuallyCertifiablePartsOfTheStorageUnitEn = individuallyCertifiablePartsOfTheStorageUnitEn;
+        this.individuallyCertifiablePartsOfTheStorageUnitFr = individuallyCertifiablePartsOfTheStorageUnitFr;
         this.images = images;
         this.videos = videos;
         this.measurements = measurements;
+        this.footnotes = footnotes;
         this.bibliography = bibliography;
         this.topographics = topographics;
         this.historicalReferences = historicalReferences;
         this.descriptiveCharacteristics = descriptiveCharacteristics;
         this.signature = signature;
+        this.showInMainPage = showInMainPage;
     }
 }

@@ -11,9 +11,13 @@ public class HistoricalReferenceResponseDto {
 
     private final Long id;
     private final LanguagesResponseDto culturalAffiliation;
-    private final LanguagesResponseDto century;
     private final LanguagesResponseDto justificationOfTheNumberingBasedOnLithography;
+    private final LanguagesResponseDto justificationOfTheNumberingBasedOnReliableDocument;
+    private final LanguagesResponseDto justificationOfTheNumberingBasedOnBibliographicalSources;
+    private final LanguagesResponseDto justificationOfTheNumberingAccordingIconography;
+    private final LanguagesResponseDto justificationOfTheNumberingBasedOnEvidence;
     private final LanguagesResponseDto chronologicalTableOfTheStud;
     private final LanguagesResponseDto chronologicalTableOfTheMonumentsStudy;
     private final LanguagesResponseDto author;
+    private final LanguagesResponseDto briefHistoricalOverview;
 }

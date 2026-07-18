@@ -58,10 +58,10 @@ public class MonumentMapper {
             m.getStorageUnitNameEn(),
             m.getStorageUnitNameFr()
         ));
-        monumentDtoBuilder.condition(LanguagesResponseDto.of(
-            m.getConditionHy(),
-            m.getConditionEn(),
-            m.getConditionFr()
+        monumentDtoBuilder.individuallyCertifiablePartsOfTheStorageUnit(LanguagesResponseDto.of(
+            m.getIndividuallyCertifiablePartsOfTheStorageUnitHy(),
+            m.getIndividuallyCertifiablePartsOfTheStorageUnitEn(),
+            m.getIndividuallyCertifiablePartsOfTheStorageUnitFr()
         ));
 
         monumentDtoBuilder.images(m.getImages());

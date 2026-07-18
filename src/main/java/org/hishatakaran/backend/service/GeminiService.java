@@ -605,7 +605,7 @@ NOW EXTRACT DATA FROM THIS HTML:
     data.put("history", monument.getHistoryHy());
     data.put("originalAffiliation", monument.getOriginalAffiliationHy());
     data.put("storageUnitName", monument.getStorageUnitNameHy());
-    data.put("condition", monument.getConditionHy());
+    data.put("individuallyCertifiablePartsOfTheStorageUnit", monument.getIndividuallyCertifiablePartsOfTheStorageUnitHy());
 
     data.put(
         "videos",
@@ -714,10 +714,14 @@ NOW EXTRACT DATA FROM THIS HTML:
     Map<String,Object> data = new HashMap<>();
 
     data.put("culturalAffiliation", reference.getCulturalAffiliationHy());
-    data.put("century", reference.getCenturyHy());
+    data.put("justificationOfTheNumberingBasedOnReliableDocument", reference.getJustificationOfTheNumberingBasedOnReliableDocumentHy());
+    data.put("justificationOfTheNumberingBasedOnBibliographicalSources", reference.getJustificationOfTheNumberingBasedOnBibliographicalSourcesHy());
+    data.put("justificationOfTheNumberingAccordingIconography", reference.getJustificationOfTheNumberingAccordingIconographyHy());
+    data.put("justificationOfTheNumberingBasedOnEvidence", reference.getJustificationOfTheNumberingBasedOnEvidenceHy());
     data.put("justificationOfTheNumberingBasedOnLithography", reference.getJustificationOfTheNumberingBasedOnLithographyHy());
     data.put("chronologicalTableOfTheStud", reference.getChronologicalTableOfTheStudHy());
     data.put("chronologicalTableOfTheMonumentsStudy", reference.getChronologicalTableOfTheMonumentsStudyHy());
+    data.put("briefHistoricalOverview", reference.getBriefHistoricalOverviewHy());
     data.put("author", reference.getAuthorHy());
 
     return data;
@@ -734,11 +738,22 @@ NOW EXTRACT DATA FROM THIS HTML:
     Map<String,Object> data = new HashMap<>();
 
     data.put("theBuildingMaterial", reference.getTheBuildingMaterialHy());
+    data.put("archeologicalOverviewStratigraphyFindings", reference.getArcheologicalOverviewStratigraphyFindingsHy());
+    data.put("architecturalOverview", reference.getArchitecturalOverviewHy());
+    data.put("decorativeAndMonumentalFeaturesCompositionColours", reference.getDecorativeAndMonumentalFeaturesCompositionColoursHy());
+    data.put("openingsWindows", reference.getOpeningsWindowsHy());
     data.put("openingsEntrances", reference.getOpeningsEntrancesHy());
     data.put("constructions", reference.getConstructionsHy());
     data.put("roof", reference.getRoofHy());
     data.put("type", reference.getTypeHy());
-    data.put("color", reference.getColorHy());
+    data.put("levelsOfConstruction", reference.getLevelsOfConstructionHy());
+    data.put("exterior", reference.getExteriorHy());
+    data.put("length", reference.getLengthHy());
+    data.put("width", reference.getWidthHy());
+    data.put("height", reference.getHeightHy());
+    data.put("depthThickness", reference.getDepthThicknessHy());
+    data.put("area", reference.getAreaHy());
+    data.put("lengthOfSpan", reference.getLengthOfSpanHy());
     data.put("implementationTechnique", reference.getImplementationTechniqueHy());
     data.put("stateOfMonument", reference.getStateOfMonumentHy());
     data.put("valuation", reference.getValuationHy());
@@ -756,7 +771,7 @@ NOW EXTRACT DATA FROM THIS HTML:
     properties.put("history", stringSchema());
     properties.put("originalAffiliation", stringSchema());
     properties.put("storageUnitName", stringSchema());
-    properties.put("condition", stringSchema());
+    properties.put("individuallyCertifiablePartsOfTheStorageUnit", stringSchema());
     properties.put("topographics", topographicSchema());
     properties.put("historicalReferences", historicalSchema());
     properties.put("descriptiveCharacteristics", descriptiveSchema());
@@ -857,7 +872,22 @@ NOW EXTRACT DATA FROM THIS HTML:
     );
 
     properties.put(
-        "century",
+        "justificationOfTheNumberingBasedOnReliableDocument",
+        stringSchema()
+    );
+
+    properties.put(
+        "justificationOfTheNumberingBasedOnBibliographicalSources",
+        stringSchema()
+    );
+
+    properties.put(
+        "justificationOfTheNumberingAccordingIconography",
+        stringSchema()
+    );
+
+    properties.put(
+        "justificationOfTheNumberingBasedOnEvidence",
         stringSchema()
     );
 
@@ -881,6 +911,11 @@ NOW EXTRACT DATA FROM THIS HTML:
         stringSchema()
     );
 
+    properties.put(
+        "briefHistoricalOverview",
+        stringSchema()
+    );
+
 
     return Schema.builder()
         .type(Type.Known.OBJECT)
@@ -894,6 +929,21 @@ NOW EXTRACT DATA FROM THIS HTML:
 
 
     properties.put(
+        "archeologicalOverviewStratigraphyFindings",
+        stringSchema()
+    );
+
+    properties.put(
+        "architecturalOverview",
+        stringSchema()
+    );
+
+    properties.put(
+        "decorativeAndMonumentalFeaturesCompositionColours",
+        stringSchema()
+    );
+
+    properties.put(
         "theBuildingMaterial",
         stringSchema()
     );
@@ -904,7 +954,17 @@ NOW EXTRACT DATA FROM THIS HTML:
     );
 
     properties.put(
+        "openingsWindows",
+        stringSchema()
+    );
+
+    properties.put(
         "constructions",
+        stringSchema()
+    );
+
+    properties.put(
+        "levelsOfConstruction",
         stringSchema()
     );
 
@@ -919,12 +979,42 @@ NOW EXTRACT DATA FROM THIS HTML:
     );
 
     properties.put(
-        "color",
+        "exterior",
         stringSchema()
     );
 
     properties.put(
         "implementationTechnique",
+        stringSchema()
+    );
+
+    properties.put(
+        "length",
+        stringSchema()
+    );
+
+    properties.put(
+        "width",
+        stringSchema()
+    );
+
+    properties.put(
+        "height",
+        stringSchema()
+    );
+
+    properties.put(
+        "depthThickness",
+        stringSchema()
+    );
+
+    properties.put(
+        "area",
+        stringSchema()
+    );
+
+    properties.put(
+        "lengthOfSpan",
         stringSchema()
     );
 

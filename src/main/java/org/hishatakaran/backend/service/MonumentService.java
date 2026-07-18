@@ -62,7 +62,7 @@ public class MonumentService {
             .anotherNamesHy(monumentRequestDto.getAnotherNames())
             .historyHy(monumentRequestDto.getHistory())
             .originalAffiliationHy(monumentRequestDto.getOriginalAffiliation())
-            .conditionHy(monumentRequestDto.getCondition())
+            .individuallyCertifiablePartsOfTheStorageUnitHy(monumentRequestDto.getIndividuallyCertifiablePartsOfTheStorageUnit())
             .measurements(monumentRequestDto.getMeasurements())
             .images(monumentRequestDto.getImages())
             .storageUnitNameHy(monumentRequestDto.getStorageUnitName())
@@ -119,21 +119,36 @@ public class MonumentService {
                 monumentRequestDto.getHistoricalReferences().getChronologicalTableOfTheStud())
             .chronologicalTableOfTheMonumentsStudyHy(
                 monumentRequestDto.getHistoricalReferences().getChronologicalTableOfTheMonumentsStudy())
-            .centuryHy(monumentRequestDto.getHistoricalReferences().getCentury())
+            .justificationOfTheNumberingBasedOnReliableDocumentHy(monumentRequestDto.getHistoricalReferences().getJustificationOfTheNumberingBasedOnReliableDocument())
+            .justificationOfTheNumberingBasedOnBibliographicalSourcesHy(monumentRequestDto.getHistoricalReferences().getJustificationOfTheNumberingBasedOnBibliographicalSources())
+            .justificationOfTheNumberingAccordingIconographyHy(monumentRequestDto.getHistoricalReferences().getJustificationOfTheNumberingAccordingIconography())
+            .justificationOfTheNumberingBasedOnEvidenceHy(monumentRequestDto.getHistoricalReferences().getJustificationOfTheNumberingBasedOnEvidence())
             .authorHy(monumentRequestDto.getHistoricalReferences().getAuthor())
+            .briefHistoricalOverviewHy(monumentRequestDto.getHistoricalReferences().getBriefHistoricalOverview())
             .justificationOfTheNumberingBasedOnLithographyHy(
                 monumentRequestDto.getHistoricalReferences().getJustificationOfTheNumberingBasedOnLithography())
             .build();
 
         DescriptiveCharacteristicReference descriptiveCharacteristicReference = DescriptiveCharacteristicReference.builder()
             .monument(monument)
+            .archeologicalOverviewStratigraphyFindingsHy(monumentRequestDto.getDescriptiveCharacteristics().getArcheologicalOverviewStratigraphyFindings())
+            .architecturalOverviewHy(monumentRequestDto.getDescriptiveCharacteristics().getArchitecturalOverview())
+            .decorativeAndMonumentalFeaturesCompositionColoursHy(monumentRequestDto.getDescriptiveCharacteristics().getDecorativeAndMonumentalFeaturesCompositionColours())
+            .openingsWindowsHy(monumentRequestDto.getDescriptiveCharacteristics().getOpeningsWindows())
             .theBuildingMaterialHy(monumentRequestDto.getDescriptiveCharacteristics().getTheBuildingMaterial())
-            .colorHy(monumentRequestDto.getDescriptiveCharacteristics().getColor())
+            .levelsOfConstructionHy(monumentRequestDto.getDescriptiveCharacteristics().getLevelsOfConstruction())
             .openingsEntrancesHy(monumentRequestDto.getDescriptiveCharacteristics().getOpeningsEntrances())
             .constructionsHy(monumentRequestDto.getDescriptiveCharacteristics().getConstructions())
+            .exteriorHy(monumentRequestDto.getDescriptiveCharacteristics().getExterior())
             .roofHy(monumentRequestDto.getDescriptiveCharacteristics().getRoof())
             .typeHy(monumentRequestDto.getDescriptiveCharacteristics().getType())
             .implementationTechniqueHy(monumentRequestDto.getDescriptiveCharacteristics().getImplementationTechnique())
+            .lengthHy(monumentRequestDto.getDescriptiveCharacteristics().getLength())
+            .widthHy(monumentRequestDto.getDescriptiveCharacteristics().getWidth())
+            .heightHy(monumentRequestDto.getDescriptiveCharacteristics().getHeight())
+            .depthThicknessHy(monumentRequestDto.getDescriptiveCharacteristics().getDepthThickness())
+            .areaHy(monumentRequestDto.getDescriptiveCharacteristics().getArea())
+            .lengthOfSpanHy(monumentRequestDto.getDescriptiveCharacteristics().getLengthOfSpan())
             .stateOfMonumentHy(monumentRequestDto.getDescriptiveCharacteristics().getStateOfMonument())
             .valuationHy(monumentRequestDto.getDescriptiveCharacteristics().getValuation())
             .build();
@@ -213,11 +228,11 @@ public class MonumentService {
             monument.setStorageUnitNameFr(monumentEditDto.getStorageUnitName().getFr());
         }
 
-        if (monumentEditDto.getCondition() != null)
+        if (monumentEditDto.getIndividuallyCertifiablePartsOfTheStorageUnit() != null)
         {
-            monument.setConditionHy(monumentEditDto.getCondition().getHy());
-            monument.setConditionEn(monumentEditDto.getCondition().getEn());
-            monument.setConditionFr(monumentEditDto.getCondition().getFr());
+            monument.setIndividuallyCertifiablePartsOfTheStorageUnitHy(monumentEditDto.getIndividuallyCertifiablePartsOfTheStorageUnit().getHy());
+            monument.setIndividuallyCertifiablePartsOfTheStorageUnitEn(monumentEditDto.getIndividuallyCertifiablePartsOfTheStorageUnit().getEn());
+            monument.setIndividuallyCertifiablePartsOfTheStorageUnitFr(monumentEditDto.getIndividuallyCertifiablePartsOfTheStorageUnit().getFr());
         }
 
         monument.setImages(monumentEditDto.getImages());
@@ -388,17 +403,17 @@ public class MonumentService {
                 ? monumentEditDto.getHistoricalReferences().getCulturalAffiliation().getFr()
                 : null);
 
-        historical.setCenturyHy(
-            monumentEditDto.getHistoricalReferences().getCentury() != null
-                ? monumentEditDto.getHistoricalReferences().getCentury().getHy()
+        historical.setJustificationOfTheNumberingBasedOnReliableDocumentHy(
+            monumentEditDto.getHistoricalReferences().getJustificationOfTheNumberingBasedOnReliableDocument() != null
+                ? monumentEditDto.getHistoricalReferences().getJustificationOfTheNumberingBasedOnReliableDocument().getHy()
                 : null);
-        historical.setCenturyEn(
-            monumentEditDto.getHistoricalReferences().getCentury() != null
-                ? monumentEditDto.getHistoricalReferences().getCentury().getEn()
+        historical.setJustificationOfTheNumberingBasedOnReliableDocumentEn(
+            monumentEditDto.getHistoricalReferences().getJustificationOfTheNumberingBasedOnReliableDocument() != null
+                ? monumentEditDto.getHistoricalReferences().getJustificationOfTheNumberingBasedOnReliableDocument().getEn()
                 : null);
-        historical.setCenturyFr(
-            monumentEditDto.getHistoricalReferences().getCentury() != null
-                ? monumentEditDto.getHistoricalReferences().getCentury().getFr()
+        historical.setJustificationOfTheNumberingBasedOnReliableDocumentFr(
+            monumentEditDto.getHistoricalReferences().getJustificationOfTheNumberingBasedOnReliableDocument() != null
+                ? monumentEditDto.getHistoricalReferences().getJustificationOfTheNumberingBasedOnReliableDocument().getFr()
                 : null);
 
         historical.setJustificationOfTheNumberingBasedOnLithographyHy(
@@ -412,6 +427,45 @@ public class MonumentService {
         historical.setJustificationOfTheNumberingBasedOnLithographyFr(
             monumentEditDto.getHistoricalReferences().getJustificationOfTheNumberingBasedOnLithography() != null
                 ? monumentEditDto.getHistoricalReferences().getJustificationOfTheNumberingBasedOnLithography().getFr()
+                : null);
+
+        historical.setJustificationOfTheNumberingBasedOnBibliographicalSourcesHy(
+            monumentEditDto.getHistoricalReferences().getJustificationOfTheNumberingBasedOnBibliographicalSources() != null
+                ? monumentEditDto.getHistoricalReferences().getJustificationOfTheNumberingBasedOnBibliographicalSources().getHy()
+                : null);
+        historical.setJustificationOfTheNumberingBasedOnBibliographicalSourcesEn(
+            monumentEditDto.getHistoricalReferences().getJustificationOfTheNumberingBasedOnBibliographicalSources() != null
+                ? monumentEditDto.getHistoricalReferences().getJustificationOfTheNumberingBasedOnBibliographicalSources().getEn()
+                : null);
+        historical.setJustificationOfTheNumberingBasedOnBibliographicalSourcesFr(
+            monumentEditDto.getHistoricalReferences().getJustificationOfTheNumberingBasedOnBibliographicalSources() != null
+                ? monumentEditDto.getHistoricalReferences().getJustificationOfTheNumberingBasedOnBibliographicalSources().getFr()
+                : null);
+
+        historical.setJustificationOfTheNumberingAccordingIconographyHy(
+            monumentEditDto.getHistoricalReferences().getJustificationOfTheNumberingAccordingIconography() != null
+                ? monumentEditDto.getHistoricalReferences().getJustificationOfTheNumberingAccordingIconography().getHy()
+                : null);
+        historical.setJustificationOfTheNumberingAccordingIconographyEn(
+            monumentEditDto.getHistoricalReferences().getJustificationOfTheNumberingAccordingIconography() != null
+                ? monumentEditDto.getHistoricalReferences().getJustificationOfTheNumberingAccordingIconography().getEn()
+                : null);
+        historical.setJustificationOfTheNumberingAccordingIconographyFr(
+            monumentEditDto.getHistoricalReferences().getJustificationOfTheNumberingAccordingIconography() != null
+                ? monumentEditDto.getHistoricalReferences().getJustificationOfTheNumberingAccordingIconography().getFr()
+                : null);
+
+        historical.setJustificationOfTheNumberingBasedOnEvidenceHy(
+            monumentEditDto.getHistoricalReferences().getJustificationOfTheNumberingBasedOnEvidence() != null
+                ? monumentEditDto.getHistoricalReferences().getJustificationOfTheNumberingBasedOnEvidence().getHy()
+                : null);
+        historical.setJustificationOfTheNumberingBasedOnEvidenceEn(
+            monumentEditDto.getHistoricalReferences().getJustificationOfTheNumberingBasedOnEvidence() != null
+                ? monumentEditDto.getHistoricalReferences().getJustificationOfTheNumberingBasedOnEvidence().getEn()
+                : null);
+        historical.setJustificationOfTheNumberingBasedOnEvidenceFr(
+            monumentEditDto.getHistoricalReferences().getJustificationOfTheNumberingBasedOnEvidence() != null
+                ? monumentEditDto.getHistoricalReferences().getJustificationOfTheNumberingBasedOnEvidence().getFr()
                 : null);
 
         historical.setChronologicalTableOfTheStudHy(
@@ -453,6 +507,19 @@ public class MonumentService {
                 ? monumentEditDto.getHistoricalReferences().getAuthor().getFr()
                 : null);
 
+        historical.setBriefHistoricalOverviewHy(
+            monumentEditDto.getHistoricalReferences().getBriefHistoricalOverview() != null
+                ? monumentEditDto.getHistoricalReferences().getBriefHistoricalOverview().getHy()
+                : null);
+        historical.setBriefHistoricalOverviewEn(
+            monumentEditDto.getHistoricalReferences().getBriefHistoricalOverview() != null
+                ? monumentEditDto.getHistoricalReferences().getBriefHistoricalOverview().getEn()
+                : null);
+        historical.setBriefHistoricalOverviewFr(
+            monumentEditDto.getHistoricalReferences().getBriefHistoricalOverview() != null
+                ? monumentEditDto.getHistoricalReferences().getBriefHistoricalOverview().getFr()
+                : null);
+
         DescriptiveCharacteristicReference descriptive = monument.getDescriptiveCharacteristics();
 
         if (descriptive == null) {
@@ -460,6 +527,58 @@ public class MonumentService {
             descriptive.setMonument(monument);
             monument.setDescriptiveCharacteristics(descriptive);
         }
+
+        descriptive.setArcheologicalOverviewStratigraphyFindingsHy(
+            monumentEditDto.getDescriptiveCharacteristics().getArcheologicalOverviewStratigraphyFindings() != null
+                ? monumentEditDto.getDescriptiveCharacteristics().getArcheologicalOverviewStratigraphyFindings().getHy()
+                : null);
+        descriptive.setArcheologicalOverviewStratigraphyFindingsEn(
+            monumentEditDto.getDescriptiveCharacteristics().getArcheologicalOverviewStratigraphyFindings() != null
+                ? monumentEditDto.getDescriptiveCharacteristics().getArcheologicalOverviewStratigraphyFindings().getEn()
+                : null);
+        descriptive.setArcheologicalOverviewStratigraphyFindingsFr(
+            monumentEditDto.getDescriptiveCharacteristics().getArcheologicalOverviewStratigraphyFindings() != null
+                ? monumentEditDto.getDescriptiveCharacteristics().getArcheologicalOverviewStratigraphyFindings().getFr()
+                : null);
+
+        descriptive.setArchitecturalOverviewHy(
+            monumentEditDto.getDescriptiveCharacteristics().getArchitecturalOverview() != null
+                ? monumentEditDto.getDescriptiveCharacteristics().getArchitecturalOverview().getHy()
+                : null);
+        descriptive.setArchitecturalOverviewEn(
+            monumentEditDto.getDescriptiveCharacteristics().getArchitecturalOverview() != null
+                ? monumentEditDto.getDescriptiveCharacteristics().getArchitecturalOverview().getEn()
+                : null);
+        descriptive.setArchitecturalOverviewFr(
+            monumentEditDto.getDescriptiveCharacteristics().getArchitecturalOverview() != null
+                ? monumentEditDto.getDescriptiveCharacteristics().getArchitecturalOverview().getFr()
+                : null);
+
+        descriptive.setDecorativeAndMonumentalFeaturesCompositionColoursHy(
+            monumentEditDto.getDescriptiveCharacteristics().getDecorativeAndMonumentalFeaturesCompositionColours() != null
+                ? monumentEditDto.getDescriptiveCharacteristics().getDecorativeAndMonumentalFeaturesCompositionColours().getHy()
+                : null);
+        descriptive.setDecorativeAndMonumentalFeaturesCompositionColoursEn(
+            monumentEditDto.getDescriptiveCharacteristics().getDecorativeAndMonumentalFeaturesCompositionColours() != null
+                ? monumentEditDto.getDescriptiveCharacteristics().getDecorativeAndMonumentalFeaturesCompositionColours().getEn()
+                : null);
+        descriptive.setDecorativeAndMonumentalFeaturesCompositionColoursFr(
+            monumentEditDto.getDescriptiveCharacteristics().getDecorativeAndMonumentalFeaturesCompositionColours() != null
+                ? monumentEditDto.getDescriptiveCharacteristics().getDecorativeAndMonumentalFeaturesCompositionColours().getFr()
+                : null);
+
+        descriptive.setOpeningsWindowsHy(
+            monumentEditDto.getDescriptiveCharacteristics().getOpeningsWindows() != null
+                ? monumentEditDto.getDescriptiveCharacteristics().getOpeningsWindows().getHy()
+                : null);
+        descriptive.setOpeningsWindowsEn(
+            monumentEditDto.getDescriptiveCharacteristics().getOpeningsWindows() != null
+                ? monumentEditDto.getDescriptiveCharacteristics().getOpeningsWindows().getEn()
+                : null);
+        descriptive.setOpeningsWindowsFr(
+            monumentEditDto.getDescriptiveCharacteristics().getOpeningsWindows() != null
+                ? monumentEditDto.getDescriptiveCharacteristics().getOpeningsWindows().getFr()
+                : null);
 
         descriptive.setTheBuildingMaterialHy(
             monumentEditDto.getDescriptiveCharacteristics().getBuildingMaterial() != null
@@ -487,6 +606,19 @@ public class MonumentService {
                 ? monumentEditDto.getDescriptiveCharacteristics().getOpeningsEntrances().getFr()
                 : null);
 
+        descriptive.setLevelsOfConstructionHy(
+            monumentEditDto.getDescriptiveCharacteristics().getLevelsOfConstruction() != null
+                ? monumentEditDto.getDescriptiveCharacteristics().getLevelsOfConstruction().getHy()
+                : null);
+        descriptive.setLevelsOfConstructionEn(
+            monumentEditDto.getDescriptiveCharacteristics().getLevelsOfConstruction() != null
+                ? monumentEditDto.getDescriptiveCharacteristics().getLevelsOfConstruction().getEn()
+                : null);
+        descriptive.setLevelsOfConstructionFr(
+            monumentEditDto.getDescriptiveCharacteristics().getLevelsOfConstruction() != null
+                ? monumentEditDto.getDescriptiveCharacteristics().getLevelsOfConstruction().getFr()
+                : null);
+
         descriptive.setConstructionsHy(
             monumentEditDto.getDescriptiveCharacteristics().getConstructions() != null
                 ? monumentEditDto.getDescriptiveCharacteristics().getConstructions().getHy()
@@ -498,6 +630,19 @@ public class MonumentService {
         descriptive.setConstructionsFr(
             monumentEditDto.getDescriptiveCharacteristics().getConstructions() != null
                 ? monumentEditDto.getDescriptiveCharacteristics().getConstructions().getFr()
+                : null);
+
+        descriptive.setExteriorHy(
+            monumentEditDto.getDescriptiveCharacteristics().getExterior() != null
+                ? monumentEditDto.getDescriptiveCharacteristics().getExterior().getHy()
+                : null);
+        descriptive.setExteriorEn(
+            monumentEditDto.getDescriptiveCharacteristics().getExterior() != null
+                ? monumentEditDto.getDescriptiveCharacteristics().getExterior().getEn()
+                : null);
+        descriptive.setExteriorFr(
+            monumentEditDto.getDescriptiveCharacteristics().getExterior() != null
+                ? monumentEditDto.getDescriptiveCharacteristics().getExterior().getFr()
                 : null);
 
         descriptive.setRoofHy(
@@ -526,17 +671,43 @@ public class MonumentService {
                 ? monumentEditDto.getDescriptiveCharacteristics().getType().getFr()
                 : null);
 
-        descriptive.setColorHy(
-            monumentEditDto.getDescriptiveCharacteristics().getColor() != null
-                ? monumentEditDto.getDescriptiveCharacteristics().getColor().getHy()
+        descriptive.setLengthHy(
+            monumentEditDto.getDescriptiveCharacteristics().getLength() != null
+                ? monumentEditDto.getDescriptiveCharacteristics().getLength().getHy()
                 : null);
-        descriptive.setColorEn(
-            monumentEditDto.getDescriptiveCharacteristics().getColor() != null
-                ? monumentEditDto.getDescriptiveCharacteristics().getColor().getEn()
+        descriptive.setLengthEn(
+            monumentEditDto.getDescriptiveCharacteristics().getLength() != null
+                ? monumentEditDto.getDescriptiveCharacteristics().getLength().getEn()
                 : null);
-        descriptive.setColorFr(
-            monumentEditDto.getDescriptiveCharacteristics().getColor() != null
-                ? monumentEditDto.getDescriptiveCharacteristics().getColor().getFr()
+        descriptive.setLengthFr(
+            monumentEditDto.getDescriptiveCharacteristics().getLength() != null
+                ? monumentEditDto.getDescriptiveCharacteristics().getLength().getFr()
+                : null);
+
+        descriptive.setWidthHy(
+            monumentEditDto.getDescriptiveCharacteristics().getWidth() != null
+                ? monumentEditDto.getDescriptiveCharacteristics().getWidth().getHy()
+                : null);
+        descriptive.setWidthEn(
+            monumentEditDto.getDescriptiveCharacteristics().getWidth() != null
+                ? monumentEditDto.getDescriptiveCharacteristics().getWidth().getEn()
+                : null);
+        descriptive.setWidthFr(
+            monumentEditDto.getDescriptiveCharacteristics().getWidth() != null
+                ? monumentEditDto.getDescriptiveCharacteristics().getWidth().getFr()
+                : null);
+
+        descriptive.setHeightHy(
+            monumentEditDto.getDescriptiveCharacteristics().getHeight() != null
+                ? monumentEditDto.getDescriptiveCharacteristics().getHeight().getHy()
+                : null);
+        descriptive.setHeightEn(
+            monumentEditDto.getDescriptiveCharacteristics().getHeight() != null
+                ? monumentEditDto.getDescriptiveCharacteristics().getHeight().getEn()
+                : null);
+        descriptive.setHeightFr(
+            monumentEditDto.getDescriptiveCharacteristics().getHeight() != null
+                ? monumentEditDto.getDescriptiveCharacteristics().getHeight().getFr()
                 : null);
 
         descriptive.setImplementationTechniqueHy(
@@ -550,6 +721,45 @@ public class MonumentService {
         descriptive.setImplementationTechniqueFr(
             monumentEditDto.getDescriptiveCharacteristics().getImplementationTechnique() != null
                 ? monumentEditDto.getDescriptiveCharacteristics().getImplementationTechnique().getFr()
+                : null);
+
+        descriptive.setDepthThicknessHy(
+            monumentEditDto.getDescriptiveCharacteristics().getDepthThickness() != null
+                ? monumentEditDto.getDescriptiveCharacteristics().getDepthThickness().getHy()
+                : null);
+        descriptive.setDepthThicknessEn(
+            monumentEditDto.getDescriptiveCharacteristics().getDepthThickness() != null
+                ? monumentEditDto.getDescriptiveCharacteristics().getDepthThickness().getEn()
+                : null);
+        descriptive.setDepthThicknessFr(
+            monumentEditDto.getDescriptiveCharacteristics().getDepthThickness() != null
+                ? monumentEditDto.getDescriptiveCharacteristics().getDepthThickness().getFr()
+                : null);
+
+        descriptive.setAreaHy(
+            monumentEditDto.getDescriptiveCharacteristics().getArea() != null
+                ? monumentEditDto.getDescriptiveCharacteristics().getArea().getHy()
+                : null);
+        descriptive.setAreaEn(
+            monumentEditDto.getDescriptiveCharacteristics().getArea() != null
+                ? monumentEditDto.getDescriptiveCharacteristics().getArea().getEn()
+                : null);
+        descriptive.setAreaFr(
+            monumentEditDto.getDescriptiveCharacteristics().getArea() != null
+                ? monumentEditDto.getDescriptiveCharacteristics().getArea().getFr()
+                : null);
+
+        descriptive.setLengthOfSpanHy(
+            monumentEditDto.getDescriptiveCharacteristics().getLengthOfSpan() != null
+                ? monumentEditDto.getDescriptiveCharacteristics().getLengthOfSpan().getHy()
+                : null);
+        descriptive.setLengthOfSpanEn(
+            monumentEditDto.getDescriptiveCharacteristics().getLengthOfSpan() != null
+                ? monumentEditDto.getDescriptiveCharacteristics().getLengthOfSpan().getEn()
+                : null);
+        descriptive.setLengthOfSpanFr(
+            monumentEditDto.getDescriptiveCharacteristics().getLengthOfSpan() != null
+                ? monumentEditDto.getDescriptiveCharacteristics().getLengthOfSpan().getFr()
                 : null);
 
         descriptive.setStateOfMonumentHy(
