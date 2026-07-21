@@ -2,6 +2,7 @@ package org.hishatakaran.backend.controller;
 
 import java.util.List;
 
+import org.hishatakaran.backend.model.MonumentResponseDto;
 import org.hishatakaran.backend.model.ProgramEditDto;
 import org.hishatakaran.backend.model.ProgramRequestDto;
 import org.hishatakaran.backend.model.ProgramResponseDto;
@@ -34,6 +35,13 @@ public class ProgramController {
 
         return ResponseEntity.ok(programService.postProgram(programRequestDto));
 
+    }
+
+    @PostMapping("/admin/programs/{id}/publish")
+    public ProgramResponseDto publishProgram(
+        @PathVariable Long id
+    ) {
+        return programService.publish(id);
     }
 
     @PostMapping("/admin/programs/{id}/translate/{language}")

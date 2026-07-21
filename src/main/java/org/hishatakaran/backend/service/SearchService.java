@@ -50,7 +50,7 @@ public class SearchService {
                 List<String> fields = List.of("titleHy", "titleEn", "titleFr", "descriptionHy", "descriptionEn",
                     "descriptionFr");
                 return programRepository.findAll(SearchSpecifications.containsTextInFields(queryText, fields))
-                    .stream().map(ProgramMapper::toResponseDto).toList();
+                    .stream().map(ProgramMapper::toDto).toList();
             })
         );
 

@@ -7,7 +7,7 @@ import org.hishatakaran.backend.model.ProgramResponseDto;
 
 public class ProgramMapper {
 
-  public static ProgramResponseDto toResponseDto(Program program) {
+  public static ProgramResponseDto toDto(Program program) {
     return new ProgramResponseDto(
         program.getId(),
         program.getIsPublished(),

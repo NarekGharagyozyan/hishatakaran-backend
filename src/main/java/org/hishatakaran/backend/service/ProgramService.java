@@ -27,14 +27,26 @@ public class ProgramService {
   public List<ProgramResponseDto> getAllPrograms() {
     return programRepository.findAll()
         .stream()
-        .map(ProgramMapper::toResponseDto)
+        .map(ProgramMapper::toDto)
         .toList();
   }
 
   public ProgramResponseDto getProgramById(Long id) {
-    return ProgramMapper.toResponseDto(Objects.requireNonNull(programRepository.findById(id)
+    return ProgramMapper.toDto(Objects.requireNonNull(programRepository.findById(id)
         .orElse(null)
     ));
+  }
+
+  @Transactional
+  public ProgramResponseDto publish(
+      Long id
+  ) {
+    Program program = programRepository.findById(id).orElseThrow(
+        () -> new RuntimeException("Program not found")
+    );
+    program.setIsPublished(!program.getIsPublished());
+    Program updatedProgram = programRepository.save(program);
+    return ProgramMapper.toDto(updatedProgram);
   }
 
   public ProgramResponseDto editProgram(Long id, ProgramEditDto programEditDto) {
@@ -89,7 +101,7 @@ public class ProgramService {
     program.setImages(programEditDto.getImages());
 
     Program editedProgram = programRepository.save(program);
-    return ProgramMapper.toResponseDto(editedProgram);
+    return ProgramMapper.toDto(editedProgram);
   }
 
   public ProgramResponseDto postProgram(
@@ -118,7 +130,7 @@ public class ProgramService {
     program.setPdf(programRequestDto.getPdf());
 
     Program savedProgram = programRepository.save(program);
-    return ProgramMapper.toResponseDto(savedProgram);
+    return ProgramMapper.toDto(savedProgram);
   }
 
   @Transactional
@@ -156,7 +168,7 @@ public class ProgramService {
         language
     );
 
-    return ProgramMapper.toResponseDto(
+    return ProgramMapper.toDto(
         programRepository.save(program)
     );
   }
