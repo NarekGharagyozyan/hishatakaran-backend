@@ -3,6 +3,7 @@ package org.hishatakaran.backend.mapper;
 import org.hishatakaran.backend.entity.Monument;
 import org.hishatakaran.backend.model.BibliographyResponseDto;
 import org.hishatakaran.backend.model.FootnoteResponseDto;
+import org.hishatakaran.backend.model.ImageResponseDto;
 import org.hishatakaran.backend.model.LanguagesResponseDto;
 import org.hishatakaran.backend.model.MonumentResponseDto;
 import org.hishatakaran.backend.model.MonumentVideoResponseDto;
@@ -64,7 +65,19 @@ public class MonumentMapper {
             m.getIndividuallyCertifiablePartsOfTheStorageUnitFr()
         ));
 
-        monumentDtoBuilder.images(m.getImages());
+        monumentDtoBuilder.images(m.getImages()
+            .stream()
+            .map(image -> new ImageResponseDto(
+                image.getId(),
+                LanguagesResponseDto.of(
+                    image.getCaptionHy(),
+                    image.getCaptionEn(),
+                    image.getCaptionFr()
+                ),
+                image.getUrl()
+            ))
+            .toList()
+        );
         monumentDtoBuilder.videos(m.getVideos()
             .stream()
             .map(video -> new MonumentVideoResponseDto(

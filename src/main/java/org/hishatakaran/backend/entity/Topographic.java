@@ -78,11 +78,11 @@ public class Topographic {
     @Column(columnDefinition = "TEXT")
     private String hydrographyFr;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "LONGTEXT")
     private String descriptionHy;
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "LONGTEXT")
     private String descriptionEn;
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "LONGTEXT")
     private String descriptionFr;
 
     public Topographic(

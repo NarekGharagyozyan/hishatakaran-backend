@@ -28,7 +28,7 @@ public class MonumentRequestDto {
   private String storageUnitName;
   private String individuallyCertifiablePartsOfTheStorageUnit;
 
-  private List<String> images;
+  private List<ImageRequestDto> images;
   private List<MonumentVideoRequestDto> videos;
   private List<String> measurements;
 

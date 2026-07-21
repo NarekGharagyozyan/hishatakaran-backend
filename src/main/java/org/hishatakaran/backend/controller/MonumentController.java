@@ -3,6 +3,7 @@ package org.hishatakaran.backend.controller;
 import lombok.RequiredArgsConstructor;
 
 import org.hishatakaran.backend.mapper.MonumentMapper;
+import org.hishatakaran.backend.model.ImageResponseDto;
 import org.hishatakaran.backend.model.LanguagesResponseDto;
 import org.hishatakaran.backend.model.MonumentEditDto;
 import org.hishatakaran.backend.model.MonumentFilterRequest;
@@ -161,6 +162,7 @@ public class MonumentController {
             .stream()
             .map(MonumentResponseDto::getImages)
             .flatMap(Collection::stream)
+            .map(ImageResponseDto::getUrl)
             .toList();
 
         return IntStream.range(0, images.size())

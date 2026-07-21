@@ -29,7 +29,7 @@ public class MonumentResponseDto {
     private final LanguagesResponseDto storageUnitName;
     private final LanguagesResponseDto individuallyCertifiablePartsOfTheStorageUnit;
 
-    private final List<String> images;
+    private final List<ImageResponseDto> images;
     private final List<MonumentVideoResponseDto> videos;
     private final List<String> measurements;
 

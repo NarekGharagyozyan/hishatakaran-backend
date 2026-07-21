@@ -627,6 +627,25 @@ NOW EXTRACT DATA FROM THIS HTML:
     );
 
     data.put(
+        "images",
+        monument.getImages()
+            .stream()
+            .map(v -> {
+
+              Map<String, Object> map = new HashMap<>();
+
+              map.put(
+                  "caption",
+                  v.getCaptionHy()
+              );
+
+              return map;
+
+            })
+            .toList()
+    );
+
+    data.put(
         "footnotes",
         monument.getFootnotes()
             .stream()
@@ -781,6 +800,13 @@ NOW EXTRACT DATA FROM THIS HTML:
         Schema.builder()
             .type(Type.Known.ARRAY)
             .items(videoSchema())
+            .build()
+    );
+    properties.put(
+        "images",
+        Schema.builder()
+            .type(Type.Known.ARRAY)
+            .items(imageSchema())
             .build()
     );
     properties.put(
@@ -1047,6 +1073,22 @@ NOW EXTRACT DATA FROM THIS HTML:
 
     properties.put(
         "title",
+        stringSchema()
+    );
+
+
+    return Schema.builder()
+        .type(Type.Known.OBJECT)
+        .properties(properties)
+        .build();
+  }
+
+  private Schema imageSchema() {
+
+    Map<String, Schema> properties = new HashMap<>();
+
+    properties.put(
+        "caption",
         stringSchema()
     );
 

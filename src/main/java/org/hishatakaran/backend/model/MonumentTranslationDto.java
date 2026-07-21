@@ -35,4 +35,6 @@ public class MonumentTranslationDto {
     private List<BibliographyTranslationDto> bibliography;
 
     private List<VideoTranslationDto> videos;
+
+    private List<ImageTranslationDto> images;
 }

@@ -23,7 +23,7 @@ public class MonumentEditDto {
   private LanguagesResponseDto originalAffiliation;
   private LanguagesResponseDto storageUnitName;
   private LanguagesResponseDto individuallyCertifiablePartsOfTheStorageUnit;
-  private List<String> images;
+  private List<ImageResponseDto> images;
   private List<String> measurements;
   private List<MonumentVideoResponseDto> videos;
   private List<FootnoteResponseDto> footnotes;

@@ -7,11 +7,13 @@ import org.hishatakaran.backend.entity.DescriptiveCharacteristicReference;
 import org.hishatakaran.backend.entity.Footnote;
 import org.hishatakaran.backend.entity.HistoricalReference;
 import org.hishatakaran.backend.entity.Monument;
+import org.hishatakaran.backend.entity.MonumentImage;
 import org.hishatakaran.backend.entity.MonumentTypes;
 import org.hishatakaran.backend.entity.MonumentVideo;
 import org.hishatakaran.backend.entity.Topographic;
 import org.hishatakaran.backend.mapper.MonumentMapper;
 import org.hishatakaran.backend.mapper.MonumentTypeMapper;
+import org.hishatakaran.backend.model.ImageRequestDto;
 import org.hishatakaran.backend.model.MonumentEditDto;
 import org.hishatakaran.backend.model.MonumentFilterRequest;
 import org.hishatakaran.backend.model.MonumentRequestDto;
@@ -64,7 +66,6 @@ public class MonumentService {
             .originalAffiliationHy(monumentRequestDto.getOriginalAffiliation())
             .individuallyCertifiablePartsOfTheStorageUnitHy(monumentRequestDto.getIndividuallyCertifiablePartsOfTheStorageUnit())
             .measurements(monumentRequestDto.getMeasurements())
-            .images(monumentRequestDto.getImages())
             .storageUnitNameHy(monumentRequestDto.getStorageUnitName())
             .signature(monumentRequestDto.getSignature())
             .showInMainPage(monumentRequestDto.getShowInMainPage())
@@ -174,6 +175,22 @@ public class MonumentService {
                     .toList()
             );
         }
+
+        if (monumentRequestDto.getImages() != null)
+        {
+            monument.setImages(
+                monumentRequestDto.getImages()
+                    .stream()
+                    .map(image -> new MonumentImage(
+                        image.getUrl(),
+                        image.getCaption(),
+                        null,
+                        null,
+                        monument
+                        ))
+                    .toList()
+            );
+        }
         Monument savedMonument = monumentRepository.save(monument);
         return MonumentMapper.toDto(savedMonument);
     }
@@ -235,7 +252,6 @@ public class MonumentService {
             monument.setIndividuallyCertifiablePartsOfTheStorageUnitFr(monumentEditDto.getIndividuallyCertifiablePartsOfTheStorageUnit().getFr());
         }
 
-        monument.setImages(monumentEditDto.getImages());
         monument.setMeasurements(monumentEditDto.getMeasurements());
 
         monument.getVideos().clear();
@@ -250,6 +266,19 @@ public class MonumentService {
                 dto.getUrl()
             ))
             .forEach(monument.getVideos()::add);
+
+        monument.getImages().clear();
+        monumentEditDto.getImages()
+                .stream()
+                .filter(dto -> dto.getCaption() != null)
+                .map(dto -> new MonumentImage(
+                    dto.getUrl(),
+                    dto.getCaption().getHy(),
+                    dto.getCaption().getEn(),
+                    dto.getCaption().getFr(),
+                    monument
+                ))
+                .forEach(monument.getImages()::add);
 
         monument.getBibliography().clear();
         monumentEditDto.getBibliography()
@@ -811,7 +840,7 @@ public class MonumentService {
         Monument monument = monumentRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Monument not found"));
 
-        deleteFiles(monument.getImages());
+        deleteFiles(monument.getImages().stream().map(MonumentImage::getUrl).toList());
         deleteFiles(monument.getMeasurements());
 
         monumentRepository.delete(monument);

@@ -7,12 +7,14 @@ import org.hishatakaran.backend.entity.DescriptiveCharacteristicReference;
 import org.hishatakaran.backend.entity.Footnote;
 import org.hishatakaran.backend.entity.HistoricalReference;
 import org.hishatakaran.backend.entity.Monument;
+import org.hishatakaran.backend.entity.MonumentImage;
 import org.hishatakaran.backend.entity.MonumentVideo;
 import org.hishatakaran.backend.entity.Topographic;
 import org.hishatakaran.backend.model.BibliographyTranslationDto;
 import org.hishatakaran.backend.model.DescriptiveCharacteristicTranslationDto;
 import org.hishatakaran.backend.model.FootnoteTranslationDto;
 import org.hishatakaran.backend.model.HistoricalReferenceTranslationDto;
+import org.hishatakaran.backend.model.ImageTranslationDto;
 import org.hishatakaran.backend.model.MonumentTranslationDto;
 import org.hishatakaran.backend.model.TopographicTranslationDto;
 import org.hishatakaran.backend.model.TranslationLanguage;
@@ -115,6 +117,14 @@ public class MonumentTranslationService {
             applyVideosTranslation(
                 monument.getVideos(),
                 dto.getVideos(),
+                language
+            );
+        }
+
+        if (dto.getImages() != null) {
+            applyImagesTranslation(
+                monument.getImages(),
+                dto.getImages(),
                 language
             );
         }
@@ -535,6 +545,46 @@ public class MonumentTranslationService {
 
                 video.setTitleFr(
                     clean(translation.getTitle())
+                );
+            }
+        }
+    }
+
+    private void applyImagesTranslation(
+        List<MonumentImage> images,
+        List<ImageTranslationDto> dto,
+        TranslationLanguage language
+    ) {
+
+        if (images == null || dto == null) {
+            return;
+        }
+
+
+        int size = Math.min(
+            images.size(),
+            dto.size()
+        );
+
+
+        for (int i = 0; i < size; i++) {
+
+            MonumentImage image = images.get(i);
+
+            ImageTranslationDto translation =
+                dto.get(i);
+
+
+            if(language == TranslationLanguage.en) {
+
+                image.setCaptionEn(
+                    clean(translation.getCaption())
+                );
+
+            } else {
+
+                image.setCaptionFr(
+                    clean(translation.getCaption())
                 );
             }
         }
