@@ -17,8 +17,8 @@ import org.hishatakaran.backend.repository.MonumentRepository;
 import org.hishatakaran.backend.repository.ProgramRepository;
 import org.hishatakaran.backend.repository.TeamMembersRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.support.TransactionTemplate;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -30,7 +30,8 @@ public class SearchService {
     private final TeamMembersRepository teamMembersRepository;
     private final LibraryRepository libraryRepository;
 
-    @Transactional
+    private final TransactionTemplate transactionTemplate;
+
     public SearchResponseDto globalSearch(String queryText) {
         if (queryText == null || queryText.isBlank()) {
             return new SearchResponseDto(List.of(), List.of(), List.of(), List.of());
@@ -38,27 +39,37 @@ public class SearchService {
 
         // Запускаем 4 тяжелых запроса параллельно
         CompletableFuture<List<MonumentResponseDto>> monumentsFuture = CompletableFuture.supplyAsync(() ->
-            monumentRepository.findAll(SearchSpecifications.searchMonument(queryText))
-                .stream().map(MonumentMapper::toDto).toList()
+            transactionTemplate.execute(status ->
+                monumentRepository.findAll(SearchSpecifications.searchMonument(queryText))
+                    .stream().map(MonumentMapper::toDto).toList()
+            )
         );
 
-        CompletableFuture<List<ProgramResponseDto>> programsFuture = CompletableFuture.supplyAsync(() -> {
-            List<String> fields = List.of("titleHy", "titleEn", "titleFr", "descriptionHy", "descriptionEn", "descriptionFr");
-            return programRepository.findAll(SearchSpecifications.containsTextInFields(queryText, fields))
-                .stream().map(ProgramMapper::toResponseDto).toList();
-        });
+        CompletableFuture<List<ProgramResponseDto>> programsFuture = CompletableFuture.supplyAsync(() ->
+            transactionTemplate.execute(status -> {
+                List<String> fields = List.of("titleHy", "titleEn", "titleFr", "descriptionHy", "descriptionEn",
+                    "descriptionFr");
+                return programRepository.findAll(SearchSpecifications.containsTextInFields(queryText, fields))
+                    .stream().map(ProgramMapper::toResponseDto).toList();
+            })
+        );
 
-        CompletableFuture<List<TeamMemberResponseDto>> teamFuture = CompletableFuture.supplyAsync(() -> {
-            List<String> fields = List.of("fullNameHy", "fullNameEn", "fullNameFr", "positionHy", "positionEn", "positionFr", "descriptionHy", "descriptionEn", "descriptionFr", "signature");
-            return teamMembersRepository.findAll(SearchSpecifications.containsTextInFields(queryText, fields))
-                .stream().map(TeamMemberMapper::toDto).toList();
-        });
+        CompletableFuture<List<TeamMemberResponseDto>> teamFuture = CompletableFuture.supplyAsync(() ->
+            transactionTemplate.execute(status -> {
+                List<String> fields = List.of("fullNameHy", "fullNameEn", "fullNameFr", "positionHy", "positionEn",
+                    "positionFr", "descriptionHy", "descriptionEn", "descriptionFr", "signature");
+                return teamMembersRepository.findAll(SearchSpecifications.containsTextInFields(queryText, fields))
+                    .stream().map(TeamMemberMapper::toDto).toList();
+            })
+        );
 
-        CompletableFuture<List<LibraryResponseDto>> libraryFuture = CompletableFuture.supplyAsync(() -> {
-            List<String> fields = List.of("titleHy", "titleEn", "titleFr", "descriptionHy", "descriptionEn", "descriptionFr", "authorsHy", "authorsEn", "authorsFr");
-            return libraryRepository.findAll(SearchSpecifications.containsTextInFields(queryText, fields))
-                .stream().map(LibraryMapper::toDto).toList();
-        });
+        CompletableFuture<List<LibraryResponseDto>> libraryFuture = CompletableFuture.supplyAsync(() ->
+            transactionTemplate.execute(status -> {
+                List<String> fields = List.of("titleHy", "titleEn", "titleFr", "descriptionHy", "descriptionEn", "descriptionFr", "authorsHy", "authorsEn", "authorsFr");
+                return libraryRepository.findAll(SearchSpecifications.containsTextInFields(queryText, fields))
+                    .stream().map(LibraryMapper::toDto).toList();
+            })
+        );
 
         // Ожидаем завершения всех потоков
         CompletableFuture.allOf(monumentsFuture, programsFuture, teamFuture, libraryFuture).join();

@@ -1,5 +1,7 @@
 package org.hishatakaran.backend.mapper;
 
+import java.util.ArrayList;
+
 import org.hishatakaran.backend.entity.Monument;
 import org.hishatakaran.backend.model.BibliographyResponseDto;
 import org.hishatakaran.backend.model.FootnoteResponseDto;
@@ -91,7 +93,11 @@ public class MonumentMapper {
             ))
             .toList()
         );
-        monumentDtoBuilder.measurements(m.getMeasurements());
+        monumentDtoBuilder.measurements(
+            m.getMeasurements() != null
+                ? new ArrayList<>(m.getMeasurements())
+                : new ArrayList<>()
+        );
 
         monumentDtoBuilder.footnotes(
             m.getFootnotes()
