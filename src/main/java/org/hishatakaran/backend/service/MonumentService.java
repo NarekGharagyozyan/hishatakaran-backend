@@ -270,12 +270,11 @@ public class MonumentService {
         monument.getImages().clear();
         monumentEditDto.getImages()
                 .stream()
-                .filter(dto -> dto.getCaption() != null)
                 .map(dto -> new MonumentImage(
                     dto.getUrl(),
-                    dto.getCaption().getHy(),
-                    dto.getCaption().getEn(),
-                    dto.getCaption().getFr(),
+                    dto.getCaption() != null ? dto.getCaption().getHy() : null,
+                    dto.getCaption() != null ? dto.getCaption().getEn() : null,
+                    dto.getCaption() != null ? dto.getCaption().getFr() : null,
                     monument
                 ))
                 .forEach(monument.getImages()::add);
