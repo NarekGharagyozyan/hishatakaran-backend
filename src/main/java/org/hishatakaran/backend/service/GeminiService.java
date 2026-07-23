@@ -13,17 +13,12 @@ import org.hishatakaran.backend.entity.Program;
 import org.hishatakaran.backend.entity.ProgramLink;
 import org.hishatakaran.backend.entity.TeamMembers;
 import org.hishatakaran.backend.entity.Topographic;
-import org.hishatakaran.backend.model.LibraryRequestDto;
 import org.hishatakaran.backend.model.LibraryTranslationDto;
 import org.hishatakaran.backend.model.LinkTranslationDto;
-import org.hishatakaran.backend.model.MonumentRequestDto;
 import org.hishatakaran.backend.model.MonumentTranslationDto;
 import org.hishatakaran.backend.model.MonumentTypeTranslateDto;
-import org.hishatakaran.backend.model.ProgramRequestDto;
 import org.hishatakaran.backend.model.ProgramTranslationDto;
-import org.hishatakaran.backend.model.SettlementRequestDto;
 import org.hishatakaran.backend.model.SettlementTranslationDto;
-import org.hishatakaran.backend.model.TeamMemberRequestDto;
 import org.hishatakaran.backend.model.TeamMemberTranslationDto;
 import org.hishatakaran.backend.model.TranslationLanguage;
 import org.springframework.beans.factory.annotation.Value;
@@ -646,6 +641,25 @@ NOW EXTRACT DATA FROM THIS HTML:
     );
 
     data.put(
+        "measurements",
+        monument.getMeasurements()
+            .stream()
+            .map(v -> {
+
+              Map<String, Object> map = new HashMap<>();
+
+              map.put(
+                  "caption",
+                  v.getCaptionHy()
+              );
+
+              return map;
+
+            })
+            .toList()
+    );
+
+    data.put(
         "footnotes",
         monument.getFootnotes()
             .stream()
@@ -807,6 +821,13 @@ NOW EXTRACT DATA FROM THIS HTML:
         Schema.builder()
             .type(Type.Known.ARRAY)
             .items(imageSchema())
+            .build()
+    );
+    properties.put(
+        "measurements",
+        Schema.builder()
+            .type(Type.Known.ARRAY)
+            .items(measurementSchema())
             .build()
     );
     properties.put(
@@ -1084,6 +1105,22 @@ NOW EXTRACT DATA FROM THIS HTML:
   }
 
   private Schema imageSchema() {
+
+    Map<String, Schema> properties = new HashMap<>();
+
+    properties.put(
+        "caption",
+        stringSchema()
+    );
+
+
+    return Schema.builder()
+        .type(Type.Known.OBJECT)
+        .properties(properties)
+        .build();
+  }
+
+  private Schema measurementSchema() {
 
     Map<String, Schema> properties = new HashMap<>();
 

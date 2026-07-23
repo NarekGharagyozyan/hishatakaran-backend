@@ -3,12 +3,8 @@ package org.hishatakaran.backend.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hishatakaran.backend.model.ImageRequestDto;
-
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -118,10 +114,8 @@ public class Monument extends BaseEntity{
     @OneToMany(mappedBy = "monument", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MonumentVideo> videos = new ArrayList<>();
 
-    @ElementCollection
-    @CollectionTable(name = "monument_measurements", joinColumns = @JoinColumn(name = "monument_id"))
-    @Column(name = "measurement_url")
-    private List<String> measurements = new ArrayList<>();
+    @OneToMany(mappedBy = "monument", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MonumentMeasurement> measurements = new ArrayList<>();
 
     @OneToMany(mappedBy = "monument", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("orderNumber ASC")
@@ -169,7 +163,7 @@ public class Monument extends BaseEntity{
         String individuallyCertifiablePartsOfTheStorageUnitFr,
         List<MonumentImage> images,
         List<MonumentVideo> videos,
-        List<String> measurements,
+        List<MonumentMeasurement> measurements,
         List<Footnote> footnotes,
         List<Bibliography> bibliography,
         Topographic topographics,

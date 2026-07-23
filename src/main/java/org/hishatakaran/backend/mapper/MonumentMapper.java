@@ -1,12 +1,11 @@
 package org.hishatakaran.backend.mapper;
 
-import java.util.ArrayList;
-
 import org.hishatakaran.backend.entity.Monument;
 import org.hishatakaran.backend.model.BibliographyResponseDto;
 import org.hishatakaran.backend.model.FootnoteResponseDto;
 import org.hishatakaran.backend.model.ImageResponseDto;
 import org.hishatakaran.backend.model.LanguagesResponseDto;
+import org.hishatakaran.backend.model.MeasurementResponseDto;
 import org.hishatakaran.backend.model.MonumentResponseDto;
 import org.hishatakaran.backend.model.MonumentVideoResponseDto;
 import org.hishatakaran.backend.service.YouTubeService;
@@ -93,12 +92,19 @@ public class MonumentMapper {
             ))
             .toList()
         );
-        monumentDtoBuilder.measurements(
-            m.getMeasurements() != null
-                ? new ArrayList<>(m.getMeasurements())
-                : new ArrayList<>()
+        monumentDtoBuilder.measurements(m.getMeasurements()
+            .stream()
+            .map(image -> new MeasurementResponseDto(
+                image.getId(),
+                LanguagesResponseDto.of(
+                    image.getCaptionHy(),
+                    image.getCaptionEn(),
+                    image.getCaptionFr()
+                ),
+                image.getUrl()
+            ))
+            .toList()
         );
-
         monumentDtoBuilder.footnotes(
             m.getFootnotes()
                 .stream()

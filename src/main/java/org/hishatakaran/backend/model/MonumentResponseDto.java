@@ -31,7 +31,7 @@ public class MonumentResponseDto {
 
     private final List<ImageResponseDto> images;
     private final List<MonumentVideoResponseDto> videos;
-    private final List<String> measurements;
+    private final List<MeasurementResponseDto> measurements;
 
     private final List<FootnoteResponseDto> footnotes;
 

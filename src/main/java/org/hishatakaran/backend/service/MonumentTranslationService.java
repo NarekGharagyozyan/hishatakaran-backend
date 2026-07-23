@@ -8,13 +8,14 @@ import org.hishatakaran.backend.entity.Footnote;
 import org.hishatakaran.backend.entity.HistoricalReference;
 import org.hishatakaran.backend.entity.Monument;
 import org.hishatakaran.backend.entity.MonumentImage;
+import org.hishatakaran.backend.entity.MonumentMeasurement;
 import org.hishatakaran.backend.entity.MonumentVideo;
 import org.hishatakaran.backend.entity.Topographic;
 import org.hishatakaran.backend.model.BibliographyTranslationDto;
 import org.hishatakaran.backend.model.DescriptiveCharacteristicTranslationDto;
 import org.hishatakaran.backend.model.FootnoteTranslationDto;
 import org.hishatakaran.backend.model.HistoricalReferenceTranslationDto;
-import org.hishatakaran.backend.model.ImageTranslationDto;
+import org.hishatakaran.backend.model.ImageAndMeasurementTranslationDto;
 import org.hishatakaran.backend.model.MonumentTranslationDto;
 import org.hishatakaran.backend.model.TopographicTranslationDto;
 import org.hishatakaran.backend.model.TranslationLanguage;
@@ -125,6 +126,14 @@ public class MonumentTranslationService {
             applyImagesTranslation(
                 monument.getImages(),
                 dto.getImages(),
+                language
+            );
+        }
+
+        if (dto.getMeasurements() != null) {
+            applyMeasurementTranslation(
+                monument.getMeasurements(),
+                dto.getMeasurements(),
                 language
             );
         }
@@ -552,7 +561,7 @@ public class MonumentTranslationService {
 
     private void applyImagesTranslation(
         List<MonumentImage> images,
-        List<ImageTranslationDto> dto,
+        List<ImageAndMeasurementTranslationDto> dto,
         TranslationLanguage language
     ) {
 
@@ -571,7 +580,47 @@ public class MonumentTranslationService {
 
             MonumentImage image = images.get(i);
 
-            ImageTranslationDto translation =
+            ImageAndMeasurementTranslationDto translation =
+                dto.get(i);
+
+
+            if(language == TranslationLanguage.en) {
+
+                image.setCaptionEn(
+                    clean(translation.getCaption())
+                );
+
+            } else {
+
+                image.setCaptionFr(
+                    clean(translation.getCaption())
+                );
+            }
+        }
+    }
+
+    private void applyMeasurementTranslation(
+        List<MonumentMeasurement> images,
+        List<ImageAndMeasurementTranslationDto> dto,
+        TranslationLanguage language
+    ) {
+
+        if (images == null || dto == null) {
+            return;
+        }
+
+
+        int size = Math.min(
+            images.size(),
+            dto.size()
+        );
+
+
+        for (int i = 0; i < size; i++) {
+
+            MonumentMeasurement image = images.get(i);
+
+            ImageAndMeasurementTranslationDto translation =
                 dto.get(i);
 
 

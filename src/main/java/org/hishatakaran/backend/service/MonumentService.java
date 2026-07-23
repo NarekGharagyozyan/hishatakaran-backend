@@ -8,12 +8,12 @@ import org.hishatakaran.backend.entity.Footnote;
 import org.hishatakaran.backend.entity.HistoricalReference;
 import org.hishatakaran.backend.entity.Monument;
 import org.hishatakaran.backend.entity.MonumentImage;
+import org.hishatakaran.backend.entity.MonumentMeasurement;
 import org.hishatakaran.backend.entity.MonumentTypes;
 import org.hishatakaran.backend.entity.MonumentVideo;
 import org.hishatakaran.backend.entity.Topographic;
 import org.hishatakaran.backend.mapper.MonumentMapper;
 import org.hishatakaran.backend.mapper.MonumentTypeMapper;
-import org.hishatakaran.backend.model.ImageRequestDto;
 import org.hishatakaran.backend.model.MonumentEditDto;
 import org.hishatakaran.backend.model.MonumentFilterRequest;
 import org.hishatakaran.backend.model.MonumentRequestDto;
@@ -65,7 +65,6 @@ public class MonumentService {
             .historyHy(monumentRequestDto.getHistory())
             .originalAffiliationHy(monumentRequestDto.getOriginalAffiliation())
             .individuallyCertifiablePartsOfTheStorageUnitHy(monumentRequestDto.getIndividuallyCertifiablePartsOfTheStorageUnit())
-            .measurements(monumentRequestDto.getMeasurements())
             .storageUnitNameHy(monumentRequestDto.getStorageUnitName())
             .signature(monumentRequestDto.getSignature())
             .showInMainPage(monumentRequestDto.getShowInMainPage())
@@ -191,6 +190,22 @@ public class MonumentService {
                     .toList()
             );
         }
+
+        if (monumentRequestDto.getMeasurements() != null)
+        {
+            monument.setMeasurements(
+                monumentRequestDto.getMeasurements()
+                    .stream()
+                    .map(image -> new MonumentMeasurement(
+                        image.getUrl(),
+                        image.getCaption(),
+                        null,
+                        null,
+                        monument
+                    ))
+                    .toList()
+            );
+        }
         Monument savedMonument = monumentRepository.save(monument);
         return MonumentMapper.toDto(savedMonument);
     }
@@ -252,8 +267,6 @@ public class MonumentService {
             monument.setIndividuallyCertifiablePartsOfTheStorageUnitFr(monumentEditDto.getIndividuallyCertifiablePartsOfTheStorageUnit().getFr());
         }
 
-        monument.setMeasurements(monumentEditDto.getMeasurements());
-
         monument.getVideos().clear();
         monumentEditDto.getVideos()
             .stream()
@@ -278,6 +291,18 @@ public class MonumentService {
                     monument
                 ))
                 .forEach(monument.getImages()::add);
+
+        monument.getMeasurements().clear();
+        monumentEditDto.getMeasurements()
+            .stream()
+            .map(dto -> new MonumentMeasurement(
+                dto.getUrl(),
+                dto.getCaption() != null ? dto.getCaption().getHy() : null,
+                dto.getCaption() != null ? dto.getCaption().getEn() : null,
+                dto.getCaption() != null ? dto.getCaption().getFr() : null,
+                monument
+            ))
+            .forEach(monument.getMeasurements()::add);
 
         monument.getBibliography().clear();
         monumentEditDto.getBibliography()
@@ -840,7 +865,7 @@ public class MonumentService {
             .orElseThrow(() -> new RuntimeException("Monument not found"));
 
         deleteFiles(monument.getImages().stream().map(MonumentImage::getUrl).toList());
-        deleteFiles(monument.getMeasurements());
+        deleteFiles(monument.getMeasurements().stream().map(MonumentMeasurement::getUrl).toList());
 
         monumentRepository.delete(monument);
     }
@@ -857,8 +882,7 @@ public class MonumentService {
             MonumentFilterRequest request
     ) {
 
-        if (request.getSettlementId() != null
-                && request.getRegionId() == null) {
+        if (request.getSettlementId() != null && request.getRegionId() == null) {
 
             throw new IllegalArgumentException(
                     "Settlement cannot be used without region"

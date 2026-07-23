@@ -30,7 +30,7 @@ public class MonumentRequestDto {
 
   private List<ImageRequestDto> images;
   private List<MonumentVideoRequestDto> videos;
-  private List<String> measurements;
+  private List<MeasurementRequestDto> measurements;
 
   private List<BibliographyRequestDto> bibliography;
   private TopographicRequestDto topographics;

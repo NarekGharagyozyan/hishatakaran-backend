@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ImageTranslationDto {
+public class ImageAndMeasurementTranslationDto {
 
   private String caption;
 }

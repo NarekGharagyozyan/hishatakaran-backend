@@ -36,5 +36,7 @@ public class MonumentTranslationDto {
 
     private List<VideoTranslationDto> videos;
 
-    private List<ImageTranslationDto> images;
+    private List<ImageAndMeasurementTranslationDto> images;
+
+    private List<ImageAndMeasurementTranslationDto> measurements;
 }

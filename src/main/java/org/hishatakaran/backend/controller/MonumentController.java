@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.hishatakaran.backend.mapper.MonumentMapper;
 import org.hishatakaran.backend.model.ImageResponseDto;
 import org.hishatakaran.backend.model.LanguagesResponseDto;
+import org.hishatakaran.backend.model.MeasurementResponseDto;
 import org.hishatakaran.backend.model.MonumentEditDto;
 import org.hishatakaran.backend.model.MonumentFilterRequest;
 import org.hishatakaran.backend.model.MonumentMediasResponseDto;
@@ -216,6 +217,7 @@ public class MonumentController {
             .stream()
             .map(MonumentResponseDto::getMeasurements)
             .flatMap(Collection::stream)
+            .map(MeasurementResponseDto::getUrl)
             .toList();
 
         return IntStream.range(0, measurements.size())
