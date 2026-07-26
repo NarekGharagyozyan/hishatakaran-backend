@@ -50,7 +50,13 @@ public class SearchService {
                 List<String> fields = List.of("titleHy", "titleEn", "titleFr", "descriptionHy", "descriptionEn",
                     "descriptionFr");
                 return programRepository.findAll(SearchSpecifications.containsTextInFields(queryText, fields))
-                    .stream().map(ProgramMapper::toDto).toList();
+                    .stream()
+                    .map(program -> {
+                        ProgramResponseDto dto = ProgramMapper.toDto(program);
+                        program.getImages().size();
+                        return dto;
+                    })
+                    .toList();
             })
         );
 
@@ -59,7 +65,13 @@ public class SearchService {
                 List<String> fields = List.of("fullNameHy", "fullNameEn", "fullNameFr", "positionHy", "positionEn",
                     "positionFr", "descriptionHy", "descriptionEn", "descriptionFr", "signature");
                 return teamMembersRepository.findAll(SearchSpecifications.containsTextInFields(queryText, fields))
-                    .stream().map(TeamMemberMapper::toDto).toList();
+                    .stream()
+                    .map(teamMember -> {
+                        TeamMemberResponseDto dto = TeamMemberMapper.toDto(teamMember);
+                        teamMember.getImage();
+                        return dto;
+                    })
+                    .toList();
             })
         );
 
@@ -67,14 +79,18 @@ public class SearchService {
             transactionTemplate.execute(status -> {
                 List<String> fields = List.of("titleHy", "titleEn", "titleFr", "descriptionHy", "descriptionEn", "descriptionFr", "authorsHy", "authorsEn", "authorsFr");
                 return libraryRepository.findAll(SearchSpecifications.containsTextInFields(queryText, fields))
-                    .stream().map(LibraryMapper::toDto).toList();
+                    .stream()
+                    .map(library -> {
+                        LibraryResponseDto dto = LibraryMapper.toDto(library);
+                        library.getCoverUrl();
+                        return dto;
+                    })
+                    .toList();
             })
         );
 
-        // Ожидаем завершения всех потоков
         CompletableFuture.allOf(monumentsFuture, programsFuture, teamFuture, libraryFuture).join();
 
-        // Собираем ответ
         SearchResponseDto response = new SearchResponseDto();
         response.setMonuments(monumentsFuture.join());
         response.setPrograms(programsFuture.join());
