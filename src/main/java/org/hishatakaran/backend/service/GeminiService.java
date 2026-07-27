@@ -349,9 +349,9 @@ NOW EXTRACT DATA FROM THIS HTML:
 
     return """
         You are a professional translator.
-
+        
         Translate the Armenian program data into %s.
-
+        
         RULES:
         1. Translate only text.
         2. Do not summarize.
@@ -360,7 +360,20 @@ NOW EXTRACT DATA FROM THIS HTML:
         5. Return ONLY JSON matching the schema.
         6. Do not invent values.
         7. If a value is null, return null.
-
+        
+        8. Place name transliteration requirement:
+           If the Armenian text contains any geographical proper name (including cities, villages, regions, streets, mountains, lakes, landmarks, historical places, or any other location name), preserve the translated place name and append the romanized Armenian original in parentheses immediately after it.
+        
+           Format:
+           Translated place name [Armenian romanization]
+        
+           Rules:
+           - For English translation: use Library of Congress Armenian romanization rules.
+           - For French translation: use French-compatible romanization based on Armenian romanization rules.
+           - Apply this rule in every string field.
+           - Apply this rule even if the field contains only a place name.
+           - Do not omit the transcription.
+        
         Armenian program data:
 
         %s
@@ -559,9 +572,9 @@ NOW EXTRACT DATA FROM THIS HTML:
 
     return """
         You are a professional translator specializing in Armenian historical monuments.
-
+        
         Translate the Armenian monument data into %s.
-
+        
         RULES:
         1. Translate only text.
         2. Preserve historical terminology.
@@ -575,8 +588,21 @@ NOW EXTRACT DATA FROM THIS HTML:
         10. Translate titles inside videos and bibliography.
         11. Do not translate ids, urls or coordinates.
         12. If there are html tags in the text, they must remain in place after translation.
-
-
+        
+        13. Historical monument place name transliteration requirement:
+            If the Armenian text contains any geographical place name or location-related proper name (including but not limited to monasteries, churches, fortresses, archaeological sites, villages, cities, regions, mountains, rivers, valleys, streets, or historical locations), preserve the translated name and append the romanized Armenian original in parentheses immediately after it.
+        
+            Format:
+            Translated place name [Armenian romanization]
+        
+            Rules:
+            - For English translation: use Library of Congress Armenian romanization rules.
+            - For French translation: use French-compatible romanization based on Armenian romanization rules.
+            - Apply this rule in every text field, including monument names, descriptions, historical information, video titles, bibliography titles, and nested text values.
+            - Apply this rule even when the field contains only a single monument/place name.
+            - Never omit the transcription when a place name exists.
+            - The required romanization is not considered additional information and must not be removed.
+        
         Armenian monument data:
 
         %s

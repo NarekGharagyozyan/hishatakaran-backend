@@ -2,6 +2,8 @@ package org.hishatakaran.backend.controller;
 
 import lombok.RequiredArgsConstructor;
 
+import org.hishatakaran.backend.entity.Monument;
+import org.hishatakaran.backend.exception.SomethingWentWrongException;
 import org.hishatakaran.backend.mapper.MonumentMapper;
 import org.hishatakaran.backend.model.ImageResponseDto;
 import org.hishatakaran.backend.model.LanguagesResponseDto;
@@ -24,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @RestController
@@ -245,6 +248,16 @@ public class MonumentController {
 
     @DeleteMapping("/admin/monuments/types/{monumentTypeId}")
     public void deleteMonumentType(@PathVariable Long monumentTypeId) {
+        MonumentFilterRequest monumentFilterRequest = new MonumentFilterRequest();
+        monumentFilterRequest.setMonumentType(monumentTypesRepository.findById(monumentTypeId).get().getNameHy());
+        List<Monument> monumentsWithSelectedMonumentType = monumentRepository.findByMonumentTypeId(monumentTypeId);
+        if (!monumentsWithSelectedMonumentType.isEmpty()) {
+            throw new SomethingWentWrongException("Կան հուշարձաններ որոնք օգտագործում են տվյալ հուշարձանի տեսակը։ Այդ հուշարձաններն են՝ "
+                + monumentsWithSelectedMonumentType.stream()
+                .map(Monument::getNameHy)
+                .collect(Collectors.joining(", "))
+            );
+        }
         monumentTypesRepository.deleteById(monumentTypeId);
     }
 

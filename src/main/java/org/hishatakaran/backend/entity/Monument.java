@@ -63,7 +63,7 @@ public class Monument extends BaseEntity{
     private Settlement settlement;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "monument_type", nullable = false)
+    @JoinColumn(name = "monument_type")
     private MonumentTypes monumentType;
 
     @Column(columnDefinition = "TEXT")

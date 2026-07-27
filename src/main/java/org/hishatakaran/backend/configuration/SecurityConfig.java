@@ -44,7 +44,8 @@ public class SecurityConfig {
     return http
         .csrf(csrf -> csrf
             .ignoringRequestMatchers(
-                "/api/auth/login"
+                "/api/auth/login",
+                "/api/contactUs"
             )
             .csrfTokenRepository(
                 CookieCsrfTokenRepository.withHttpOnlyFalse()
@@ -59,6 +60,7 @@ public class SecurityConfig {
         .authorizeHttpRequests(auth -> auth
             .requestMatchers(
                 "/api/auth/login",
+                "/api/contactUs",
                 "/api/auth/csrf"
             )
             .permitAll()
