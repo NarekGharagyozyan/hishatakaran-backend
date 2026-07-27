@@ -11,7 +11,7 @@ public class ContactUsMapper {
         contactUs.getName(),
         contactUs.getEmailOrPhoneNumber(),
         contactUs.getMessage(),
-        contactUs.getCreatedAt().toEpochSecond()
+        contactUs.getCreatedAt().toInstant().toEpochMilli()
     );
   }
 }
