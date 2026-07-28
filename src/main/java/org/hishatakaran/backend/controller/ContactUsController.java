@@ -41,7 +41,7 @@ public class ContactUsController {
     return ResponseEntity.ok(contactUsRepository.findAll()
         .stream()
         .map(ContactUsMapper::toDto)
-        .sorted(Comparator.comparing(ContactUsResponseDto::getSentTime))
+        .sorted(Comparator.comparing(ContactUsResponseDto::getSentTime).reversed())
         .toList());
   }
 }
