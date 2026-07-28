@@ -94,7 +94,7 @@ public class MonumentController {
         @RequestParam(required = false)
         Long settlementId,
         @RequestParam(required = false)
-        String monumentType
+        Long monumentType
     ) {
 
         MonumentFilterRequest request =
@@ -153,7 +153,7 @@ public class MonumentController {
         @RequestParam(required = false)
         Long settlementId,
         @RequestParam(required = false)
-        String monumentType
+        Long monumentType
     ) {
         MonumentFilterRequest request =
             new MonumentFilterRequest();
@@ -184,7 +184,7 @@ public class MonumentController {
         @RequestParam(required = false)
         Long settlementId,
         @RequestParam(required = false)
-        String monumentType
+        Long monumentType
     ) {
         MonumentFilterRequest request =
             new MonumentFilterRequest();
@@ -207,7 +207,7 @@ public class MonumentController {
         @RequestParam(required = false)
         Long settlementId,
         @RequestParam(required = false)
-        String monumentType
+        Long monumentType
     ) {
         MonumentFilterRequest request =
             new MonumentFilterRequest();
@@ -249,7 +249,7 @@ public class MonumentController {
     @DeleteMapping("/admin/monuments/types/{monumentTypeId}")
     public void deleteMonumentType(@PathVariable Long monumentTypeId) {
         MonumentFilterRequest monumentFilterRequest = new MonumentFilterRequest();
-        monumentFilterRequest.setMonumentType(monumentTypesRepository.findById(monumentTypeId).get().getNameHy());
+        monumentFilterRequest.setMonumentType(monumentTypeId);
         List<Monument> monumentsWithSelectedMonumentType = monumentRepository.findByMonumentTypeId(monumentTypeId);
         if (!monumentsWithSelectedMonumentType.isEmpty()) {
             throw new SomethingWentWrongException("Կան հուշարձաններ որոնք օգտագործում են տվյալ հուշարձանի տեսակը։ Այդ հուշարձաններն են՝ "

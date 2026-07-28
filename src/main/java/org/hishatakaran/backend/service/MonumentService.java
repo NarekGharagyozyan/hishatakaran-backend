@@ -914,7 +914,18 @@ public class MonumentService {
             );
         }
 
-        if (request.getMonumentType() != null && !request.getMonumentType().isBlank()) {
+        if (request.getMonumentType() != null) {
+
+            spec = spec.and(
+                (root, query, cb) ->
+                    cb.equal(
+                        root.get("monumentType").get("id"),
+                        request.getMonumentType()
+                    )
+            );
+        }
+
+        /*if (request.getMonumentType() != null && !request.getMonumentType().isBlank()) {
 
             String monumentType = request.getMonumentType().trim().toLowerCase();
             spec = spec.and((root, query, cb) ->
@@ -924,7 +935,7 @@ public class MonumentService {
                     cb.equal(cb.lower(root.get("monumentTypeFr")), monumentType)
                 )
             );
-        }
+        }*/
 
         return monumentRepository
                 .findAll(spec, Sort.unsorted())
