@@ -31,7 +31,7 @@ public class ProgramService {
     return programRepository.findAll()
         .stream()
         .map(ProgramMapper::toDto)
-        .sorted(Comparator.comparing(ProgramResponseDto::getId))
+        .sorted(Comparator.comparing(ProgramResponseDto::getId).reversed())
         .toList();
   }
 

@@ -930,7 +930,7 @@ public class MonumentService {
                 .findAll(spec, Sort.unsorted())
                 .stream()
                 .map(MonumentMapper::toDto)
-                .sorted(Comparator.comparing(MonumentResponseDto::getCreatedAt))
+                .sorted(Comparator.comparing(MonumentResponseDto::getId).reversed())
                 .toList();
     }
 

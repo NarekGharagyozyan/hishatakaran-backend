@@ -118,7 +118,7 @@ public class TeamMembersService {
     return teamMembersRepository.findAll()
         .stream()
         .map(TeamMemberMapper::toDto)
-        .sorted(Comparator.comparing(TeamMemberResponseDto::getId))
+        .sorted(Comparator.comparing(TeamMemberResponseDto::getId).reversed())
         .toList();
   }
 }
