@@ -23,7 +23,7 @@ public class RegionController {
         return regionRepository.findAll()
             .stream()
             .map(RegionMapper::toDto)
-            .sorted(Comparator.comparing(RegionResponseDto::getId).reversed())
+            .sorted(Comparator.comparing(RegionResponseDto::getId))
             .toList();
     }
 

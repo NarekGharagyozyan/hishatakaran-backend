@@ -1,9 +1,11 @@
 package org.hishatakaran.backend.service;
 
+import java.util.Comparator;
 import java.util.List;
 
 import org.hishatakaran.backend.entity.TeamMembers;
 import org.hishatakaran.backend.mapper.TeamMemberMapper;
+import org.hishatakaran.backend.model.LibraryResponseDto;
 import org.hishatakaran.backend.model.TeamMemberEditDto;
 import org.hishatakaran.backend.model.TeamMemberRequestDto;
 import org.hishatakaran.backend.model.TeamMemberResponseDto;
@@ -116,6 +118,7 @@ public class TeamMembersService {
     return teamMembersRepository.findAll()
         .stream()
         .map(TeamMemberMapper::toDto)
+        .sorted(Comparator.comparing(TeamMemberResponseDto::getId))
         .toList();
   }
 }

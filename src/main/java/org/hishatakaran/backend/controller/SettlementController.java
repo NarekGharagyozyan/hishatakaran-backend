@@ -38,7 +38,7 @@ public class SettlementController {
         return settlementRepository.findAll()
             .stream()
             .map(SettlementMapper::toDto)
-            .sorted(Comparator.comparing(SettlementResponseDto::getId).reversed())
+            .sorted(Comparator.comparing(SettlementResponseDto::getId))
             .toList();
     }
 

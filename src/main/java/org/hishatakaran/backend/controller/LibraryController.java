@@ -58,7 +58,7 @@ public class LibraryController {
         return libraryRepository.findAll()
             .stream()
             .map(LibraryMapper::toDto)
-            .sorted(Comparator.comparing(LibraryResponseDto::getId).reversed())
+            .sorted(Comparator.comparing(LibraryResponseDto::getId))
             .toList();
     }
 
