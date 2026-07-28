@@ -1,5 +1,6 @@
 package org.hishatakaran.backend.service;
 
+import java.util.Comparator;
 import java.util.List;
 
 import org.hishatakaran.backend.entity.Bibliography;
@@ -929,6 +930,7 @@ public class MonumentService {
                 .findAll(spec, Sort.unsorted())
                 .stream()
                 .map(MonumentMapper::toDto)
+                .sorted(Comparator.comparing(MonumentResponseDto::getCreatedAt))
                 .toList();
     }
 
