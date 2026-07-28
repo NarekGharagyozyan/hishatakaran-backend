@@ -2,10 +2,13 @@ package org.hishatakaran.backend.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.hishatakaran.backend.mapper.RegionMapper;
+import org.hishatakaran.backend.model.LibraryResponseDto;
+import org.hishatakaran.backend.model.MonumentResponseDto;
 import org.hishatakaran.backend.model.RegionResponseDto;
 import org.hishatakaran.backend.repository.RegionRepository;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Comparator;
 import java.util.List;
 
 @RestController
@@ -20,6 +23,7 @@ public class RegionController {
         return regionRepository.findAll()
             .stream()
             .map(RegionMapper::toDto)
+            .sorted(Comparator.comparing(RegionResponseDto::getId).reversed())
             .toList();
     }
 

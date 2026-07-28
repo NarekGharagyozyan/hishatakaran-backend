@@ -1,11 +1,13 @@
 package org.hishatakaran.backend.controller;
 
+import java.util.Comparator;
 import java.util.List;
 
 import org.hishatakaran.backend.entity.ContactUs;
 import org.hishatakaran.backend.mapper.ContactUsMapper;
 import org.hishatakaran.backend.model.ContactUsRequestDto;
 import org.hishatakaran.backend.model.ContactUsResponseDto;
+import org.hishatakaran.backend.model.MonumentResponseDto;
 import org.hishatakaran.backend.repository.ContactUsRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,6 +41,7 @@ public class ContactUsController {
     return ResponseEntity.ok(contactUsRepository.findAll()
         .stream()
         .map(ContactUsMapper::toDto)
+        .sorted(Comparator.comparing(ContactUsResponseDto::getSentTime))
         .toList());
   }
 }

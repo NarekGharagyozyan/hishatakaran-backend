@@ -5,12 +5,14 @@ import org.hishatakaran.backend.mapper.LibraryMapper;
 import org.hishatakaran.backend.model.LibraryEditDto;
 import org.hishatakaran.backend.model.LibraryRequestDto;
 import org.hishatakaran.backend.model.LibraryResponseDto;
+import org.hishatakaran.backend.model.MonumentResponseDto;
 import org.hishatakaran.backend.model.TranslationLanguage;
 import org.hishatakaran.backend.repository.LibraryRepository;
 import org.hishatakaran.backend.service.LibraryService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Comparator;
 import java.util.List;
 
 @RestController
@@ -56,6 +58,7 @@ public class LibraryController {
         return libraryRepository.findAll()
             .stream()
             .map(LibraryMapper::toDto)
+            .sorted(Comparator.comparing(LibraryResponseDto::getId).reversed())
             .toList();
     }
 

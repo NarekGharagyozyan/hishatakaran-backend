@@ -3,6 +3,8 @@ package org.hishatakaran.backend.controller;
 import lombok.RequiredArgsConstructor;
 
 import org.hishatakaran.backend.mapper.SettlementMapper;
+import org.hishatakaran.backend.model.LibraryResponseDto;
+import org.hishatakaran.backend.model.MonumentResponseDto;
 import org.hishatakaran.backend.model.SettlementEditDto;
 import org.hishatakaran.backend.model.SettlementRequestDto;
 import org.hishatakaran.backend.model.SettlementResponseDto;
@@ -11,6 +13,7 @@ import org.hishatakaran.backend.service.SettlementService;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Comparator;
 import java.util.List;
 
 @RestController
@@ -35,6 +38,7 @@ public class SettlementController {
         return settlementRepository.findAll()
             .stream()
             .map(SettlementMapper::toDto)
+            .sorted(Comparator.comparing(SettlementResponseDto::getId).reversed())
             .toList();
     }
 
