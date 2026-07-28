@@ -15,9 +15,9 @@ public class GlobalExceptionHandler {
 
 
 	@ExceptionHandler(SomethingWentWrongException.class)
-	@ResponseStatus(code = HttpStatus.NOT_ACCEPTABLE)
+	@ResponseStatus(code = HttpStatus.METHOD_NOT_ALLOWED)
 	public ResponseEntity<ApiError> somethingWentWrongException(HttpServletRequest req, SomethingWentWrongException e) {
-		return buildResponse(HttpStatus.NOT_ACCEPTABLE, e.getMessage(), req.getRequestURI());
+		return buildResponse(HttpStatus.METHOD_NOT_ALLOWED, e.getMessage(), req.getRequestURI());
 	}
 
 	private ResponseEntity<ApiError> buildResponse(HttpStatus httpStatus, String message, String uri) {
