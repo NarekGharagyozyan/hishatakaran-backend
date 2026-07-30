@@ -85,7 +85,7 @@ jobs:
 
             systemctl is-active --quiet hishatakaran-backend.service
 
-            curl --fail --silent http://127.0.0.1:8080/actuator/health >/dev/null
+            curl --fail --silent http://127.0.0.1:8888/actuator/health >/dev/null
 
             echo "Deployment completed successfully."
 
