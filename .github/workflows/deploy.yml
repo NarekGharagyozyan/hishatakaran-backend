@@ -14,28 +14,50 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-java@v4
+      - name: Set up Java
+        uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '21'
           cache: maven
 
-      - name: Build
+      - name: Make Maven Wrapper executable
+        run: chmod +x mvnw
+
+      - name: Verify Maven Wrapper
+        run: ./mvnw --version
+
+      - name: Build application
         run: ./mvnw clean package -DskipTests
+
+      - name: Find application JAR
+        run: |
+          JAR=$(find target -maxdepth 1 -type f -name "*.jar" \
+            ! -name "*-sources.jar" \
+            ! -name "*-javadoc.jar" | head -n1)
+
+          if [ -z "$JAR" ]; then
+            echo "Application JAR not found"
+            exit 1
+          fi
+
+          echo "JAR=$JAR" >> $GITHUB_ENV
+          echo "Using JAR: $JAR"
 
       - name: Install SSH key
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+          ssh-keyscan -H "${{ secrets.SERVER_HOST }}" >> ~/.ssh/known_hosts
 
-      - name: Copy JAR
+      - name: Upload JAR
         run: |
           scp -i ~/.ssh/id_ed25519 \
-            target/*.jar \
+            "$JAR" \
             ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/tmp/backend.jar
 
       - name: Deploy
@@ -43,16 +65,28 @@ jobs:
           ssh -i ~/.ssh/id_ed25519 \
             ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
 
-          mkdir -p /var/www/hishatakaran/backend/backups
+            set -e
 
-          if [ -f /var/www/hishatakaran/backend/backend.jar ]; then
-            cp /var/www/hishatakaran/backend/backend.jar \
-               /var/www/hishatakaran/backend/backups/backend-$(date +%F-%H%M%S).jar
-          fi
+            APP_DIR="/var/www/hishatakaran/backend"
+            BACKUP_DIR="$APP_DIR/backups"
 
-          mv /tmp/backend.jar /var/www/hishatakaran/backend/backend.jar
+            mkdir -p "$BACKUP_DIR"
 
-          systemctl restart hishatakaran-backend
+            if [ -f "$APP_DIR/backend.jar" ]; then
+              cp "$APP_DIR/backend.jar" \
+                 "$BACKUP_DIR/backend-$(date +%Y%m%d-%H%M%S).jar"
+            fi
 
-          systemctl is-active --quiet hishatakaran-backend
+            mv /tmp/backend.jar "$APP_DIR/backend.jar"
+
+            systemctl restart hishatakaran-backend.service
+
+            sleep 5
+
+            systemctl is-active --quiet hishatakaran-backend.service
+
+            curl --fail --silent http://127.0.0.1:8080/actuator/health >/dev/null
+
+            echo "Deployment completed successfully."
+
           EOF
