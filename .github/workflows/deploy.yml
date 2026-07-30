@@ -81,12 +81,40 @@ jobs:
 
             systemctl restart hishatakaran-backend.service
 
-            sleep 5
-
-            systemctl is-active --quiet hishatakaran-backend.service
-
-            curl --fail --silent http://127.0.0.1:8888/actuator/health >/dev/null
-
-            echo "Deployment completed successfully."
-
+          echo "Waiting for service..."
+          
+          for i in {1..60}; do
+            if systemctl is-active --quiet hishatakaran-backend.service; then
+              echo "Service is active."
+              break
+            fi
+          
+            sleep 1
+          done
+          
+          if ! systemctl is-active --quiet hishatakaran-backend.service; then
+            echo "Service failed to start."
+            systemctl status hishatakaran-backend.service --no-pager
+            journalctl -u hishatakaran-backend.service -n 100 --no-pager
+            exit 1
+          fi
+          
+          echo "Waiting for application..."
+          
+          for i in {1..60}; do
+            if curl --fail --silent http://127.0.0.1:8888/actuator/health >/dev/null; then
+              echo "Application is ready."
+              exit 0
+            fi
+          
+            sleep 1
+          done
+          
+          echo "Health check failed."
+          
+          systemctl status hishatakaran-backend.service --no-pager
+          journalctl -u hishatakaran-backend.service -n 100 --no-pager
+          
+          exit 1
+          
           EOF
