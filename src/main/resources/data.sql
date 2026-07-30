@@ -1,4 +1,4 @@
-insert into regions(id, name_hy, name_en, name_fr)
+insert ignore into regions(id, name_hy, name_en, name_fr)
 values
     (1, 'Ասկերանի շրջան', 'Askerani District', 'district d''Askerani'),
     (2, 'Հադրութի շրջան', 'Hadruti District', 'district de Hadruti'),
@@ -10,7 +10,7 @@ values
     (8, 'Ստեփանակերտ', 'Stepʻanakert', 'Stepʻanakert'),
     (9, 'Քաշաթաղի շրջան', 'Kʻashatʻaghi District', 'district de Kʻashatʻaghi');
 
-insert into settlements(id, name_en, name_fr, name_hy, region)
+insert ignore into settlements(id, name_en, name_fr, name_hy, region)
 values
     (1,  'Akna', 'Akna', 'Ակնա', 1),
     (2,  'Aknaghbyur', 'Aknaghbyur', 'Ակնաղբյուր', 1),
@@ -376,7 +376,7 @@ values
     (354, 'K’arotan', 'Karotan', 'Քարոտան', 9),
     (355, 'K’arut', 'Karout', 'Քարուտ', 9);
 
-insert into monument_types (id, name_hy, name_en, name_fr) VALUES
+insert ignore into monument_types (id, name_hy, name_en, name_fr) VALUES
     (1,'Աղբյուր', 'Spring', 'Source'),
     (2,'Անապատ', 'Desert', 'Désert'),
     (3,'Արգելոց-թանգարան', 'Museum-Reserve', 'Réserve-musée'),
