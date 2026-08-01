@@ -15,6 +15,8 @@ import org.hishatakaran.backend.entity.TeamMembers;
 import org.hishatakaran.backend.entity.Topographic;
 import org.hishatakaran.backend.model.LibraryTranslationDto;
 import org.hishatakaran.backend.model.LinkTranslationDto;
+import org.hishatakaran.backend.model.MainPageRequestDto;
+import org.hishatakaran.backend.model.MainPageTranslationDto;
 import org.hishatakaran.backend.model.MonumentTranslationDto;
 import org.hishatakaran.backend.model.MonumentTypeTranslateDto;
 import org.hishatakaran.backend.model.ProgramTranslationDto;
@@ -1585,6 +1587,127 @@ NOW EXTRACT DATA FROM THIS HTML:
     properties.put("nameHy", stringSchema());
     properties.put("nameEn", stringSchema());
     properties.put("nameFr", stringSchema());
+
+    return Schema.builder()
+        .type(Type.Known.OBJECT)
+        .properties(properties)
+        .build();
+  }
+
+  public MainPageTranslationDto translateMainPage(
+      MainPageRequestDto dto
+  ) throws JsonProcessingException {
+
+    GenerateContentConfig config =
+        GenerateContentConfig.builder()
+            .responseMimeType("application/json")
+            .responseSchema(mainPageTranslationSchema())
+            .build();
+
+    Content content = Content.builder()
+        .parts(List.of(
+            Part.builder()
+                .text(buildMainPagePrompt(dto))
+                .build()
+        ))
+        .build();
+
+    GenerateContentResponse response =
+        client.models.generateContent(
+            "gemini-2.5-flash",
+            content,
+            config
+        );
+
+    return objectMapper.readValue(
+        response.text(),
+        MainPageTranslationDto.class
+    );
+  }
+
+  private String buildMainPagePrompt(
+      MainPageRequestDto dto
+  ) {
+
+    return """
+        You are a professional translator.
+
+        The input text is written in Armenian.
+        Return Armenian (corrected if needed), English and French.
+
+        RULES
+
+        1. titleHy MUST contain the Armenian title.
+           Correct only grammar, spelling and punctuation if necessary.
+        2. textHy MUST contain the Armenian text.
+           Correct only grammar, spelling and punctuation if necessary.
+        3. Translate title into English and French.
+        4. Translate text into English and French.
+        5. Do not summarize.
+        6. Do not rewrite.
+        7. Preserve formatting.
+        8. Return ONLY JSON matching the schema.
+
+        Armenian data:
+
+        %s
+        """
+        .formatted(createMainPageTranslationObject(dto));
+  }
+
+  private Map<String, Object> createMainPageTranslationObject(
+      MainPageRequestDto dto
+  ) {
+
+    Map<String, Object> data = new HashMap<>();
+
+    data.put(
+        "title",
+        dto.getTitle()
+    );
+
+    data.put(
+        "text",
+        dto.getText()
+    );
+
+    return data;
+  }
+
+  private Schema mainPageTranslationSchema() {
+
+    Map<String, Schema> properties =
+        new HashMap<>();
+
+    properties.put(
+        "titleHy",
+        stringSchema()
+    );
+
+    properties.put(
+        "titleEn",
+        stringSchema()
+    );
+
+    properties.put(
+        "titleFr",
+        stringSchema()
+    );
+
+    properties.put(
+        "textHy",
+        stringSchema()
+    );
+
+    properties.put(
+        "textEn",
+        stringSchema()
+    );
+
+    properties.put(
+        "textFr",
+        stringSchema()
+    );
 
     return Schema.builder()
         .type(Type.Known.OBJECT)
