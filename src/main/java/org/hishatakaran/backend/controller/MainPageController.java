@@ -4,6 +4,7 @@ import org.hishatakaran.backend.model.LibraryRequestDto;
 import org.hishatakaran.backend.model.LibraryResponseDto;
 import org.hishatakaran.backend.model.MainPageRequestDto;
 import org.hishatakaran.backend.model.MainPageResponseDto;
+import org.hishatakaran.backend.model.QuantityResponseDto;
 import org.hishatakaran.backend.service.MainPageService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,5 +34,10 @@ public class MainPageController {
   @GetMapping("/mainPage")
   public ResponseEntity<MainPageResponseDto> editMainPage() {
     return ResponseEntity.ok(mainPageService.getMainPage());
+  }
+
+  @GetMapping("/quantity")
+  public ResponseEntity<QuantityResponseDto> getQuantity() {
+    return ResponseEntity.ok(mainPageService.getQuantity());
   }
 }
