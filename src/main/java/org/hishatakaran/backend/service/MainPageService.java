@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.hishatakaran.backend.entity.MainPage;
 import org.hishatakaran.backend.mapper.MainPageMapper;
+import org.hishatakaran.backend.model.MainPageEditDto;
 import org.hishatakaran.backend.model.MainPageRequestDto;
 import org.hishatakaran.backend.model.MainPageResponseDto;
 import org.hishatakaran.backend.model.MainPageTranslationDto;
@@ -73,6 +74,20 @@ public class MainPageService {
 
   public MainPageResponseDto getMainPage() {
     return MainPageMapper.toResponseDto(mainPageRepository.findAll().getFirst());
+  }
+
+  public MainPageResponseDto editMainPage(MainPageEditDto mainPageEditDto)
+  {
+    MainPage mainPage = mainPageRepository.findAll().getFirst();
+    mainPage.setTitleHy(mainPageEditDto.getTitle().getHy());
+    mainPage.setTitleEn(mainPageEditDto.getTitle().getEn());
+    mainPage.setTitleFr(mainPageEditDto.getTitle().getFr());
+    mainPage.setTextHy(mainPageEditDto.getText().getHy());
+    mainPage.setTextEn(mainPageEditDto.getText().getEn());
+    mainPage.setTextFr(mainPageEditDto.getText().getFr());
+    mainPage.setBackground(mainPageEditDto.getBackground());
+
+    return MainPageMapper.toResponseDto(mainPageRepository.save(mainPage));
   }
 
   public QuantityResponseDto getQuantity() {
