@@ -36,7 +36,7 @@ public class MainPageController {
     return ResponseEntity.ok(mainPageService.getMainPage());
   }
 
-  @PutMapping("/mainPage")
+  @PutMapping("/admin/mainPage")
   public ResponseEntity<MainPageResponseDto> editMainPage(
       @RequestBody MainPageEditDto mainPageEditDto
   ) {
