@@ -25,14 +25,14 @@ public class MainPageController {
   private final MainPageService mainPageService;
 
   @PostMapping("/admin/mainPage")
-  public ResponseEntity<MainPageResponseDto> editMainPage(
+  public ResponseEntity<MainPageResponseDto> createMainPage(
       @RequestBody MainPageRequestDto mainPageRequestDto
   ){
-    return ResponseEntity.ok(mainPageService.editMainPage(mainPageRequestDto));
+    return ResponseEntity.ok(mainPageService.createMainPage(mainPageRequestDto));
   }
 
   @GetMapping("/mainPage")
-  public ResponseEntity<MainPageResponseDto> editMainPage() {
+  public ResponseEntity<MainPageResponseDto> getMainPage() {
     return ResponseEntity.ok(mainPageService.getMainPage());
   }
 

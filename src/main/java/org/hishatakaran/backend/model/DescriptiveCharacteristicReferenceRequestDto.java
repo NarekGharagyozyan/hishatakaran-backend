@@ -29,6 +29,7 @@ public class DescriptiveCharacteristicReferenceRequestDto {
   private String lengthOfSpan;
   private String stateOfMonument;
   private String valuation;
+  private String monumentDataUpdate;
 
   @Override
   public String toString() {

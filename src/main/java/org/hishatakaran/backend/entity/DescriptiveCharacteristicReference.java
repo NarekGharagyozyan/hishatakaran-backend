@@ -172,6 +172,13 @@ public class DescriptiveCharacteristicReference {
     @Column(columnDefinition = "TEXT")
     private String valuationFr;
 
+    @Column(columnDefinition = "TEXT")
+    private String monumentDataUpdateHy;
+    @Column(columnDefinition = "TEXT")
+    private String monumentDataUpdateEn;
+    @Column(columnDefinition = "TEXT")
+    private String monumentDataUpdateFr;
+
     public DescriptiveCharacteristicReference(Monument monument, String archeologicalOverviewStratigraphyFindingsHy,
         String archeologicalOverviewStratigraphyFindingsEn, String archeologicalOverviewStratigraphyFindingsFr,
         String architecturalOverviewHy, String architecturalOverviewEn, String architecturalOverviewFr,
@@ -192,7 +199,7 @@ public class DescriptiveCharacteristicReference {
         String areaHy, String areaEn, String areaFr, String lengthOfSpanHy, String lengthOfSpanEn,
         String lengthOfSpanFr,
         String stateOfMonumentHy, String stateOfMonumentEn, String stateOfMonumentFr, String valuationHy,
-        String valuationEn, String valuationFr
+        String valuationEn, String valuationFr, String monumentDataUpdateHy, String monumentDataUpdateEn, String monumentDataUpdateFr
     )
     {
         this.monument = monument;
@@ -256,6 +263,9 @@ public class DescriptiveCharacteristicReference {
         this.valuationHy = valuationHy;
         this.valuationEn = valuationEn;
         this.valuationFr = valuationFr;
+        this.monumentDataUpdateHy = monumentDataUpdateHy;
+        this.monumentDataUpdateEn = monumentDataUpdateEn;
+        this.monumentDataUpdateFr = monumentDataUpdateFr;
     }
 
     @Override

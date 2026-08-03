@@ -9,7 +9,8 @@ import lombok.Setter;
 @RequiredArgsConstructor
 public class QuantityResponseDto {
 
-  private final MonumentCountDto monuments;
+  private final MonumentCountDto registered;
+  private final MonumentCountDto documented;
   private final SettlementsCountDto settlements;
   private final MediaCountDto media;
 }

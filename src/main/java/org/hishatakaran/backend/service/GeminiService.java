@@ -807,6 +807,7 @@ NOW EXTRACT DATA FROM THIS HTML:
     data.put("implementationTechnique", reference.getImplementationTechniqueHy());
     data.put("stateOfMonument", reference.getStateOfMonumentHy());
     data.put("valuation", reference.getValuationHy());
+    data.put("monumentDataUpdate", reference.getMonumentDataUpdateHy());
 
     return data;
   }
@@ -1094,6 +1095,11 @@ NOW EXTRACT DATA FROM THIS HTML:
 
     properties.put(
         "valuation",
+        stringSchema()
+    );
+
+    properties.put(
+        "monumentDataUpdate",
         stringSchema()
     );
 

@@ -433,6 +433,10 @@ public class MonumentTranslationService {
                 clean(dto.getValuation())
             );
 
+            descriptive.setMonumentDataUpdateEn(
+                clean(dto.getMonumentDataUpdate())
+            );
+
 
         } else {
 
@@ -515,6 +519,10 @@ public class MonumentTranslationService {
 
             descriptive.setValuationFr(
                 clean(dto.getValuation())
+            );
+
+            descriptive.setMonumentDataUpdateFr(
+                clean(dto.getMonumentDataUpdate())
             );
         }
     }

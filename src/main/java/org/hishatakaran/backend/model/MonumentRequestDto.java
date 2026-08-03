@@ -17,6 +17,7 @@ import lombok.Setter;
 public class MonumentRequestDto {
 
   private String name;
+  private Integer monumentStatusId;
   private Long regionId;
   private Long settlementId;
   private Long monumentTypeId;
