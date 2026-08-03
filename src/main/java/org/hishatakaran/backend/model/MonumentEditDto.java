@@ -17,6 +17,7 @@ public class MonumentEditDto {
   private LanguagesResponseDto specialName;
   private LanguagesResponseDto anotherNames;
   private Long monumentTypeId;
+  private Integer monumentStatusId;
   private Long regionId;
   private Long settlementId;
   private LanguagesResponseDto history;

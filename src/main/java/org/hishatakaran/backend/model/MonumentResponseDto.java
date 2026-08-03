@@ -14,6 +14,7 @@ import lombok.Setter;
 public class MonumentResponseDto {
 
     private final Long id;
+    private final MonumentStatusResponseDto monumentStatus;
     private final LanguagesResponseDto name;
     private final Boolean isPublished;
     private final MonumentTypesResponseDto monumentType;

@@ -108,6 +108,11 @@ public class DescriptiveCharacteristicMapper {
                 descriptive.getValuationHy(),
                 descriptive.getValuationEn(),
                 descriptive.getValuationFr()
+            ),
+            LanguagesResponseDto.of(
+                descriptive.getMonumentDataUpdateHy(),
+                descriptive.getMonumentDataUpdateEn(),
+                descriptive.getMonumentDataUpdateFr()
             )
         );
     }

@@ -25,6 +25,7 @@ import org.hishatakaran.backend.model.MonumentTypeTranslateDto;
 import org.hishatakaran.backend.model.MonumentTypesResponseDto;
 import org.hishatakaran.backend.model.TranslationLanguage;
 import org.hishatakaran.backend.repository.MonumentRepository;
+import org.hishatakaran.backend.repository.MonumentStatusRepository;
 import org.hishatakaran.backend.repository.MonumentTypesRepository;
 import org.hishatakaran.backend.repository.RegionRepository;
 import org.hishatakaran.backend.repository.SettlementRepository;
@@ -47,12 +48,16 @@ public class MonumentService {
     private final RegionRepository regionRepository;
     private final SettlementRepository settlementRepository;
     private final MonumentTypesRepository monumentTypesRepository;
+    private final MonumentStatusRepository monumentStatusRepository;
     private final MonumentTranslationService monumentTranslationService;
     private final FileStorageService fileStorageService;
 
     public MonumentResponseDto postMonument(MonumentRequestDto monumentRequestDto) {
         Monument monument = Monument.builder()
             .isPublished(Boolean.FALSE)
+            .monumentStatus(monumentStatusRepository.findById(monumentRequestDto.getMonumentStatusId()).orElseThrow(
+                () -> new RuntimeException("There is no monument status with that id.")
+            ))
             .nameHy(monumentRequestDto.getName())
             .monumentType(monumentTypesRepository.findById(monumentRequestDto.getMonumentTypeId()).orElseThrow(
                 () -> new RuntimeException("There is no monument type with that id.")
@@ -152,6 +157,7 @@ public class MonumentService {
             .lengthOfSpanHy(monumentRequestDto.getDescriptiveCharacteristics().getLengthOfSpan())
             .stateOfMonumentHy(monumentRequestDto.getDescriptiveCharacteristics().getStateOfMonument())
             .valuationHy(monumentRequestDto.getDescriptiveCharacteristics().getValuation())
+            .monumentDataUpdateHy(monumentRequestDto.getDescriptiveCharacteristics().getMonumentDataUpdate())
             .build();
 
         monument.setFootnotes(footnotes);
@@ -236,6 +242,7 @@ public class MonumentService {
             monument.setAnotherNamesFr(monumentEditDto.getAnotherNames().getFr());
         }
 
+        monument.setMonumentStatus(monumentStatusRepository.findById(monumentEditDto.getMonumentStatusId()).orElseThrow(() -> new RuntimeException("Monument status not found")));
         monument.setMonumentType(monumentTypesRepository.findById(monumentEditDto.getMonumentTypeId()).orElseThrow(() -> new RuntimeException("Monument type not found")));
         monument.setRegion(regionRepository.findById(monumentEditDto.getRegionId()).orElseThrow(() -> new RuntimeException("Region not found")));
         monument.setSettlement(settlementRepository.findById(monumentEditDto.getSettlementId()).orElseThrow(() -> new RuntimeException("Settlement not found")));
@@ -853,6 +860,19 @@ public class MonumentService {
         descriptive.setValuationFr(
             monumentEditDto.getDescriptiveCharacteristics().getValuation() != null
                 ? monumentEditDto.getDescriptiveCharacteristics().getValuation().getFr()
+                : null);
+
+        descriptive.setMonumentDataUpdateHy(
+            monumentEditDto.getDescriptiveCharacteristics().getMonumentDataUpdate() != null
+                ? monumentEditDto.getDescriptiveCharacteristics().getMonumentDataUpdate().getHy()
+                : null);
+        descriptive.setMonumentDataUpdateEn(
+            monumentEditDto.getDescriptiveCharacteristics().getMonumentDataUpdate() != null
+                ? monumentEditDto.getDescriptiveCharacteristics().getMonumentDataUpdate().getEn()
+                : null);
+        descriptive.setMonumentDataUpdateFr(
+            monumentEditDto.getDescriptiveCharacteristics().getMonumentDataUpdate() != null
+                ? monumentEditDto.getDescriptiveCharacteristics().getMonumentDataUpdate().getFr()
                 : null);
 
         monument.setSignature(monumentEditDto.getSignature());

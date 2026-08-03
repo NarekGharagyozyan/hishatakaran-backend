@@ -30,4 +30,5 @@ public class DescriptiveCharacteristicResponseDto {
     private final LanguagesResponseDto lengthOfSpan;
     private final LanguagesResponseDto stateOfMonument;
     private final LanguagesResponseDto valuation;
+    private final LanguagesResponseDto monumentDataUpdate;
 }

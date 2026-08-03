@@ -28,4 +28,5 @@ public class DescriptiveCharacteristicTranslationDto {
     private String lengthOfSpan;
     private String stateOfMonument;
     private String valuation;
+    private String monumentDataUpdate;
 }

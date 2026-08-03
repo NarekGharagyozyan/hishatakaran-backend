@@ -47,6 +47,10 @@ public class Monument extends BaseEntity{
     private Long id;
     private Boolean isPublished;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "monument_status")
+    private MonumentStatus monumentStatus;
+
     @Column(columnDefinition = "TEXT")
     private String nameHy;
     @Column(columnDefinition = "TEXT")
