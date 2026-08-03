@@ -655,16 +655,16 @@ public class MonumentService {
                 : null);
 
         descriptive.setTheBuildingMaterialHy(
-            monumentEditDto.getDescriptiveCharacteristics().getBuildingMaterial() != null
-                ? monumentEditDto.getDescriptiveCharacteristics().getBuildingMaterial().getHy()
+            monumentEditDto.getDescriptiveCharacteristics().getTheBuildingMaterial() != null
+                ? monumentEditDto.getDescriptiveCharacteristics().getTheBuildingMaterial().getHy()
                 : null);
         descriptive.setTheBuildingMaterialEn(
-            monumentEditDto.getDescriptiveCharacteristics().getBuildingMaterial() != null
-                ? monumentEditDto.getDescriptiveCharacteristics().getBuildingMaterial().getEn()
+            monumentEditDto.getDescriptiveCharacteristics().getTheBuildingMaterial() != null
+                ? monumentEditDto.getDescriptiveCharacteristics().getTheBuildingMaterial().getEn()
                 : null);
         descriptive.setTheBuildingMaterialFr(
-            monumentEditDto.getDescriptiveCharacteristics().getBuildingMaterial() != null
-                ? monumentEditDto.getDescriptiveCharacteristics().getBuildingMaterial().getFr()
+            monumentEditDto.getDescriptiveCharacteristics().getTheBuildingMaterial() != null
+                ? monumentEditDto.getDescriptiveCharacteristics().getTheBuildingMaterial().getFr()
                 : null);
 
         descriptive.setOpeningsEntrancesHy(
