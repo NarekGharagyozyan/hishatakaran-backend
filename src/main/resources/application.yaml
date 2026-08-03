@@ -10,9 +10,8 @@ spring:
     password: hishatakaranpassword
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
     show-sql: true
-    defer-datasource-initialization: true
   sql:
     init:
       mode: ALWAYS
@@ -21,6 +20,9 @@ spring:
       max-file-size: 500MB
       max-request-size: 500MB
       enabled: true
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
 
 server:
   servlet:
