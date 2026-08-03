@@ -18,7 +18,13 @@ public class MonumentMapper {
         MonumentResponseDto.MonumentResponseDtoBuilder monumentDtoBuilder = MonumentResponseDto.builder();
 
         monumentDtoBuilder.id(m.getId());
-        monumentDtoBuilder.monumentStatus(MonumentStatusMapper.toDto(m.getMonumentStatus()));
+        monumentDtoBuilder.monumentStatus(
+            MonumentStatusMapper.toDto(
+                m.getMonumentStatus() == null
+                    ? null
+                    : m.getMonumentStatus()
+            )
+        );
         monumentDtoBuilder.name(LanguagesResponseDto.of(
             m.getNameHy(),
             m.getNameEn(),

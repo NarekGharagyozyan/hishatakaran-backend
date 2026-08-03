@@ -8,6 +8,9 @@ public class MonumentStatusMapper {
 
     public static MonumentStatusResponseDto toDto(MonumentStatus monumentStatus)
     {
+      if (monumentStatus == null)
+        return null;
+
       return new MonumentStatusResponseDto(
           monumentStatus.getId(),
           LanguagesResponseDto.of(
