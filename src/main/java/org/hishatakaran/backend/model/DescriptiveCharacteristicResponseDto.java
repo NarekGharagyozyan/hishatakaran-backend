@@ -19,7 +19,7 @@ public class DescriptiveCharacteristicResponseDto {
     private final LanguagesResponseDto roof;
     private final LanguagesResponseDto type;
     private final LanguagesResponseDto levelsOfConstruction;
-    private final LanguagesResponseDto buildingMaterial;
+    private final LanguagesResponseDto theBuildingMaterial;
     private final LanguagesResponseDto exterior;
     private final LanguagesResponseDto implementationTechnique;
     private final LanguagesResponseDto length;
