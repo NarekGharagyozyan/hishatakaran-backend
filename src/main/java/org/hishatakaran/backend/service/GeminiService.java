@@ -13,6 +13,8 @@ import org.hishatakaran.backend.entity.Program;
 import org.hishatakaran.backend.entity.ProgramLink;
 import org.hishatakaran.backend.entity.TeamMembers;
 import org.hishatakaran.backend.entity.Topographic;
+import org.hishatakaran.backend.model.AboutUsRequestDto;
+import org.hishatakaran.backend.model.AboutUsTranslationDto;
 import org.hishatakaran.backend.model.LibraryTranslationDto;
 import org.hishatakaran.backend.model.LinkTranslationDto;
 import org.hishatakaran.backend.model.MainPageRequestDto;
@@ -1697,6 +1699,153 @@ NOW EXTRACT DATA FROM THIS HTML:
 
     properties.put(
         "titleFr",
+        stringSchema()
+    );
+
+    properties.put(
+        "textHy",
+        stringSchema()
+    );
+
+    properties.put(
+        "textEn",
+        stringSchema()
+    );
+
+    properties.put(
+        "textFr",
+        stringSchema()
+    );
+
+    return Schema.builder()
+        .type(Type.Known.OBJECT)
+        .properties(properties)
+        .build();
+  }
+
+
+  public AboutUsTranslationDto translateAboutUs(
+      AboutUsRequestDto dto
+  ) throws JsonProcessingException {
+
+
+
+    GenerateContentConfig config =
+        GenerateContentConfig.builder()
+            .responseMimeType("application/json")
+            .responseSchema(aboutUsTranslationSchema())
+            .build();
+
+    Content content = Content.builder()
+        .parts(List.of(
+            Part.builder()
+                .text(buildAboutUsPrompt(dto))
+                .build()
+        ))
+        .build();
+
+    GenerateContentResponse response =
+        client.models.generateContent(
+            "gemini-2.5-flash",
+            content,
+            config
+        );
+
+    return objectMapper.readValue(
+        response.text(),
+        AboutUsTranslationDto.class
+    );
+  }
+
+  private String buildAboutUsPrompt(
+      AboutUsRequestDto dto
+  ) {
+
+    return """
+        You are a professional translator.
+
+        The input text is written in Armenian.
+        Return Armenian (corrected if needed), English and French.
+
+        RULES
+
+        1. titleHy MUST contain the Armenian title.
+           Correct only grammar, spelling and punctuation if necessary.
+        2. subtitleHy MUST contain the Armenian subtitle.
+          Correct only grammar, spelling and punctuation if necessary.
+        3. textHy MUST contain the Armenian text.
+           Correct only grammar, spelling and punctuation if necessary.
+        4. Translate title into English and French.
+        5. Translate subtitle into English and French.
+        6. Translate text into English and French.
+        7. Do not summarize.
+        8. Do not rewrite.
+        9. Preserve formatting.
+        10. Return ONLY JSON matching the schema.
+
+        Armenian data:
+
+        %s
+        """
+        .formatted(createAboutUsTranslationObject(dto));
+  }
+
+  private Map<String, Object> createAboutUsTranslationObject(
+      AboutUsRequestDto dto
+  ) {
+
+    Map<String, Object> data = new HashMap<>();
+
+    data.put(
+        "title",
+        dto.getTitle()
+    );
+
+    data.put(
+        "subtitle",
+        dto.getSubtitle()
+    );
+
+    data.put(
+        "text",
+        dto.getText()
+    );
+
+    return data;
+  }
+
+  private Schema aboutUsTranslationSchema() {
+
+    Map<String, Schema> properties =
+        new HashMap<>();
+
+    properties.put(
+        "titleHy",
+        stringSchema()
+    );
+
+    properties.put(
+        "titleEn",
+        stringSchema()
+    );
+
+    properties.put(
+        "titleFr",
+        stringSchema()
+    );
+
+    properties.put(
+        "subtitleHy",
+        stringSchema()
+    );
+
+    properties.put(
+        "subtitleEn",
+        stringSchema()
+    );
+
+    properties.put(
+        "subtitleFr",
         stringSchema()
     );
 
