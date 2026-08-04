@@ -15,6 +15,8 @@ import org.hishatakaran.backend.entity.TeamMembers;
 import org.hishatakaran.backend.entity.Topographic;
 import org.hishatakaran.backend.model.AboutUsRequestDto;
 import org.hishatakaran.backend.model.AboutUsTranslationDto;
+import org.hishatakaran.backend.model.CulturalHeritagesRequestDto;
+import org.hishatakaran.backend.model.CulturalHeritagesTranslationDto;
 import org.hishatakaran.backend.model.LibraryTranslationDto;
 import org.hishatakaran.backend.model.LinkTranslationDto;
 import org.hishatakaran.backend.model.MainPageRequestDto;
@@ -1861,6 +1863,129 @@ NOW EXTRACT DATA FROM THIS HTML:
 
     properties.put(
         "textFr",
+        stringSchema()
+    );
+
+    return Schema.builder()
+        .type(Type.Known.OBJECT)
+        .properties(properties)
+        .build();
+  }
+
+  public CulturalHeritagesTranslationDto translateCulturalHeritages(
+      CulturalHeritagesRequestDto dto
+  ) throws JsonProcessingException {
+
+
+
+    GenerateContentConfig config =
+        GenerateContentConfig.builder()
+            .responseMimeType("application/json")
+            .responseSchema(culturalHeritagesTranslationSchema())
+            .build();
+
+    Content content = Content.builder()
+        .parts(List.of(
+            Part.builder()
+                .text(buildCulturalHeritagesPrompt(dto))
+                .build()
+        ))
+        .build();
+
+    GenerateContentResponse response =
+        client.models.generateContent(
+            "gemini-2.5-flash",
+            content,
+            config
+        );
+
+    return objectMapper.readValue(
+        response.text(),
+        CulturalHeritagesTranslationDto.class
+    );
+  }
+
+  private String buildCulturalHeritagesPrompt(
+      CulturalHeritagesRequestDto dto
+  ) {
+
+    return """
+        You are a professional translator.
+
+        The input text is written in Armenian.
+        Return Armenian (corrected if needed), English and French.
+
+        RULES
+
+        1. titleHy MUST contain the Armenian title.
+           Correct only grammar, spelling and punctuation if necessary.
+        2. subtitleHy MUST contain the Armenian subtitle.
+          Correct only grammar, spelling and punctuation if necessary.
+        3. Translate title into English and French.
+        4. Translate subtitle into English and French.
+        5. Do not summarize.
+        6. Do not rewrite.
+        7. Preserve formatting.
+        8. Return ONLY JSON matching the schema.
+
+        Armenian data:
+
+        %s
+        """
+        .formatted(createCulturalHeritagesTranslationObject(dto));
+  }
+
+  private Map<String, Object> createCulturalHeritagesTranslationObject(
+      CulturalHeritagesRequestDto dto
+  ) {
+
+    Map<String, Object> data = new HashMap<>();
+
+    data.put(
+        "title",
+        dto.getTitle()
+    );
+
+    data.put(
+        "subtitle",
+        dto.getSubtitle()
+    );
+
+    return data;
+  }
+
+  private Schema culturalHeritagesTranslationSchema() {
+
+    Map<String, Schema> properties =
+        new HashMap<>();
+
+    properties.put(
+        "titleHy",
+        stringSchema()
+    );
+
+    properties.put(
+        "titleEn",
+        stringSchema()
+    );
+
+    properties.put(
+        "titleFr",
+        stringSchema()
+    );
+
+    properties.put(
+        "subtitleHy",
+        stringSchema()
+    );
+
+    properties.put(
+        "subtitleEn",
+        stringSchema()
+    );
+
+    properties.put(
+        "subtitleFr",
         stringSchema()
     );
 
