@@ -3,8 +3,6 @@ package org.hishatakaran.backend.controller;
 import lombok.RequiredArgsConstructor;
 
 import org.hishatakaran.backend.mapper.SettlementMapper;
-import org.hishatakaran.backend.model.LibraryResponseDto;
-import org.hishatakaran.backend.model.MonumentResponseDto;
 import org.hishatakaran.backend.model.SettlementEditDto;
 import org.hishatakaran.backend.model.SettlementRequestDto;
 import org.hishatakaran.backend.model.SettlementResponseDto;
@@ -60,6 +58,6 @@ public class SettlementController {
 
     @DeleteMapping("/admin/settlements/{settlementId}")
     public void deleteSettlement(@PathVariable Long settlementId) {
-        settlementRepository.deleteById(settlementId);
+        settlementService.deleteSettlement(settlementId);
     }
 }

@@ -1,6 +1,7 @@
 package org.hishatakaran.backend.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.hishatakaran.backend.entity.AboutUs;
 import org.hishatakaran.backend.mapper.AboutUsMapper;
@@ -60,7 +61,10 @@ public class AboutUsService {
   }
 
   public AboutUsResponseDto getAboutUs() {
-    return AboutUsMapper.toResponseDto(aboutUsRepository.findAll().getFirst());
+    List<AboutUs> aboutUses = aboutUsRepository.findAll();
+    if (aboutUses.isEmpty())
+      return null;
+    return AboutUsMapper.toResponseDto(aboutUses.getFirst());
   }
 
   public AboutUsResponseDto editAboutUs(AboutUsEditDto aboutUsEditDto)

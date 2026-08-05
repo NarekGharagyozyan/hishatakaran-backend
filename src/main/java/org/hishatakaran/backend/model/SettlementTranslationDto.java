@@ -1,5 +1,7 @@
 package org.hishatakaran.backend.model;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,4 +16,8 @@ public class SettlementTranslationDto {
     private String nameHy;
     private String nameEn;
     private String nameFr;
+    private String descriptionHy;
+    private String descriptionEn;
+    private String descriptionFr;
+    private List<ImageAndMeasurementTranslationDto> images;
 }
