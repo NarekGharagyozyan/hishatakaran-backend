@@ -73,7 +73,10 @@ public class MainPageService {
   }
 
   public MainPageResponseDto getMainPage() {
-    return MainPageMapper.toResponseDto(mainPageRepository.findAll().getFirst());
+    List<MainPage> mainPages = mainPageRepository.findAll();
+    if (mainPages.isEmpty())
+      return null;
+    return MainPageMapper.toResponseDto(mainPages.getFirst());
   }
 
   public MainPageResponseDto editMainPage(MainPageEditDto mainPageEditDto)

@@ -57,7 +57,10 @@ public class CulturalHeritagesService {
   }
 
   public CulturalHeritagesResponseDto getCulturalHeritages() {
-    return CulturalHeritagesMapper.toResponseDto(culturalHeritagesRepository.findAll().getFirst());
+    List<CulturalHeritages> culturalHeritages = culturalHeritagesRepository.findAll();
+    if (culturalHeritages.isEmpty())
+      return null;
+    return CulturalHeritagesMapper.toResponseDto(culturalHeritages.getFirst());
   }
 
   public CulturalHeritagesResponseDto editCulturalHeritages(CulturalHeritagesEditDto culturalHeritagesEditDto)

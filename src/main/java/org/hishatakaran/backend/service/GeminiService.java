@@ -24,6 +24,7 @@ import org.hishatakaran.backend.model.MainPageTranslationDto;
 import org.hishatakaran.backend.model.MonumentTranslationDto;
 import org.hishatakaran.backend.model.MonumentTypeTranslateDto;
 import org.hishatakaran.backend.model.ProgramTranslationDto;
+import org.hishatakaran.backend.model.SettlementRequestDto;
 import org.hishatakaran.backend.model.SettlementTranslationDto;
 import org.hishatakaran.backend.model.TeamMemberTranslationDto;
 import org.hishatakaran.backend.model.TranslationLanguage;
@@ -1454,7 +1455,156 @@ NOW EXTRACT DATA FROM THIS HTML:
         .build();
   }
 
+
   public SettlementTranslationDto translateSettlement(
+      SettlementRequestDto dto
+  ) throws JsonProcessingException {
+
+    GenerateContentConfig config =
+        GenerateContentConfig.builder()
+            .responseMimeType("application/json")
+            .responseSchema(settlementTranslationSchema())
+            .build();
+
+    Content content = Content.builder()
+        .parts(List.of(
+            Part.builder()
+                .text(buildSettlementPrompt(dto))
+                .build()
+        ))
+        .build();
+
+    GenerateContentResponse response =
+        client.models.generateContent(
+            "gemini-2.5-flash",
+            content,
+            config
+        );
+
+    return objectMapper.readValue(
+        response.text(),
+        SettlementTranslationDto.class
+    );
+  }
+
+  private String buildSettlementPrompt(
+      SettlementRequestDto dto
+  ) {
+
+    return """
+        You are a professional translator.
+
+        The input text is written in Armenian.
+        Return Armenian (corrected if needed), English and French.
+
+        RULES
+
+        1. nameHy MUST contain the Armenian title.
+           Correct only grammar, spelling and punctuation if necessary.
+        2. descriptionHy MUST contain the Armenian text.
+           Correct only grammar, spelling and punctuation if necessary.
+        3. Translate name into English and French.
+        4. Translate description into English and French.
+        5. Do not summarize.
+        6. Do not rewrite.
+        7. Preserve formatting.
+        8. Return ONLY JSON matching the schema.
+
+        Armenian data:
+
+        %s
+        """
+        .formatted(createSettlementTranslationObject(dto));
+  }
+
+  private Map<String, Object> createSettlementTranslationObject(
+      SettlementRequestDto dto
+  ) {
+
+    Map<String, Object> data = new HashMap<>();
+
+    data.put(
+        "name",
+        dto.getName()
+    );
+
+    data.put(
+        "description",
+        dto.getDescription()
+    );
+
+    data.put(
+        "images",
+        dto.getImages()
+            .stream()
+            .map(v -> {
+
+              Map<String, Object> map = new HashMap<>();
+
+              map.put(
+                  "caption",
+                  v.getCaption()
+              );
+
+              return map;
+
+            })
+            .toList()
+    );
+
+    return data;
+  }
+
+  private Schema settlementTranslationSchema() {
+
+    Map<String, Schema> properties =
+        new HashMap<>();
+
+    properties.put(
+        "nameHy",
+        stringSchema()
+    );
+
+    properties.put(
+        "nameEn",
+        stringSchema()
+    );
+
+    properties.put(
+        "nameFr",
+        stringSchema()
+    );
+
+    properties.put(
+        "descriptionHy",
+        stringSchema()
+    );
+
+    properties.put(
+        "descriptionEn",
+        stringSchema()
+    );
+
+    properties.put(
+        "descriptionFr",
+        stringSchema()
+    );
+
+    properties.put(
+        "images",
+        Schema.builder()
+            .type(Type.Known.ARRAY)
+            .items(imageSchema())
+            .build()
+    );
+
+    return Schema.builder()
+        .type(Type.Known.OBJECT)
+        .properties(properties)
+        .build();
+  }
+
+  /*public SettlementTranslationDto translateSettlement(
       String armenianName
   ) throws JsonProcessingException {
 
@@ -1530,7 +1680,7 @@ NOW EXTRACT DATA FROM THIS HTML:
         .type(Type.Known.OBJECT)
         .properties(properties)
         .build();
-  }
+  }*/
 
 
 

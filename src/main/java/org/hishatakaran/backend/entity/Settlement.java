@@ -5,7 +5,10 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -39,6 +42,19 @@ public class Settlement {
     @Column(nullable = false)
     private String nameFr;
 
+    @Column(columnDefinition = "TEXT")
+    private String descriptionHy;
+    @Column(columnDefinition = "TEXT")
+    private String descriptionEn;
+    @Column(columnDefinition = "TEXT")
+    private String descriptionFr;
+
+    private String longitude;
+    private String latitude;
+
+    @OneToMany(mappedBy = "settlement", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SettlementImage> images = new ArrayList<>();
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "region", nullable = false)
     @JsonBackReference
@@ -58,10 +74,16 @@ public class Settlement {
             '}';
     }
 
-    public Settlement(String nameHy, String nameEn, String nameFr, Region region) {
+    public Settlement(String nameHy, String nameEn, String nameFr, String descriptionHy, String descriptionEn,
+        String descriptionFr, String longitude, String latitude, Region region) {
         this.nameHy = nameHy;
         this.nameEn = nameEn;
         this.nameFr = nameFr;
+        this.descriptionHy = descriptionHy;
+        this.descriptionEn = descriptionEn;
+        this.descriptionFr = descriptionFr;
+        this.longitude = longitude;
+        this.latitude = latitude;
         this.region = region;
     }
 }
