@@ -110,6 +110,11 @@ public class SettlementService {
     settlementRepository.delete(settlement);
   }
 
+  public SettlementResponseDto getSettlement(Long id) {
+    Settlement settlement = settlementRepository.findById(id).orElseThrow(() -> new RuntimeException("Settlement not found"));
+    return SettlementMapper.toDto(settlement);
+  }
+
   private void deleteFiles(List<String> paths) {
     if (paths == null) {
       return;
@@ -117,4 +122,5 @@ public class SettlementService {
 
     paths.forEach(fileStorageService::deleteImage);
   }
+
 }
