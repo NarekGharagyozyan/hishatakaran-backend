@@ -60,4 +60,9 @@ public class SettlementController {
     public void deleteSettlement(@PathVariable Long settlementId) {
         settlementService.deleteSettlement(settlementId);
     }
+
+    @GetMapping("/settlements/{settlementId}")
+    public SettlementResponseDto getSettlement(@PathVariable Long settlementId) {
+        return settlementService.getSettlement(settlementId);
+    }
 }
