@@ -33,7 +33,7 @@ public class ProgramCulturalHeritageDocumentationController {
     return ResponseEntity.ok(programCulturalHeritageDocumentationService.getProgramCulturalHeritageDocumentation());
   }
 
-  @PutMapping("/admin/culturalHeritagesDocumentation")
+  @PutMapping("/admin/program/culturalHeritagesDocumentation")
   public ResponseEntity<ProgramCulturalHeritageDocumentationResponseDto> editProgramCulturalHeritageDocumentation(
       @RequestBody ProgramCulturalHeritageDocumentationEditDto culturalHeritagesDocumentEditDto
   ) {
