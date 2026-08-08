@@ -17,23 +17,23 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
-public class ProgramsCulturalHeritageDocumentationController {
+public class ProgramCulturalHeritageDocumentationController {
 
   private final ProgramCulturalHeritageDocumentationService programCulturalHeritageDocumentationService;
 
-  @PostMapping("/admin/program/culturalHeritagesDocument")
+  @PostMapping("/admin/program/culturalHeritagesDocumentation")
   public ResponseEntity<ProgramCulturalHeritageDocumentationResponseDto> createProgramCulturalHeritageDocumentation(
       @RequestBody ProgramCulturalHeritageDocumentationRequestDto culturalHeritagesDocumentRequestDto
   ){
     return ResponseEntity.ok(programCulturalHeritageDocumentationService.createProgramCulturalHeritageDocumentation(culturalHeritagesDocumentRequestDto));
   }
 
-  @GetMapping("/program/culturalHeritagesDocument")
+  @GetMapping("/program/culturalHeritagesDocumentation")
   public ResponseEntity<ProgramCulturalHeritageDocumentationResponseDto> getProgramCulturalHeritageDocumentation() {
     return ResponseEntity.ok(programCulturalHeritageDocumentationService.getProgramCulturalHeritageDocumentation());
   }
 
-  @PutMapping("/admin/culturalHeritagesDocument")
+  @PutMapping("/admin/culturalHeritagesDocumentation")
   public ResponseEntity<ProgramCulturalHeritageDocumentationResponseDto> editProgramCulturalHeritageDocumentation(
       @RequestBody ProgramCulturalHeritageDocumentationEditDto culturalHeritagesDocumentEditDto
   ) {
