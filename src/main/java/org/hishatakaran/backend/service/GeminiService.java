@@ -23,6 +23,8 @@ import org.hishatakaran.backend.model.MainPageRequestDto;
 import org.hishatakaran.backend.model.MainPageTranslationDto;
 import org.hishatakaran.backend.model.MonumentTranslationDto;
 import org.hishatakaran.backend.model.MonumentTypeTranslateDto;
+import org.hishatakaran.backend.model.ProgramCulturalHeritageDocumentationRequestDto;
+import org.hishatakaran.backend.model.ProgramCulturalHeritageDocumentationTranslationDto;
 import org.hishatakaran.backend.model.ProgramTranslationDto;
 import org.hishatakaran.backend.model.SettlementRequestDto;
 import org.hishatakaran.backend.model.SettlementTranslationDto;
@@ -631,10 +633,7 @@ NOW EXTRACT DATA FROM THIS HTML:
 
               Map<String, Object> map = new HashMap<>();
 
-              map.put(
-                  "title",
-                  v.getTitleHy()
-              );
+              map.put("title", v.getTitleHy());
 
               return map;
 
@@ -650,10 +649,7 @@ NOW EXTRACT DATA FROM THIS HTML:
 
               Map<String, Object> map = new HashMap<>();
 
-              map.put(
-                  "caption",
-                  v.getCaptionHy()
-              );
+              map.put("caption", v.getCaptionHy());
 
               return map;
 
@@ -669,10 +665,7 @@ NOW EXTRACT DATA FROM THIS HTML:
 
               Map<String, Object> map = new HashMap<>();
 
-              map.put(
-                  "caption",
-                  v.getCaptionHy()
-              );
+              map.put("caption", v.getCaptionHy());
 
               return map;
 
@@ -703,10 +696,7 @@ NOW EXTRACT DATA FROM THIS HTML:
 
               Map<String, Object> map = new HashMap<>();
 
-              map.put(
-                  "title",
-                  b.getTitleHy()
-              );
+              map.put("title", b.getTitleHy());
 
               return map;
 
@@ -878,30 +868,12 @@ NOW EXTRACT DATA FROM THIS HTML:
     Map<String, Schema> properties = new HashMap<>();
 
     properties.put("region", stringSchema());
-
     properties.put("address", stringSchema());
-
     properties.put("topography", stringSchema());
-
-    properties.put(
-        "distanceFromResidence",
-        stringSchema()
-    );
-
-    properties.put(
-        "altitude",
-        stringSchema()
-    );
-
-    properties.put(
-        "hydrography",
-        stringSchema()
-    );
-
-    properties.put(
-        "description",
-        stringSchema()
-    );
+    properties.put("distanceFromResidence", stringSchema());
+    properties.put("altitude", stringSchema());
+    properties.put("hydrography", stringSchema());
+    properties.put("description", stringSchema());
 
 
     return Schema.builder()
@@ -936,60 +908,17 @@ NOW EXTRACT DATA FROM THIS HTML:
 
     Map<String, Schema> properties = new HashMap<>();
 
-    properties.put(
-        "culturalAffiliation",
-        stringSchema()
-    );
-
-    properties.put(
-        "justificationOfTheNumberingBasedOnReliableDocument",
-        stringSchema()
-    );
-
-    properties.put(
-        "justificationOfTheNumberingBasedOnBibliographicalSources",
-        stringSchema()
-    );
-
-    properties.put(
-        "justificationOfTheNumberingAccordingIconography",
-        stringSchema()
-    );
-
-    properties.put(
-        "justificationOfTheNumberingBasedOnEvidence",
-        stringSchema()
-    );
-
-    properties.put(
-        "justificationOfTheNumberingBasedOnLithography",
-        stringSchema()
-    );
-
-    properties.put(
-        "chronologicalTableOfTheStud",
-        stringSchema()
-    );
-
-    properties.put(
-        "chronologicalTableOfTheMonumentsStudy",
-        stringSchema()
-    );
-
-    properties.put(
-        "author",
-        stringSchema()
-    );
-
-    properties.put(
-        "sourceForDeterminingTheAuthor",
-        stringSchema()
-    );
-
-    properties.put(
-        "briefHistoricalOverview",
-        stringSchema()
-    );
+    properties.put("culturalAffiliation", stringSchema());
+    properties.put("justificationOfTheNumberingBasedOnReliableDocument", stringSchema());
+    properties.put("justificationOfTheNumberingBasedOnBibliographicalSources", stringSchema());
+    properties.put("justificationOfTheNumberingAccordingIconography", stringSchema());
+    properties.put("justificationOfTheNumberingBasedOnEvidence", stringSchema());
+    properties.put("justificationOfTheNumberingBasedOnLithography", stringSchema());
+    properties.put("chronologicalTableOfTheStud", stringSchema());
+    properties.put("chronologicalTableOfTheMonumentsStudy", stringSchema());
+    properties.put("author", stringSchema());
+    properties.put("sourceForDeterminingTheAuthor", stringSchema());
+    properties.put("briefHistoricalOverview", stringSchema());
 
 
     return Schema.builder()
@@ -1002,111 +931,27 @@ NOW EXTRACT DATA FROM THIS HTML:
 
     Map<String, Schema> properties = new HashMap<>();
 
-
-    properties.put(
-        "archeologicalOverviewStratigraphyFindings",
-        stringSchema()
-    );
-
-    properties.put(
-        "architecturalOverview",
-        stringSchema()
-    );
-
-    properties.put(
-        "decorativeAndMonumentalFeaturesCompositionColours",
-        stringSchema()
-    );
-
-    properties.put(
-        "theBuildingMaterial",
-        stringSchema()
-    );
-
-    properties.put(
-        "openingsEntrances",
-        stringSchema()
-    );
-
-    properties.put(
-        "openingsWindows",
-        stringSchema()
-    );
-
-    properties.put(
-        "constructions",
-        stringSchema()
-    );
-
-    properties.put(
-        "levelsOfConstruction",
-        stringSchema()
-    );
-
-    properties.put(
-        "roof",
-        stringSchema()
-    );
-
-    properties.put(
-        "type",
-        stringSchema()
-    );
-
-    properties.put(
-        "exterior",
-        stringSchema()
-    );
-
-    properties.put(
-        "implementationTechnique",
-        stringSchema()
-    );
-
-    properties.put(
-        "length",
-        stringSchema()
-    );
-
-    properties.put(
-        "width",
-        stringSchema()
-    );
-
-    properties.put(
-        "height",
-        stringSchema()
-    );
-
-    properties.put(
-        "depthThickness",
-        stringSchema()
-    );
-
-    properties.put(
-        "area",
-        stringSchema()
-    );
-
-    properties.put(
-        "lengthOfSpan",
-        stringSchema()
-    );
-
-    properties.put(
-        "stateOfMonument",
-        stringSchema()
-    );
-
-    properties.put(
-        "valuation",
-        stringSchema()
-    );
-
-    properties.put(
-        "monumentDataUpdate",
-        stringSchema()
-    );
+    properties.put("archeologicalOverviewStratigraphyFindings", stringSchema());
+    properties.put("architecturalOverview", stringSchema());
+    properties.put("decorativeAndMonumentalFeaturesCompositionColours", stringSchema());
+    properties.put("theBuildingMaterial", stringSchema());
+    properties.put("openingsEntrances", stringSchema());
+    properties.put("openingsWindows", stringSchema());
+    properties.put("constructions", stringSchema());
+    properties.put("levelsOfConstruction", stringSchema());
+    properties.put("roof", stringSchema());
+    properties.put("type", stringSchema());
+    properties.put("exterior", stringSchema());
+    properties.put("implementationTechnique", stringSchema());
+    properties.put("length", stringSchema());
+    properties.put("width", stringSchema());
+    properties.put("height", stringSchema());
+    properties.put("depthThickness", stringSchema());
+    properties.put("area", stringSchema());
+    properties.put("lengthOfSpan", stringSchema());
+    properties.put("stateOfMonument", stringSchema());
+    properties.put("valuation", stringSchema());
+    properties.put("monumentDataUpdate", stringSchema());
 
 
     return Schema.builder()
@@ -1119,11 +964,7 @@ NOW EXTRACT DATA FROM THIS HTML:
 
     Map<String, Schema> properties = new HashMap<>();
 
-    properties.put(
-        "title",
-        stringSchema()
-    );
-
+    properties.put("title", stringSchema());
 
     return Schema.builder()
         .type(Type.Known.OBJECT)
@@ -1135,11 +976,7 @@ NOW EXTRACT DATA FROM THIS HTML:
 
     Map<String, Schema> properties = new HashMap<>();
 
-    properties.put(
-        "caption",
-        stringSchema()
-    );
-
+    properties.put("caption", stringSchema());
 
     return Schema.builder()
         .type(Type.Known.OBJECT)
@@ -1151,11 +988,7 @@ NOW EXTRACT DATA FROM THIS HTML:
 
     Map<String, Schema> properties = new HashMap<>();
 
-    properties.put(
-        "caption",
-        stringSchema()
-    );
-
+    properties.put("caption", stringSchema());
 
     return Schema.builder()
         .type(Type.Known.OBJECT)
@@ -1180,9 +1013,6 @@ NOW EXTRACT DATA FROM THIS HTML:
         .type(Type.Known.STRING)
         .build();
   }
-
-
-
 
   public void translateLibrary(
       Library library,
@@ -1306,8 +1136,6 @@ NOW EXTRACT DATA FROM THIS HTML:
 
     return data;
   }
-
-
 
   private void applyLibraryTranslation(
       Library library,
@@ -1523,29 +1351,15 @@ NOW EXTRACT DATA FROM THIS HTML:
 
     Map<String, Object> data = new HashMap<>();
 
-    data.put(
-        "name",
-        dto.getName()
-    );
-
-    data.put(
-        "description",
-        dto.getDescription()
-    );
-
+    data.put("name", dto.getName());
+    data.put("description", dto.getDescription());
     data.put(
         "images",
         dto.getImages()
             .stream()
             .map(v -> {
-
               Map<String, Object> map = new HashMap<>();
-
-              map.put(
-                  "caption",
-                  v.getCaption()
-              );
-
+              map.put("caption", v.getCaption());
               return map;
 
             })
@@ -1557,38 +1371,14 @@ NOW EXTRACT DATA FROM THIS HTML:
 
   private Schema settlementTranslationSchema() {
 
-    Map<String, Schema> properties =
-        new HashMap<>();
+    Map<String, Schema> properties = new HashMap<>();
 
-    properties.put(
-        "nameHy",
-        stringSchema()
-    );
-
-    properties.put(
-        "nameEn",
-        stringSchema()
-    );
-
-    properties.put(
-        "nameFr",
-        stringSchema()
-    );
-
-    properties.put(
-        "descriptionHy",
-        stringSchema()
-    );
-
-    properties.put(
-        "descriptionEn",
-        stringSchema()
-    );
-
-    properties.put(
-        "descriptionFr",
-        stringSchema()
-    );
+    properties.put("nameHy", stringSchema());
+    properties.put("nameEn", stringSchema());
+    properties.put("nameFr", stringSchema());
+    properties.put("descriptionHy", stringSchema());
+    properties.put("descriptionEn", stringSchema());
+    properties.put("descriptionFr", stringSchema());
 
     properties.put(
         "images",
@@ -1603,87 +1393,6 @@ NOW EXTRACT DATA FROM THIS HTML:
         .properties(properties)
         .build();
   }
-
-  /*public SettlementTranslationDto translateSettlement(
-      String armenianName
-  ) throws JsonProcessingException {
-
-    GenerateContentConfig config =
-        GenerateContentConfig.builder()
-            .responseMimeType("application/json")
-            .responseSchema(settlementSchema())
-            .build();
-
-    Content content =
-        Content.builder()
-            .parts(List.of(
-                Part.builder()
-                    .text(buildSettlementPrompt(armenianName))
-                    .build()
-            ))
-            .build();
-
-    GenerateContentResponse response =
-        client.models.generateContent(
-            "gemini-2.5-flash",
-            content,
-            config
-        );
-
-    return objectMapper.readValue(
-        response.text(),
-        SettlementTranslationDto.class
-    );
-  }
-
-  private String buildSettlementPrompt(
-      String armenianName
-  ) {
-
-    return """
-      You are an expert in Armenian geographical names.
-      
-      Translate the Armenian settlement name into English and French.
-      
-      IMPORTANT:
-      
-      - This is a proper geographical name.
-      - Do NOT translate its meaning.
-      - Transliterate it.
-      
-      English:
-      - Use the official ALA-LC Romanization for Armenian.
-      
-      French:
-      - Use the same ALA-LC transliteration, adapted only where required by conventional French orthography.
-      
-      Do not invent alternative spellings.
-      
-      Return ONLY JSON.
-      
-      Input:
-      
-      %s
-      """
-        .formatted(armenianName);
-  }
-
-  private Schema settlementSchema() {
-
-    Map<String, Schema> properties = new HashMap<>();
-
-    properties.put("nameHy", stringSchema());
-    properties.put("nameEn", stringSchema());
-    properties.put("nameFr", stringSchema());
-
-    return Schema.builder()
-        .type(Type.Known.OBJECT)
-        .properties(properties)
-        .build();
-  }*/
-
-
-
 
   public MonumentTypeTranslateDto translateMonumentType(
       String armenianName
@@ -1821,53 +1530,22 @@ NOW EXTRACT DATA FROM THIS HTML:
 
     Map<String, Object> data = new HashMap<>();
 
-    data.put(
-        "title",
-        dto.getTitle()
-    );
-
-    data.put(
-        "text",
-        dto.getText()
-    );
+    data.put("title", dto.getTitle());
+    data.put("text", dto.getText());
 
     return data;
   }
 
   private Schema mainPageTranslationSchema() {
 
-    Map<String, Schema> properties =
-        new HashMap<>();
+    Map<String, Schema> properties = new HashMap<>();
 
-    properties.put(
-        "titleHy",
-        stringSchema()
-    );
-
-    properties.put(
-        "titleEn",
-        stringSchema()
-    );
-
-    properties.put(
-        "titleFr",
-        stringSchema()
-    );
-
-    properties.put(
-        "textHy",
-        stringSchema()
-    );
-
-    properties.put(
-        "textEn",
-        stringSchema()
-    );
-
-    properties.put(
-        "textFr",
-        stringSchema()
-    );
+    properties.put("titleHy", stringSchema());
+    properties.put("titleEn", stringSchema());
+    properties.put("titleFr", stringSchema());
+    properties.put("textHy", stringSchema());
+    properties.put("textEn", stringSchema());
+    properties.put("textFr", stringSchema());
 
     return Schema.builder()
         .type(Type.Known.OBJECT)
@@ -1879,8 +1557,6 @@ NOW EXTRACT DATA FROM THIS HTML:
   public AboutUsTranslationDto translateAboutUs(
       AboutUsRequestDto dto
   ) throws JsonProcessingException {
-
-
 
     GenerateContentConfig config =
         GenerateContentConfig.builder()
@@ -1948,73 +1624,26 @@ NOW EXTRACT DATA FROM THIS HTML:
 
     Map<String, Object> data = new HashMap<>();
 
-    data.put(
-        "title",
-        dto.getTitle()
-    );
-
-    data.put(
-        "subtitle",
-        dto.getSubtitle()
-    );
-
-    data.put(
-        "text",
-        dto.getText()
-    );
+    data.put("title", dto.getTitle());
+    data.put("subtitle", dto.getSubtitle());
+    data.put("text", dto.getText());
 
     return data;
   }
 
   private Schema aboutUsTranslationSchema() {
 
-    Map<String, Schema> properties =
-        new HashMap<>();
+    Map<String, Schema> properties = new HashMap<>();
 
-    properties.put(
-        "titleHy",
-        stringSchema()
-    );
-
-    properties.put(
-        "titleEn",
-        stringSchema()
-    );
-
-    properties.put(
-        "titleFr",
-        stringSchema()
-    );
-
-    properties.put(
-        "subtitleHy",
-        stringSchema()
-    );
-
-    properties.put(
-        "subtitleEn",
-        stringSchema()
-    );
-
-    properties.put(
-        "subtitleFr",
-        stringSchema()
-    );
-
-    properties.put(
-        "textHy",
-        stringSchema()
-    );
-
-    properties.put(
-        "textEn",
-        stringSchema()
-    );
-
-    properties.put(
-        "textFr",
-        stringSchema()
-    );
+    properties.put("titleHy", stringSchema());
+    properties.put("titleEn", stringSchema());
+    properties.put("titleFr", stringSchema());
+    properties.put("subtitleHy", stringSchema());
+    properties.put("subtitleEn", stringSchema());
+    properties.put("subtitleFr", stringSchema());
+    properties.put("textHy", stringSchema());
+    properties.put("textEn", stringSchema());
+    properties.put("textFr", stringSchema());
 
     return Schema.builder()
         .type(Type.Known.OBJECT)
@@ -2091,53 +1720,116 @@ NOW EXTRACT DATA FROM THIS HTML:
 
     Map<String, Object> data = new HashMap<>();
 
-    data.put(
-        "title",
-        dto.getTitle()
-    );
-
-    data.put(
-        "subtitle",
-        dto.getSubtitle()
-    );
+    data.put("title", dto.getTitle());
+    data.put("subtitle", dto.getSubtitle());
 
     return data;
   }
 
   private Schema culturalHeritagesTranslationSchema() {
 
+    Map<String, Schema> properties = new HashMap<>();
+
+    properties.put("titleHy", stringSchema());
+    properties.put("titleEn", stringSchema());
+    properties.put("titleFr", stringSchema());
+    properties.put("subtitleHy", stringSchema());
+    properties.put("subtitleEn", stringSchema());
+    properties.put("subtitleFr", stringSchema());
+
+    return Schema.builder()
+        .type(Type.Known.OBJECT)
+        .properties(properties)
+        .build();
+  }
+
+
+  public ProgramCulturalHeritageDocumentationTranslationDto translateProgramCulturalHeritageDocumentation(
+      ProgramCulturalHeritageDocumentationRequestDto dto
+  ) throws JsonProcessingException {
+
+
+
+    GenerateContentConfig config =
+        GenerateContentConfig.builder()
+            .responseMimeType("application/json")
+            .responseSchema(programCulturalHeritageDocumentationTranslationSchema())
+            .build();
+
+    Content content = Content.builder()
+        .parts(List.of(
+            Part.builder()
+                .text(buildProgramCulturalHeritageDocumentationPrompt(dto))
+                .build()
+        ))
+        .build();
+
+    GenerateContentResponse response =
+        client.models.generateContent(
+            "gemini-2.5-flash",
+            content,
+            config
+        );
+
+    return objectMapper.readValue(
+        response.text(),
+        ProgramCulturalHeritageDocumentationTranslationDto.class
+    );
+  }
+
+  private String buildProgramCulturalHeritageDocumentationPrompt(
+      ProgramCulturalHeritageDocumentationRequestDto dto
+  ) {
+
+    return """
+        You are a professional translator.
+
+        The input text is written in Armenian.
+        Return Armenian (corrected if needed), English and French.
+
+        RULES
+
+        1. titleHy MUST contain the Armenian title.
+           Correct only grammar, spelling and punctuation if necessary.
+        2. subtitleHy MUST contain the Armenian subtitle.
+          Correct only grammar, spelling and punctuation if necessary.
+        3. Translate title into English and French.
+        4. Translate subtitle into English and French.
+        5. Do not summarize.
+        6. Do not rewrite.
+        7. Preserve formatting.
+        8. Return ONLY JSON matching the schema.
+
+        Armenian data:
+
+        %s
+        """
+        .formatted(createProgramCulturalHeritageDocumentationTranslationObject(dto));
+  }
+
+  private Map<String, Object> createProgramCulturalHeritageDocumentationTranslationObject(
+      ProgramCulturalHeritageDocumentationRequestDto dto
+  ) {
+
+    Map<String, Object> data = new HashMap<>();
+
+    data.put("title", dto.getTitle());
+    data.put("subtitle", dto.getSubtitle());
+
+    return data;
+  }
+
+  private Schema programCulturalHeritageDocumentationTranslationSchema() {
+
     Map<String, Schema> properties =
         new HashMap<>();
 
-    properties.put(
-        "titleHy",
-        stringSchema()
-    );
-
-    properties.put(
-        "titleEn",
-        stringSchema()
-    );
-
-    properties.put(
-        "titleFr",
-        stringSchema()
-    );
-
-    properties.put(
-        "subtitleHy",
-        stringSchema()
-    );
-
-    properties.put(
-        "subtitleEn",
-        stringSchema()
-    );
-
-    properties.put(
-        "subtitleFr",
-        stringSchema()
-    );
+    properties.put("titleHy", stringSchema());
+    properties.put("titleEn", stringSchema());
+    properties.put("titleFr", stringSchema());
+    properties.put("subtitleHy", stringSchema());
+    properties.put("subtitleEn", stringSchema());
+    properties.put("subtitleFr", stringSchema());
 
     return Schema.builder()
         .type(Type.Known.OBJECT)
