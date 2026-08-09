@@ -16,7 +16,7 @@ public class ProgramMapper {
         program.getId(),
         program.getIsPublished(),
         program.getProgramTypes() != null ? new ProgramTypeResponseDto(
-            program.getId(),
+            program.getProgramTypes().getId(),
             LanguagesResponseDto.of(
                 program.getProgramTypes().getNameHy(),
                 program.getProgramTypes().getNameEn(),
