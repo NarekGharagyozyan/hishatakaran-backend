@@ -10,6 +10,8 @@ import org.hishatakaran.backend.entity.HistoricalReference;
 import org.hishatakaran.backend.entity.Library;
 import org.hishatakaran.backend.entity.Monument;
 import org.hishatakaran.backend.entity.Program;
+import org.hishatakaran.backend.entity.ProgramEpisode;
+import org.hishatakaran.backend.entity.ProgramImage;
 import org.hishatakaran.backend.entity.ProgramLink;
 import org.hishatakaran.backend.entity.TeamMembers;
 import org.hishatakaran.backend.entity.Topographic;
@@ -25,6 +27,8 @@ import org.hishatakaran.backend.model.MonumentTranslationDto;
 import org.hishatakaran.backend.model.MonumentTypeTranslateDto;
 import org.hishatakaran.backend.model.ProgramCulturalHeritageDocumentationRequestDto;
 import org.hishatakaran.backend.model.ProgramCulturalHeritageDocumentationTranslationDto;
+import org.hishatakaran.backend.model.ProgramEpisodeTranslationDto;
+import org.hishatakaran.backend.model.ProgramImageTranslationDto;
 import org.hishatakaran.backend.model.ProgramTranslationDto;
 import org.hishatakaran.backend.model.SettlementRequestDto;
 import org.hishatakaran.backend.model.SettlementTranslationDto;
@@ -352,43 +356,90 @@ NOW EXTRACT DATA FROM THIS HTML:
       TranslationLanguage language
   ) {
 
-    String targetLanguage = language == TranslationLanguage.en
-        ? "English"
-        : "French";
+    String targetLanguage =
+        language == TranslationLanguage.en
+            ? "English"
+            : "French";
 
     return """
-        You are a professional translator.
-        
-        Translate the Armenian program data into %s.
-        
-        RULES:
-        1. Translate only text.
-        2. Do not summarize.
-        3. Do not rewrite.
-        4. Keep the order of arrays.
-        5. Return ONLY JSON matching the schema.
-        6. Do not invent values.
-        7. If a value is null, return null.
-        
-        Armenian program data:
-
-        %s
-        """
+      You are a professional translator.
+      
+      Translate the Armenian program data into %s.
+      
+      RULES:
+      
+      1. Translate only text.
+      2. Do not summarize.
+      3. Do not rewrite.
+      4. Do not add information.
+      5. Do not invent values.
+      6. Keep the exact order of all arrays.
+      7. The array indexes must correspond exactly to the original data.
+      8. URLs must NOT be translated or modified.
+      9. If a value is null, return null.
+      10. Return ONLY JSON matching the provided schema.
+      
+      TRANSLATION REQUIREMENTS:
+      
+      - Translate the program title.
+      - Translate the program description.
+      - Translate the program text/content.
+      - Translate every link title.
+      - Translate every episode title.
+      - Translate every image caption.
+      
+      IMPORTANT:
+      
+      The "links" array must contain exactly the same number of items
+      as the input "links" array.
+      
+      The "episodes" array must contain exactly the same number of items
+      as the input "episodes" array.
+      
+      The "images" array must contain exactly the same number of items
+      as the input "images" array.
+      
+      Do not change the order of any array.
+      
+      Armenian program data:
+      
+      %s
+      """
         .formatted(
             targetLanguage,
             createTranslationObject(program)
         );
   }
 
-  private List<Map<String,Object>> createLinks(List<ProgramLink> links) {
+  private Map<String, Object> createTranslationObject(
+      Program program
+  ) {
 
-    if (links == null)
+    Map<String, Object> data = new HashMap<>();
+
+    data.put("title", program.getTitleHy());
+    data.put("description", program.getDescriptionHy());
+    data.put("program", program.getProgramHy());
+    data.put("links", createLinks(program.getLinks()));
+    data.put("episodes", createEpisodes(program.getEpisodes()));
+    data.put("images", createImages(program.getImages()));
+
+    return data;
+  }
+
+  private List<Map<String, Object>> createLinks(
+      List<ProgramLink> links
+  ) {
+
+    if (links == null) {
       return null;
+    }
 
     return links.stream()
         .map(link -> {
 
-          Map<String,Object> map = new HashMap<>();
+          Map<String, Object> map =
+              new HashMap<>();
 
           map.put("linkTitle", link.getTitleHy());
 
@@ -398,30 +449,80 @@ NOW EXTRACT DATA FROM THIS HTML:
         .toList();
   }
 
-  private Map<String,Object> createTranslationObject(Program program) {
+  private List<Map<String, Object>> createEpisodes(
+      List<ProgramEpisode> episodes
+  ) {
 
-    Map<String,Object> data = new HashMap<>();
+    if (episodes == null) {
+      return null;
+    }
 
-    data.put("title", program.getTitleHy());
-    data.put("description", program.getDescriptionHy());
-    data.put("links", createLinks(program.getLinks()));
+    return episodes.stream()
+        .map(episode -> {
 
-    return data;
+          Map<String, Object> map =
+              new HashMap<>();
+
+          map.put("title", episode.getTitleHy());
+
+          return map;
+
+        })
+        .toList();
+  }
+
+  private List<Map<String, Object>> createImages(
+      List<ProgramImage> images
+  ) {
+
+    if (images == null) {
+      return null;
+    }
+
+    return images.stream()
+        .map(image -> {
+
+          Map<String, Object> map =
+              new HashMap<>();
+
+          map.put("caption", image.getCaptionHy());
+
+          return map;
+
+        })
+        .toList();
   }
 
 
   private Schema programTranslationSchema() {
 
-    Map<String, Schema> properties = new HashMap<>();
+    Map<String, Schema> properties =
+        new HashMap<>();
 
     properties.put("title", stringSchema());
     properties.put("description", stringSchema());
+    properties.put("program", stringSchema());
 
-    properties.put(
-        "links",
+    properties.put("links",
         Schema.builder()
             .type(Type.Known.ARRAY)
             .items(linkSchema())
+            .build()
+    );
+
+    properties.put(
+        "episodes",
+        Schema.builder()
+            .type(Type.Known.ARRAY)
+            .items(episodeSchema())
+            .build()
+    );
+
+    properties.put(
+        "images",
+        Schema.builder()
+            .type(Type.Known.ARRAY)
+            .items(imageSchema())
             .build()
     );
 
@@ -433,9 +534,23 @@ NOW EXTRACT DATA FROM THIS HTML:
 
   private Schema linkSchema() {
 
-    Map<String, Schema> properties = new HashMap<>();
+    Map<String, Schema> properties =
+        new HashMap<>();
 
     properties.put("linkTitle", stringSchema());
+
+    return Schema.builder()
+        .type(Type.Known.OBJECT)
+        .properties(properties)
+        .build();
+  }
+
+  private Schema episodeSchema() {
+
+    Map<String, Schema> properties =
+        new HashMap<>();
+
+    properties.put("title", stringSchema());
 
     return Schema.builder()
         .type(Type.Known.OBJECT)
@@ -453,23 +568,37 @@ NOW EXTRACT DATA FROM THIS HTML:
       return;
     }
 
-    boolean en = language == TranslationLanguage.en;
+    boolean en =
+        language == TranslationLanguage.en;
 
     if (en) {
 
       program.setTitleEn(dto.getTitle());
       program.setDescriptionEn(dto.getDescription());
+      program.setProgramEn(dto.getProgram());
 
     } else {
 
       program.setTitleFr(dto.getTitle());
       program.setDescriptionFr(dto.getDescription());
-
+      program.setProgramFr(dto.getProgram());
     }
 
     applyLinksTranslation(
         program.getLinks(),
         dto.getLinks(),
+        language
+    );
+
+    applyEpisodesTranslation(
+        program.getEpisodes(),
+        dto.getEpisodes(),
+        language
+    );
+
+    applyImagesTranslation(
+        program.getImages(),
+        dto.getImages(),
         language
     );
   }
@@ -492,7 +621,8 @@ NOW EXTRACT DATA FROM THIS HTML:
 
     for (int i = 0; i < size; i++) {
 
-      ProgramLink link = links.get(i);
+      ProgramLink link =
+          links.get(i);
 
       LinkTranslationDto translation =
           dto.get(i);
@@ -508,7 +638,84 @@ NOW EXTRACT DATA FROM THIS HTML:
         link.setTitleFr(
             translation.getLinkTitle()
         );
+      }
+    }
+  }
 
+  private void applyEpisodesTranslation(
+      List<ProgramEpisode> episodes,
+      List<ProgramEpisodeTranslationDto> dto,
+      TranslationLanguage language
+  ) {
+
+    if (episodes == null || dto == null) {
+      return;
+    }
+
+    int size =
+        Math.min(
+            episodes.size(),
+            dto.size()
+        );
+
+    for (int i = 0; i < size; i++) {
+
+      ProgramEpisode episode =
+          episodes.get(i);
+
+      ProgramEpisodeTranslationDto translation =
+          dto.get(i);
+
+      if (language == TranslationLanguage.en) {
+
+        episode.setTitleEn(
+            translation.getTitle()
+        );
+
+      } else {
+
+        episode.setTitleFr(
+            translation.getTitle()
+        );
+      }
+    }
+  }
+
+  private void applyImagesTranslation(
+      List<ProgramImage> images,
+      List<ProgramImageTranslationDto> dto,
+      TranslationLanguage language
+  ) {
+
+    if (images == null || dto == null) {
+      return;
+    }
+
+    int size =
+        Math.min(
+            images.size(),
+            dto.size()
+        );
+
+    for (int i = 0; i < size; i++) {
+
+      ProgramImage image =
+          images.get(i);
+
+      ProgramImageTranslationDto translation =
+          dto.get(i);
+
+      if (language == TranslationLanguage.en) {
+
+        image.setCaptionEn(
+            translation.getCaption()
+        );
+
+      } else {
+
+        image.setCaptionFr(
+            translation.getCaption()
+        );
       }
     }
   }

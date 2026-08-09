@@ -14,10 +14,14 @@ public class ProgramResponseDto {
   private final Long id;
   private final Boolean isPublished;
 
+  private final ProgramTypeResponseDto programType;
+
   private final LanguagesResponseDto title;
   private final LanguagesResponseDto description;
+  private final LanguagesResponseDto program;
 
-  private final List<String> images;
+  private final List<ImageResponseDto> images;
+  private final List<ProgramEpisodeResponseDto> episodes;
 
   private final String pdf;
   private final String cover;

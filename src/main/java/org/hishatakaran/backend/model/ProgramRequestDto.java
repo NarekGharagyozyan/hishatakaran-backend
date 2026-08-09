@@ -12,10 +12,13 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProgramRequestDto {
+  private Long programTypeId;
   private String title;
   private String description;
+  private String program;
   private List<ProgramLinkRequestDto> links;
-  private List<String> images;
+  private List<ImageRequestDto> images;
+  private List<ProgramEpisodeRequestDto> episodes;
   private String cover;
   private String pdf;
 
