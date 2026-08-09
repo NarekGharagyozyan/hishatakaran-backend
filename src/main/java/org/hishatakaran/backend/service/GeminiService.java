@@ -377,7 +377,8 @@ NOW EXTRACT DATA FROM THIS HTML:
       7. The array indexes must correspond exactly to the original data.
       8. URLs must NOT be translated or modified.
       9. If a value is null, return null.
-      10. Return ONLY JSON matching the provided schema.
+      10. If the input contains the literal characters "\\n", preserve them as the literal characters "\\n". Do not convert them into an actual newline or don't delete it.
+      11. Return ONLY JSON matching the provided schema.
       
       TRANSLATION REQUIREMENTS:
       
