@@ -159,7 +159,7 @@ public class ProgramService {
     Program program = new Program();
 
     program.setIsPublished(Boolean.FALSE);
-    program.setProgramTypes(programTypeRepository.findById(program.getId()).orElseThrow(() -> new RuntimeException("Program type not found")));
+    program.setProgramTypes(programTypeRepository.findById(programRequestDto.getProgramTypeId()).orElseThrow(() -> new RuntimeException("Program type not found")));
     program.setTitleHy(programRequestDto.getTitle());
     program.setDescriptionHy(programRequestDto.getDescription());
     program.setProgramHy(programRequestDto.getProgram());
