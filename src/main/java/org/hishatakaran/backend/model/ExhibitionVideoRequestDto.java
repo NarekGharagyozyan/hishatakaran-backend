@@ -2,13 +2,16 @@ package org.hishatakaran.backend.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@AllArgsConstructor
 @Getter
 @Setter
-public class ProgramLinkResponseDto {
+@AllArgsConstructor
+@NoArgsConstructor
+public class ExhibitionVideoRequestDto {
 
-  private LanguagesResponseDto title;
+  private String title;
   private String url;
+
 }

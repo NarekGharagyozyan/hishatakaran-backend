@@ -9,19 +9,17 @@ import lombok.Setter;
 @Setter
 @Getter
 @RequiredArgsConstructor
-public class ProgramResponseDto {
+public class ExhibitionResponseDto {
 
   private final Long id;
   private final Boolean isPublished;
-
-  private final ProgramTypeResponseDto programType;
 
   private final LanguagesResponseDto title;
   private final LanguagesResponseDto description;
   private final LanguagesResponseDto program;
 
   private final List<ImageResponseDto> images;
-  private final List<ProgramEpisodeResponseDto> episodes;
+  private final List<ExhibitionVideoResponseDto> videos;
 
   private final String pdf;
   private final String cover;

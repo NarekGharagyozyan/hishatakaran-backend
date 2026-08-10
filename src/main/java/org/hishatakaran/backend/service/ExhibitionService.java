@@ -4,21 +4,16 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
-import org.hishatakaran.backend.entity.MonumentImage;
-import org.hishatakaran.backend.entity.MonumentVideo;
-import org.hishatakaran.backend.entity.Program;
-import org.hishatakaran.backend.entity.ProgramEpisode;
-import org.hishatakaran.backend.entity.ProgramImage;
-import org.hishatakaran.backend.entity.ProgramLink;
-import org.hishatakaran.backend.mapper.ProgramMapper;
-import org.hishatakaran.backend.model.LibraryResponseDto;
-import org.hishatakaran.backend.model.MonumentResponseDto;
-import org.hishatakaran.backend.model.ProgramEditDto;
-import org.hishatakaran.backend.model.ProgramRequestDto;
-import org.hishatakaran.backend.model.ProgramResponseDto;
+import org.hishatakaran.backend.entity.Exhibition;
+import org.hishatakaran.backend.entity.ExhibitionImage;
+import org.hishatakaran.backend.entity.ExhibitionLink;
+import org.hishatakaran.backend.entity.ExhibitionVideo;
+import org.hishatakaran.backend.mapper.ExhibitionMapper;
+import org.hishatakaran.backend.model.ExhibitionEditDto;
+import org.hishatakaran.backend.model.ExhibitionRequestDto;
+import org.hishatakaran.backend.model.ExhibitionResponseDto;
 import org.hishatakaran.backend.model.TranslationLanguage;
-import org.hishatakaran.backend.repository.ProgramRepository;
-import org.hishatakaran.backend.repository.ProgramTypeRepository;
+import org.hishatakaran.backend.repository.ExhibitionRepository;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
@@ -26,46 +21,42 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class ProgramService {
+public class ExhibitionService {
 
-  private final ProgramRepository programRepository;
-  private final ProgramTypeRepository programTypeRepository;
+  private final ExhibitionRepository exhibitionRepository;
   private final FileStorageService fileStorageService;
-  private final ProgramTranslationService programTranslationService;
+  private final ExhibitionTranslationService exhibitionTranslationService;
 
-  public List<ProgramResponseDto> getAllPrograms(Long programTypeId) {
-    List<Program> programs = programTypeId == null
-        ? programRepository.findAll()
-        : programRepository.findAllByProgramTypesId(programTypeId);
-
-    return programs.stream()
-        .map(ProgramMapper::toDto)
-        .sorted(Comparator.comparing(ProgramResponseDto::getId).reversed())
+  public List<ExhibitionResponseDto> getAllExhibitions() {
+    return exhibitionRepository.findAll()
+        .stream()
+        .map(ExhibitionMapper::toDto)
+        .sorted(Comparator.comparing(ExhibitionResponseDto::getId).reversed())
         .toList();
   }
 
-  public ProgramResponseDto getProgramById(Long id) {
-    return ProgramMapper.toDto(Objects.requireNonNull(programRepository.findById(id)
+  public ExhibitionResponseDto getExhibitionById(Long id) {
+    return ExhibitionMapper.toDto(Objects.requireNonNull(exhibitionRepository.findById(id)
         .orElse(null)
     ));
   }
 
   @Transactional
-  public ProgramResponseDto publish(
+  public ExhibitionResponseDto publish(
       Long id
   ) {
-    Program program = programRepository.findById(id).orElseThrow(
-        () -> new RuntimeException("Program not found")
+    Exhibition program = exhibitionRepository.findById(id).orElseThrow(
+        () -> new RuntimeException("Exhibition not found")
     );
     program.setIsPublished(!program.getIsPublished());
-    Program updatedProgram = programRepository.save(program);
-    return ProgramMapper.toDto(updatedProgram);
+    Exhibition updatedExhibition = exhibitionRepository.save(program);
+    return ExhibitionMapper.toDto(updatedExhibition);
   }
 
-  public ProgramResponseDto editProgram(Long id, ProgramEditDto programEditDto) {
+  public ExhibitionResponseDto editExhibition(Long id, ExhibitionEditDto programEditDto) {
 
-    Program program = programRepository.findById(id).orElseThrow(
-        () -> new RuntimeException("Program not found")
+    Exhibition program = exhibitionRepository.findById(id).orElseThrow(
+        () -> new RuntimeException("Exhibition not found")
     );
 
     if (programEditDto.getTitle() != null)
@@ -109,7 +100,7 @@ public class ProgramService {
       program.getLinks().clear();
       programEditDto.getLinks()
           .stream()
-          .map(programLinkResponseDto -> new ProgramLink(
+          .map(programLinkResponseDto -> new ExhibitionLink(
               program,
               programLinkResponseDto.getTitle().getHy(),
               programLinkResponseDto.getTitle().getEn(),
@@ -123,25 +114,24 @@ public class ProgramService {
 
     program.setCover(programEditDto.getCover());
     program.setPdf(programEditDto.getPdf());
-    program.setProgramTypes(programTypeRepository.findById(programEditDto.getProgramTypeId()).orElseThrow(() -> new RuntimeException("Program type not found")));
 
-    program.getEpisodes().clear();
-    programEditDto.getEpisodes()
+    program.getVideos().clear();
+    programEditDto.getVideos()
         .stream()
         .filter(dto -> dto.getTitle() != null)
-        .map(dto -> new ProgramEpisode(
+        .map(dto -> new ExhibitionVideo(
             program,
             dto.getTitle().getHy(),
             dto.getTitle().getEn(),
             dto.getTitle().getFr(),
             dto.getUrl()
         ))
-        .forEach(program.getEpisodes()::add);
+        .forEach(program.getVideos()::add);
 
     program.getImages().clear();
     programEditDto.getImages()
         .stream()
-        .map(dto -> new ProgramImage(
+        .map(dto -> new ExhibitionImage(
             dto.getUrl(),
             dto.getCaption() != null ? dto.getCaption().getHy() : null,
             dto.getCaption() != null ? dto.getCaption().getEn() : null,
@@ -150,25 +140,24 @@ public class ProgramService {
         ))
         .forEach(program.getImages()::add);
 
-    Program editedProgram = programRepository.save(program);
-    return ProgramMapper.toDto(editedProgram);
+    Exhibition editedExhibition = exhibitionRepository.save(program);
+    return ExhibitionMapper.toDto(editedExhibition);
   }
 
-  public ProgramResponseDto postProgram(
-      ProgramRequestDto programRequestDto
+  public ExhibitionResponseDto postExhibition(
+      ExhibitionRequestDto programRequestDto
   )
   {
 
-    Program program = new Program();
+    Exhibition program = new Exhibition();
 
     program.setIsPublished(Boolean.FALSE);
-    program.setProgramTypes(programTypeRepository.findById(programRequestDto.getProgramTypeId()).orElseThrow(() -> new RuntimeException("Program type not found")));
     program.setTitleHy(programRequestDto.getTitle());
     program.setDescriptionHy(programRequestDto.getDescription());
     program.setProgramHy(programRequestDto.getProgram());
     if (programRequestDto.getLinks() != null) {
       program.setLinks(programRequestDto.getLinks().stream()
-          .map(link -> new ProgramLink(
+          .map(link -> new ExhibitionLink(
               program,
               link.getTitle(),
               null,
@@ -178,12 +167,12 @@ public class ProgramService {
           .toList());
     }
 
-    if (programRequestDto.getEpisodes() != null)
+    if (programRequestDto.getVideos() != null)
     {
-      program.setEpisodes(
-          programRequestDto.getEpisodes()
+      program.setVideos(
+          programRequestDto.getVideos()
               .stream()
-              .map(video -> new ProgramEpisode(
+              .map(video -> new ExhibitionVideo(
                   program,
                   video.getTitle(),
                   null,
@@ -199,7 +188,7 @@ public class ProgramService {
       program.setImages(
           programRequestDto.getImages()
               .stream()
-              .map(image -> new ProgramImage(
+              .map(image -> new ExhibitionImage(
                   image.getUrl(),
                   image.getCaption(),
                   null,
@@ -212,25 +201,25 @@ public class ProgramService {
     program.setCover(programRequestDto.getCover());
     program.setPdf(programRequestDto.getPdf());
 
-    Program savedProgram = programRepository.save(program);
-    return ProgramMapper.toDto(savedProgram);
+    Exhibition savedExhibition = exhibitionRepository.save(program);
+    return ExhibitionMapper.toDto(savedExhibition);
   }
 
   @Transactional
-  public void deleteProgram(Long id) {
-    Program program = programRepository.findById(id)
-        .orElseThrow(() -> new RuntimeException("Program not found"));
+  public void deleteExhibition(Long id) {
+    Exhibition program = exhibitionRepository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Exhibition not found"));
 
     deleteFiles(
         program.getImages()
             .stream()
-            .map(ProgramImage::getUrl)
+            .map(ExhibitionImage::getUrl)
             .toList()
     );
     fileStorageService.deleteImage(program.getCover());
     fileStorageService.deleteFile(program.getPdf());
 
-    programRepository.delete(program);
+    exhibitionRepository.delete(program);
   }
 
   private void deleteFiles(List<String> paths) {
@@ -242,22 +231,22 @@ public class ProgramService {
   }
 
   @Transactional
-  public ProgramResponseDto translate(
+  public ExhibitionResponseDto translate(
       Long id,
       TranslationLanguage language
   ) {
 
-    Program program =
-        programRepository.findById(id)
+    Exhibition exhibition =
+        exhibitionRepository.findById(id)
             .orElseThrow();
 
-    programTranslationService.translate(
-        program,
+    exhibitionTranslationService.translate(
+        exhibition,
         language
     );
 
-    return ProgramMapper.toDto(
-        programRepository.save(program)
+    return ExhibitionMapper.toDto(
+        exhibitionRepository.save(exhibition)
     );
   }
 }
