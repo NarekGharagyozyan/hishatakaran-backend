@@ -14,9 +14,10 @@ import lombok.Setter;
 public class ProgramTranslationDto {
 
     private String title;
-
     private String description;
+    private String program;
 
     private List<LinkTranslationDto> links;
-
+    private List<ProgramEpisodeTranslationDto> episodes;
+    private List<ProgramImageTranslationDto> images;
 }

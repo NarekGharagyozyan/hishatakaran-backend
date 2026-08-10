@@ -8,10 +8,12 @@ import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -31,20 +33,35 @@ public class Program extends BaseEntity{
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "program_type")
+  private ProgramType programTypes;
+
   private Boolean isPublished;
 
   private String titleHy;
   private String titleEn;
   private String titleFr;
 
+  @Column(columnDefinition = "TEXT")
   private String descriptionHy;
+  @Column(columnDefinition = "TEXT")
   private String descriptionEn;
+  @Column(columnDefinition = "TEXT")
   private String descriptionFr;
 
-  @ElementCollection
-  @CollectionTable(name = "program_images", joinColumns = @JoinColumn(name = "program_id"))
-  @Column(name = "image_urls")
-  private List<String> images = new ArrayList<>();
+  @Column(columnDefinition = "TEXT")
+  private String programHy;
+  @Column(columnDefinition = "TEXT")
+  private String programEn;
+  @Column(columnDefinition = "TEXT")
+  private String programFr;
+
+  @OneToMany(mappedBy = "program", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<ProgramImage> images = new ArrayList<>();
+
+  @OneToMany(mappedBy = "program", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<ProgramEpisode> episodes = new ArrayList<>();
 
   private String pdf;
   private String cover;
@@ -53,7 +70,7 @@ public class Program extends BaseEntity{
   private List<ProgramLink> links = new ArrayList<>();
 
   public Program(Boolean isPublished, String titleHy, String titleEn, String titleFr, String descriptionHy,
-      String descriptionEn, String descriptionFr, List<String> images, String pdf, String cover, List<ProgramLink> links) {
+      String descriptionEn, String descriptionFr, List<ProgramImage> images, String pdf, String cover, List<ProgramLink> links) {
     this.isPublished = isPublished;
     this.titleHy = titleHy;
     this.titleEn = titleEn;
