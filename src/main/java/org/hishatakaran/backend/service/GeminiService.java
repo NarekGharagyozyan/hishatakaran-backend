@@ -6,6 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.hishatakaran.backend.entity.DescriptiveCharacteristicReference;
+import org.hishatakaran.backend.entity.Exhibition;
+import org.hishatakaran.backend.entity.ExhibitionImage;
+import org.hishatakaran.backend.entity.ExhibitionLink;
+import org.hishatakaran.backend.entity.ExhibitionVideo;
 import org.hishatakaran.backend.entity.HistoricalReference;
 import org.hishatakaran.backend.entity.Library;
 import org.hishatakaran.backend.entity.Monument;
@@ -19,6 +23,9 @@ import org.hishatakaran.backend.model.AboutUsRequestDto;
 import org.hishatakaran.backend.model.AboutUsTranslationDto;
 import org.hishatakaran.backend.model.CulturalHeritagesRequestDto;
 import org.hishatakaran.backend.model.CulturalHeritagesTranslationDto;
+import org.hishatakaran.backend.model.ExhibitionImageTranslationDto;
+import org.hishatakaran.backend.model.ExhibitionTranslationDto;
+import org.hishatakaran.backend.model.ExhibitionVideoTranslationDto;
 import org.hishatakaran.backend.model.LibraryTranslationDto;
 import org.hishatakaran.backend.model.LinkTranslationDto;
 import org.hishatakaran.backend.model.MainPageRequestDto;
@@ -2043,5 +2050,407 @@ NOW EXTRACT DATA FROM THIS HTML:
         .type(Type.Known.OBJECT)
         .properties(properties)
         .build();
+  }
+
+  public void translateExhibition(
+      Exhibition exhibition,
+      TranslationLanguage language
+  ) throws JsonProcessingException {
+
+    String prompt =
+        buildExhibitionTranslationPrompt(
+            exhibition,
+            language
+        );
+
+    GenerateContentConfig config =
+        GenerateContentConfig.builder()
+            .responseMimeType("application/json")
+            .responseSchema(exhibitionTranslationSchema())
+            .build();
+
+    Content content =
+        Content.builder()
+            .parts(List.of(
+                Part.builder()
+                    .text(prompt)
+                    .build()
+            ))
+            .build();
+
+    GenerateContentResponse response =
+        client.models.generateContent(
+            "gemini-2.5-flash",
+            content,
+            config
+        );
+
+    ExhibitionTranslationDto dto =
+        objectMapper.readValue(
+            response.text(),
+            ExhibitionTranslationDto.class
+        );
+
+    applyTranslation(
+        exhibition,
+        dto,
+        language
+    );
+  }
+
+  private String buildExhibitionTranslationPrompt(
+      Exhibition exhibition,
+      TranslationLanguage language
+  ) {
+
+    String targetLanguage =
+        language == TranslationLanguage.en
+            ? "English"
+            : "French";
+
+    return """
+      You are a professional translator.
+      
+      Translate the Armenian exhibition data into %s.
+      
+      RULES:
+      
+      1. Translate only text.
+      2. Do not summarize.
+      3. Do not rewrite.
+      4. Do not add information.
+      5. Do not invent values.
+      6. Keep the exact order of all arrays.
+      7. The array indexes must correspond exactly to the original data.
+      8. URLs must NOT be translated or modified.
+      9. If a value is null, return null.
+      10. If the input contains the literal characters "\\n", preserve them as the literal characters "\\n". Do not convert them into an actual newline or don't delete it.
+      11. Return ONLY JSON matching the provided schema.
+      
+      TRANSLATION REQUIREMENTS:
+      
+      - Translate the exhibition title.
+      - Translate the exhibition description.
+      - Translate the exhibition text/content.
+      - Translate every link title.
+      - Translate every video title.
+      - Translate every image caption.
+      
+      IMPORTANT:
+      
+      The "links" array must contain exactly the same number of items
+      as the input "links" array.
+      
+      The "videos" array must contain exactly the same number of items
+      as the input "videos" array.
+      
+      The "images" array must contain exactly the same number of items
+      as the input "images" array.
+      
+      Do not change the order of any array.
+      
+      Armenian exhibition data:
+      
+      %s
+      """
+        .formatted(
+            targetLanguage,
+            createTranslationObject(exhibition)
+        );
+  }
+
+  private Map<String, Object> createTranslationObject(
+      Exhibition exhibition
+  ) {
+
+    Map<String, Object> data = new HashMap<>();
+
+    data.put("title", exhibition.getTitleHy());
+    data.put("description", exhibition.getDescriptionHy());
+    data.put("program", exhibition.getProgramHy());
+    data.put("links", createExhibitionLinks(exhibition.getLinks()));
+    data.put("videos", createExhibitionVideos(exhibition.getVideos()));
+    data.put("images", createExhibitionImages(exhibition.getImages()));
+
+    return data;
+  }
+
+  private List<Map<String, Object>> createExhibitionLinks(
+      List<ExhibitionLink> links
+  ) {
+
+    if (links == null) {
+      return null;
+    }
+
+    return links.stream()
+        .map(link -> {
+
+          Map<String, Object> map =
+              new HashMap<>();
+
+          map.put("linkTitle", link.getTitleHy());
+
+          return map;
+
+        })
+        .toList();
+  }
+
+  private List<Map<String, Object>> createExhibitionVideos(
+      List<ExhibitionVideo> videos
+  ) {
+
+    if (videos == null) {
+      return null;
+    }
+
+    return videos.stream()
+        .map(video -> {
+
+          Map<String, Object> map =
+              new HashMap<>();
+
+          map.put("title", video.getTitleHy());
+
+          return map;
+
+        })
+        .toList();
+  }
+
+  private List<Map<String, Object>> createExhibitionImages(
+      List<ExhibitionImage> images
+  ) {
+
+    if (images == null) {
+      return null;
+    }
+
+    return images.stream()
+        .map(image -> {
+
+          Map<String, Object> map =
+              new HashMap<>();
+
+          map.put("caption", image.getCaptionHy());
+
+          return map;
+
+        })
+        .toList();
+  }
+
+
+  private Schema exhibitionTranslationSchema() {
+
+    Map<String, Schema> properties =
+        new HashMap<>();
+
+    properties.put("title", stringSchema());
+    properties.put("description", stringSchema());
+    properties.put("exhibition", stringSchema());
+
+    properties.put("links",
+        Schema.builder()
+            .type(Type.Known.ARRAY)
+            .items(linkSchema())
+            .build()
+    );
+
+    properties.put(
+        "videos",
+        Schema.builder()
+            .type(Type.Known.ARRAY)
+            .items(exhibitionVideoSchema())
+            .build()
+    );
+
+    properties.put(
+        "images",
+        Schema.builder()
+            .type(Type.Known.ARRAY)
+            .items(imageSchema())
+            .build()
+    );
+
+    return Schema.builder()
+        .type(Type.Known.OBJECT)
+        .properties(properties)
+        .build();
+  }
+
+  private Schema exhibitionVideoSchema() {
+
+    Map<String, Schema> properties = new HashMap<>();
+
+    properties.put("title", stringSchema());
+
+    return Schema.builder()
+        .type(Type.Known.OBJECT)
+        .properties(properties)
+        .build();
+  }
+
+  private void applyTranslation(
+      Exhibition exhibition,
+      ExhibitionTranslationDto dto,
+      TranslationLanguage language
+  ) {
+
+    if (dto == null) {
+      return;
+    }
+
+    boolean en =
+        language == TranslationLanguage.en;
+
+    if (en) {
+
+      exhibition.setTitleEn(dto.getTitle());
+      exhibition.setDescriptionEn(dto.getDescription());
+      exhibition.setProgramEn(dto.getProgram());
+
+    } else {
+
+      exhibition.setTitleFr(dto.getTitle());
+      exhibition.setDescriptionFr(dto.getDescription());
+      exhibition.setProgramFr(dto.getProgram());
+    }
+
+    applyExhibitionLinksTranslation(
+        exhibition.getLinks(),
+        dto.getLinks(),
+        language
+    );
+
+    applyExhibitionVideosTranslation(
+        exhibition.getVideos(),
+        dto.getVideos(),
+        language
+    );
+
+    applyExhibitionImagesTranslation(
+        exhibition.getImages(),
+        dto.getImages(),
+        language
+    );
+  }
+
+  private void applyExhibitionLinksTranslation(
+      List<ExhibitionLink> links,
+      List<LinkTranslationDto> dto,
+      TranslationLanguage language
+  ) {
+
+    if (links == null || dto == null) {
+      return;
+    }
+
+    int size =
+        Math.min(
+            links.size(),
+            dto.size()
+        );
+
+    for (int i = 0; i < size; i++) {
+
+      ExhibitionLink link =
+          links.get(i);
+
+      LinkTranslationDto translation =
+          dto.get(i);
+
+      if (language == TranslationLanguage.en) {
+
+        link.setTitleEn(
+            translation.getLinkTitle()
+        );
+
+      } else {
+
+        link.setTitleFr(
+            translation.getLinkTitle()
+        );
+      }
+    }
+  }
+
+  private void applyExhibitionVideosTranslation(
+      List<ExhibitionVideo> videos,
+      List<ExhibitionVideoTranslationDto> dto,
+      TranslationLanguage language
+  ) {
+
+    if (videos == null || dto == null) {
+      return;
+    }
+
+    int size =
+        Math.min(
+            videos.size(),
+            dto.size()
+        );
+
+    for (int i = 0; i < size; i++) {
+
+      ExhibitionVideo video =
+          videos.get(i);
+
+      ExhibitionVideoTranslationDto translation =
+          dto.get(i);
+
+      if (language == TranslationLanguage.en) {
+
+        video.setTitleEn(
+            translation.getTitle()
+        );
+
+      } else {
+
+        video.setTitleFr(
+            translation.getTitle()
+        );
+      }
+    }
+  }
+
+  private void applyExhibitionImagesTranslation(
+      List<ExhibitionImage> images,
+      List<ExhibitionImageTranslationDto> dto,
+      TranslationLanguage language
+  ) {
+
+    if (images == null || dto == null) {
+      return;
+    }
+
+    int size =
+        Math.min(
+            images.size(),
+            dto.size()
+        );
+
+    for (int i = 0; i < size; i++) {
+
+      ExhibitionImage image =
+          images.get(i);
+
+      ExhibitionImageTranslationDto translation =
+          dto.get(i);
+
+      if (language == TranslationLanguage.en) {
+
+        image.setCaptionEn(
+            translation.getCaption()
+        );
+
+      } else {
+
+        image.setCaptionFr(
+            translation.getCaption()
+        );
+      }
+    }
   }
 }

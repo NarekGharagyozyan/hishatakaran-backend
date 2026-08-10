@@ -11,13 +11,13 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProgramEditDto {
-  private Long programTypeId;
+public class ExhibitionEditDto {
+
   private LanguagesResponseDto title;
   private LanguagesResponseDto description;
   private LanguagesResponseDto program;
   private List<ImageResponseDto> images;
-  private List<ProgramEpisodeResponseDto> episodes;
+  private List<ExhibitionVideoResponseDto> videos;
   private String pdf;
   private String cover;
   private List<LinkResponseDto> links;

@@ -1,28 +1,19 @@
 package org.hishatakaran.backend.mapper;
 
-import org.hishatakaran.backend.entity.Program;
+import org.hishatakaran.backend.entity.Exhibition;
+import org.hishatakaran.backend.model.ExhibitionResponseDto;
+import org.hishatakaran.backend.model.ExhibitionVideoResponseDto;
 import org.hishatakaran.backend.model.ImageResponseDto;
 import org.hishatakaran.backend.model.LanguagesResponseDto;
-import org.hishatakaran.backend.model.ProgramEpisodeResponseDto;
 import org.hishatakaran.backend.model.LinkResponseDto;
-import org.hishatakaran.backend.model.ProgramResponseDto;
-import org.hishatakaran.backend.model.ProgramTypeResponseDto;
 import org.hishatakaran.backend.service.YouTubeService;
 
-public class ProgramMapper {
+public class ExhibitionMapper {
 
-  public static ProgramResponseDto toDto(Program program) {
-    return new ProgramResponseDto(
+  public static ExhibitionResponseDto toDto(Exhibition program) {
+    return new ExhibitionResponseDto(
         program.getId(),
         program.getIsPublished(),
-        program.getProgramTypes() != null ? new ProgramTypeResponseDto(
-            program.getProgramTypes().getId(),
-            LanguagesResponseDto.of(
-                program.getProgramTypes().getNameHy(),
-                program.getProgramTypes().getNameEn(),
-                program.getProgramTypes().getNameFr()
-            )
-        ) : null,
         program.getTitleHy() != null ? LanguagesResponseDto.of(
             program.getTitleHy(),
             program.getTitleEn(),
@@ -50,16 +41,16 @@ public class ProgramMapper {
                 image.getUrl()
             ))
             .toList(),
-        program.getEpisodes()
+        program.getVideos()
             .stream()
-            .map(episode -> new ProgramEpisodeResponseDto(
+            .map(video -> new ExhibitionVideoResponseDto(
                 LanguagesResponseDto.of(
-                    episode.getTitleHy(),
-                    episode.getTitleEn(),
-                    episode.getTitleFr()
+                    video.getTitleHy(),
+                    video.getTitleEn(),
+                    video.getTitleFr()
                 ),
-                YouTubeService.extractVideoId(episode.getUrl()),
-                episode.getUrl()
+                YouTubeService.extractVideoId(video.getUrl()),
+                video.getUrl()
             ))
             .toList(),
         program.getPdf(),
