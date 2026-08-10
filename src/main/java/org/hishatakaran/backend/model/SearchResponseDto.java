@@ -16,8 +16,11 @@ import lombok.Setter;
 public class SearchResponseDto {
 
     private List<MonumentResponseDto> monuments;
+    private List<ProgramCulturalHeritageDocumentationResponseDto> programCulturalHeritages;
     private List<ProgramResponseDto> programs;
+    private List<ExhibitionResponseDto> exhibitions;
     private List<LibraryResponseDto> libraries;
     private List<TeamMemberResponseDto> teamMembers;
+    private List<SettlementResponseDto> settlements;
 
 }

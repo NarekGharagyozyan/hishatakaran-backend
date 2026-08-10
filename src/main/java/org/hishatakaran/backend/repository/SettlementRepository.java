@@ -1,14 +1,16 @@
 package org.hishatakaran.backend.repository;
 
+import org.hishatakaran.backend.entity.Monument;
 import org.hishatakaran.backend.entity.Region;
 import org.hishatakaran.backend.entity.Settlement;
 import org.hishatakaran.backend.model.SettlementCountDto;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface SettlementRepository extends JpaRepository<Settlement, Long> {
+public interface SettlementRepository extends JpaRepository<Settlement, Long>, JpaSpecificationExecutor<Settlement> {
     List<Settlement> findAllByRegionId(Long regionId);
 
     @Query("""
