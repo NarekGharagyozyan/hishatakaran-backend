@@ -33,9 +33,12 @@ public class ProgramService {
   private final FileStorageService fileStorageService;
   private final ProgramTranslationService programTranslationService;
 
-  public List<ProgramResponseDto> getAllPrograms() {
-    return programRepository.findAll()
-        .stream()
+  public List<ProgramResponseDto> getAllPrograms(Long programTypeId) {
+    List<Program> programs = programTypeId == null
+        ? programRepository.findAll()
+        : programRepository.findAllByProgramTypesId(programTypeId);
+
+    return programs.stream()
         .map(ProgramMapper::toDto)
         .sorted(Comparator.comparing(ProgramResponseDto::getId).reversed())
         .toList();

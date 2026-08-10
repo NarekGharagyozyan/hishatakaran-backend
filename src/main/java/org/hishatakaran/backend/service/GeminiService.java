@@ -2249,7 +2249,7 @@ NOW EXTRACT DATA FROM THIS HTML:
 
     properties.put("title", stringSchema());
     properties.put("description", stringSchema());
-    properties.put("exhibition", stringSchema());
+    properties.put("program", stringSchema());
 
     properties.put("links",
         Schema.builder()

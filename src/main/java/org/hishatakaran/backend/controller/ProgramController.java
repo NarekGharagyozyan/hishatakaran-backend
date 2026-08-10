@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -73,7 +74,9 @@ public class ProgramController {
     }
 
     @GetMapping("/programs")
-    public ResponseEntity<List<ProgramResponseDto>> findAllProgram(){
-        return ResponseEntity.ok(programService.getAllPrograms());
+    public ResponseEntity<List<ProgramResponseDto>> findAllPrograms(
+        @RequestParam(required = false) Long programTypeId
+    ) {
+        return ResponseEntity.ok(programService.getAllPrograms(programTypeId));
     }
 }
