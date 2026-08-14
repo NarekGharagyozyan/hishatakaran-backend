@@ -11,4 +11,5 @@ public class MonumentMediasResponseDto {
 
   private final Long id;
   private final String media;
+  private final LanguagesResponseDto caption;
 }
