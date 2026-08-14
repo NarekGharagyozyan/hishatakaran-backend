@@ -15,6 +15,7 @@ import org.hishatakaran.backend.model.QuantityResponseDto;
 import org.hishatakaran.backend.model.SettlementsCountDto;
 import org.hishatakaran.backend.repository.MainPageRepository;
 import org.hishatakaran.backend.repository.MonumentImageRepository;
+import org.hishatakaran.backend.repository.MonumentMeasurementRepository;
 import org.hishatakaran.backend.repository.MonumentRepository;
 import org.hishatakaran.backend.repository.MonumentStatusRepository;
 import org.hishatakaran.backend.repository.MonumentVideoRepository;
@@ -32,6 +33,7 @@ public class MainPageService {
   private final MainPageRepository mainPageRepository;
   private final MonumentRepository monumentRepository;
   private final MonumentImageRepository monumentImageRepository;
+  private final MonumentMeasurementRepository monumentMeasurementRepository;
   private final MonumentVideoRepository monumentVideoRepository;
   private final MonumentStatusRepository monumentStatusRepository;
   private final SettlementRepository settlementRepository;
@@ -96,6 +98,7 @@ public class MainPageService {
   public QuantityResponseDto getQuantity() {
     Long imagesCount = monumentImageRepository.countMonumentImages();
     Long videosCount = monumentVideoRepository.countMonumentVideos();
+    Long measurementsCount = monumentMeasurementRepository.countMonumentMeasurements();
     MonumentStatus registeredMonumentStatus = monumentStatusRepository.findById(1).orElseThrow(
         () -> new RuntimeException("Something went wrong"));
     MonumentStatus documentedMonumentStatus = monumentStatusRepository.findById(2).orElseThrow(
@@ -116,7 +119,8 @@ public class MainPageService {
         new MediaCountDto(
             imagesCount + videosCount,
             imagesCount,
-            videosCount
+            videosCount,
+            measurementsCount
         )
     );
   }

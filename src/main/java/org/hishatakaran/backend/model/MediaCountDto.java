@@ -11,5 +11,6 @@ public class MediaCountDto {
 
   private final Long totalCount;
   private final Long imagesCount;
+  private final Long videosCount;
   private final Long measurementsCount;
 }

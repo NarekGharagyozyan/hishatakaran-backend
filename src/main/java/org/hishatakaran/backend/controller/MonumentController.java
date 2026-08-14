@@ -162,17 +162,17 @@ public class MonumentController {
         request.setSettlementId(settlementId);
         request.setMonumentType(monumentType);
 
-        List<String> images = monumentService.filter(request)
+        List<ImageResponseDto> images = monumentService.filter(request)
             .stream()
             .map(MonumentResponseDto::getImages)
             .flatMap(Collection::stream)
-            .map(ImageResponseDto::getUrl)
             .toList();
 
         return IntStream.range(0, images.size())
             .mapToObj(i -> new MonumentMediasResponseDto(
                 (long) i + 1,
-                images.get(i)
+                images.get(i).getUrl(),
+                images.get(i).getCaption()
             ))
             .toList();
     }
@@ -216,17 +216,17 @@ public class MonumentController {
         request.setSettlementId(settlementId);
         request.setMonumentType(monumentType);
 
-        List<String> measurements = monumentService.filter(request)
+        List<MeasurementResponseDto> measurements = monumentService.filter(request)
             .stream()
             .map(MonumentResponseDto::getMeasurements)
             .flatMap(Collection::stream)
-            .map(MeasurementResponseDto::getUrl)
             .toList();
 
         return IntStream.range(0, measurements.size())
             .mapToObj(i -> new MonumentMediasResponseDto(
                 (long) i + 1,
-                measurements.get(i)
+                measurements.get(i).getUrl(),
+                measurements.get(i).getCaption()
             ))
             .toList();
     }
