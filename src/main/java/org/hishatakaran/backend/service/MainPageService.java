@@ -117,7 +117,7 @@ public class MainPageService {
             settlementRepository.getSettlementCounts()
         ),
         new MediaCountDto(
-            imagesCount + videosCount,
+            imagesCount + measurementsCount,
             imagesCount,
             videosCount,
             measurementsCount
