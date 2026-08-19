@@ -85,7 +85,7 @@ public class MonumentTranslationService {
             monument.setOriginalAffiliationFr(clean(dto.getOriginalAffiliation()));
             monument.setStorageUnitNameFr(clean(dto.getStorageUnitName()));
             monument.setIndividuallyCertifiablePartsOfTheStorageUnitFr(clean(dto.getIndividuallyCertifiablePartsOfTheStorageUnit()));
-            monument.setSignatureFr(clean(dto.getIndividuallyCertifiablePartsOfTheStorageUnit()));
+            monument.setSignatureFr(clean(dto.getSignature()));
         }
 
 
