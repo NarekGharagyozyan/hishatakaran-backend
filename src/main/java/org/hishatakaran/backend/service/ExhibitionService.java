@@ -31,7 +31,12 @@ public class ExhibitionService {
     return exhibitionRepository.findAll()
         .stream()
         .map(ExhibitionMapper::toDto)
-        .sorted(Comparator.comparing(ExhibitionResponseDto::getId).reversed())
+        .sorted(
+            Comparator.comparing(
+                ExhibitionResponseDto::getDate,
+                Comparator.nullsFirst(Comparator.reverseOrder())
+            )
+        )
         .toList();
   }
 
@@ -45,135 +50,139 @@ public class ExhibitionService {
   public ExhibitionResponseDto publish(
       Long id
   ) {
-    Exhibition program = exhibitionRepository.findById(id).orElseThrow(
+    Exhibition exhibition = exhibitionRepository.findById(id).orElseThrow(
         () -> new RuntimeException("Exhibition not found")
     );
-    program.setIsPublished(!program.getIsPublished());
-    Exhibition updatedExhibition = exhibitionRepository.save(program);
+    exhibition.setIsPublished(!exhibition.getIsPublished());
+    Exhibition updatedExhibition = exhibitionRepository.save(exhibition);
     return ExhibitionMapper.toDto(updatedExhibition);
   }
 
-  public ExhibitionResponseDto editExhibition(Long id, ExhibitionEditDto programEditDto) {
+  public ExhibitionResponseDto editExhibition(Long id, ExhibitionEditDto exhibitionEditDto) {
 
-    Exhibition program = exhibitionRepository.findById(id).orElseThrow(
+    Exhibition exhibition = exhibitionRepository.findById(id).orElseThrow(
         () -> new RuntimeException("Exhibition not found")
     );
 
-    if (programEditDto.getTitle() != null)
+    if (exhibitionEditDto.getTitle() != null)
     {
-      program.setTitleHy(programEditDto.getTitle().getHy());
-      program.setTitleEn(programEditDto.getTitle().getEn());
-      program.setTitleFr(programEditDto.getTitle().getFr());
+      exhibition.setTitleHy(exhibitionEditDto.getTitle().getHy());
+      exhibition.setTitleEn(exhibitionEditDto.getTitle().getEn());
+      exhibition.setTitleFr(exhibitionEditDto.getTitle().getFr());
     }
     else {
-      program.setTitleHy(null);
-      program.setTitleEn(null);
-      program.setTitleFr(null);
+      exhibition.setTitleHy(null);
+      exhibition.setTitleEn(null);
+      exhibition.setTitleFr(null);
     }
 
-    if (programEditDto.getDescription() != null)
+    if (exhibitionEditDto.getDescription() != null)
     {
-      program.setDescriptionHy(programEditDto.getDescription().getHy());
-      program.setDescriptionEn(programEditDto.getDescription().getEn());
-      program.setDescriptionFr(programEditDto.getDescription().getFr());
+      exhibition.setDescriptionHy(exhibitionEditDto.getDescription().getHy());
+      exhibition.setDescriptionEn(exhibitionEditDto.getDescription().getEn());
+      exhibition.setDescriptionFr(exhibitionEditDto.getDescription().getFr());
     }
     else {
-      program.setDescriptionHy(null);
-      program.setDescriptionEn(null);
-      program.setDescriptionFr(null);
+      exhibition.setDescriptionHy(null);
+      exhibition.setDescriptionEn(null);
+      exhibition.setDescriptionFr(null);
     }
 
-    if (programEditDto.getProgram() != null)
+    if (exhibitionEditDto.getProgram() != null)
     {
-      program.setProgramHy(programEditDto.getProgram().getHy());
-      program.setProgramEn(programEditDto.getProgram().getEn());
-      program.setProgramFr(programEditDto.getProgram().getFr());
+      exhibition.setProgramHy(exhibitionEditDto.getProgram().getHy());
+      exhibition.setProgramEn(exhibitionEditDto.getProgram().getEn());
+      exhibition.setProgramFr(exhibitionEditDto.getProgram().getFr());
     }
     else {
-      program.setProgramHy(null);
-      program.setProgramEn(null);
-      program.setProgramFr(null);
+      exhibition.setProgramHy(null);
+      exhibition.setProgramEn(null);
+      exhibition.setProgramFr(null);
     }
 
-    if (programEditDto.getLinks() != null)
+    if (exhibitionEditDto.getLinks() != null)
     {
-      program.getLinks().clear();
-      programEditDto.getLinks()
+      exhibition.getLinks().clear();
+      exhibitionEditDto.getLinks()
           .stream()
-          .map(programLinkResponseDto -> new ExhibitionLink(
-              program,
-              programLinkResponseDto.getTitle().getHy(),
-              programLinkResponseDto.getTitle().getEn(),
-              programLinkResponseDto.getTitle().getFr(),
-              programLinkResponseDto.getUrl()
+          .map(linkResponseDto -> new ExhibitionLink(
+              exhibition,
+              linkResponseDto.getTitle().getHy(),
+              linkResponseDto.getTitle().getEn(),
+              linkResponseDto.getTitle().getFr(),
+              linkResponseDto.getUrl(),
+              linkResponseDto.getPdf()
           ))
-          .forEach(program.getLinks()::add);
+          .forEach(exhibition.getLinks()::add);
     }
     else
-      program.setLinks(null);
+      exhibition.setLinks(null);
 
-    program.setCover(programEditDto.getCover());
-    program.setPdf(programEditDto.getPdf());
+    exhibition.setCover(exhibitionEditDto.getCover());
+    exhibition.setDate(exhibitionEditDto.getDate());
+    exhibition.setPdf(exhibitionEditDto.getPdf());
 
-    program.getVideos().clear();
-    programEditDto.getVideos()
+    exhibition.getVideos().clear();
+    exhibitionEditDto.getVideos()
         .stream()
         .filter(dto -> dto.getTitle() != null)
         .map(dto -> new ExhibitionVideo(
-            program,
+            exhibition,
             dto.getTitle().getHy(),
             dto.getTitle().getEn(),
             dto.getTitle().getFr(),
             dto.getUrl()
         ))
-        .forEach(program.getVideos()::add);
+        .forEach(exhibition.getVideos()::add);
 
-    program.getImages().clear();
-    programEditDto.getImages()
+    exhibition.getImages().clear();
+    exhibitionEditDto.getImages()
         .stream()
         .map(dto -> new ExhibitionImage(
             dto.getUrl(),
             dto.getCaption() != null ? dto.getCaption().getHy() : null,
             dto.getCaption() != null ? dto.getCaption().getEn() : null,
             dto.getCaption() != null ? dto.getCaption().getFr() : null,
-            program
+            exhibition
         ))
-        .forEach(program.getImages()::add);
+        .forEach(exhibition.getImages()::add);
 
-    Exhibition editedExhibition = exhibitionRepository.save(program);
+    Exhibition editedExhibition = exhibitionRepository.save(exhibition);
     return ExhibitionMapper.toDto(editedExhibition);
   }
 
   public ExhibitionResponseDto postExhibition(
-      ExhibitionRequestDto programRequestDto
+      ExhibitionRequestDto exhibitionRequestDto
   )
   {
 
-    Exhibition program = new Exhibition();
+    Exhibition exhibition = new Exhibition();
 
-    program.setIsPublished(Boolean.FALSE);
-    program.setTitleHy(programRequestDto.getTitle());
-    program.setDescriptionHy(programRequestDto.getDescription());
-    program.setProgramHy(programRequestDto.getProgram());
-    if (programRequestDto.getLinks() != null) {
-      program.setLinks(programRequestDto.getLinks().stream()
+    exhibition.setIsPublished(Boolean.FALSE);
+    exhibition.setDate(exhibitionRequestDto.getDate());
+    exhibition.setTitleHy(exhibitionRequestDto.getTitle());
+    exhibition.setDescriptionHy(exhibitionRequestDto.getDescription());
+    exhibition.setProgramHy(exhibitionRequestDto.getProgram());
+    if (exhibitionRequestDto.getLinks() != null) {
+      exhibition.setLinks(exhibitionRequestDto.getLinks().stream()
           .map(link -> new ExhibitionLink(
-              program,
+              exhibition,
               link.getTitle(),
               null,
               null,
-              link.getUrl())
+              link.getUrl(),
+              link.getPdf())
           )
           .toList());
     }
 
-    if (programRequestDto.getVideos() != null)
+    if (exhibitionRequestDto.getVideos() != null)
     {
-      program.setVideos(
-          programRequestDto.getVideos()
+      exhibition.setVideos(
+          exhibitionRequestDto.getVideos()
               .stream()
               .map(video -> new ExhibitionVideo(
-                  program,
+                  exhibition,
                   video.getTitle(),
                   null,
                   null,
@@ -183,43 +192,43 @@ public class ExhibitionService {
       );
     }
 
-    if (programRequestDto.getImages() != null)
+    if (exhibitionRequestDto.getImages() != null)
     {
-      program.setImages(
-          programRequestDto.getImages()
+      exhibition.setImages(
+          exhibitionRequestDto.getImages()
               .stream()
               .map(image -> new ExhibitionImage(
                   image.getUrl(),
                   image.getCaption(),
                   null,
                   null,
-                  program
+                  exhibition
               ))
               .toList()
       );
     }
-    program.setCover(programRequestDto.getCover());
-    program.setPdf(programRequestDto.getPdf());
+    exhibition.setCover(exhibitionRequestDto.getCover());
+    exhibition.setPdf(exhibitionRequestDto.getPdf());
 
-    Exhibition savedExhibition = exhibitionRepository.save(program);
+    Exhibition savedExhibition = exhibitionRepository.save(exhibition);
     return ExhibitionMapper.toDto(savedExhibition);
   }
 
   @Transactional
   public void deleteExhibition(Long id) {
-    Exhibition program = exhibitionRepository.findById(id)
+    Exhibition exhibition = exhibitionRepository.findById(id)
         .orElseThrow(() -> new RuntimeException("Exhibition not found"));
 
     deleteFiles(
-        program.getImages()
+        exhibition.getImages()
             .stream()
             .map(ExhibitionImage::getUrl)
             .toList()
     );
-    fileStorageService.deleteImage(program.getCover());
-    fileStorageService.deleteFile(program.getPdf());
+    fileStorageService.deleteImage(exhibition.getCover());
+    fileStorageService.deleteFile(exhibition.getPdf());
 
-    exhibitionRepository.delete(program);
+    exhibitionRepository.delete(exhibition);
   }
 
   private void deleteFiles(List<String> paths) {

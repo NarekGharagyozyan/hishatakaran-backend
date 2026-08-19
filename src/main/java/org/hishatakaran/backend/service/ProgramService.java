@@ -4,15 +4,12 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
-import org.hishatakaran.backend.entity.MonumentImage;
-import org.hishatakaran.backend.entity.MonumentVideo;
 import org.hishatakaran.backend.entity.Program;
 import org.hishatakaran.backend.entity.ProgramEpisode;
 import org.hishatakaran.backend.entity.ProgramImage;
 import org.hishatakaran.backend.entity.ProgramLink;
 import org.hishatakaran.backend.mapper.ProgramMapper;
-import org.hishatakaran.backend.model.LibraryResponseDto;
-import org.hishatakaran.backend.model.MonumentResponseDto;
+import org.hishatakaran.backend.model.ExhibitionResponseDto;
 import org.hishatakaran.backend.model.ProgramEditDto;
 import org.hishatakaran.backend.model.ProgramRequestDto;
 import org.hishatakaran.backend.model.ProgramResponseDto;
@@ -40,7 +37,12 @@ public class ProgramService {
 
     return programs.stream()
         .map(ProgramMapper::toDto)
-        .sorted(Comparator.comparing(ProgramResponseDto::getId).reversed())
+        .sorted(
+            Comparator.comparing(
+                ProgramResponseDto::getDate,
+                Comparator.nullsFirst(Comparator.reverseOrder())
+            )
+        )
         .toList();
   }
 
@@ -114,7 +116,8 @@ public class ProgramService {
               programLinkResponseDto.getTitle().getHy(),
               programLinkResponseDto.getTitle().getEn(),
               programLinkResponseDto.getTitle().getFr(),
-              programLinkResponseDto.getUrl()
+              programLinkResponseDto.getUrl(),
+              programLinkResponseDto.getPdf()
           ))
           .forEach(program.getLinks()::add);
     }
@@ -123,6 +126,7 @@ public class ProgramService {
 
     program.setCover(programEditDto.getCover());
     program.setPdf(programEditDto.getPdf());
+    program.setDate(programEditDto.getDate());
     program.setProgramTypes(programTypeRepository.findById(programEditDto.getProgramTypeId()).orElseThrow(() -> new RuntimeException("Program type not found")));
 
     program.getEpisodes().clear();
@@ -162,6 +166,7 @@ public class ProgramService {
     Program program = new Program();
 
     program.setIsPublished(Boolean.FALSE);
+    program.setDate(programRequestDto.getDate());
     program.setProgramTypes(programTypeRepository.findById(programRequestDto.getProgramTypeId()).orElseThrow(() -> new RuntimeException("Program type not found")));
     program.setTitleHy(programRequestDto.getTitle());
     program.setDescriptionHy(programRequestDto.getDescription());
@@ -173,7 +178,8 @@ public class ProgramService {
               link.getTitle(),
               null,
               null,
-              link.getUrl())
+              link.getUrl(),
+              link.getPdf())
           )
           .toList());
     }

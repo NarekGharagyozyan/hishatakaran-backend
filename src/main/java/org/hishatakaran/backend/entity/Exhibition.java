@@ -1,5 +1,6 @@
 package org.hishatakaran.backend.entity;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +30,8 @@ public class Exhibition extends BaseEntity{
   private Long id;
 
   private Boolean isPublished;
+
+  private LocalDate date;
 
   private String titleHy;
   private String titleEn;
@@ -60,9 +63,10 @@ public class Exhibition extends BaseEntity{
   @OneToMany(mappedBy = "exhibition", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<ExhibitionLink> links = new ArrayList<>();
 
-  public Exhibition(Boolean isPublished, String titleHy, String titleEn, String titleFr, String descriptionHy,
+  public Exhibition(Boolean isPublished, LocalDate date, String titleHy, String titleEn, String titleFr, String descriptionHy,
       String descriptionEn, String descriptionFr, List<ExhibitionImage> images, String pdf, String cover, List<ExhibitionLink> links) {
     this.isPublished = isPublished;
+    this.date = date;
     this.titleHy = titleHy;
     this.titleEn = titleEn;
     this.titleFr = titleFr;

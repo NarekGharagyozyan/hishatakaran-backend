@@ -1,5 +1,6 @@
 package org.hishatakaran.backend.model;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -13,6 +14,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ProgramRequestDto {
   private Long programTypeId;
+  private LocalDate date;
   private String title;
   private String description;
   private String program;

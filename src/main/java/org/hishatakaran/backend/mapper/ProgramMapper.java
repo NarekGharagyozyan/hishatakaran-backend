@@ -15,6 +15,7 @@ public class ProgramMapper {
     return new ProgramResponseDto(
         program.getId(),
         program.getIsPublished(),
+        program.getDate(),
         program.getProgramTypes() != null ? new ProgramTypeResponseDto(
             program.getProgramTypes().getId(),
             LanguagesResponseDto.of(
@@ -72,7 +73,8 @@ public class ProgramMapper {
                     link.getTitleEn(),
                     link.getTitleFr()
                 ),
-                link.getUrl())
+                link.getUrl(),
+                link.getPdf())
             )
             .toList() : null
     );

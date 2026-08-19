@@ -45,5 +45,5 @@ public class MonumentResponseDto {
     private final DescriptiveCharacteristicResponseDto descriptiveCharacteristics;
 
     private final boolean showInMainPage;
-    private final String signature;
+    private final LanguagesResponseDto signature;
 }

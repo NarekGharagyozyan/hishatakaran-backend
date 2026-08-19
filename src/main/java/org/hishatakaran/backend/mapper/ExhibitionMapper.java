@@ -10,26 +10,27 @@ import org.hishatakaran.backend.service.YouTubeService;
 
 public class ExhibitionMapper {
 
-  public static ExhibitionResponseDto toDto(Exhibition program) {
+  public static ExhibitionResponseDto toDto(Exhibition exhibition) {
     return new ExhibitionResponseDto(
-        program.getId(),
-        program.getIsPublished(),
-        program.getTitleHy() != null ? LanguagesResponseDto.of(
-            program.getTitleHy(),
-            program.getTitleEn(),
-            program.getTitleFr()
+        exhibition.getId(),
+        exhibition.getIsPublished(),
+        exhibition.getDate(),
+        exhibition.getTitleHy() != null ? LanguagesResponseDto.of(
+            exhibition.getTitleHy(),
+            exhibition.getTitleEn(),
+            exhibition.getTitleFr()
         ) : null,
-        program.getDescriptionHy() != null ? LanguagesResponseDto.of(
-            program.getDescriptionHy(),
-            program.getDescriptionEn(),
-            program.getDescriptionFr()
+        exhibition.getDescriptionHy() != null ? LanguagesResponseDto.of(
+            exhibition.getDescriptionHy(),
+            exhibition.getDescriptionEn(),
+            exhibition.getDescriptionFr()
         ) : null,
-        program.getProgramHy() != null ? LanguagesResponseDto.of(
-            program.getProgramHy(),
-            program.getProgramEn(),
-            program.getProgramFr()
+        exhibition.getProgramHy() != null ? LanguagesResponseDto.of(
+            exhibition.getProgramHy(),
+            exhibition.getProgramEn(),
+            exhibition.getProgramFr()
         ) : null,
-        program.getImages()
+        exhibition.getImages()
             .stream()
             .map(image -> new ImageResponseDto(
                 image.getId(),
@@ -41,7 +42,7 @@ public class ExhibitionMapper {
                 image.getUrl()
             ))
             .toList(),
-        program.getVideos()
+        exhibition.getVideos()
             .stream()
             .map(video -> new ExhibitionVideoResponseDto(
                 LanguagesResponseDto.of(
@@ -53,9 +54,9 @@ public class ExhibitionMapper {
                 video.getUrl()
             ))
             .toList(),
-        program.getPdf(),
-        program.getCover(),
-        program.getLinks() != null ? program.getLinks()
+        exhibition.getPdf(),
+        exhibition.getCover(),
+        exhibition.getLinks() != null ? exhibition.getLinks()
             .stream()
             .map(link -> new LinkResponseDto(
                 LanguagesResponseDto.of(
@@ -63,7 +64,8 @@ public class ExhibitionMapper {
                     link.getTitleEn(),
                     link.getTitleFr()
                 ),
-                link.getUrl())
+                link.getUrl(),
+                link.getPdf())
             )
             .toList() : null
     );

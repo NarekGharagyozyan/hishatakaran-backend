@@ -33,12 +33,14 @@ public class ExhibitionLink {
   private String titleEn;
   private String titleFr;
   private String url;
+  private String pdf;
 
-  public ExhibitionLink(Exhibition exhibition, String titleHy, String titleEn, String titleFr, String url) {
+  public ExhibitionLink(Exhibition exhibition, String titleHy, String titleEn, String titleFr, String url, String pdf) {
     this.exhibition = exhibition;
     this.titleHy = titleHy;
     this.titleEn = titleEn;
     this.titleFr = titleFr;
     this.url = url;
+    this.pdf = pdf;
   }
 }

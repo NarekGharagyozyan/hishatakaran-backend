@@ -1,5 +1,6 @@
 package org.hishatakaran.backend.model;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import lombok.Getter;
@@ -13,6 +14,8 @@ public class ProgramResponseDto {
 
   private final Long id;
   private final Boolean isPublished;
+
+  private final LocalDate date;
 
   private final ProgramTypeResponseDto programType;
 
