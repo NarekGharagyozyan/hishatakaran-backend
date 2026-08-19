@@ -1,5 +1,6 @@
 package org.hishatakaran.backend.entity;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +33,8 @@ public class Program extends BaseEntity{
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+
+  private LocalDate date;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "program_type")
@@ -69,9 +72,10 @@ public class Program extends BaseEntity{
   @OneToMany(mappedBy = "program", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<ProgramLink> links = new ArrayList<>();
 
-  public Program(Boolean isPublished, String titleHy, String titleEn, String titleFr, String descriptionHy,
+  public Program(Boolean isPublished, LocalDate date, String titleHy, String titleEn, String titleFr, String descriptionHy,
       String descriptionEn, String descriptionFr, List<ProgramImage> images, String pdf, String cover, List<ProgramLink> links) {
     this.isPublished = isPublished;
+    this.date = date;
     this.titleHy = titleHy;
     this.titleEn = titleEn;
     this.titleFr = titleFr;

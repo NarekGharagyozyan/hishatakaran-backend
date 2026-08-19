@@ -33,13 +33,15 @@ public class ProgramLink {
   private String titleEn;
   private String titleFr;
   private String url;
+  private String pdf;
 
-  public ProgramLink(Program program, String titleHy, String titleEn, String titleFr, String url) {
+  public ProgramLink(Program program, String titleHy, String titleEn, String titleFr, String url, String pdf) {
     this.program = program;
     this.titleHy = titleHy;
     this.titleEn = titleEn;
     this.titleFr = titleFr;
     this.url = url;
+    this.pdf = pdf;
   }
 
   @Override

@@ -24,6 +24,8 @@ public class MonumentTranslationDto {
 
     private String individuallyCertifiablePartsOfTheStorageUnit;
 
+    private String signature;
+
     private List<FootnoteTranslationDto> footnotes;
 
     private TopographicTranslationDto topographics;

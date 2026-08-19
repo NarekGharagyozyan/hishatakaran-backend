@@ -32,7 +32,7 @@ public class MonumentEditDto {
   private TopographicResponseDto topographics;
   private HistoricalReferenceResponseDto historicalReferences;
   private DescriptiveCharacteristicResponseDto descriptiveCharacteristics;
-  private String signature;
+  private LanguagesResponseDto signature;
   private Boolean showInMainPage;
 
 }

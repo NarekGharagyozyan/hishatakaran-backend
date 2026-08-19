@@ -147,7 +147,11 @@ public class MonumentMapper {
         monumentDtoBuilder.topographics(TopographicMapper.toDto(m.getTopographics()));
         monumentDtoBuilder.historicalReferences(HistoricalReferenceMapper.toDto(m.getHistoricalReferences()));
         monumentDtoBuilder.descriptiveCharacteristics(DescriptiveCharacteristicMapper.toDto(m.getDescriptiveCharacteristics()));
-        monumentDtoBuilder.signature(m.getSignature());
+        monumentDtoBuilder.signature(LanguagesResponseDto.of(
+            m.getSignatureHy(),
+            m.getSignatureEn(),
+            m.getSignatureFr()
+        ));
 
         return monumentDtoBuilder.build();
     }

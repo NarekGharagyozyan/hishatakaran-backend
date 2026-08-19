@@ -11,4 +11,5 @@ public class LinkResponseDto {
 
   private LanguagesResponseDto title;
   private String url;
+  private String pdf;
 }

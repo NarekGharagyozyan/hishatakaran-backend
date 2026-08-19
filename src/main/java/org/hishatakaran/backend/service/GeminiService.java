@@ -628,24 +628,13 @@ NOW EXTRACT DATA FROM THIS HTML:
         );
 
     for (int i = 0; i < size; i++) {
-
-      ProgramLink link =
-          links.get(i);
-
-      LinkTranslationDto translation =
-          dto.get(i);
-
+      ProgramLink link = links.get(i);
+      LinkTranslationDto translation = dto.get(i);
       if (language == TranslationLanguage.en) {
-
-        link.setTitleEn(
-            translation.getLinkTitle()
-        );
-
-      } else {
-
-        link.setTitleFr(
-            translation.getLinkTitle()
-        );
+        link.setTitleEn(translation.getLinkTitle());
+      }
+      else {
+        link.setTitleFr(translation.getLinkTitle());
       }
     }
   }
@@ -815,6 +804,16 @@ NOW EXTRACT DATA FROM THIS HTML:
             - The required romanization is not considered additional information and must not be removed.
             - If some name or place name already have transcription, don't repeat ir in another place.
         
+        14. Preserve the exact punctuation and structure of signatures when translating them.
+        
+            If a signature consists of initials separated by Armenian punctuation ․, convert each initial to its Latin equivalent and preserve the same structure.
+            Do not add or remove punctuation that is present in the original signature.
+            If the original signature contains multiple signatures separated by a comma, preserve the comma and spacing.
+        
+            Examples:
+              Ս․Դ․ → S.D. → S.D
+              Ա․Հ․, Ս․Դ․ → A.H., S.D. → A.H., S.D
+        
         Armenian monument data:
 
         %s
@@ -839,6 +838,7 @@ NOW EXTRACT DATA FROM THIS HTML:
     data.put("originalAffiliation", monument.getOriginalAffiliationHy());
     data.put("storageUnitName", monument.getStorageUnitNameHy());
     data.put("individuallyCertifiablePartsOfTheStorageUnit", monument.getIndividuallyCertifiablePartsOfTheStorageUnitHy());
+    data.put("signature", monument.getSignatureHy());
 
     data.put(
         "videos",
@@ -1033,6 +1033,7 @@ NOW EXTRACT DATA FROM THIS HTML:
     properties.put("originalAffiliation", stringSchema());
     properties.put("storageUnitName", stringSchema());
     properties.put("individuallyCertifiablePartsOfTheStorageUnit", stringSchema());
+    properties.put("signature", stringSchema());
     properties.put("topographics", topographicSchema());
     properties.put("historicalReferences", historicalSchema());
     properties.put("descriptiveCharacteristics", descriptiveSchema());

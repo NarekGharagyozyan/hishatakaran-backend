@@ -1,5 +1,6 @@
 package org.hishatakaran.backend.model;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -14,6 +15,7 @@ import lombok.Setter;
 public class ExhibitionEditDto {
 
   private LanguagesResponseDto title;
+  private LocalDate date;
   private LanguagesResponseDto description;
   private LanguagesResponseDto program;
   private List<ImageResponseDto> images;

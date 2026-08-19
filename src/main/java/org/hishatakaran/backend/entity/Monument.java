@@ -137,7 +137,10 @@ public class Monument extends BaseEntity{
     @OneToOne(mappedBy = "monument", cascade = CascadeType.ALL, orphanRemoval = true)
     private DescriptiveCharacteristicReference descriptiveCharacteristics;
 
-    private String signature;
+    private String signatureHy;
+    private String signatureEn;
+    private String signatureFr;
+
     private Boolean showInMainPage;
 
     public Monument(Boolean isPublished,
@@ -173,7 +176,9 @@ public class Monument extends BaseEntity{
         Topographic topographics,
         HistoricalReference historicalReferences,
         DescriptiveCharacteristicReference descriptiveCharacteristics,
-        String signature,
+        String signatureHy,
+        String signatureEn,
+        String signatureFr,
         Boolean showInMainPage
     ) {
         this.isPublished = isPublished;
@@ -209,7 +214,9 @@ public class Monument extends BaseEntity{
         this.topographics = topographics;
         this.historicalReferences = historicalReferences;
         this.descriptiveCharacteristics = descriptiveCharacteristics;
-        this.signature = signature;
+        this.signatureHy = signatureHy;
+        this.signatureEn = signatureEn;
+        this.signatureFr = signatureFr;
         this.showInMainPage = showInMainPage;
     }
 }

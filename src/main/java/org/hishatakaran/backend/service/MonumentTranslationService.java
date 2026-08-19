@@ -74,6 +74,7 @@ public class MonumentTranslationService {
             monument.setOriginalAffiliationEn(clean(dto.getOriginalAffiliation()));
             monument.setStorageUnitNameEn(clean(dto.getStorageUnitName()));
             monument.setIndividuallyCertifiablePartsOfTheStorageUnitEn(clean(dto.getIndividuallyCertifiablePartsOfTheStorageUnit()));
+            monument.setSignatureEn(clean(dto.getSignature()));
 
         } else {
 
@@ -84,6 +85,7 @@ public class MonumentTranslationService {
             monument.setOriginalAffiliationFr(clean(dto.getOriginalAffiliation()));
             monument.setStorageUnitNameFr(clean(dto.getStorageUnitName()));
             monument.setIndividuallyCertifiablePartsOfTheStorageUnitFr(clean(dto.getIndividuallyCertifiablePartsOfTheStorageUnit()));
+            monument.setSignatureFr(clean(dto.getIndividuallyCertifiablePartsOfTheStorageUnit()));
         }
 
 

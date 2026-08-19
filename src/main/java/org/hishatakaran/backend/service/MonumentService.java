@@ -72,7 +72,7 @@ public class MonumentService {
             .originalAffiliationHy(monumentRequestDto.getOriginalAffiliation())
             .individuallyCertifiablePartsOfTheStorageUnitHy(monumentRequestDto.getIndividuallyCertifiablePartsOfTheStorageUnit())
             .storageUnitNameHy(monumentRequestDto.getStorageUnitName())
-            .signature(monumentRequestDto.getSignature())
+            .signatureHy(monumentRequestDto.getSignature())
             .showInMainPage(monumentRequestDto.getShowInMainPage())
             .build();
 
@@ -875,7 +875,9 @@ public class MonumentService {
                 ? monumentEditDto.getDescriptiveCharacteristics().getMonumentDataUpdate().getFr()
                 : null);
 
-        monument.setSignature(monumentEditDto.getSignature());
+        monument.setSignatureHy(monumentEditDto.getSignature().getHy());
+        monument.setSignatureEn(monumentEditDto.getSignature().getEn());
+        monument.setSignatureFr(monumentEditDto.getSignature().getFr());
         Monument editedMonument = monumentRepository.save(monument);
         return MonumentMapper.toDto(editedMonument);
     }

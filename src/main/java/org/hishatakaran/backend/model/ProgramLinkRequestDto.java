@@ -13,6 +13,7 @@ import lombok.Setter;
 public class ProgramLinkRequestDto {
   private String title;
   private String url;
+  private String pdf;
 
   @Override
   public String toString() {
