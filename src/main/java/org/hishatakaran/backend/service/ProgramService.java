@@ -9,6 +9,7 @@ import org.hishatakaran.backend.entity.ProgramEpisode;
 import org.hishatakaran.backend.entity.ProgramImage;
 import org.hishatakaran.backend.entity.ProgramLink;
 import org.hishatakaran.backend.mapper.ProgramMapper;
+import org.hishatakaran.backend.model.ExhibitionResponseDto;
 import org.hishatakaran.backend.model.ProgramEditDto;
 import org.hishatakaran.backend.model.ProgramRequestDto;
 import org.hishatakaran.backend.model.ProgramResponseDto;
@@ -36,7 +37,12 @@ public class ProgramService {
 
     return programs.stream()
         .map(ProgramMapper::toDto)
-        .sorted(Comparator.comparing(ProgramResponseDto::getDate).reversed())
+        .sorted(
+            Comparator.comparing(
+                ProgramResponseDto::getDate,
+                Comparator.nullsFirst(Comparator.reverseOrder())
+            )
+        )
         .toList();
   }
 

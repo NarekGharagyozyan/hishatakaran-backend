@@ -31,7 +31,12 @@ public class ExhibitionService {
     return exhibitionRepository.findAll()
         .stream()
         .map(ExhibitionMapper::toDto)
-        .sorted(Comparator.comparing(ExhibitionResponseDto::getDate).reversed())
+        .sorted(
+            Comparator.comparing(
+                ExhibitionResponseDto::getDate,
+                Comparator.nullsFirst(Comparator.reverseOrder())
+            )
+        )
         .toList();
   }
 
