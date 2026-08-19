@@ -4,6 +4,7 @@ spring:
   jackson:
     serialization:
       indent_output: true
+      write-dates-as-timestamps: false
   datasource:
     url: jdbc:mysql://localhost:3307/hishatakaran
     username: hishatakaranlogin
