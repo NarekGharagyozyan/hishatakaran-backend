@@ -1465,6 +1465,7 @@ NOW EXTRACT DATA FROM THIS HTML:
             If a signature consists of initials separated by Armenian punctuation ․, convert each initial to its Latin equivalent and preserve the same structure.
             Do not add or remove punctuation that is present in the original signature.
             If the original signature contains multiple signatures separated by a comma, preserve the comma and spacing.
+            If there are another signs, don't remove or change them.
         
             Examples:
               Ս․Դ․ → S.D. → S.D
