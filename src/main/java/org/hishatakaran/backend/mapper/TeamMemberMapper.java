@@ -26,7 +26,11 @@ public class TeamMemberMapper {
             teamMembers.getPositionFr()
         ),
         teamMembers.getUrl(),
-        teamMembers.getSignature(),
+        LanguagesResponseDto.of(
+            teamMembers.getSignatureHy(),
+            teamMembers.getSignatureEn(),
+            teamMembers.getSignatureFr()
+        ),
         teamMembers.getImage()
     );
   }

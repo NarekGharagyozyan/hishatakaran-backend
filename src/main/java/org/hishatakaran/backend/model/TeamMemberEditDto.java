@@ -14,6 +14,6 @@ public class TeamMemberEditDto {
   private LanguagesResponseDto description;
   private LanguagesResponseDto position;
   private String url;
-  private String signature;
+  private LanguagesResponseDto signature;
   private String image;
 }
