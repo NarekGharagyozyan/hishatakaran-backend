@@ -39,6 +39,8 @@ public class TeamMembersService {
         null,
         teamMemberRequestDto.getImage(),
         teamMemberRequestDto.getSignature(),
+        null,
+        null,
         teamMemberRequestDto.getUrl()
     );
     return TeamMemberMapper.toDto(teamMembersRepository.save(newTeamMemberEntity));
@@ -97,6 +99,19 @@ public class TeamMembersService {
       teamMember.setDescriptionHy(null);
       teamMember.setDescriptionEn(null);
       teamMember.setDescriptionFr(null);
+    }
+
+    if (teamMemberEditDto.getSignature() != null)
+    {
+      teamMember.setSignatureHy(teamMemberEditDto.getSignature().getHy());
+      teamMember.setSignatureEn(teamMemberEditDto.getSignature().getEn());
+      teamMember.setSignatureFr(teamMemberEditDto.getSignature().getFr());
+    }
+    else
+    {
+      teamMember.setSignatureHy(null);
+      teamMember.setSignatureEn(null);
+      teamMember.setSignatureFr(null);
     }
 
     teamMember.setImage(teamMemberEditDto.getImage());

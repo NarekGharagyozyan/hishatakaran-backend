@@ -13,4 +13,5 @@ public class TeamMemberTranslationDto {
     private String fullName;
     private String position;
     private String description;
+    private String signature;
 }

@@ -44,10 +44,12 @@ public class TeamMemberTranslationService {
             member.setFullNameEn(dto.getFullName());
             member.setPositionEn(dto.getPosition());
             member.setDescriptionEn(dto.getDescription());
+            member.setSignatureEn(dto.getSignature());
         } else {
             member.setFullNameFr(dto.getFullName());
             member.setPositionFr(dto.getPosition());
             member.setDescriptionFr(dto.getDescription());
+            member.setSignatureFr(dto.getSignature());
         }
     }
 }

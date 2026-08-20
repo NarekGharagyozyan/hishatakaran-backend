@@ -45,11 +45,13 @@ public class TeamMembers {
 
   private String url;
 
-  private String signature;
+  private String signatureHy;
+  private String signatureEn;
+  private String signatureFr;
 
   public TeamMembers(String fullNameHy, String fullNameEn, String fullNameFr,
       String positionHy, String positionEn, String positionFr, String descriptionHy, String descriptionEn,
-      String descriptionFr, String image, String signature, String url) {
+      String descriptionFr, String image, String signatureHy, String signatureEn, String signatureFr, String url) {
     this.fullNameHy = fullNameHy;
     this.fullNameEn = fullNameEn;
     this.fullNameFr = fullNameFr;
@@ -60,7 +62,9 @@ public class TeamMembers {
     this.descriptionEn = descriptionEn;
     this.descriptionFr = descriptionFr;
     this.image = image;
-    this.signature = signature;
+    this.signatureHy = signatureHy;
+    this.signatureEn = signatureEn;
+    this.signatureFr = signatureFr;
     this.url = url;
   }
 }

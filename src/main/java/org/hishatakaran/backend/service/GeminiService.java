@@ -1460,6 +1460,15 @@ NOW EXTRACT DATA FROM THIS HTML:
       6. Translate names and surnames using standard %s transliteration.
       7. If a field is null, return null.
       8. Never return Armenian characters in translated fields.
+      9. Preserve the exact punctuation and structure of signatures when translating them.
+        
+            If a signature consists of initials separated by Armenian punctuation ․, convert each initial to its Latin equivalent and preserve the same structure.
+            Do not add or remove punctuation that is present in the original signature.
+            If the original signature contains multiple signatures separated by a comma, preserve the comma and spacing.
+        
+            Examples:
+              Ս․Դ․ → S.D. → S.D
+              Ա․Հ․, Ս․Դ․ → A.H., S.D. → A.H., S.D
   
       Armenian team member data:
   
@@ -1481,6 +1490,7 @@ NOW EXTRACT DATA FROM THIS HTML:
     data.put("fullName", member.getFullNameHy());
     data.put("position", member.getPositionHy());
     data.put("description", member.getDescriptionHy());
+    data.put("signature", member.getSignatureHy());
 
     return data;
   }
@@ -1492,6 +1502,7 @@ NOW EXTRACT DATA FROM THIS HTML:
     properties.put("fullName", stringSchema());
     properties.put("position", stringSchema());
     properties.put("description", stringSchema());
+    properties.put("signature", stringSchema());
 
     return Schema.builder()
         .type(Type.Known.OBJECT)
