@@ -1468,8 +1468,8 @@ NOW EXTRACT DATA FROM THIS HTML:
             If there are another signs, don't remove or change them.
         
             Examples:
-              Ս․Դ․ → S.D. → S.D
-              Ա․Հ․, Ս․Դ․ → A.H., S.D. → A.H., S.D
+              (Ս․Դ․) → (S.D.) → (S.D)
+              (Ա․Հ․, Ս․Դ․) → (A.H., S.D.) → (A.H., S.D)
   
       Armenian team member data:
   
