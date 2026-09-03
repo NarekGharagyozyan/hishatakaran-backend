@@ -1,14 +1,11 @@
 package org.hishatakaran.backend.controller;
 
-import java.util.Comparator;
 import java.util.List;
 
-import org.hishatakaran.backend.entity.ContactUs;
-import org.hishatakaran.backend.mapper.ContactUsMapper;
 import org.hishatakaran.backend.model.ContactUsRequestDto;
 import org.hishatakaran.backend.model.ContactUsResponseDto;
-import org.hishatakaran.backend.model.MonumentResponseDto;
 import org.hishatakaran.backend.repository.ContactUsRepository;
+import org.hishatakaran.backend.service.ContactUsService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,24 +21,16 @@ import lombok.RequiredArgsConstructor;
 public class ContactUsController {
 
   private final ContactUsRepository contactUsRepository;
+  private final ContactUsService contactUsService;
 
   @PostMapping
   public ResponseEntity<ContactUsResponseDto> contactUs(@RequestBody ContactUsRequestDto contactUsRequestDto)
   {
-    ContactUs savedContactUs = contactUsRepository.save(new ContactUs(
-        contactUsRequestDto.getName(),
-        contactUsRequestDto.getEmailOrPhoneNumber(),
-        contactUsRequestDto.getMessage()
-    ));
-    return ResponseEntity.ok(ContactUsMapper.toDto(savedContactUs));
+    return ResponseEntity.ok(contactUsService.saveContactUs(contactUsRequestDto));
   }
 
   @GetMapping
   public ResponseEntity<List<ContactUsResponseDto>> getAllContactUs() {
-    return ResponseEntity.ok(contactUsRepository.findAll()
-        .stream()
-        .map(ContactUsMapper::toDto)
-        .sorted(Comparator.comparing(ContactUsResponseDto::getSentTime).reversed())
-        .toList());
+    return ResponseEntity.ok(contactUsService.getAllContactUs());
   }
 }
