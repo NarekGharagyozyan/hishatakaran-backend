@@ -100,7 +100,7 @@ public class SearchService {
         CompletableFuture<List<TeamMemberResponseDto>> teamFuture = CompletableFuture.supplyAsync(() ->
             transactionTemplate.execute(status -> {
                 List<String> fields = List.of("fullNameHy", "fullNameEn", "fullNameFr", "positionHy", "positionEn",
-                    "positionFr", "descriptionHy", "descriptionEn", "descriptionFr", "signature");
+                    "positionFr", "descriptionHy", "descriptionEn", "descriptionFr", "signatureHy", "signatureEn", "signatureFr");
                 return teamMembersRepository.findAll(SearchSpecifications.containsTextInFields(queryText, fields))
                     .stream()
                     .map(teamMember -> {
