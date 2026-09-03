@@ -39,7 +39,7 @@ public class SearchSpecifications {
                 "historyHy", "historyEn", "historyFr",
                 "originalAffiliationHy", "originalAffiliationEn", "originalAffiliationFr",
                 "storageUnitNameHy", "storageUnitNameEn", "storageUnitNameFr",
-                "signature"
+                "signatureHy", "signatureEn", "signatureFr"
             );
             
             for (String field : textFields) {
