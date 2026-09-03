@@ -803,6 +803,7 @@ NOW EXTRACT DATA FROM THIS HTML:
             - Never omit the transcription when a place name exists.
             - The required romanization is not considered additional information and must not be removed.
             - If some name or place name already have transcription, don't repeat ir in another place.
+            - Besides normal letters you must use only this special symbols: ē Ē ō Ō ě Ě ṛ Ṛ ḥ Ḥʻ tʻ Tʻ chʻ Chʻ tsʻ Tsʻ pʻ Pʻ kʻ Kʻ ʹ gʹh dʹz kʹh sʹh tʹs zh kh gh ch sh ts dz ew ev, don't use any other SPECIAL symbol
         
         14. Preserve the exact punctuation and structure of signatures when translating them.
         
