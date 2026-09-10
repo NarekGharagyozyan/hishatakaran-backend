@@ -1556,7 +1556,7 @@ NOW EXTRACT DATA FROM THIS HTML:
 
         RULES
 
-        1. nameHy MUST contain the Armenian title.
+        1. nameHy MUST contain the Armenian title. Not translate the name directly, example Ճրագ isn't Lamp in English, it's Jrag
            Correct only grammar, spelling and punctuation if necessary.
         2. descriptionHy MUST contain the Armenian text.
            Correct only grammar, spelling and punctuation if necessary.
