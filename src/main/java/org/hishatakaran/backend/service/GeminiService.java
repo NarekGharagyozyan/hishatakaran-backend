@@ -1582,19 +1582,20 @@ NOW EXTRACT DATA FROM THIS HTML:
 
     data.put("name", dto.getName());
     data.put("description", dto.getDescription());
-    data.put(
-        "images",
-        dto.getImages()
-            .stream()
-            .map(v -> {
-              Map<String, Object> map = new HashMap<>();
-              map.put("caption", v.getCaption());
-              return map;
+    if(dto.getImages() != null) {
+      data.put(
+          "images",
+          dto.getImages()
+              .stream()
+              .map(v -> {
+                Map<String, Object> map = new HashMap<>();
+                map.put("caption", v.getCaption());
+                return map;
 
-            })
-            .toList()
-    );
-
+              })
+              .toList()
+      );
+    }
     return data;
   }
 
