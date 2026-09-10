@@ -1,13 +1,17 @@
 package org.hishatakaran.backend.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.hishatakaran.backend.entity.Monument;
 import org.hishatakaran.backend.entity.MonumentImage;
 import org.hishatakaran.backend.entity.MonumentMeasurement;
 import org.hishatakaran.backend.entity.Settlement;
 import org.hishatakaran.backend.entity.SettlementImage;
+import org.hishatakaran.backend.exception.SomethingWentWrongException;
 import org.hishatakaran.backend.mapper.SettlementMapper;
+import org.hishatakaran.backend.model.MonumentFilterRequest;
+import org.hishatakaran.backend.model.MonumentResponseDto;
 import org.hishatakaran.backend.model.SettlementEditDto;
 import org.hishatakaran.backend.model.SettlementRequestDto;
 import org.hishatakaran.backend.model.SettlementResponseDto;
@@ -29,6 +33,7 @@ public class SettlementService {
   private final RegionRepository regionRepository;
   private final SettlementRepository settlementRepository;
   private final FileStorageService fileStorageService;
+  private final MonumentService monumentService;
 
   public SettlementResponseDto createNewSettlement(Long regionId, SettlementRequestDto settlementRequestDto) {
     SettlementTranslationDto translation;
@@ -105,6 +110,16 @@ public class SettlementService {
     Settlement settlement = settlementRepository.findById(id)
         .orElseThrow(() -> new RuntimeException("Settlement not found"));
 
+    MonumentFilterRequest monumentFilterRequest = new MonumentFilterRequest();
+    monumentFilterRequest.setSettlementId(id);
+    List<MonumentResponseDto> monumentResponseDtos = monumentService.filter(monumentFilterRequest);
+    if (!monumentResponseDtos.isEmpty()) {
+      throw new SomethingWentWrongException("Կան հուշարձաններ որոնք օգտագործում են տվյալ բնակավայրը։ Այդ հուշարձաններն են՝ "
+          + monumentResponseDtos.stream()
+          .map(monumentResponseDto -> monumentResponseDto.getName().getHy())
+          .collect(Collectors.joining(", "))
+      );
+    }
     deleteFiles(settlement.getImages().stream().map(SettlementImage::getUrl).toList());
 
     settlementRepository.delete(settlement);

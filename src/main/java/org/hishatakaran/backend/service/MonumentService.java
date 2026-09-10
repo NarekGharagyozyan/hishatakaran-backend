@@ -905,12 +905,12 @@ public class MonumentService {
             MonumentFilterRequest request
     ) {
 
-        if (request.getSettlementId() != null && request.getRegionId() == null) {
-
-            throw new IllegalArgumentException(
-                    "Settlement cannot be used without region"
-            );
-        }
+//        if (request.getSettlementId() != null && request.getRegionId() == null) {
+//
+//            throw new IllegalArgumentException(
+//                    "Settlement cannot be used without region"
+//            );
+//        }
 
         Specification<Monument> spec = (root, query, cb) -> cb.conjunction();
 
