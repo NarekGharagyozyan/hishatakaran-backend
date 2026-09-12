@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.hishatakaran.backend.model.ContactUsRequestDto;
 import org.hishatakaran.backend.model.ContactUsResponseDto;
-import org.hishatakaran.backend.repository.ContactUsRepository;
 import org.hishatakaran.backend.service.ContactUsService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +19,6 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/contactUs")
 public class ContactUsController {
 
-  private final ContactUsRepository contactUsRepository;
   private final ContactUsService contactUsService;
 
   @PostMapping

@@ -1,18 +1,14 @@
 package org.hishatakaran.backend.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.hishatakaran.backend.mapper.LibraryMapper;
 import org.hishatakaran.backend.model.LibraryEditDto;
 import org.hishatakaran.backend.model.LibraryRequestDto;
 import org.hishatakaran.backend.model.LibraryResponseDto;
-import org.hishatakaran.backend.model.MonumentResponseDto;
 import org.hishatakaran.backend.model.TranslationLanguage;
-import org.hishatakaran.backend.repository.LibraryRepository;
 import org.hishatakaran.backend.service.LibraryService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Comparator;
 import java.util.List;
 
 @RestController
@@ -20,7 +16,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LibraryController {
 
-    private final LibraryRepository libraryRepository;
     private final LibraryService libraryService;
 
     @PostMapping("/admin/library")
@@ -55,17 +50,11 @@ public class LibraryController {
 
     @GetMapping("/library")
     public List<LibraryResponseDto> getAll() {
-        return libraryRepository.findAll()
-            .stream()
-            .map(LibraryMapper::toDto)
-            .sorted(Comparator.comparing(LibraryResponseDto::getId).reversed())
-            .toList();
+        return libraryService.getAll();
     }
 
     @GetMapping("/library/{id}")
     public LibraryResponseDto getById(@PathVariable Long id) {
-        return LibraryMapper.toDto(
-            libraryRepository.findById(id).orElseThrow()
-        );
+        return libraryService.getById(id);
     }
 }

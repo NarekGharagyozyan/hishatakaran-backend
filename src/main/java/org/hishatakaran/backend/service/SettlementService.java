@@ -1,5 +1,6 @@
 package org.hishatakaran.backend.service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -128,6 +129,21 @@ public class SettlementService {
   public SettlementResponseDto getSettlement(Long id) {
     Settlement settlement = settlementRepository.findById(id).orElseThrow(() -> new RuntimeException("Settlement not found"));
     return SettlementMapper.toDto(settlement);
+  }
+
+  public List<SettlementResponseDto> getByRegion(Long regionId) {
+    return settlementRepository.findAllByRegionId(regionId)
+        .stream()
+        .map(SettlementMapper::toDto)
+        .toList();
+  }
+
+  public List<SettlementResponseDto> getAll() {
+    return settlementRepository.findAll()
+        .stream()
+        .map(SettlementMapper::toDto)
+        .sorted(Comparator.comparing(SettlementResponseDto::getId).reversed())
+        .toList();
   }
 
   private void deleteFiles(List<String> paths) {

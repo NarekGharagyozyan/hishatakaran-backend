@@ -2,11 +2,7 @@ package org.hishatakaran.backend.controller;
 
 import lombok.RequiredArgsConstructor;
 
-import org.hishatakaran.backend.entity.Monument;
-import org.hishatakaran.backend.exception.SomethingWentWrongException;
-import org.hishatakaran.backend.mapper.MonumentMapper;
 import org.hishatakaran.backend.model.ImageResponseDto;
-import org.hishatakaran.backend.model.LanguagesResponseDto;
 import org.hishatakaran.backend.model.MeasurementResponseDto;
 import org.hishatakaran.backend.model.MonumentEditDto;
 import org.hishatakaran.backend.model.MonumentFilterRequest;
@@ -18,15 +14,12 @@ import org.hishatakaran.backend.model.MonumentTypeRequestDto;
 import org.hishatakaran.backend.model.MonumentTypesResponseDto;
 import org.hishatakaran.backend.model.MonumentVideoResponseDto;
 import org.hishatakaran.backend.model.TranslationLanguage;
-import org.hishatakaran.backend.repository.MonumentRepository;
-import org.hishatakaran.backend.repository.MonumentTypesRepository;
 import org.hishatakaran.backend.service.MonumentService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @RestController
@@ -34,8 +27,6 @@ import java.util.stream.IntStream;
 @RequiredArgsConstructor
 public class MonumentController {
 
-    private final MonumentRepository monumentRepository;
-    private final MonumentTypesRepository monumentTypesRepository;
     private final MonumentService monumentService;
 
     @PostMapping("/admin/monuments")
@@ -109,41 +100,22 @@ public class MonumentController {
 
     @GetMapping("/monuments/{id}")
     public MonumentResponseDto getById(@PathVariable Long id) {
-        return MonumentMapper.toDto(
-            monumentRepository.findById(id).orElseThrow()
-        );
+        return monumentService.getById(id);
     }
 
     @GetMapping("/monuments/region/{regionId}")
     public List<MonumentResponseDto> getByRegion(@PathVariable Long regionId) {
-        return monumentRepository.findByRegionId(regionId)
-            .stream()
-            .map(MonumentMapper::toDto)
-            .toList();
+        return monumentService.getByRegion(regionId);
     }
 
     @GetMapping("/monuments/settlement/{settlementId}")
     public List<MonumentResponseDto> getBySettlement(@PathVariable Long settlementId) {
-        return monumentRepository.findBySettlementId(settlementId)
-            .stream()
-            .map(MonumentMapper::toDto)
-            .toList();
+        return monumentService.getBySettlement(settlementId);
     }
 
     @GetMapping("/monuments/types")
     public List<MonumentTypesResponseDto> getAllMonumentTypes() {
-        return monumentTypesRepository.findAll()
-            .stream()
-            .map(monumentType -> new MonumentTypesResponseDto(
-                monumentType.getId(),
-                LanguagesResponseDto.of(
-                    monumentType.getNameHy(),
-                    monumentType.getNameEn(),
-                    monumentType.getNameFr()
-                )
-            ))
-            .distinct()
-            .toList();
+        return monumentService.getAllMonumentTypes();
     }
 
     @GetMapping("/monuments/images")
@@ -248,17 +220,7 @@ public class MonumentController {
 
     @DeleteMapping("/admin/monuments/types/{monumentTypeId}")
     public void deleteMonumentType(@PathVariable Long monumentTypeId) {
-        MonumentFilterRequest monumentFilterRequest = new MonumentFilterRequest();
-        monumentFilterRequest.setMonumentType(monumentTypeId);
-        List<Monument> monumentsWithSelectedMonumentType = monumentRepository.findByMonumentTypeId(monumentTypeId);
-        if (!monumentsWithSelectedMonumentType.isEmpty()) {
-            throw new SomethingWentWrongException("Կան հուշարձաններ որոնք օգտագործում են տվյալ հուշարձանի տեսակը։ Այդ հուշարձաններն են՝ "
-                + monumentsWithSelectedMonumentType.stream()
-                .map(Monument::getNameHy)
-                .collect(Collectors.joining(", "))
-            );
-        }
-        monumentTypesRepository.deleteById(monumentTypeId);
+        monumentService.deleteMonumentType(monumentTypeId);
     }
 
 }

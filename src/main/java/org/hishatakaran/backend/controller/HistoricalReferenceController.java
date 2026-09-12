@@ -1,9 +1,8 @@
 package org.hishatakaran.backend.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.hishatakaran.backend.mapper.HistoricalReferenceMapper;
 import org.hishatakaran.backend.model.HistoricalReferenceResponseDto;
-import org.hishatakaran.backend.repository.HistoricalReferenceRepository;
+import org.hishatakaran.backend.service.HistoricalReferenceService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,28 +12,20 @@ import java.util.List;
 @RequiredArgsConstructor
 public class HistoricalReferenceController {
 
-    private final HistoricalReferenceRepository historicalReferenceRepository;
+    private final HistoricalReferenceService historicalReferenceService;
 
     @GetMapping
     public List<HistoricalReferenceResponseDto> getAll() {
-        return historicalReferenceRepository.findAll()
-            .stream()
-            .map(HistoricalReferenceMapper::toDto)
-            .toList();
+        return historicalReferenceService.getAll();
     }
 
     @GetMapping("/{id}")
     public HistoricalReferenceResponseDto getById(@PathVariable Long id) {
-        return HistoricalReferenceMapper.toDto(
-            historicalReferenceRepository.findById(id).orElseThrow()
-        );
+        return historicalReferenceService.getById(id);
     }
 
 //    @GetMapping("/monument/{monumentId}")
 //    public List<HistoricalReferenceResponseDto> getByMonument(@PathVariable Long monumentId) {
-//        return historicalReferenceRepository.findByMonumentId(monumentId)
-//            .stream()
-//            .map(HistoricalReferenceMapper::toDto)
-//            .toList();
+//        return historicalReferenceService.getByMonument(monumentId);
 //    }
 }

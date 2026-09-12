@@ -9,10 +9,12 @@ import org.hishatakaran.backend.entity.ProgramEpisode;
 import org.hishatakaran.backend.entity.ProgramImage;
 import org.hishatakaran.backend.entity.ProgramLink;
 import org.hishatakaran.backend.mapper.ProgramMapper;
+import org.hishatakaran.backend.mapper.ProgramTypeMapper;
 import org.hishatakaran.backend.model.ExhibitionResponseDto;
 import org.hishatakaran.backend.model.ProgramEditDto;
 import org.hishatakaran.backend.model.ProgramRequestDto;
 import org.hishatakaran.backend.model.ProgramResponseDto;
+import org.hishatakaran.backend.model.ProgramTypeResponseDto;
 import org.hishatakaran.backend.model.TranslationLanguage;
 import org.hishatakaran.backend.repository.ProgramRepository;
 import org.hishatakaran.backend.repository.ProgramTypeRepository;
@@ -265,5 +267,12 @@ public class ProgramService {
     return ProgramMapper.toDto(
         programRepository.save(program)
     );
+  }
+
+  public List<ProgramTypeResponseDto> getAllProgramTypes() {
+    return programTypeRepository.findAll()
+        .stream()
+        .map(ProgramTypeMapper::toDto)
+        .toList();
   }
 }

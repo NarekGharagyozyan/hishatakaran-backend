@@ -1,5 +1,8 @@
 package org.hishatakaran.backend.service;
 
+import java.util.Comparator;
+import java.util.List;
+
 import org.hishatakaran.backend.entity.Library;
 import org.hishatakaran.backend.mapper.LibraryMapper;
 import org.hishatakaran.backend.model.LibraryEditDto;
@@ -132,6 +135,20 @@ public class LibraryService {
     fileStorageService.deleteFile(library.getBookUrl());
 
     libraryRepository.delete(library);
+  }
+
+  public List<LibraryResponseDto> getAll() {
+    return libraryRepository.findAll()
+        .stream()
+        .map(LibraryMapper::toDto)
+        .sorted(Comparator.comparing(LibraryResponseDto::getId).reversed())
+        .toList();
+  }
+
+  public LibraryResponseDto getById(Long id) {
+    return LibraryMapper.toDto(
+        libraryRepository.findById(id).orElseThrow()
+    );
   }
 
 }

@@ -1,14 +1,10 @@
 package org.hishatakaran.backend.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.hishatakaran.backend.mapper.RegionMapper;
-import org.hishatakaran.backend.model.LibraryResponseDto;
-import org.hishatakaran.backend.model.MonumentResponseDto;
 import org.hishatakaran.backend.model.RegionResponseDto;
-import org.hishatakaran.backend.repository.RegionRepository;
+import org.hishatakaran.backend.service.RegionService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Comparator;
 import java.util.List;
 
 @RestController
@@ -16,21 +12,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RegionController {
 
-    private final RegionRepository regionRepository;
+    private final RegionService regionService;
 
     @GetMapping
     public List<RegionResponseDto> getAll() {
-        return regionRepository.findAll()
-            .stream()
-            .map(RegionMapper::toDto)
-            .sorted(Comparator.comparing(RegionResponseDto::getId).reversed())
-            .toList();
+        return regionService.getAll();
     }
 
     @GetMapping("/{id}")
     public RegionResponseDto getById(@PathVariable Long id) {
-        return RegionMapper.toDto(
-            regionRepository.findById(id).orElseThrow()
-        );
+        return regionService.getById(id);
     }
 }
