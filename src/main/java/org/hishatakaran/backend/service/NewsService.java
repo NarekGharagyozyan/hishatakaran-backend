@@ -65,6 +65,19 @@ public class NewsService {
     return null;
   }
 
+  public List<NewsResponseDto> getAll() {
+    return newsRepository.findAll()
+        .stream()
+        .map(NewsMapper::toDto)
+        .toList();
+  }
+
+  public NewsResponseDto getById(Long id) {
+    return NewsMapper.toDto(
+        newsRepository.findById(id).orElseThrow()
+    );
+  }
+
   private String extractJson(String response) {
     var start = response.indexOf('{');
     var end = response.lastIndexOf('}');

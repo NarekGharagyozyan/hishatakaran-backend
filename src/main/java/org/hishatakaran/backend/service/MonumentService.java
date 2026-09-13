@@ -2,6 +2,7 @@ package org.hishatakaran.backend.service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.hishatakaran.backend.entity.Bibliography;
 import org.hishatakaran.backend.entity.DescriptiveCharacteristicReference;
@@ -13,12 +14,15 @@ import org.hishatakaran.backend.entity.MonumentMeasurement;
 import org.hishatakaran.backend.entity.MonumentTypes;
 import org.hishatakaran.backend.entity.MonumentVideo;
 import org.hishatakaran.backend.entity.Topographic;
+import org.hishatakaran.backend.exception.SomethingWentWrongException;
 import org.hishatakaran.backend.mapper.MonumentMapper;
+import org.hishatakaran.backend.mapper.MonumentStatusMapper;
 import org.hishatakaran.backend.mapper.MonumentTypeMapper;
 import org.hishatakaran.backend.model.MonumentEditDto;
 import org.hishatakaran.backend.model.MonumentFilterRequest;
 import org.hishatakaran.backend.model.MonumentRequestDto;
 import org.hishatakaran.backend.model.MonumentResponseDto;
+import org.hishatakaran.backend.model.MonumentStatusResponseDto;
 import org.hishatakaran.backend.model.MonumentTypeEditDto;
 import org.hishatakaran.backend.model.MonumentTypeRequestDto;
 import org.hishatakaran.backend.model.MonumentTypeTranslateDto;
@@ -1031,6 +1035,55 @@ public class MonumentService {
         return MonumentTypeMapper.toDto(monumentTypesRepository.save(monumentType));
     }
 
+
+    public MonumentResponseDto getById(Long id) {
+        return MonumentMapper.toDto(
+            monumentRepository.findById(id).orElseThrow()
+        );
+    }
+
+    public List<MonumentResponseDto> getByRegion(Long regionId) {
+        return monumentRepository.findByRegionId(regionId)
+            .stream()
+            .map(MonumentMapper::toDto)
+            .toList();
+    }
+
+    public List<MonumentResponseDto> getBySettlement(Long settlementId) {
+        return monumentRepository.findBySettlementId(settlementId)
+            .stream()
+            .map(MonumentMapper::toDto)
+            .toList();
+    }
+
+    public List<MonumentTypesResponseDto> getAllMonumentTypes() {
+        return monumentTypesRepository.findAll()
+            .stream()
+            .map(MonumentTypeMapper::toDto)
+            .distinct()
+            .toList();
+    }
+
+    public List<MonumentStatusResponseDto> getAllMonumentStatuses() {
+        return monumentStatusRepository.findAll()
+            .stream()
+            .map(MonumentStatusMapper::toDto)
+            .toList();
+    }
+
+    public void deleteMonumentType(Long monumentTypeId) {
+        List<Monument> monumentsWithSelectedMonumentType =
+            monumentRepository.findByMonumentTypeId(monumentTypeId);
+
+        if (!monumentsWithSelectedMonumentType.isEmpty()) {
+            throw new SomethingWentWrongException("Կան հուշարձաններ որոնք օգտագործում են տվյալ հուշարձանի տեսակը։ Այդ հուշարձաններն են՝ "
+                + monumentsWithSelectedMonumentType.stream()
+                .map(Monument::getNameHy)
+                .collect(Collectors.joining(", "))
+            );
+        }
+        monumentTypesRepository.deleteById(monumentTypeId);
+    }
 
     @Transactional
     public MonumentResponseDto publish(

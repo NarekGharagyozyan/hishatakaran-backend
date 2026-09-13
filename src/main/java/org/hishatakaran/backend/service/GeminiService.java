@@ -37,6 +37,7 @@ import org.hishatakaran.backend.model.ProgramCulturalHeritageDocumentationTransl
 import org.hishatakaran.backend.model.ProgramEpisodeTranslationDto;
 import org.hishatakaran.backend.model.ProgramImageTranslationDto;
 import org.hishatakaran.backend.model.ProgramTranslationDto;
+import org.hishatakaran.backend.model.RegionTranslationDto;
 import org.hishatakaran.backend.model.SettlementRequestDto;
 import org.hishatakaran.backend.model.SettlementTranslationDto;
 import org.hishatakaran.backend.model.TeamMemberTranslationDto;
@@ -1680,6 +1681,78 @@ NOW EXTRACT DATA FROM THIS HTML:
   }
 
   private Schema monumentTypesSchema() {
+
+    Map<String, Schema> properties = new HashMap<>();
+
+    properties.put("nameHy", stringSchema());
+    properties.put("nameEn", stringSchema());
+    properties.put("nameFr", stringSchema());
+
+    return Schema.builder()
+        .type(Type.Known.OBJECT)
+        .properties(properties)
+        .build();
+  }
+
+  public RegionTranslationDto translateRegion(
+      String armenianName
+  ) throws JsonProcessingException {
+
+    GenerateContentConfig config =
+        GenerateContentConfig.builder()
+            .responseMimeType("application/json")
+            .responseSchema(regionTranslationSchema())
+            .build();
+
+    Content content =
+        Content.builder()
+            .parts(List.of(
+                Part.builder()
+                    .text(buildRegionPrompt(armenianName))
+                    .build()
+            ))
+            .build();
+
+    GenerateContentResponse response =
+        client.models.generateContent(
+            "gemini-2.5-flash",
+            content,
+            config
+        );
+
+    return objectMapper.readValue(
+        response.text(),
+        RegionTranslationDto.class
+    );
+  }
+
+  private String buildRegionPrompt(
+      String armenianName
+  ) {
+
+    return """
+        You are a professional translator.
+
+        The input text is written in Armenian and is the name of an Armenian region (marz).
+
+        RULES
+
+        1. nameHy MUST contain the Armenian name.
+           Correct only grammar, spelling and punctuation if necessary.
+        2. This is a proper place name. Do NOT translate its meaning,
+           example Արագածոտն isn't Throne of Aragats in English, it's Aragatsotn.
+        3. If the region has an established English or French exonym, use it.
+           Otherwise transliterate the Armenian name.
+        4. Return ONLY JSON matching the schema.
+
+        Armenian name:
+
+        %s
+        """
+        .formatted(armenianName);
+  }
+
+  private Schema regionTranslationSchema() {
 
     Map<String, Schema> properties = new HashMap<>();
 

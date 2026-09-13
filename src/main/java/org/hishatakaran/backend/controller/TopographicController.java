@@ -2,9 +2,8 @@ package org.hishatakaran.backend.controller;
 
 import lombok.RequiredArgsConstructor;
 
-import org.hishatakaran.backend.mapper.TopographicMapper;
 import org.hishatakaran.backend.model.TopographicResponseDto;
-import org.hishatakaran.backend.repository.TopographicRepository;
+import org.hishatakaran.backend.service.TopographicService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,28 +13,20 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TopographicController {
 
-    private final TopographicRepository topographicRepository;
+    private final TopographicService topographicService;
 
     @GetMapping
     public List<TopographicResponseDto> getAll() {
-        return topographicRepository.findAll()
-            .stream()
-            .map(TopographicMapper::toDto)
-            .toList();
+        return topographicService.getAll();
     }
 
     @GetMapping("/{id}")
     public TopographicResponseDto getById(@PathVariable Long id) {
-        return TopographicMapper.toDto(
-            topographicRepository.findById(id).orElseThrow()
-        );
+        return topographicService.getById(id);
     }
 
     @GetMapping("/monument/{monumentId}")
     public List<TopographicResponseDto> getByMonument(@PathVariable Long monumentId) {
-        return topographicRepository.findByMonumentId(monumentId)
-            .stream()
-            .map(TopographicMapper::toDto)
-            .toList();
+        return topographicService.getByMonument(monumentId);
     }
 }

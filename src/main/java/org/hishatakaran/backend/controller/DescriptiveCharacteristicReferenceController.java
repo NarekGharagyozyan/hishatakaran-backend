@@ -1,9 +1,8 @@
 package org.hishatakaran.backend.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.hishatakaran.backend.mapper.DescriptiveCharacteristicMapper;
 import org.hishatakaran.backend.model.DescriptiveCharacteristicResponseDto;
-import org.hishatakaran.backend.repository.DescriptiveCharacteristicReferenceRepository;
+import org.hishatakaran.backend.service.DescriptiveCharacteristicReferenceService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,28 +12,20 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DescriptiveCharacteristicReferenceController {
 
-    private final DescriptiveCharacteristicReferenceRepository descriptiveRepository;
+    private final DescriptiveCharacteristicReferenceService descriptiveService;
 
     @GetMapping
     public List<DescriptiveCharacteristicResponseDto> getAll() {
-        return descriptiveRepository.findAll()
-            .stream()
-            .map(DescriptiveCharacteristicMapper::toDto)
-            .toList();
+        return descriptiveService.getAll();
     }
 
     @GetMapping("/{id}")
     public DescriptiveCharacteristicResponseDto getById(@PathVariable Long id) {
-        return DescriptiveCharacteristicMapper.toDto(
-            descriptiveRepository.findById(id).orElseThrow()
-        );
+        return descriptiveService.getById(id);
     }
 
     @GetMapping("/monument/{monumentId}")
     public List<DescriptiveCharacteristicResponseDto> getByMonument(@PathVariable Long monumentId) {
-        return descriptiveRepository.findByMonumentId(monumentId)
-            .stream()
-            .map(DescriptiveCharacteristicMapper::toDto)
-            .toList();
+        return descriptiveService.getByMonument(monumentId);
     }
 }

@@ -2,16 +2,13 @@ package org.hishatakaran.backend.controller;
 
 import lombok.RequiredArgsConstructor;
 
-import org.hishatakaran.backend.mapper.SettlementMapper;
 import org.hishatakaran.backend.model.SettlementEditDto;
 import org.hishatakaran.backend.model.SettlementRequestDto;
 import org.hishatakaran.backend.model.SettlementResponseDto;
-import org.hishatakaran.backend.repository.SettlementRepository;
 import org.hishatakaran.backend.service.SettlementService;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Comparator;
 import java.util.List;
 
 @RestController
@@ -19,25 +16,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SettlementController {
 
-    private final SettlementRepository settlementRepository;
     private final SettlementService settlementService;
 
     @GetMapping("/region/{regionId}/settlements")
     @Query("select s from settlements s where s.region = ?1")
     public List<SettlementResponseDto> getByRegion(@PathVariable Long regionId) {
-        return settlementRepository.findAllByRegionId(regionId)
-            .stream()
-            .map(SettlementMapper::toDto)
-            .toList();
+        return settlementService.getByRegion(regionId);
     }
 
     @GetMapping("/settlements")
     public List<SettlementResponseDto> getAll() {
-        return settlementRepository.findAll()
-            .stream()
-            .map(SettlementMapper::toDto)
-            .sorted(Comparator.comparing(SettlementResponseDto::getId).reversed())
-            .toList();
+        return settlementService.getAll();
     }
 
     @PostMapping("/admin/region/{regionId}/settlements")
