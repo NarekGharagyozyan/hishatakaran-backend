@@ -127,8 +127,8 @@ public class MonumentMapper {
                 .toList()
         );
 
-        monumentDtoBuilder.createdAt(m.getCreatedAt().toEpochSecond());
-        monumentDtoBuilder.updatedAt(m.getUpdatedAt().toEpochSecond());
+        monumentDtoBuilder.createdAt(m.getCreatedAt().toInstant().toEpochMilli());
+        monumentDtoBuilder.updatedAt(m.getUpdatedAt().toInstant().toEpochMilli());
 
         monumentDtoBuilder.bibliography(
             m.getBibliography()
