@@ -1,14 +1,14 @@
 insert ignore into regions(id, name_hy, name_en, name_fr)
 values
-    (1, 'Ասկերանի շրջան', 'Askerani District', 'district d''Askerani'),
-    (2, 'Հադրութի շրջան', 'Hadruti District', 'district de Hadruti'),
-    (3, 'Մարտակերտի շրջան', 'Martakerti District', 'district de Martakerti'),
-    (4, 'Մարտունու շրջան', 'Martunu District', 'district de Martunu'),
-    (5, 'Նոր Շահումյանի (Քարվաճառ) շրջան', 'New Shahumyani (Kʻarvachar) District', 'district de Nouveau Shahumyani (Kʻarvachar)'),
-    (6, 'Շահումյանի շրջան', 'Shahumyani District', 'district de Shahumyani'),
-    (7, 'Շուշիի շրջան', 'Shushii District', 'district de Shushii'),
-    (8, 'Ստեփանակերտ', 'Stepʻanakert', 'Stepʻanakert'),
-    (9, 'Քաշաթաղի շրջան', 'Kʻashatʻaghi District', 'district de Kʻashatʻaghi');
+    (1, 'Ասկերանի շրջան', 'Askeran Region', 'Région d’Askeran'),
+    (2, 'Հադրութի շրջան', 'Hadrut Region', 'Région de Hadrout'),
+    (3, 'Մարտակերտի շրջան', 'Martakert Region', 'Région de Martakert'),
+    (4, 'Մարտունու շրջան', 'Martuni Region', 'Région de Martouni'),
+    (5, 'Նոր Շահումյանի (Քարվաճառ) շրջան', 'Nor Shahumyan (Karvachar) Region', 'Région de Nor Chahoumyan (Kʻarvachaṛ)'),
+    (6, 'Շահումյանի շրջան', 'Shahumyan Region', 'Région de Chahoumyan'),
+    (7, 'Շուշիի շրջան', 'Shushi Region', 'Région de Chouchi'),
+    (8, 'Ստեփանակերտ', 'Stepanakert', 'Stepanakert'),
+    (9, 'Քաշաթաղի շրջան', 'Kashatagh Region (Kʻashatʻagh)', 'Région de Kashatagh (Kʻashatʻagh)');
 
 insert ignore into settlements(id, name_en, name_fr, name_hy, region)
 values
