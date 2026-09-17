@@ -27,12 +27,15 @@ import org.hishatakaran.backend.model.MonumentTypeEditDto;
 import org.hishatakaran.backend.model.MonumentTypeRequestDto;
 import org.hishatakaran.backend.model.MonumentTypeTranslateDto;
 import org.hishatakaran.backend.model.MonumentTypesResponseDto;
+import org.hishatakaran.backend.model.PageResponseDto;
 import org.hishatakaran.backend.model.TranslationLanguage;
 import org.hishatakaran.backend.repository.MonumentRepository;
 import org.hishatakaran.backend.repository.MonumentStatusRepository;
 import org.hishatakaran.backend.repository.MonumentTypesRepository;
 import org.hishatakaran.backend.repository.RegionRepository;
 import org.hishatakaran.backend.repository.SettlementRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -46,6 +49,12 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class MonumentService {
+
+    /** Used when the client sends no page size, or a size below 1. */
+    public static final int DEFAULT_PAGE_SIZE = 20;
+
+    /** Upper bound, so a client cannot ask for the whole table in one request. */
+    public static final int MAX_PAGE_SIZE = 100;
 
     private final MonumentRepository monumentRepository;
     private final GeminiService geminiService;
@@ -916,6 +925,58 @@ public class MonumentService {
 //            );
 //        }
 
+        return monumentRepository
+                .findAll(specificationOf(request), Sort.unsorted())
+                .stream()
+                .map(MonumentMapper::toDto)
+                .sorted(Comparator.comparing(MonumentResponseDto::getId).reversed())
+                .toList();
+    }
+
+    /**
+     * Page of monuments matching the filter, newest first.
+     *
+     * <p>Unlike {@link #filter}, the ordering is applied by the database rather than
+     * in memory: sorting a single page after it has been fetched would order only the
+     * rows that page happens to contain, so the same monument could appear on two
+     * pages or on none.
+     */
+    public PageResponseDto<MonumentResponseDto> filterPaged(
+            MonumentFilterRequest request,
+            int page,
+            int size
+    ) {
+
+        PageRequest pageRequest = PageRequest.of(
+            Math.max(page, 0),
+            clampPageSize(size),
+            Sort.by(Sort.Direction.DESC, "id")
+        );
+
+        Page<Monument> monuments =
+            monumentRepository.findAll(specificationOf(request), pageRequest);
+
+        return new PageResponseDto<>(
+            monuments.getContent()
+                .stream()
+                .map(MonumentMapper::toDto)
+                .toList(),
+            monuments.getNumber(),
+            monuments.getSize(),
+            monuments.getTotalElements(),
+            monuments.getTotalPages()
+        );
+    }
+
+    private static int clampPageSize(int size) {
+        if (size < 1) {
+            return DEFAULT_PAGE_SIZE;
+        }
+        return Math.min(size, MAX_PAGE_SIZE);
+    }
+
+    private Specification<Monument> specificationOf(MonumentFilterRequest request) {
+
         Specification<Monument> spec = (root, query, cb) -> cb.conjunction();
 
         if (request.getRegionId() != null) {
@@ -963,12 +1024,7 @@ public class MonumentService {
             );
         }*/
 
-        return monumentRepository
-                .findAll(spec, Sort.unsorted())
-                .stream()
-                .map(MonumentMapper::toDto)
-                .sorted(Comparator.comparing(MonumentResponseDto::getId).reversed())
-                .toList();
+        return spec;
     }
 
     public List<String> generateImagesPaths(List<MultipartFile> files) {

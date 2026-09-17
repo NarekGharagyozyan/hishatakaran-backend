@@ -13,6 +13,7 @@ import org.hishatakaran.backend.model.MonumentTypeEditDto;
 import org.hishatakaran.backend.model.MonumentTypeRequestDto;
 import org.hishatakaran.backend.model.MonumentTypesResponseDto;
 import org.hishatakaran.backend.model.MonumentVideoResponseDto;
+import org.hishatakaran.backend.model.PageResponseDto;
 import org.hishatakaran.backend.model.TranslationLanguage;
 import org.hishatakaran.backend.service.MonumentService;
 import org.springframework.web.bind.annotation.*;
@@ -79,13 +80,17 @@ public class MonumentController {
     }
 
     @GetMapping("/monuments")
-    public List<MonumentResponseDto> getMonumentsByFilter(
+    public PageResponseDto<MonumentResponseDto> getMonumentsByFilter(
         @RequestParam(required = false)
         Long regionId,
         @RequestParam(required = false)
         Long settlementId,
         @RequestParam(required = false)
-        Long monumentType
+        Long monumentType,
+        @RequestParam(defaultValue = "0")
+        int page,
+        @RequestParam(defaultValue = "" + MonumentService.DEFAULT_PAGE_SIZE)
+        int size
     ) {
 
         MonumentFilterRequest request =
@@ -95,7 +100,7 @@ public class MonumentController {
         request.setSettlementId(settlementId);
         request.setMonumentType(monumentType);
 
-        return monumentService.filter(request);
+        return monumentService.filterPaged(request, page, size);
     }
 
     @GetMapping("/monuments/{id}")
