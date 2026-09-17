@@ -2,6 +2,7 @@ package org.hishatakaran.backend.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -18,9 +19,11 @@ import org.hishatakaran.backend.entity.MonumentStatus;
 import org.hishatakaran.backend.entity.MonumentTypes;
 import org.hishatakaran.backend.entity.Topographic;
 import org.hishatakaran.backend.exception.SomethingWentWrongException;
+import org.hishatakaran.backend.model.MonumentFilterRequest;
 import org.hishatakaran.backend.model.MonumentResponseDto;
 import org.hishatakaran.backend.model.MonumentStatusResponseDto;
 import org.hishatakaran.backend.model.MonumentTypesResponseDto;
+import org.hishatakaran.backend.model.PageResponseDto;
 import org.hishatakaran.backend.repository.MonumentRepository;
 import org.hishatakaran.backend.repository.MonumentStatusRepository;
 import org.hishatakaran.backend.repository.MonumentTypesRepository;
@@ -28,9 +31,16 @@ import org.hishatakaran.backend.repository.RegionRepository;
 import org.hishatakaran.backend.repository.SettlementRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 
 @ExtendWith(MockitoExtension.class)
 class MonumentServiceTest {
@@ -181,6 +191,93 @@ class MonumentServiceTest {
         when(monumentStatusRepository.findAll()).thenReturn(List.of());
 
         assertThat(monumentService.getAllMonumentStatuses()).isEmpty();
+    }
+
+    private PageRequest capturePageRequest(int page, int size) {
+        when(monumentRepository.findAll(ArgumentMatchers.<Specification<Monument>>any(), any(Pageable.class)))
+            .thenReturn(new PageImpl<>(List.of(), PageRequest.of(0, 20), 0));
+
+        monumentService.filterPaged(new MonumentFilterRequest(), page, size);
+
+        ArgumentCaptor<Pageable> pageable = ArgumentCaptor.forClass(Pageable.class);
+        verify(monumentRepository).findAll(
+            ArgumentMatchers.<Specification<Monument>>any(),
+            pageable.capture()
+        );
+        return (PageRequest) pageable.getValue();
+    }
+
+    @Test
+    void filterPaged_asksTheDatabaseForTheRequestedPage() {
+        PageRequest request = capturePageRequest(2, 20);
+
+        assertThat(request.getPageNumber()).isEqualTo(2);
+        assertThat(request.getPageSize()).isEqualTo(20);
+    }
+
+    @Test
+    void filterPaged_sortsByIdDescendingInTheQueryNotInMemory() {
+        PageRequest request = capturePageRequest(0, 20);
+
+        assertThat(request.getSort()).isEqualTo(Sort.by(Sort.Direction.DESC, "id"));
+    }
+
+    @Test
+    void filterPaged_fallsBackToTwentyWhenSizeIsMissingOrZero() {
+        assertThat(capturePageRequest(0, 0).getPageSize()).isEqualTo(20);
+    }
+
+    @Test
+    void filterPaged_fallsBackToTwentyWhenSizeIsNegative() {
+        assertThat(capturePageRequest(0, -5).getPageSize()).isEqualTo(20);
+    }
+
+    @Test
+    void filterPaged_capsSizeSoOneRequestCannotPullTheWholeTable() {
+        assertThat(capturePageRequest(0, 100_000).getPageSize())
+            .isEqualTo(MonumentService.MAX_PAGE_SIZE);
+    }
+
+    @Test
+    void filterPaged_treatsNegativePageAsTheFirstPage() {
+        assertThat(capturePageRequest(-3, 20).getPageNumber()).isZero();
+    }
+
+    @Test
+    void filterPaged_reportsTheTotalsFromTheFullResultSet() {
+        List<Monument> pageContent = List.of(monument(9L, "Գառնի"), monument(8L, "Զվարթնոց"));
+        when(monumentRepository.findAll(ArgumentMatchers.<Specification<Monument>>any(), any(Pageable.class)))
+            .thenReturn(new PageImpl<>(pageContent, PageRequest.of(1, 2), 7));
+
+        PageResponseDto<MonumentResponseDto> result =
+            monumentService.filterPaged(new MonumentFilterRequest(), 1, 2);
+
+        assertThat(result.getContent()).extracting(MonumentResponseDto::getId).containsExactly(9L, 8L);
+        assertThat(result.getPage()).isEqualTo(1);
+        assertThat(result.getSize()).isEqualTo(2);
+        assertThat(result.getTotalElements()).isEqualTo(7);
+        assertThat(result.getTotalPages()).isEqualTo(4);
+    }
+
+    /**
+     * SettlementService.deleteSettlement uses filter() to decide whether a settlement is
+     * still in use. If that ever returned only one page, the guard would let a settlement
+     * with monuments be deleted.
+     */
+    @Test
+    void filter_stillReturnsEveryMatchAndNeverPaginates() {
+        when(monumentRepository.findAll(ArgumentMatchers.<Specification<Monument>>any(), any(Sort.class)))
+            .thenReturn(List.of(
+                monument(1L, "Ա"), monument(2L, "Բ"), monument(3L, "Գ")
+            ));
+
+        List<MonumentResponseDto> result = monumentService.filter(new MonumentFilterRequest());
+
+        assertThat(result).extracting(MonumentResponseDto::getId).containsExactly(3L, 2L, 1L);
+        verify(monumentRepository, never()).findAll(
+            ArgumentMatchers.<Specification<Monument>>any(),
+            any(Pageable.class)
+        );
     }
 
     @Test
