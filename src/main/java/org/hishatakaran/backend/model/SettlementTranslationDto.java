@@ -2,22 +2,31 @@ package org.hishatakaran.backend.model;
 
 import java.util.List;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/** One language per call, like {@link MonumentTranslationDto}. Coordinates are not translated. */
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 public class SettlementTranslationDto {
 
-    private String nameHy;
-    private String nameEn;
-    private String nameFr;
-    private String descriptionHy;
-    private String descriptionEn;
-    private String descriptionFr;
+    private String name;
+
+    private String anotherNames;
+
+    private String history;
+
+    private String description;
+
+    private String dataUpdate;
+
+    private SettlementTopographicTranslationDto topographics;
+
+    private List<BibliographyTranslationDto> bibliography;
+
     private List<ImageAndMeasurementTranslationDto> images;
+
+    private List<ImageAndMeasurementTranslationDto> measurements;
+
+    private List<VideoTranslationDto> videos;
 }

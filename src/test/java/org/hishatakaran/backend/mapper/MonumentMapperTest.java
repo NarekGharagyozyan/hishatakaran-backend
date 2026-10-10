@@ -11,6 +11,9 @@ import org.hishatakaran.backend.entity.DescriptiveCharacteristicReference;
 import org.hishatakaran.backend.entity.HistoricalReference;
 import org.hishatakaran.backend.entity.Monument;
 import org.hishatakaran.backend.entity.MonumentTypes;
+import org.hishatakaran.backend.entity.Region;
+import org.hishatakaran.backend.entity.Settlement;
+import org.hishatakaran.backend.entity.SettlementTopographic;
 import org.hishatakaran.backend.entity.Topographic;
 import org.hishatakaran.backend.model.MonumentResponseDto;
 import org.junit.jupiter.api.Test;
@@ -59,5 +62,33 @@ class MonumentMapperTest {
         MonumentResponseDto result = MonumentMapper.toDto(monument());
 
         assertThat(result.getUpdatedAt()).isGreaterThan(result.getCreatedAt());
+    }
+
+    /**
+     * A monument embeds its settlement in the compact form it always had, coordinates included,
+     * so the monument response does not change. The coordinates now live in the settlement's
+     * topographic block and are read from there.
+     */
+    @Test
+    void toDto_embedsTheSettlementWithItsCoordinatesFromTheTopographicBlock() {
+        Region region = new Region();
+        region.setId(5L);
+        Settlement settlement = new Settlement();
+        settlement.setId(393L);
+        settlement.setNameHy("Չրաղ");
+        settlement.setRegion(region);
+        SettlementTopographic topographic = new SettlementTopographic();
+        topographic.setLatitude("39.9");
+        topographic.setLongitude("45.9");
+        settlement.setTopographics(topographic);
+        Monument monument = monument();
+        monument.setSettlement(settlement);
+
+        MonumentResponseDto result = MonumentMapper.toDto(monument);
+
+        assertThat(result.getSettlement().getName().getHy()).isEqualTo("Չրաղ");
+        assertThat(result.getSettlement().getRegionId()).isEqualTo(5L);
+        assertThat(result.getSettlement().getLatitude()).isEqualTo("39.9");
+        assertThat(result.getSettlement().getLongitude()).isEqualTo("45.9");
     }
 }

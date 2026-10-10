@@ -38,7 +38,6 @@ import org.hishatakaran.backend.model.ProgramEpisodeTranslationDto;
 import org.hishatakaran.backend.model.ProgramImageTranslationDto;
 import org.hishatakaran.backend.model.ProgramTranslationDto;
 import org.hishatakaran.backend.model.RegionTranslationDto;
-import org.hishatakaran.backend.model.SettlementRequestDto;
 import org.hishatakaran.backend.model.SettlementTranslationDto;
 import org.hishatakaran.backend.model.TeamMemberTranslationDto;
 import org.hishatakaran.backend.model.TranslationLanguage;
@@ -1514,20 +1513,27 @@ NOW EXTRACT DATA FROM THIS HTML:
   }
 
 
+  /**
+   * Translates the given Armenian data into one language. The caller decides what goes in:
+   * everything for the translate button, only the still-empty fields when an edit is saved.
+   * A null in the input comes back as null.
+   */
   public SettlementTranslationDto translateSettlement(
-      SettlementRequestDto dto
-  ) throws JsonProcessingException {
+      Map<String, Object> armenianData,
+      TranslationLanguage language
+  ) {
 
-    GenerateContentConfig config =
-        GenerateContentConfig.builder()
-            .responseMimeType("application/json")
-            .responseSchema(settlementTranslationSchema())
-            .build();
+    String prompt = buildSettlementPrompt(armenianData, language);
+
+    GenerateContentConfig config = GenerateContentConfig.builder()
+        .responseMimeType("application/json")
+        .responseSchema(settlementTranslationSchema())
+        .build();
 
     Content content = Content.builder()
         .parts(List.of(
             Part.builder()
-                .text(buildSettlementPrompt(dto))
+                .text(prompt)
                 .build()
         ))
         .build();
@@ -1539,78 +1545,91 @@ NOW EXTRACT DATA FROM THIS HTML:
             config
         );
 
-    return objectMapper.readValue(
-        response.text(),
-        SettlementTranslationDto.class
-    );
+    try {
+
+      return objectMapper.readValue(
+          response.text(),
+          SettlementTranslationDto.class
+      );
+
+    } catch (JsonProcessingException e) {
+
+      throw new RuntimeException(
+          "Cannot parse Gemini translation response",
+          e
+      );
+    }
   }
 
   private String buildSettlementPrompt(
-      SettlementRequestDto dto
+      Map<String, Object> armenianData,
+      TranslationLanguage language
   ) {
+
+    String targetLanguage = language == TranslationLanguage.en
+        ? "English"
+        : "French";
 
     return """
-        You are a professional translator.
+        You are a professional translator specializing in Armenian settlements and historical geography.
 
-        The input text is written in Armenian.
-        Return Armenian (corrected if needed), English and French.
+        Translate the Armenian settlement data into %s.
 
-        RULES
+        RULES:
+        1. Translate only text.
+        2. Preserve historical and geographical terminology.
+        3. Do not summarize.
+        4. Do not add information.
+        5. Return ONLY valid JSON matching the schema.
+        6. Include every field defined in the schema.
+        7. Never omit properties.
+        8. If a value is null or missing in the input, return null for it: never the string "null" and never invented text.
+        9. Translate every text field.
+        10. Translate captions of images and measurements, and titles inside videos and bibliography.
+        11. Do not translate ids, urls or coordinates.
+        12. The text may contain html with embedded photos, links and video links. Keep every tag in place, translate only the text between tags, and never change urls or attributes such as src and href.
+        13. Return the images, measurements, videos and bibliography arrays in the same order as the input, with exactly one entry per input element.
 
-        1. nameHy MUST contain the Armenian title. Not translate the name directly, example Ճրագ isn't Lamp in English, it's Jrag
-           Correct only grammar, spelling and punctuation if necessary.
-        2. descriptionHy MUST contain the Armenian text.
-           Correct only grammar, spelling and punctuation if necessary.
-        3. Translate name into English and French.
-        4. Translate description into English and French.
-        5. Do not summarize.
-        6. Do not rewrite.
-        7. Preserve formatting.
-        8. Return ONLY JSON matching the schema.
+        14. The "name" and "anotherNames" fields are the settlement's own names.
+            Transliterate them, do not translate their meaning, and do not append the romanization in brackets.
+            Example: Ճրագ is not "Lamp", it is "Jrag".
 
-        Armenian data:
+        15. Place name transliteration requirement for every other field (history, description, address,
+            topography, hydrography, captions, titles and so on):
+            If the Armenian text contains any geographical place name or location-related proper name (including but not limited to monasteries, churches, fortresses, archaeological sites, villages, cities, regions, mountains, rivers, valleys, streets, or historical locations), preserve the translated name and append the romanized Armenian original in brackets immediately after it.
+
+            Format:
+            Translated place name [Armenian romanization]
+
+            Rules:
+            - For English translation: use Library of Congress Armenian romanization rules.
+            - For French translation: use French-compatible romanization based on Armenian romanization rules.
+            - Never omit the transcription when a place name exists.
+            - The required romanization is not considered additional information and must not be removed.
+            - If some name or place name already has a transcription, don't repeat it in another place.
+            - Besides normal letters you must use only these special symbols: ē Ē ō Ō ě Ě ṛ Ṛ ḥ Ḥʻ tʻ Tʻ chʻ Chʻ tsʻ Tsʻ pʻ Pʻ kʻ Kʻ ʹ gʹh dʹz kʹh sʹh tʹs zh kh gh ch sh ts dz ew ev, don't use any other SPECIAL symbol
+
+        Armenian settlement data:
 
         %s
+
         """
-        .formatted(createSettlementTranslationObject(dto));
-  }
-
-  private Map<String, Object> createSettlementTranslationObject(
-      SettlementRequestDto dto
-  ) {
-
-    Map<String, Object> data = new HashMap<>();
-
-    data.put("name", dto.getName());
-    data.put("description", dto.getDescription());
-    if(dto.getImages() != null) {
-      data.put(
-          "images",
-          dto.getImages()
-              .stream()
-              .map(v -> {
-                Map<String, Object> map = new HashMap<>();
-                map.put("caption", v.getCaption());
-                return map;
-
-              })
-              .toList()
-      );
-    }
-    return data;
+        .formatted(
+            targetLanguage,
+            armenianData
+        );
   }
 
   private Schema settlementTranslationSchema() {
 
     Map<String, Schema> properties = new HashMap<>();
 
-    properties.put("nameHy", stringSchema());
-    properties.put("nameEn", stringSchema());
-    properties.put("nameFr", stringSchema());
-    properties.put("descriptionHy", stringSchema());
-    properties.put("descriptionEn", stringSchema());
-    properties.put("descriptionFr", stringSchema());
-
+    properties.put("name", stringSchema());
+    properties.put("anotherNames", stringSchema());
+    properties.put("history", stringSchema());
+    properties.put("description", stringSchema());
+    properties.put("dataUpdate", stringSchema());
+    properties.put("topographics", settlementTopographicSchema());
     properties.put(
         "images",
         Schema.builder()
@@ -1618,6 +1637,43 @@ NOW EXTRACT DATA FROM THIS HTML:
             .items(imageSchema())
             .build()
     );
+    properties.put(
+        "measurements",
+        Schema.builder()
+            .type(Type.Known.ARRAY)
+            .items(measurementSchema())
+            .build()
+    );
+    properties.put(
+        "videos",
+        Schema.builder()
+            .type(Type.Known.ARRAY)
+            .items(videoSchema())
+            .build()
+    );
+    properties.put(
+        "bibliography",
+        Schema.builder()
+            .type(Type.Known.ARRAY)
+            .items(bibliographySchema())
+            .build()
+    );
+
+    return Schema.builder()
+        .type(Type.Known.OBJECT)
+        .properties(properties)
+        .build();
+  }
+
+  private Schema settlementTopographicSchema() {
+
+    Map<String, Schema> properties = new HashMap<>();
+
+    properties.put("topography", stringSchema());
+    properties.put("address", stringSchema());
+    properties.put("altitude", stringSchema());
+    properties.put("hydrography", stringSchema());
+    properties.put("dataUpdate", stringSchema());
 
     return Schema.builder()
         .type(Type.Known.OBJECT)
