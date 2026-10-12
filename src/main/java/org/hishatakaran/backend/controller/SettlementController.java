@@ -2,9 +2,12 @@ package org.hishatakaran.backend.controller;
 
 import lombok.RequiredArgsConstructor;
 
+import org.hishatakaran.backend.model.SettlementDetailsResponseDto;
 import org.hishatakaran.backend.model.SettlementEditDto;
 import org.hishatakaran.backend.model.SettlementRequestDto;
 import org.hishatakaran.backend.model.SettlementResponseDto;
+import org.hishatakaran.backend.model.SettlementTypeResponseDto;
+import org.hishatakaran.backend.model.TranslationLanguage;
 import org.hishatakaran.backend.service.SettlementService;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.*;
@@ -29,8 +32,13 @@ public class SettlementController {
         return settlementService.getAll();
     }
 
+    @GetMapping("/settlements/types")
+    public List<SettlementTypeResponseDto> getAllSettlementTypes() {
+        return settlementService.getAllSettlementTypes();
+    }
+
     @PostMapping("/admin/region/{regionId}/settlements")
-    public SettlementResponseDto addNewSettlement(
+    public SettlementDetailsResponseDto addNewSettlement(
         @PathVariable Long regionId,
         @RequestBody SettlementRequestDto settlementRequestDto
     ) {
@@ -38,11 +46,19 @@ public class SettlementController {
     }
 
     @PutMapping("/admin/settlements/{settlementId}")
-    public SettlementResponseDto editSettlement(
+    public SettlementDetailsResponseDto editSettlement(
         @PathVariable Long settlementId,
         @RequestBody SettlementEditDto settlementEditDto
     ) {
         return settlementService.editSettlement(settlementId, settlementEditDto);
+    }
+
+    @PostMapping("/admin/settlements/{settlementId}/translate/{language}")
+    public SettlementDetailsResponseDto translate(
+        @PathVariable Long settlementId,
+        @PathVariable TranslationLanguage language
+    ) {
+        return settlementService.translate(settlementId, language);
     }
 
     @DeleteMapping("/admin/settlements/{settlementId}")
@@ -51,7 +67,7 @@ public class SettlementController {
     }
 
     @GetMapping("/settlements/{settlementId}")
-    public SettlementResponseDto getSettlement(@PathVariable Long settlementId) {
+    public SettlementDetailsResponseDto getSettlement(@PathVariable Long settlementId) {
         return settlementService.getSettlement(settlementId);
     }
 }
