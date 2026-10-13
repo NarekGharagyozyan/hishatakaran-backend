@@ -65,12 +65,11 @@ class MonumentMapperTest {
     }
 
     /**
-     * A monument embeds its settlement in the compact form it always had, coordinates included,
-     * so the monument response does not change. The coordinates now live in the settlement's
-     * topographic block and are read from there.
+     * A monument embeds its settlement in the same full form as GET /settlements/{id}, so the
+     * coordinates are inside the settlement's topographic block.
      */
     @Test
-    void toDto_embedsTheSettlementWithItsCoordinatesFromTheTopographicBlock() {
+    void toDto_embedsTheWholeSettlementWithItsCoordinatesInsideTopographics() {
         Region region = new Region();
         region.setId(5L);
         Settlement settlement = new Settlement();
@@ -86,9 +85,10 @@ class MonumentMapperTest {
 
         MonumentResponseDto result = MonumentMapper.toDto(monument);
 
+        assertThat(result.getSettlement()).usingRecursiveComparison().isEqualTo(SettlementMapper.toDetailsDto(settlement));
         assertThat(result.getSettlement().getName().getHy()).isEqualTo("Չրաղ");
         assertThat(result.getSettlement().getRegionId()).isEqualTo(5L);
-        assertThat(result.getSettlement().getLatitude()).isEqualTo("39.9");
-        assertThat(result.getSettlement().getLongitude()).isEqualTo("45.9");
+        assertThat(result.getSettlement().getTopographics().getLatitude()).isEqualTo("39.9");
+        assertThat(result.getSettlement().getTopographics().getLongitude()).isEqualTo("45.9");
     }
 }

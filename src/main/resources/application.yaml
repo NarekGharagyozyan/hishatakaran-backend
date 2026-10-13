@@ -13,6 +13,10 @@ spring:
     hibernate:
       ddl-auto: validate
     show-sql: true
+    properties:
+      hibernate:
+        # lazy collections load for up to 100 parents per query; GET /settlements was ~5 queries per settlement
+        default_batch_fetch_size: 100
   sql:
     init:
       mode: ALWAYS

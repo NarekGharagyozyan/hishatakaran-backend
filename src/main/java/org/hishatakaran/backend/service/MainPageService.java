@@ -96,7 +96,7 @@ public class MainPageService {
   }
 
   public QuantityResponseDto getQuantity() {
-    Long imagesCount = monumentImageRepository.countMonumentImages();
+    Long imagesCount = monumentImageRepository.countMonumentImages() + settlementRepository.countSettlementImages();
     Long videosCount = monumentVideoRepository.countMonumentVideos();
     Long measurementsCount = monumentMeasurementRepository.countMonumentMeasurements();
     MonumentStatus registeredMonumentStatus = monumentStatusRepository.findById(1).orElseThrow(

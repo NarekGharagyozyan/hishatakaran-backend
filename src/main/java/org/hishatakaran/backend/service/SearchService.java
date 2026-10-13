@@ -16,7 +16,7 @@ import org.hishatakaran.backend.model.MonumentResponseDto;
 import org.hishatakaran.backend.model.ProgramCulturalHeritageDocumentationResponseDto;
 import org.hishatakaran.backend.model.ProgramResponseDto;
 import org.hishatakaran.backend.model.SearchResponseDto;
-import org.hishatakaran.backend.model.SettlementResponseDto;
+import org.hishatakaran.backend.model.SettlementDetailsResponseDto;
 import org.hishatakaran.backend.model.TeamMemberResponseDto;
 import org.hishatakaran.backend.repository.ExhibitionRepository;
 import org.hishatakaran.backend.repository.LibraryRepository;
@@ -126,16 +126,12 @@ public class SearchService {
             })
         );
 
-      CompletableFuture<List<SettlementResponseDto>> settlementFuture = CompletableFuture.supplyAsync(() ->
+      CompletableFuture<List<SettlementDetailsResponseDto>> settlementFuture = CompletableFuture.supplyAsync(() ->
           transactionTemplate.execute(status -> {
             List<String> fields = List.of("nameHy", "nameEn", "nameFr", "descriptionHy", "descriptionEn", "descriptionFr");
             return settlementRepository.findAll(SearchSpecifications.containsTextInFields(queryText, fields))
                 .stream()
-                .map(settlement -> {
-                  SettlementResponseDto dto = SettlementMapper.toDto(settlement);
-                  settlement.getImages();
-                  return dto;
-                })
+                .map(SettlementMapper::toDetailsDto)
                 .toList();
           })
       );

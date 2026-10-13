@@ -11,45 +11,12 @@ import org.hishatakaran.backend.model.LanguagesResponseDto;
 import org.hishatakaran.backend.model.MeasurementResponseDto;
 import org.hishatakaran.backend.model.MonumentVideoResponseDto;
 import org.hishatakaran.backend.model.SettlementDetailsResponseDto;
-import org.hishatakaran.backend.model.SettlementResponseDto;
 import org.hishatakaran.backend.model.SettlementTopographicResponseDto;
 import org.hishatakaran.backend.service.YouTubeService;
 
 public class SettlementMapper {
 
-  /**
-   * The compact form that lists, monuments and search results embed. Its shape is the one
-   * settlements always had, coordinates included, so none of those responses change; the
-   * coordinates are now read from the topographic reference they belong to.
-   */
-  public static SettlementResponseDto toDto(Settlement settlement) {
-
-    if (settlement == null) {
-      return null;
-    }
-
-    SettlementTopographic topographic = settlement.getTopographics();
-
-    return new SettlementResponseDto(
-        settlement.getId(),
-        LanguagesResponseDto.of(
-            settlement.getNameHy(),
-            settlement.getNameEn(),
-            settlement.getNameFr()
-        ),
-        LanguagesResponseDto.of(
-            settlement.getDescriptionHy(),
-            settlement.getDescriptionEn(),
-            settlement.getDescriptionFr()
-        ),
-        topographic == null ? null : topographic.getLongitude(),
-        topographic == null ? null : topographic.getLatitude(),
-        images(settlement),
-        settlement.getRegion() == null ? null : settlement.getRegion().getId()
-    );
-  }
-
-  /** The whole settlement, for the detail page and the admin form. */
+  /** The whole settlement: every endpoint that returns a settlement, embedded or not, uses this form. */
   public static SettlementDetailsResponseDto toDetailsDto(Settlement settlement) {
 
     if (settlement == null) {

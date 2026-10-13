@@ -21,6 +21,6 @@ public class SearchResponseDto {
     private List<ExhibitionResponseDto> exhibitions;
     private List<LibraryResponseDto> libraries;
     private List<TeamMemberResponseDto> teamMembers;
-    private List<SettlementResponseDto> settlements;
+    private List<SettlementDetailsResponseDto> settlements;
 
 }

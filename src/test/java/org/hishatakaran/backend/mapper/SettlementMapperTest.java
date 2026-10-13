@@ -2,9 +2,6 @@ package org.hishatakaran.backend.mapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.lang.reflect.Field;
-import java.util.Arrays;
-
 import org.hishatakaran.backend.entity.Region;
 import org.hishatakaran.backend.entity.Settlement;
 import org.hishatakaran.backend.entity.SettlementBibliography;
@@ -14,7 +11,6 @@ import org.hishatakaran.backend.entity.SettlementTopographic;
 import org.hishatakaran.backend.entity.SettlementType;
 import org.hishatakaran.backend.entity.SettlementVideo;
 import org.hishatakaran.backend.model.SettlementDetailsResponseDto;
-import org.hishatakaran.backend.model.SettlementResponseDto;
 import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -172,49 +168,11 @@ class SettlementMapperTest {
         assertThat(SettlementMapper.toDetailsDto(null)).isNull();
     }
 
-    // ---------- the compact form lists, monuments and search results embed ----------
-
     @Test
-    void toDto_carriesTheFieldsTheMapperAlwaysReturnedWithCoordinatesReadFromTheTopographicBlock() {
-        SettlementResponseDto result = SettlementMapper.toDto(dossier());
-
-        assertThat(result.getId()).isEqualTo(393L);
-        assertThat(result.getName().getHy()).isEqualTo("Չրաղ");
-        assertThat(result.getDescription().getHy()).isEqualTo("նկարագրություն");
-        assertThat(result.getLongitude()).isEqualTo("45.9");
-        assertThat(result.getLatitude()).isEqualTo("39.9");
-        assertThat(result.getImages()).hasSize(1);
-        assertThat(result.getRegionId()).isEqualTo(5L);
-    }
-
-    /** Lists, monuments and search results are consumed by code that predates the dossier; its shape must not move. */
-    @Test
-    void toDto_keepsExactlyTheSevenFieldsItHadBeforeTheDossierExisted() {
-        assertThat(Arrays.stream(SettlementResponseDto.class.getDeclaredFields()).map(Field::getName))
-            .containsExactly("id", "name", "description", "longitude", "latitude", "images", "regionId");
-    }
-
-    @Test
-    void toDto_givesNullCoordinatesForASettlementWithoutATopographicBlock() {
-        Settlement settlement = dossier();
-        settlement.setTopographics(null);
-
-        SettlementResponseDto result = SettlementMapper.toDto(settlement);
-
-        assertThat(result.getLatitude()).isNull();
-        assertThat(result.getLongitude()).isNull();
-    }
-
-    @Test
-    void toDto_toleratesASettlementWithoutARegion() {
+    void toDetailsDto_toleratesASettlementWithoutARegion() {
         Settlement settlement = dossier();
         settlement.setRegion(null);
 
-        assertThat(SettlementMapper.toDto(settlement).getRegionId()).isNull();
-    }
-
-    @Test
-    void toDto_returnsNullForNull() {
-        assertThat(SettlementMapper.toDto(null)).isNull();
+        assertThat(SettlementMapper.toDetailsDto(settlement).getRegionId()).isNull();
     }
 }
