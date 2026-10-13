@@ -20,7 +20,7 @@ public class MonumentResponseDto {
     private final MonumentTypesResponseDto monumentType;
 
     private final RegionResponseDto region;
-    private final SettlementResponseDto settlement;
+    private final SettlementDetailsResponseDto settlement;
 
     private final LanguagesResponseDto specialName;
     private final LanguagesResponseDto anotherNames;

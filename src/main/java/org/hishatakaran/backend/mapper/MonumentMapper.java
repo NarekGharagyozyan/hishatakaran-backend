@@ -38,7 +38,7 @@ public class MonumentMapper {
         }
 
         if (m.getSettlement() != null) {
-            monumentDtoBuilder.settlement(SettlementMapper.toDto(m.getSettlement()));
+            monumentDtoBuilder.settlement(SettlementMapper.toDetailsDto(m.getSettlement()));
         }
 
         monumentDtoBuilder.specialName(LanguagesResponseDto.of(

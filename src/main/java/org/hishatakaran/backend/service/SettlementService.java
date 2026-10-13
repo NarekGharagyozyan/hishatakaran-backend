@@ -25,7 +25,6 @@ import org.hishatakaran.backend.model.MonumentVideoResponseDto;
 import org.hishatakaran.backend.model.SettlementDetailsResponseDto;
 import org.hishatakaran.backend.model.SettlementEditDto;
 import org.hishatakaran.backend.model.SettlementRequestDto;
-import org.hishatakaran.backend.model.SettlementResponseDto;
 import org.hishatakaran.backend.model.SettlementTopographicRequestDto;
 import org.hishatakaran.backend.model.SettlementTopographicResponseDto;
 import org.hishatakaran.backend.model.SettlementTypeResponseDto;
@@ -271,20 +270,18 @@ public class SettlementService {
     return SettlementMapper.toDetailsDto(settlement);
   }
 
-  // The two lists below are unpaginated, so they carry the compact form: the full dossier
-  // would lazy-load six collections for every settlement in the table.
-  public List<SettlementResponseDto> getByRegion(Long regionId) {
+  public List<SettlementDetailsResponseDto> getByRegion(Long regionId) {
     return settlementRepository.findAllByRegionId(regionId)
         .stream()
-        .map(SettlementMapper::toDto)
+        .map(SettlementMapper::toDetailsDto)
         .toList();
   }
 
-  public List<SettlementResponseDto> getAll() {
+  public List<SettlementDetailsResponseDto> getAll() {
     return settlementRepository.findAll()
         .stream()
-        .map(SettlementMapper::toDto)
-        .sorted(Comparator.comparing(SettlementResponseDto::getId).reversed())
+        .map(SettlementMapper::toDetailsDto)
+        .sorted(Comparator.comparing(SettlementDetailsResponseDto::getId).reversed())
         .toList();
   }
 

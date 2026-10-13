@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.hishatakaran.backend.model.SettlementDetailsResponseDto;
 import org.hishatakaran.backend.model.SettlementEditDto;
 import org.hishatakaran.backend.model.SettlementRequestDto;
-import org.hishatakaran.backend.model.SettlementResponseDto;
 import org.hishatakaran.backend.model.SettlementTypeResponseDto;
 import org.hishatakaran.backend.model.TranslationLanguage;
 import org.hishatakaran.backend.service.SettlementService;
@@ -23,12 +22,12 @@ public class SettlementController {
 
     @GetMapping("/region/{regionId}/settlements")
     @Query("select s from settlements s where s.region = ?1")
-    public List<SettlementResponseDto> getByRegion(@PathVariable Long regionId) {
+    public List<SettlementDetailsResponseDto> getByRegion(@PathVariable Long regionId) {
         return settlementService.getByRegion(regionId);
     }
 
     @GetMapping("/settlements")
-    public List<SettlementResponseDto> getAll() {
+    public List<SettlementDetailsResponseDto> getAll() {
         return settlementService.getAll();
     }
 
