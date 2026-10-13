@@ -35,7 +35,6 @@ import org.hishatakaran.backend.model.MonumentVideoResponseDto;
 import org.hishatakaran.backend.model.SettlementDetailsResponseDto;
 import org.hishatakaran.backend.model.SettlementEditDto;
 import org.hishatakaran.backend.model.SettlementRequestDto;
-import org.hishatakaran.backend.model.SettlementResponseDto;
 import org.hishatakaran.backend.model.SettlementTopographicRequestDto;
 import org.hishatakaran.backend.model.SettlementTopographicResponseDto;
 import org.hishatakaran.backend.model.SettlementTypeResponseDto;
@@ -127,10 +126,10 @@ class SettlementServiceTest {
         when(settlementRepository.findAllByRegionId(7L))
             .thenReturn(List.of(settlement(1L, "Օշական", 7L), settlement(2L, "Աշտարակ", 7L)));
 
-        List<SettlementResponseDto> result = settlementService.getByRegion(7L);
+        List<SettlementDetailsResponseDto> result = settlementService.getByRegion(7L);
 
-        assertThat(result).extracting(SettlementResponseDto::getId).containsExactly(1L, 2L);
-        assertThat(result).extracting(SettlementResponseDto::getRegionId).containsOnly(7L);
+        assertThat(result).extracting(SettlementDetailsResponseDto::getId).containsExactly(1L, 2L);
+        assertThat(result).extracting(SettlementDetailsResponseDto::getRegionId).containsOnly(7L);
         assertThat(result.get(0).getName().getHy()).isEqualTo("Օշական");
     }
 
@@ -146,9 +145,9 @@ class SettlementServiceTest {
         when(settlementRepository.findAll())
             .thenReturn(List.of(settlement(1L, "Ա", 7L), settlement(3L, "Գ", 8L), settlement(2L, "Բ", 7L)));
 
-        List<SettlementResponseDto> result = settlementService.getAll();
+        List<SettlementDetailsResponseDto> result = settlementService.getAll();
 
-        assertThat(result).extracting(SettlementResponseDto::getId).containsExactly(3L, 2L, 1L);
+        assertThat(result).extracting(SettlementDetailsResponseDto::getId).containsExactly(3L, 2L, 1L);
         assertThat(result.get(0).getRegionId()).isEqualTo(8L);
     }
 
@@ -159,20 +158,23 @@ class SettlementServiceTest {
         assertThat(settlementService.getAll()).isEmpty();
     }
 
-    /** The list keeps the shape it always had, so the map keeps working; the values now come from the topographic block. */
+    /** Each item of the list is exactly what GET /settlements/{id} returns for it. */
     @Test
-    void getAll_stillCarriesCoordinatesAtTheTopLevelReadFromTheTopographicBlock() {
-        Settlement located = settlement(1L, "Ա", 7L);
-        coordinates(located, "39.9", "45.9");
-        Settlement unlocated = settlement(2L, "Բ", 7L);
-        when(settlementRepository.findAll()).thenReturn(List.of(located, unlocated));
+    void getAll_returnsEverySettlementInTheSameFullFormAsTheSingleSettlement() {
+        Settlement withDossier = settlement(1L, "Ա", 7L);
+        withDossier.setHistoryHy("պատմություն");
+        withDossier.setSettlementType(type(3L, "գյուղ"));
+        coordinates(withDossier, "39.9", "45.9");
+        Settlement bare = settlement(2L, "Բ", 7L);
+        when(settlementRepository.findAll()).thenReturn(List.of(withDossier, bare));
+        when(settlementRepository.findById(1L)).thenReturn(Optional.of(withDossier));
 
-        List<SettlementResponseDto> result = settlementService.getAll();
+        List<SettlementDetailsResponseDto> result = settlementService.getAll();
 
-        assertThat(result.get(1).getLatitude()).isEqualTo("39.9");
-        assertThat(result.get(1).getLongitude()).isEqualTo("45.9");
-        assertThat(result.get(0).getLatitude()).isNull();
-        assertThat(result.get(0).getLongitude()).isNull();
+        assertThat(result.get(1)).usingRecursiveComparison().isEqualTo(settlementService.getSettlement(1L));
+        assertThat(result.get(1).getHistory().getHy()).isEqualTo("պատմություն");
+        assertThat(result.get(1).getTopographics().getLatitude()).isEqualTo("39.9");
+        assertThat(result.get(0).getTopographics()).isNull();
     }
 
     @Test
