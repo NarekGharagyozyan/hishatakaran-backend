@@ -114,13 +114,9 @@ public class SettlementService {
   }
 
   /**
-   * Saves what is sent, in all three languages. As in {@code updateMonument}, an omitted
-   * text group or list leaves the stored value alone; a list that is sent replaces the
-   * stored one.
-   *
-   * <p>Text sent with Armenian only (a field the admin just added) gets its empty English and
-   * French filled in by translation; text that already has a translation is left as sent.
-   * {@link #translate} is the button that redoes a whole language.
+   * Saves what is sent, in all three languages, and translates nothing: that is only
+   * {@link #translate}. As in {@code updateMonument}, an omitted text group or list leaves
+   * the stored value alone; a list that is sent replaces the stored one.
    */
   @Transactional
   public SettlementDetailsResponseDto editSettlement(Long settlementId, SettlementEditDto dto) {
@@ -193,8 +189,6 @@ public class SettlementService {
         ));
       }
     }
-
-    settlementTranslationService.fillMissing(settlement);
 
     return SettlementMapper.toDetailsDto(settlementRepository.save(settlement));
   }
