@@ -1514,9 +1514,8 @@ NOW EXTRACT DATA FROM THIS HTML:
 
 
   /**
-   * Translates the given Armenian data into one language. The caller decides what goes in:
-   * everything for the translate button, only the still-empty fields when an edit is saved.
-   * A null in the input comes back as null.
+   * Translates the given Armenian settlement data into one language; a null in the input
+   * comes back as null.
    */
   public SettlementTranslationDto translateSettlement(
       Map<String, Object> armenianData,

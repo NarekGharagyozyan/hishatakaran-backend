@@ -3,8 +3,6 @@ package org.hishatakaran.backend.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
@@ -44,7 +42,6 @@ import org.hishatakaran.backend.repository.SettlementRepository;
 import org.hishatakaran.backend.repository.SettlementTypeRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InOrder;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -382,23 +379,13 @@ class SettlementServiceTest {
         assertThat(result.getHistory().getHy()).isEqualTo("պատմություն");
         assertThat(result.getDescription().getFr()).isEqualTo("նկարագրություն-fr");
         assertThat(result.getDataUpdate().getEn()).isEqualTo("թարմացում-en");
+        verifyNoInteractions(settlementTranslationService);
     }
 
-    /**
-     * The reported case: a caption added in the form with Armenian only. The translator is asked
-     * to fill the gaps of the settlement as just edited, and the answer carries the result.
-     */
+    /** Translation is only the translate endpoint: a caption added with Armenian only stays as sent. */
     @Test
-    void editSettlement_asksForTheMissingTranslationsOfTextTheAdminJustAdded() {
-        Settlement existing = stubEditOf(393L);
-        doAnswer(call -> {
-            Settlement edited = call.getArgument(0);
-            assertThat(edited.getImages()).hasSize(1);                       // it sees the edit already applied
-            assertThat(edited.getImages().get(0).getCaptionEn()).isEmpty();  // and the gap still open
-            edited.getImages().get(0).setCaptionEn("Chragh settlement");
-            edited.getImages().get(0).setCaptionFr("Village de Tchragh");
-            return null;
-        }).when(settlementTranslationService).fillMissing(existing);
+    void editSettlement_savesANewImageAsSentWithoutTranslatingItsCaption() {
+        stubEditOf(393L);
 
         SettlementEditDto dto = new SettlementEditDto();
         dto.setImages(List.of(new ImageResponseDto(
@@ -408,29 +395,7 @@ class SettlementServiceTest {
         SettlementDetailsResponseDto result = settlementService.editSettlement(393L, dto);
 
         assertThat(result.getImages().get(0).getCaption().getHy()).isEqualTo("Չրաղ բնակավայր");
-        assertThat(result.getImages().get(0).getCaption().getEn()).isEqualTo("Chragh settlement");
-        assertThat(result.getImages().get(0).getCaption().getFr()).isEqualTo("Village de Tchragh");
-        verify(settlementTranslationService).fillMissing(existing);
-    }
-
-    @Test
-    void editSettlement_translatesAfterTheEditIsAppliedAndBeforeItIsSaved() {
-        Settlement existing = stubEditOf(393L);
-
-        settlementService.editSettlement(393L, new SettlementEditDto());
-
-        InOrder order = inOrder(settlementTranslationService, settlementRepository);
-        order.verify(settlementTranslationService).fillMissing(existing);
-        order.verify(settlementRepository).save(existing);
-    }
-
-    @Test
-    void editSettlement_doesNotTranslateWhenTheSettlementDoesNotExist() {
-        when(settlementRepository.findById(404L)).thenReturn(Optional.empty());
-
-        assertThatThrownBy(() -> settlementService.editSettlement(404L, new SettlementEditDto()))
-            .isInstanceOf(RuntimeException.class);
-
+        assertThat(result.getImages().get(0).getCaption().getEn()).isEmpty();
         verifyNoInteractions(settlementTranslationService);
     }
 
