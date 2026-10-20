@@ -3,6 +3,7 @@ package org.hishatakaran.backend.service;
 import org.hishatakaran.backend.entity.PageContent;
 import org.hishatakaran.backend.exception.SomethingWentWrongException;
 import org.hishatakaran.backend.mapper.PageContentMapper;
+import org.hishatakaran.backend.model.LanguagesResponseDto;
 import org.hishatakaran.backend.model.MainPageRequestDto;
 import org.hishatakaran.backend.model.MainPageTranslationDto;
 import org.hishatakaran.backend.model.PageContentEditDto;
@@ -24,35 +25,37 @@ public class PageContentService {
   private final PageContentRepository pageContentRepository;
   private final GeminiService geminiService;
 
-  /** Armenian in; Gemini corrects it and adds English and French. Creating again replaces the content. */
   public PageContentResponseDto createPageContent(PageType page, PageContentRequestDto dto) {
 
-    MainPageTranslationDto translation;
+    boolean hasTitle = dto.getTitle() != null;
+    boolean hasDescription = dto.getDescription() != null;
 
-    try {
-      // the main page's translation fits as is: a title and a text, corrected and translated
-      translation = geminiService.translateMainPage(
-          new MainPageRequestDto(dto.getTitle(), dto.getDescription(), dto.getBackground())
-      );
-    } catch (JsonProcessingException e) {
-      throw new RuntimeException(e);
-    }
+    MainPageTranslationDto translation = hasTitle || hasDescription ? translate(dto) : new MainPageTranslationDto();
 
     PageContent pageContent = pageContentRepository.findByPage(page)
         .orElseGet(() -> new PageContent(page));
 
-    pageContent.setTitleHy(translation.getTitleHy());
-    pageContent.setTitleEn(translation.getTitleEn());
-    pageContent.setTitleFr(translation.getTitleFr());
-    pageContent.setDescriptionHy(translation.getTextHy());
-    pageContent.setDescriptionEn(translation.getTextEn());
-    pageContent.setDescriptionFr(translation.getTextFr());
+    pageContent.setTitleHy(hasTitle ? translation.getTitleHy() : null);
+    pageContent.setTitleEn(hasTitle ? translation.getTitleEn() : null);
+    pageContent.setTitleFr(hasTitle ? translation.getTitleFr() : null);
+    pageContent.setDescriptionHy(hasDescription ? translation.getTextHy() : null);
+    pageContent.setDescriptionEn(hasDescription ? translation.getTextEn() : null);
+    pageContent.setDescriptionFr(hasDescription ? translation.getTextFr() : null);
     pageContent.setBackground(dto.getBackground());
 
     return PageContentMapper.toResponseDto(pageContentRepository.save(pageContent));
   }
 
-  /** Null until the page has been created, as for the main page. */
+  private MainPageTranslationDto translate(PageContentRequestDto dto) {
+    try {
+      return geminiService.translateMainPage(
+          new MainPageRequestDto(dto.getTitle(), dto.getDescription(), dto.getBackground())
+      );
+    } catch (JsonProcessingException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
   public PageContentResponseDto getPageContent(PageType page) {
     return pageContentRepository.findByPage(page)
         .map(PageContentMapper::toResponseDto)
@@ -61,19 +64,18 @@ public class PageContentService {
 
   public PageContentResponseDto editPageContent(PageType page, PageContentEditDto dto) {
 
-    if (dto.getTitle() == null || dto.getDescription() == null) {
-      throw new SomethingWentWrongException("Title and description are required");
-    }
-
     PageContent pageContent = pageContentRepository.findByPage(page)
         .orElseThrow(() -> new SomethingWentWrongException("The page has no content yet, create it first"));
 
-    pageContent.setTitleHy(dto.getTitle().getHy());
-    pageContent.setTitleEn(dto.getTitle().getEn());
-    pageContent.setTitleFr(dto.getTitle().getFr());
-    pageContent.setDescriptionHy(dto.getDescription().getHy());
-    pageContent.setDescriptionEn(dto.getDescription().getEn());
-    pageContent.setDescriptionFr(dto.getDescription().getFr());
+    LanguagesResponseDto title = dto.getTitle();
+    LanguagesResponseDto description = dto.getDescription();
+
+    pageContent.setTitleHy(title == null ? null : title.getHy());
+    pageContent.setTitleEn(title == null ? null : title.getEn());
+    pageContent.setTitleFr(title == null ? null : title.getFr());
+    pageContent.setDescriptionHy(description == null ? null : description.getHy());
+    pageContent.setDescriptionEn(description == null ? null : description.getEn());
+    pageContent.setDescriptionFr(description == null ? null : description.getFr());
     pageContent.setBackground(dto.getBackground());
 
     return PageContentMapper.toResponseDto(pageContentRepository.save(pageContent));

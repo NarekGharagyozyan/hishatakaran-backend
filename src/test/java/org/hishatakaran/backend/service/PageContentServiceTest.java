@@ -144,10 +144,69 @@ class PageContentServiceTest {
     }
 
     @Test
-    void editPageContent_needsTheTitleAndTheDescription() {
-        assertThatThrownBy(() -> pageContentService.editPageContent(PageType.settlementItems,
-            new PageContentEditDto(null, new LanguagesResponseDto("բ", "b", "b"), null)))
-            .isInstanceOf(SomethingWentWrongException.class);
-        verifyNoInteractions(pageContentRepository);
+    void editPageContent_storesNullForEveryFieldSentAsNullAndAnswersNull() {
+        PageContent stored = new PageContent(PageType.settlementItems);
+        stored.setTitleHy("հին");
+        stored.setTitleEn("old");
+        stored.setDescriptionHy("հին տեքստ");
+        stored.setBackground("/images/old.jpg");
+        when(pageContentRepository.findByPage(PageType.settlementItems)).thenReturn(Optional.of(stored));
+        saving();
+
+        PageContentResponseDto result = pageContentService.editPageContent(
+            PageType.settlementItems, new PageContentEditDto(null, null, null));
+
+        assertThat(stored.getTitleHy()).isNull();
+        assertThat(stored.getTitleEn()).isNull();
+        assertThat(stored.getDescriptionHy()).isNull();
+        assertThat(stored.getBackground()).isNull();
+        assertThat(result.getTitle()).isNull();
+        assertThat(result.getDescription()).isNull();
+        assertThat(result.getBackground()).isNull();
+    }
+
+    @Test
+    void editPageContent_storesANullLanguageInsideAGroupAsNull() {
+        PageContent stored = new PageContent(PageType.monumentPassport);
+        stored.setTitleEn("old");
+        when(pageContentRepository.findByPage(PageType.monumentPassport)).thenReturn(Optional.of(stored));
+        saving();
+
+        PageContentResponseDto result = pageContentService.editPageContent(PageType.monumentPassport,
+            new PageContentEditDto(new LanguagesResponseDto("Վերնագիր", null, null), null, "/images/x.jpg"));
+
+        assertThat(stored.getTitleEn()).isNull();
+        assertThat(result.getTitle()).isEqualTo(new LanguagesResponseDto("Վերնագիր", null, null));
+    }
+
+    @Test
+    void createPageContent_withEverythingNullStoresNullAndAsksGeminiNothing() throws Exception {
+        when(pageContentRepository.findByPage(PageType.documentedMonument)).thenReturn(Optional.empty());
+        saving();
+
+        PageContentResponseDto result = pageContentService.createPageContent(
+            PageType.documentedMonument, new PageContentRequestDto(null, null, null));
+
+        assertThat(result.getTitle()).isNull();
+        assertThat(result.getDescription()).isNull();
+        assertThat(result.getBackground()).isNull();
+        verifyNoInteractions(geminiService);
+    }
+
+    @Test
+    void createPageContent_keepsANullTitleNullWhateverGeminiAnswers() throws Exception {
+        when(pageContentRepository.findByPage(PageType.settlementItems)).thenReturn(Optional.empty());
+        when(geminiService.translateMainPage(any(MainPageRequestDto.class))).thenReturn(translation());   // invents a title
+        ArgumentCaptor<PageContent> saved = ArgumentCaptor.forClass(PageContent.class);
+        when(pageContentRepository.save(saved.capture())).thenAnswer(call -> call.getArgument(0));
+
+        PageContentResponseDto result = pageContentService.createPageContent(
+            PageType.settlementItems, new PageContentRequestDto(null, "Նկարագրություն", null));
+
+        assertThat(result.getTitle()).isNull();
+        assertThat(saved.getValue().getTitleHy()).isNull();
+        assertThat(saved.getValue().getTitleEn()).isNull();
+        assertThat(saved.getValue().getTitleFr()).isNull();
+        assertThat(result.getDescription()).isEqualTo(new LanguagesResponseDto("Նկարագրություն", "Description", "Description FR"));
     }
 }
