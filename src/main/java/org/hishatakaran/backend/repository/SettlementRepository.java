@@ -36,6 +36,11 @@ public interface SettlementRepository extends JpaRepository<Settlement, Long>, J
     Long countSettlementImages();
 
     @Query("""
+      select count (*) from SettlementVideo sv
+    """)
+    Long countSettlementVideos();
+
+    @Query("""
     SELECT new org.hishatakaran.backend.model.SettlementCountDto(
         s.id,
         s.nameHy,
