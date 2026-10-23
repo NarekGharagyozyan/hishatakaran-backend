@@ -97,7 +97,7 @@ public class MainPageService {
 
   public QuantityResponseDto getQuantity() {
     Long imagesCount = monumentImageRepository.countMonumentImages() + settlementRepository.countSettlementImages();
-    Long videosCount = monumentVideoRepository.countMonumentVideos();
+    Long videosCount = monumentVideoRepository.countMonumentVideos() + settlementRepository.countSettlementVideos();
     Long measurementsCount = monumentMeasurementRepository.countMonumentMeasurements();
     MonumentStatus registeredMonumentStatus = monumentStatusRepository.findById(1).orElseThrow(
         () -> new RuntimeException("Something went wrong"));
